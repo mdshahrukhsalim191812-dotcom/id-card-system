@@ -1,20 +1,14 @@
 import { NextResponse } from "next/server";
+import { connectDB } from "@/lib/db";
+import Student from "@/models/Student";
 
-let students = [
-    { name: "Aman Kumar", class: "10", roll: "12" },
-    { name: "Riya Sharma", class: "9", roll: "5" },
-];
+export async function GET(req: Request) {
+    await connectDB();
 
-// GET all students
-export async function GET() {
+    const { searchParams } = new URL(req.url);
+    const schoolId = searchParams.get("schoolId");
+
+    const students = await Student.find({ schoolId });
+
     return NextResponse.json(students);
-}
-
-// POST new student
-export async function POST(req: Request) {
-    const body = await req.json();
-
-    students.push(body);
-
-    return NextResponse.json({ message: "Student added", body });
 }

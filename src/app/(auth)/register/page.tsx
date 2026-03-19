@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -12,6 +13,8 @@ export default function RegisterPage() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  //const [message, setMessage] = useState("")
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
@@ -20,11 +23,35 @@ export default function RegisterPage() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
-    console.log(form); // later send to backend
-    alert("Registered Successfully ✅");
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        toast.success("Register Successful")
+        setTimeout(() => {
+          window.location.href = "/dashboard";
+        }, 1000)
+      }
+      else {
+        toast.error("Something went wrong!")
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -87,12 +114,11 @@ export default function RegisterPage() {
             </button>
           </div>
 
-          {/* Button */}
           <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+            disabled={loading}
+            className="w-full bg-blue-500 text-white p-2 rounded"
           >
-            Register
+            {loading ? "Registering..." : "Register"}
           </button>
 
         </form>
@@ -104,7 +130,6 @@ export default function RegisterPage() {
             Login
           </Link>
         </p>
-
       </div>
 
     </div>

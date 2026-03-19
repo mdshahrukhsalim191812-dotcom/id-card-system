@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import toast from "react-hot-toast";
+
 
 export default function LoginPage() {
     const [form, setForm] = useState({
@@ -11,6 +13,7 @@ export default function LoginPage() {
     });
 
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({
@@ -19,11 +22,37 @@ export default function LoginPage() {
         });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setLoading(true);
 
-        console.log(form); // later connect backend
-        alert("Login Successful ✅");
+        try {
+            const res = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(form),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                // 👉 Save schoolId
+                localStorage.setItem("schoolId", data.school._id);
+
+                toast.success("Login Successfully.")
+                setTimeout(() => {
+                    window.location.href = "/dashboard";
+                }, 1000)
+
+            } else {
+                alert(data.message || "Login failed ❌");
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -84,10 +113,10 @@ export default function LoginPage() {
 
                     {/* Button */}
                     <button
-                        type="submit"
-                        className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                        disabled={loading}
+                        className="w-full bg-blue-500 text-white p-2 rounded"
                     >
-                        Login
+                        {loading ? "Wait..." : "Login"}
                     </button>
 
                 </form>
