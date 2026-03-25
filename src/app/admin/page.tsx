@@ -19,7 +19,10 @@ export default function AdminPage() {
     };
 
     useEffect(() => {
-        fetchStudents();
+        const loadData = async () => {
+            await fetchStudents();
+        }
+        loadData();
     }, []);
 
     return (

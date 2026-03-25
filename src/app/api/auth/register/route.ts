@@ -22,6 +22,7 @@ export async function POST(req: Request) {
             message: "School registered",
             school,
         });
+        
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error: "Error" }, { status: 500 });

@@ -41,9 +41,10 @@ export default function AddStudentPage() {
                 setMessage("Student added successfully ✅");
                 setForm({ name: "", class: "", roll: "" });
             } else {
-                setMessage("Error adding student ❌");
+                setMessage(data.message || "Error adding student ❌");
             }
         } catch (error) {
+            console.error(error);
             setMessage("Server error ❌");
         }
 

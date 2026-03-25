@@ -1,13 +1,72 @@
 import mongoose from "mongoose";
 
-const StudentSchema = new mongoose.Schema({
-    name: String,
-    class: String,
-    roll: String,
-    schoolId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "School",
-    },
-}, { timestamps: true });
+const StudentSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        class: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        roll: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        father: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        mother: {
+            type: String,
+            trim: true,
+            default: "",
+        },
+        phone: {
+            type: String,
+            trim: true,
+            default: "",
+        },
+        address: {
+            type: String,
+            trim: true,
+            default: "",
+        },
+        dob: {
+            type: Date,
+        },
+        blood: {
+            type: String,
+            trim: true,
+            default: "",
+        },
 
-export default mongoose.models.Student || mongoose.model("Student", StudentSchema);
+        image: {
+            type: String,
+            default: "",
+        },
+        logo: {
+            type: String,
+            default: "",
+        },
+        signature: {
+            type: String,
+            default: "",
+        },
+
+        schoolId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "School",
+            required: true,
+        },
+    },
+    { timestamps: true }
+);
+
+export default mongoose.models.Student ||
+    mongoose.model("Student", StudentSchema);

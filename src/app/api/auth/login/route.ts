@@ -2,6 +2,8 @@ import { connectDB } from "@/lib/db";
 import School from "@/models/School";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { generateToken } from "@/lib/auth";
+
 
 export async function POST(req: Request) {
     try {
@@ -26,14 +28,24 @@ export async function POST(req: Request) {
                 { status: 401 }
             );
         }
-
-        return NextResponse.json({
+        const token = generateToken(school);
+        const response = NextResponse.json({
             message: "Login successful ✅",
             school,
         });
 
+        response.cookies.set(
+            "token", token, {
+            secure: false,
+            sameSite: "lax",
+            httpOnly: true,
+            path: "/",
+        })
+
+        return response;
+
     } catch (error) {
-        console.log(error);
+        console.log("Error", error);
         return NextResponse.json({ message: "Error" }, { status: 500 });
     }
 }

@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -11,6 +13,8 @@ export default function RegisterPage() {
     email: "",
     password: "",
   });
+
+  const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
   //const [message, setMessage] = useState("")
@@ -27,6 +31,12 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
 
+    if (form.password.length < 8) {
+      toast.error("Password must be at least 8 charecters")
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
@@ -40,18 +50,27 @@ export default function RegisterPage() {
       console.log(data);
 
       if (res.ok) {
-        toast.success("Register Successful")
+        toast.success("Account Created Successfully.")
         setTimeout(() => {
-          window.location.href = "/dashboard";
+          router.push("/login");
         }, 1000)
       }
-      else {
-        toast.error("Something went wrong!")
-      }
 
-    } catch (error) {
+      else {
+        if (res.status === 400) {
+          toast.error("User already exists, Please login!")
+          router.push("/login")
+        }
+        else {
+          toast.error(data.message || "Registration Failed!")
+        }
+      }
+    }
+    catch (error) {
+      toast.error("Something went wrong!")
       console.log(error);
     }
+    setLoading(false);
   };
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
@@ -11,6 +12,8 @@ export default function LoginPage() {
         email: "",
         password: "",
     });
+
+    const router = useRouter();
 
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -32,6 +35,7 @@ export default function LoginPage() {
                 headers: {
                     "Content-Type": "application/json",
                 },
+                credentials: "include",
                 body: JSON.stringify(form),
             });
 
@@ -42,12 +46,13 @@ export default function LoginPage() {
                 localStorage.setItem("schoolId", data.school._id);
 
                 toast.success("Login Successfully.")
-                setTimeout(() => {
-                    window.location.href = "/dashboard";
-                }, 1000)
+                router.push("/dashboard");
+                setLoading(false);
+                return;
 
             } else {
-                alert(data.message || "Login failed ❌");
+                toast.error(data.message || "Login failed ❌");
+                setLoading(false);
             }
 
         } catch (error) {
