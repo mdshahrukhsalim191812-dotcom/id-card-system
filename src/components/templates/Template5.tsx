@@ -46,7 +46,7 @@ export default function Template7({
 
                 {/* HEADER */}
                 <div className="bg-gradient-to-r from-green-700 to-lime-500 text-white text-center pt-[12px] pb-[18px]">
-                    <h1 className="text-[20px] font-bold tracking-tight">
+                    <h1 className="text-[19px] font-bold tracking-tight">
                         {student.school || "BAL BHARTI VIDYALAYA"}
                     </h1>
                 </div>

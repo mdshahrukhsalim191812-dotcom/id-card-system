@@ -127,7 +127,7 @@ export default function Template6(
                         </span>
 
                         <span className="text-red-500 font-bold">Roll No:</span>
-                        <span className="text-blue-900 font-bold">
+                        <span className="text-blue-900 font-bold pr-4">
                             {student.roll}
                         </span>
                     </div>
@@ -162,14 +162,14 @@ export default function Template6(
                 </div>
 
                 {/* SIGN */}
-                <div className="absolute bottom-8 right-3 text-[10px] text-green-700 font-semibold bottom-[20px]">
+                <div className="absolute right-3 text-[10px] text-green-700 font-semibold bottom-[13px]">
                     {signature &&
                         (isBlobSignature ? (
                             <img alt="signature" src={signature} className="w-[70px] h-[20px] relative" />
                         ) : (
                             <Image src={signature} width={70} height={20} alt="signature" />
                         ))}
-                    <p className="relative top-[1px]">Principal Sign.</p>
+                    <p className="relative -top-[3px]">Principal Sign.</p>
                 </div>
 
                 {/* FOOTER */}

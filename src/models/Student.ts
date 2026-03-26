@@ -2,6 +2,16 @@ import mongoose from "mongoose";
 
 const StudentSchema = new mongoose.Schema(
     {
+        school: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        tag: {
+            type: String,
+            required: true,
+            trim: true,
+        },
         name: {
             type: String,
             required: true,

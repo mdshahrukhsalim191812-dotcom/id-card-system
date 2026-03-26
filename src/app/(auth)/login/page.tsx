@@ -27,6 +27,10 @@ export default function LoginPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (loading)
+            return;
+
         setLoading(true);
 
         try {
@@ -55,8 +59,12 @@ export default function LoginPage() {
                 setLoading(false);
             }
 
-        } catch (error) {
+        }
+        catch (error) {
             console.error(error);
+        }
+        finally {
+            setLoading(false)
         }
     };
 
@@ -118,10 +126,14 @@ export default function LoginPage() {
 
                     {/* Button */}
                     <button
+                        type="submit"
                         disabled={loading}
-                        className="w-full bg-blue-500 text-white p-2 rounded"
+                        className={`w-full p-2 rounded text-white transition 
+    ${loading
+                                ? "bg-red-600 cursor-not-allowed"
+                                : "bg-blue-500 hover:bg-blue-600"}`}
                     >
-                        {loading ? "Wait..." : "Login"}
+                        {loading ? "Logging Wait..." : "Login"}
                     </button>
 
                 </form>

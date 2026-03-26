@@ -150,6 +150,8 @@ export default function CreateIDPage() {
                 setLogo(null);
                 setSignature(null);
 
+                setTemplate("1")
+
                 fetchStudents();
             } else {
                 toast.error(data.message || "Error saving!");
@@ -217,6 +219,8 @@ export default function CreateIDPage() {
                 setSignature(null);
                 setSelectedId(null);
 
+                setTemplate("1")
+
                 fetchStudents();
 
                 setUpdateLoading(false);
@@ -272,6 +276,8 @@ export default function CreateIDPage() {
                 setLogo(null);
                 setSignature(null);
                 setSelectedId(null);
+
+                setTemplate("1")
 
                 fetchStudents();
 

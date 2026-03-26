@@ -78,6 +78,8 @@ export async function POST(req: Request) {
         const signatureUrl = uploads[2]?.secure_url || "";
 
         const student = await Student.create({
+            school: body.school,
+            tag: body.tag,
             name: body.name,
             class: body.class,
             roll: body.roll,
@@ -87,8 +89,6 @@ export async function POST(req: Request) {
             address: body.address,
             dob: body.dob,
             blood: body.blood,
-            school: body.school,
-            tag: body.tag,
 
             template: body.template || "1",
 
@@ -169,7 +169,6 @@ export async function PUT(req: Request) {
             success: true,
             data: updatedStudent
         });
-
 
     } catch (error) {
         console.error(error);

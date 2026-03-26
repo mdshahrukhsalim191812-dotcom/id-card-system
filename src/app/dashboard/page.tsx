@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import LogoutButton from "@/components/LogoutButton"
 
 export default function DashboardPage() {
     const stats = [
@@ -29,22 +30,22 @@ export default function DashboardPage() {
             </div>
 
             {/* Actions */}
-            <div className="mt-8 flex gap-4">
+            <div className="mt-8 flex gap-4 justify-center">
                 <Link
                     href="/dashboard/add-student"
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+                    className="font-semibold bg-gradient-to-r from-blue-500 to-blue-900 hover:bg-gradient-to-l from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg"
                 >
                     Add Student
                 </Link>
 
                 <Link
                     href="/dashboard/create-id"
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg"
+                    className="font-semibold bg-gradient-to-r from-green-700 to-green-500 hover:bg-gradient-to-l from-green-500 to-green-700 text-white px-4 py-2 rounded-lg"
                 >
                     Create ID Card
                 </Link>
+                <LogoutButton />
             </div>
-
         </div>
     );
 }
