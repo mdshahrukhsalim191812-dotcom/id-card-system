@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Genix Graphic",
+  title: "Work GeniX",
   description: "Id Card Generate",
 };
 

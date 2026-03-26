@@ -33,12 +33,14 @@ export default function CreateIDPage() {
         class: string;
         roll: string;
         father: string;
+        mother: string;
         phone: string;
         address: string;
         dob: string;
         school: string;
         blood: string,
         tag: string;
+        template?: string;
         image?: string;
         logo?: string;
         signature?: string;
@@ -58,9 +60,26 @@ export default function CreateIDPage() {
 
 
     const fetchStudents = async () => {
-        const res = await fetch("/api/students");
-        const data = await res.json();
-        setStudents(data);
+        try {
+            const res = await fetch("/api/students", {
+                credentials: "include"
+            });
+
+            const data = await res.json();
+
+            if (Array.isArray(data)) {
+                setStudents(data);
+            } else {
+                console.error("Not array:", data);
+                setStudents([]); // fallback
+                toast.error(data.message || "Failed to fetch students");
+            }
+
+        } catch (error) {
+            console.error(error);
+            setStudents([]);
+            toast.error("Fetch error!");
+        }
     };
 
     useEffect(() => {
@@ -90,6 +109,7 @@ export default function CreateIDPage() {
 
             const studentData = {
                 ...student,
+                template,
                 dob: student.dob ? new Date(student.dob) : null,
                 image,
                 logo,
@@ -155,6 +175,8 @@ export default function CreateIDPage() {
             const studentData = {
                 id: selectedId,
                 ...student,
+                template,
+                dob: student.dob ? new Date(student.dob) : null,
                 image,
                 logo,
                 signature
@@ -280,6 +302,8 @@ export default function CreateIDPage() {
                             if (selected) {
                                 setSelectedId(selected._id);
 
+                                setTemplate(selected.template || "1")
+
                                 setStudent({
                                     school: selected.school || "",
                                     tag: selected.tag || "",
@@ -287,7 +311,7 @@ export default function CreateIDPage() {
                                     roll: selected.roll || "",
                                     class: selected.class || "",
                                     father: selected.father || "",
-                                    mother: "",
+                                    mother: selected.mother || "",
                                     phone: selected.phone || "",
                                     address: selected.address || "",
                                     schoolAddress: "",
@@ -303,7 +327,7 @@ export default function CreateIDPage() {
                         }}
                     >
                         <option>Select Student</option>
-                        {students.map((s) => (
+                        {Array.isArray(students) && students.map((s) => (
                             <option key={s._id} value={s._id}>
                                 {s.name} - Class {s.class}
                             </option>

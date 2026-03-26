@@ -4,8 +4,6 @@ import Student from "@/models/Student";
 import { cookies } from "next/headers";
 import cloudinary from "@/lib/cloudinary";
 import { verifyToken } from "@/lib/verifyToken";
-import { mongoose } from "mongoose";
-import toast from "react-hot-toast";
 
 
 export async function GET(req: Request) {
@@ -91,6 +89,8 @@ export async function POST(req: Request) {
             blood: body.blood,
             school: body.school,
             tag: body.tag,
+
+            template: body.template || "1",
 
             ...(imageUrl && { image: imageUrl }),
             ...(logoUrl && { logo: logoUrl }),

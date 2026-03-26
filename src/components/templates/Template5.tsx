@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
+import background from "../../../public/background.png"
 
 type Student = {
     school: "",
@@ -68,76 +69,89 @@ export default function Template7({
             <div className="relative p-3">
 
                 {/* LOGO LEFT */}
-                <div className="absolute left-[20px] top-[4px] w-[80px] h-[80px] rounded-full overflow-hidden border-[3px] border-green-500 bg-gray-200 shadow-l z-10">
+                <div className="absolute left-[20px] top-[4px] w-[80px] h-[80px] rounded-full overflow-hidden border-[3px] border-green-500 bg-gray-200 shadow-l z-20">
                     {logo &&
                         (isBlobLogo ? (
                             <img src={logo} alt="logo" className="w-full h-full object-cover z-10" />
                         ) : (
-                            <Image src={logo} width={80} height={80} alt="logo"/>
+                            <Image src={logo} width={80} height={80} alt="logo" />
                         ))}
                 </div>
 
                 {/* SESSION VERTICAL */}
-                <div className="absolute left-0 top-[110px] rotate-[-90deg] text-[10px] font-extrabold text-blue-900">
-                    <div className="relative left-[62px] top-[79.5px]">
+                <div className="absolute left-0 top-[110px] rotate-[-90deg] text-[10px] font-extrabold text-blue-900 z-20">
+                    <div className="relative left-[62px] top-[81px]">
                         SESSION 2026-27
                     </div>;
                 </div>
 
-                <div className="absolute">
+                <div className="absolute z-20">
                     {/* STUDENT ID TEXT */}
-                    <h2 className="relative text-center text-[14px] font-semibold left-[130px] -top-[12px]">
+                    <h2 className="relative text-center text-[14px] font-semibold left-[130px] -top-[14px]">
                         Student Id
                     </h2>
                 </div>
 
                 {/* PHOTO BOX */}
-                <div className="absolute justify-end mt-0 pr-3">
-                    <div className="relative w-[110px] h-[140px] border-[1px] border-pink-500 left-[110px] top-[6px] z-10 bg-gray-200">
-                        <div className="relative bottom-[24px]">
-                            {image &&
-                                (isBlobImage ? (
-                                    <img src={image} alt="image" className="w-full h-full object-cover" />
-                                ) : (
-                                    <Image src={image} width={100} height={100} alt="student" />
-                                ))}
-                        </div>
+                <div className="absolute left-[110px] top-[6px] z-20">
+                    <div className="relative w-[110px] h-[140px] border-[1px] left-[12px] top-[10px] border-pink-500 bg-gray-200 overflow-hidden">
+
+                        {image && (
+                            isBlobImage ? (
+                                <img
+                                    src={image}
+                                    alt="student"
+                                    className="w-full h-full object-cover"
+                                />
+                            ) : (
+                                <Image
+                                    src={image}
+                                    alt="student"
+                                    fill
+                                    className="object-cover"
+                                />
+                            )
+                        )}
+
                     </div>
                 </div>
 
+                <div className="absolute top-[0px] left-0 w-full z-0">
+                    <Image src={background} alt="background" className="w-full h-auto" />
+                </div>
+
                 {/* DETAILS CARD */}
-                <div className="absolute">
-                    <div className="relative mt-6 bg-white shadow-lg pt-[27px] pl-[7px] pb-[25px] w-[226px] h-[203px] top-[50px]">
+                <div className="absolute top-[60px] left-[12px] z-10">
+                    <div className="bg-white mt-6 shadow-lg pt-[27px] pl-[7px] pb-[25px] w-[226px] h-[208px] top-[5px]">
 
                         <div className="relative text-[10px] text-blue-900 font-bold top-[3px]">
 
                             <div className="flex gap-2">
                                 <span>Class :</span>
-                                <span>{student.class || "--"}</span>
+                                <span className="text-black">{student.class || "--"}</span>
                             </div>
 
                             <div className="flex gap-2">
                                 <span>Sec :</span>
-                                <span>--</span>
+                                <span className="text-black">--</span>
                             </div>
 
                             <div className="flex gap-2">
                                 <span>Roll No :</span>
-                                <span>{student.roll || "--"}</span>
+                                <span className="text-black">{student.roll || "--"}</span>
                             </div>
 
                             <div className="flex gap-2">
                                 <span>D.O.B :</span>
-                                <span>{formatDate(student.dob) || "--"}</span>
+                                <span className="text-black">{formatDate(student.dob) || "--"}</span>
                             </div>
                         </div>
 
                         {/* RED DOTS */}
-                        <div className="flex justify-center gap-[2px] my-[8px]">
-                            <div className="w-[7px] h-[5px] bg-red-600 top-[12px]"></div>
-                            <div className="w-[7px] h-[5px] bg-red-600"></div>
-                            <div className="w-[7px] h-[5px] bg-red-600"></div>
-                            <div className="w-[7px] h-[5px] bg-red-600"></div>
+                        <div className="flex justify-center my-[2px]">
+                            <div className="font-bold text-blue-800">
+                                { student.name || "---"}
+                            </div>
                         </div>
 
                         {/* MORE DETAILS */}
@@ -145,27 +159,27 @@ export default function Template7({
 
                             <div className="flex gap-2">
                                 <span>Admn. No :</span>
-                                <span>----</span>
+                                <span className="text-black">----</span>
                             </div>
 
                             <div className="flex gap-2">
                                 <span>F. Name :</span>
-                                <span>{student.father || "---"}</span>
+                                <span className="text-black">{student.father || "---"}</span>
                             </div>
 
                             <div className="flex gap-2">
                                 <span>M. Name :</span>
-                                <span>{student.mother || "---"}</span>
+                                <span className="text-black">{student.mother || "---"}</span>
                             </div>
 
                             <div className="flex gap-2">
                                 <span>Ph. No :</span>
-                                <span>{student.phone || "---"}</span>
+                                <span className="text-black">{student.phone || "---"}</span>
                             </div>
 
                             <div>
                                 <span>Address : </span>
-                                <span>
+                                <span className="text-black">
                                     {student.address || "---"}
                                 </span>
                             </div>
@@ -175,14 +189,14 @@ export default function Template7({
 
                 {/* SIGNATURE */}
                 <div className="absolute bottom-3 right-4 text-center">
-                    
-                        {signature &&
-                            (isBlobSignature ? (
-                                <img src={signature} alt="signature" className="w-16 h-6 mx-auto z-20" />
-                            ) : (
-                                <Image src={signature} width={60} height={20} alt="sign" />
-                            ))}
-                    <p className="text-red-600 relative font-bold text-[11px] top-[278px] right-[5px]">Principal</p>
+
+                    {signature &&
+                        (isBlobSignature ? (
+                            <img src={signature} alt="signature" className="w-16 h-6 mx-auto z-20" />
+                        ) : (
+                            <Image src={signature} width={60} height={20} alt="sign" />
+                        ))}
+                    <p className="text-red-600 relative font-bold text-[11px] top-[278px] right-[5px] z-20">Principal</p>
                 </div>
 
             </div>

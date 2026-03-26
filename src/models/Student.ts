@@ -59,6 +59,11 @@ const StudentSchema = new mongoose.Schema(
             default: "",
         },
 
+        template: {
+            type: String,
+            default: "1"
+        },
+
         schoolId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "School",
