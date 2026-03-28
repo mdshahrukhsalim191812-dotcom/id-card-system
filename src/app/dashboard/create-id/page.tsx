@@ -269,50 +269,78 @@ export default function CreateIDPage() {
                 return;
             }
 
-            const confirmDelete = confirm("Are you sure you want to delete this student?");
+            toast((t) => (
+                <div className="flex flex-col gap-3">
+                    <p className="font-semibold text-black ">
+                       <span>⚠️</span>
+                       <span> Delete this student? </span>
+                    </p>
 
-            if (!confirmDelete) return;
+                    <div className="flex gap-2 justify-end">
+                        {/* YES */}
+                        <button
+                            onClick={async () => {
+                                toast.dismiss(t.id);
 
-            const res = await fetch(`/api/students?id=${selectedId}`, {
-                method: "DELETE",
-                credentials: "include"
-            });
+                                try {
+                                    const res = await fetch(`/api/students?id=${selectedId}`, {
+                                        method: "DELETE",
+                                        credentials: "include",
+                                    });
 
-            const data = await res.json();
+                                    const data = await res.json();
 
-            if (data.success) {
-                toast.success("Deleted successfully 🗑️");
+                                    if (data.success) {
+                                        toast.success("Deleted successfully 🗑️");
 
-                setStudent({
-                    school: "",
-                    tag: "",
-                    name: "",
-                    roll: "",
-                    class: "",
-                    father: "",
-                    mother: "",
-                    phone: "",
-                    address: "",
-                    schoolAddress: "",
-                    dob: "",
-                    photo: "",
-                    blood: ""
-                });
+                                        setStudent({
+                                            school: "",
+                                            tag: "",
+                                            name: "",
+                                            roll: "",
+                                            class: "",
+                                            father: "",
+                                            mother: "",
+                                            phone: "",
+                                            address: "",
+                                            schoolAddress: "",
+                                            dob: "",
+                                            photo: "",
+                                            blood: ""
+                                        });
 
-                setImage(null);
-                setLogo(null);
-                setSignature(null);
-                setSelectedId(null);
+                                        setImage(null);
+                                        setLogo(null);
+                                        setSignature(null);
+                                        setSelectedId(null);
+                                        setTemplate("1");
 
-                setTemplate("1")
+                                        fetchStudents();
 
-                fetchStudents();
+                                    } else {
+                                        toast.error(data.message || "Delete failed ❌");
+                                    }
 
-                setDeleteLoading(false);
-            }
-            else {
-                toast.error("Delete failed ❌");
-            }
+                                } catch (error) {
+                                    console.error(error);
+                                    toast.error("Error deleting ❌");
+                                }
+                            }}
+                            className="bg-red-500 hover:bg-red-800 text-white px-3 py-1 rounded"
+                        >
+                            Yes
+                        </button>
+
+                        {/* CANCEL */}
+                        <button
+                            onClick={() => toast.dismiss(t.id)}
+                            className="bg-gray-300 hover:bg-gray-400 px-3 py-1 rounded"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            ));
 
         } catch (error) {
             console.error(error);
@@ -320,287 +348,287 @@ export default function CreateIDPage() {
         }
     };
 
-    return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-6">Create ID Card</h1>
+return (
+    <div className="p-6">
+        <h1 className="text-2xl font-bold mb-6">Create ID Card</h1>
 
-            {/* FORM */}
-            <div className="grid grid-cols-2 gap-6">
-                <div className="space-y-4">
-                    <select value={selectedId || ""}
-                        className="w-full border p-2 rounded"
+        {/* FORM */}
+        <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-4">
+                <select value={selectedId || ""}
+                    className="w-full border p-2 rounded"
+                    onChange={(e) => {
+                        const selected = students.find(s => s._id === e.target.value);
+
+                        if (selected) {
+                            setSelectedId(selected._id);
+
+                            setTemplate(selected.template || "1")
+
+                            setStudent({
+                                school: selected.school || "",
+                                tag: selected.tag || "",
+                                name: selected.name || "",
+                                roll: selected.roll || "",
+                                class: selected.class || "",
+                                father: selected.father || "",
+                                mother: selected.mother || "",
+                                phone: selected.phone || "",
+                                address: selected.address || "",
+                                schoolAddress: "",
+                                dob: selected.dob || "",
+                                photo: "",
+                                blood: selected.blood || ""
+                            });
+
+                            setImage(selected.image || null);
+                            setLogo(selected.logo || null);
+                            setSignature(selected.signature || null);
+                        }
+                    }}
+                >
+                    <option>Select Student</option>
+                    {Array.isArray(students) && students.map((s) => (
+                        <option key={s._id} value={s._id}>
+                            {s.name} - Class {s.class}
+                        </option>
+                    ))}
+                </select>
+
+                <select
+                    value={template}
+                    onChange={(e) => setTemplate(e.target.value)}
+                    className="w-full border p-2 rounded"
+                >
+                    <option value="1">Design 1</option>
+                    <option value="2">Design 2</option>
+                    <option value="3">Design 3</option>
+                    <option value="4">Design 4</option>
+                    <option value="5">Design 5</option>
+                    <option value="6">Design 6</option>
+                </select>
+
+                <div><span>School Logo </span>
+                    <input
+                        type="file"
+                        accept="image/*"
                         onChange={(e) => {
-                            const selected = students.find(s => s._id === e.target.value);
+                            const file = e.target.files?.[0];
+                            if (file) {
+                                const reader = new FileReader();
 
-                            if (selected) {
-                                setSelectedId(selected._id);
+                                reader.onloadend = () => {
+                                    setLogo(reader.result as string);
+                                };
 
-                                setTemplate(selected.template || "1")
-
-                                setStudent({
-                                    school: selected.school || "",
-                                    tag: selected.tag || "",
-                                    name: selected.name || "",
-                                    roll: selected.roll || "",
-                                    class: selected.class || "",
-                                    father: selected.father || "",
-                                    mother: selected.mother || "",
-                                    phone: selected.phone || "",
-                                    address: selected.address || "",
-                                    schoolAddress: "",
-                                    dob: selected.dob || "",
-                                    photo: "",
-                                    blood: selected.blood || ""
-                                });
-
-                                setImage(selected.image || null);
-                                setLogo(selected.logo || null);
-                                setSignature(selected.signature || null);
+                                reader.readAsDataURL(file);
                             }
                         }}
-                    >
-                        <option>Select Student</option>
-                        {Array.isArray(students) && students.map((s) => (
-                            <option key={s._id} value={s._id}>
-                                {s.name} - Class {s.class}
-                            </option>
-                        ))}
-                    </select>
-
-                    <select
-                        value={template}
-                        onChange={(e) => setTemplate(e.target.value)}
-                        className="w-full border p-2 rounded"
-                    >
-                        <option value="1">Design 1</option>
-                        <option value="2">Design 2</option>
-                        <option value="3">Design 3</option>
-                        <option value="4">Design 4</option>
-                        <option value="5">Design 5</option>
-                        <option value="6">Design 6</option>
-                    </select>
-
-                    <div><span>School Logo </span>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    const reader = new FileReader();
-
-                                    reader.onloadend = () => {
-                                        setLogo(reader.result as string);
-                                    };
-
-                                    reader.readAsDataURL(file);
-                                }
-                            }}
-                        />
-                    </div>
-
-                    <div>
-                        <span>Student Image </span>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    const reader = new FileReader();
-
-                                    reader.onloadend = () => {
-                                        setImage(reader.result as string);
-                                    };
-
-                                    reader.readAsDataURL(file);
-                                }
-                            }}
-                        />
-                    </div>
-
-                    <div>
-                        <span>Principal Signature </span>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    const reader = new FileReader();
-
-                                    reader.onloadend = () => {
-                                        setSignature(reader.result as string);
-                                    };
-
-                                    reader.readAsDataURL(file);
-                                }
-                            }}
-                        />
-                    </div>
-
-                    <input
-                        type="text"
-                        placeholder="School Name"
-                        value={student.school}
-                        onChange={(e) =>
-                            setStudent({ ...student, school: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
                     />
-                    <input
-                        type="text"
-                        placeholder="Tag Line/ School Address"
-                        value={student.tag}
-                        onChange={(e) =>
-                            setStudent({ ...student, tag: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-
-                    <input
-                        type="text"
-                        placeholder="Student Name"
-                        value={student.name}
-                        onChange={(e) =>
-                            setStudent({ ...student, name: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-
-                    <input
-                        type="text"
-                        placeholder="Class"
-                        value={student.class}
-                        onChange={(e) =>
-                            setStudent({ ...student, class: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-
-                    <input
-                        type="text"
-                        placeholder="Roll"
-                        value={student.roll}
-                        onChange={(e) =>
-                            setStudent({ ...student, roll: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Father's Name"
-                        value={student.father}
-                        onChange={(e) =>
-                            setStudent({ ...student, father: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Mother's Name"
-                        value={student.mother}
-                        onChange={(e) =>
-                            setStudent({ ...student, mother: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-                    <input
-                        type="date"
-                        placeholder="D.O.B"
-                        value={student.dob}
-                        onChange={(e) =>
-                            setStudent({ ...student, dob: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Address"
-                        value={student.address}
-                        onChange={(e) =>
-                            setStudent({ ...student, address: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Phone No."
-                        value={student.phone}
-                        onChange={(e) =>
-                            setStudent({ ...student, phone: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Blood Group"
-                        value={student.blood}
-                        onChange={(e) =>
-                            setStudent({ ...student, blood: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-
-                    <div className="flex gap-4 mt-4">
-                        <button
-                            onClick={async () => {
-                                if (!cardRef.current) return;
-
-                                const canvas = await html2canvas(cardRef.current);
-                                const link = document.createElement("a");
-
-                                link.download = "id-card.png";
-                                link.href = canvas.toDataURL();
-                                link.click();
-                            }}
-                            className="bg-gradient-to-tr from-green-800 to-green-500 text-white px-4 py-2 rounded"
-                        >
-                            Download ID Card
-                        </button>
-
-                        <button
-                            onClick={handleSave}
-                            className="bg-gradient-to-tr from-blue-900 to-blue-500 text-white px-4 py-2 rounded"
-                        >
-                            {loading ? "Saving..." : "Save"}
-                        </button>
-
-                        <button
-                            onClick={handleUpdate}
-                            className="bg-gradient-to-tr from-yellow-800 to-yellow-500 text-white px-4 py-2 rounded"
-                        >
-                            {updateloading ? "Updating..." : "Update"}
-                        </button>
-
-                        <button
-                            onClick={handleDelete}
-                            className="bg-gradient-to-tr from-red-800 to-red-500 text-white px-4 py-2 rounded"
-                        >
-                            Delete
-                        </button>
-                    </div>
-
                 </div>
 
-                {/* PREVIEW */}
-                <div className="flex justify-center items-center">
-                    <div>
-                        {template === "1" && <Template1 student={student} image={image}
-                            logo={logo} formatDate={formatDate} />}
+                <div>
+                    <span>Student Image </span>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                                const reader = new FileReader();
 
-                        {template === "2" && < Template2 student={student} image={image} logo={logo} formatDate={formatDate} />}
+                                reader.onloadend = () => {
+                                    setImage(reader.result as string);
+                                };
 
-                        {template === "3" && < Template3 student={student} image={image} logo={logo} formatDate={formatDate} />}
+                                reader.readAsDataURL(file);
+                            }
+                        }}
+                    />
+                </div>
 
-                        {template === "4" && < Template4 student={student} image={image} logo={logo} formatDate={formatDate} signature={signature} />}
+                <div>
+                    <span>Principal Signature </span>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                                const reader = new FileReader();
 
-                        {template === "5" && < Template5 student={student} image={image} logo={logo} formatDate={formatDate} />}
+                                reader.onloadend = () => {
+                                    setSignature(reader.result as string);
+                                };
 
-                        {template === "6" && < Template6 student={student} image={image} logo={logo} formatDate={formatDate} signature={signature} />}
-                    </div>
-                </div >
+                                reader.readAsDataURL(file);
+                            }
+                        }}
+                    />
+                </div>
+
+                <input
+                    type="text"
+                    placeholder="School Name"
+                    value={student.school}
+                    onChange={(e) =>
+                        setStudent({ ...student, school: e.target.value })
+                    }
+                    className="w-full border p-2 rounded"
+                />
+                <input
+                    type="text"
+                    placeholder="Tag Line/ School Address"
+                    value={student.tag}
+                    onChange={(e) =>
+                        setStudent({ ...student, tag: e.target.value })
+                    }
+                    className="w-full border p-2 rounded"
+                />
+
+                <input
+                    type="text"
+                    placeholder="Student Name"
+                    value={student.name}
+                    onChange={(e) =>
+                        setStudent({ ...student, name: e.target.value })
+                    }
+                    className="w-full border p-2 rounded"
+                />
+
+                <input
+                    type="text"
+                    placeholder="Class"
+                    value={student.class}
+                    onChange={(e) =>
+                        setStudent({ ...student, class: e.target.value })
+                    }
+                    className="w-full border p-2 rounded"
+                />
+
+                <input
+                    type="text"
+                    placeholder="Roll"
+                    value={student.roll}
+                    onChange={(e) =>
+                        setStudent({ ...student, roll: e.target.value })
+                    }
+                    className="w-full border p-2 rounded"
+                />
+                <input
+                    type="text"
+                    placeholder="Father's Name"
+                    value={student.father}
+                    onChange={(e) =>
+                        setStudent({ ...student, father: e.target.value })
+                    }
+                    className="w-full border p-2 rounded"
+                />
+                <input
+                    type="text"
+                    placeholder="Mother's Name"
+                    value={student.mother}
+                    onChange={(e) =>
+                        setStudent({ ...student, mother: e.target.value })
+                    }
+                    className="w-full border p-2 rounded"
+                />
+                <input
+                    type="date"
+                    placeholder="D.O.B"
+                    value={student.dob}
+                    onChange={(e) =>
+                        setStudent({ ...student, dob: e.target.value })
+                    }
+                    className="w-full border p-2 rounded"
+                />
+                <input
+                    type="text"
+                    placeholder="Address"
+                    value={student.address}
+                    onChange={(e) =>
+                        setStudent({ ...student, address: e.target.value })
+                    }
+                    className="w-full border p-2 rounded"
+                />
+                <input
+                    type="text"
+                    placeholder="Phone No."
+                    value={student.phone}
+                    onChange={(e) =>
+                        setStudent({ ...student, phone: e.target.value })
+                    }
+                    className="w-full border p-2 rounded"
+                />
+                <input
+                    type="text"
+                    placeholder="Blood Group"
+                    value={student.blood}
+                    onChange={(e) =>
+                        setStudent({ ...student, blood: e.target.value })
+                    }
+                    className="w-full border p-2 rounded"
+                />
+
+                <div className="flex gap-4 mt-4">
+                    <button
+                        onClick={async () => {
+                            if (!cardRef.current) return;
+
+                            const canvas = await html2canvas(cardRef.current);
+                            const link = document.createElement("a");
+
+                            link.download = "id-card.png";
+                            link.href = canvas.toDataURL();
+                            link.click();
+                        }}
+                        className="bg-gradient-to-tr from-green-800 to-green-500 text-white px-4 py-2 rounded"
+                    >
+                        Download ID Card
+                    </button>
+
+                    <button
+                        onClick={handleSave}
+                        className="bg-gradient-to-tr from-blue-900 to-blue-500 text-white px-4 py-2 rounded"
+                    >
+                        {loading ? "Saving..." : "Save"}
+                    </button>
+
+                    <button
+                        onClick={handleUpdate}
+                        className="bg-gradient-to-tr from-yellow-800 to-yellow-500 text-white px-4 py-2 rounded"
+                    >
+                        {updateloading ? "Updating..." : "Update"}
+                    </button>
+
+                    <button
+                        onClick={handleDelete}
+                        className="bg-gradient-to-tr from-red-800 to-red-500 text-white px-4 py-2 rounded"
+                    >
+                        Delete
+                    </button>
+                </div>
+
             </div>
-        </div >
-    );
+
+            {/* PREVIEW */}
+            <div className="flex justify-center items-center">
+                <div>
+                    {template === "1" && <Template1 student={student} image={image}
+                        logo={logo} formatDate={formatDate} />}
+
+                    {template === "2" && < Template2 student={student} image={image} logo={logo} formatDate={formatDate} />}
+
+                    {template === "3" && < Template3 student={student} image={image} logo={logo} formatDate={formatDate} />}
+
+                    {template === "4" && < Template4 student={student} image={image} logo={logo} formatDate={formatDate} signature={signature} />}
+
+                    {template === "5" && < Template5 student={student} image={image} logo={logo} formatDate={formatDate} />}
+
+                    {template === "6" && < Template6 student={student} image={image} logo={logo} formatDate={formatDate} signature={signature} />}
+                </div>
+            </div >
+        </div>
+    </div >
+);
 }
