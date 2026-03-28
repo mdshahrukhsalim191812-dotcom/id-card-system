@@ -4,6 +4,10 @@ const SchoolSchema = new mongoose.Schema({
     name: String,
     email: String,
     password: String,
+    role: {
+        type: String,
+        default: "school"
+    }
 }, { timestamps: true });
 
 export default mongoose.models.School || mongoose.model("School", SchoolSchema);

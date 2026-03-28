@@ -3,13 +3,14 @@ import { connectDB } from "@/lib/db";
 import Student from "@/models/Student";
 import { cookies } from "next/headers";
 import cloudinary from "@/lib/cloudinary";
-import { verifyToken } from "@/lib/verifyToken";
+import { verifyToken } from "@/lib/auth";
+import { studentSchema } from "@/lib/validation";
+import School from "@/models/School"
 
 
 export async function GET(req: Request) {
     try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get("token")?.value;
+        const token = req.headers.get("cookie")?.split("token=")[1]?.split(";")[0];
 
         if (!token) {
             return NextResponse.json({ message: "Unauthorized ❌" }, { status: 401 });
@@ -23,9 +24,13 @@ export async function GET(req: Request) {
 
         await connectDB();
 
-        const students = await Student.find({ schoolId: user.id });
-
-        return NextResponse.json(students);
+        if (user.role === "admin") {
+            const students = await Student.find().populate("schoolId");
+            return NextResponse.json(students);
+        } else {
+            const students = await Student.find({ schoolId: user._id }).populate("schoolId");
+            return NextResponse.json(students);
+        }
 
     } catch (error) {
         console.error(error);
@@ -33,11 +38,9 @@ export async function GET(req: Request) {
     }
 }
 
-
 export async function POST(req: Request) {
     try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get("token")?.value;
+        const token = req.headers.get("cookie")?.split("token=")[1]?.split(";")[0];
 
         if (!token) {
             return NextResponse.json({ message: "Unauthorized ❌" }, { status: 401 });
@@ -54,9 +57,11 @@ export async function POST(req: Request) {
         const body = await req.json();
 
 
-        if (!body.name || !body.class || !body.roll) {
+        const parsed = studentSchema.safeParse(body);
+
+        if (!parsed.success) {
             return NextResponse.json(
-                { message: "Missing required fields ❌" },
+                { message: parsed.error.issues[0].message },
                 { status: 400 }
             );
         }
@@ -96,7 +101,7 @@ export async function POST(req: Request) {
             ...(logoUrl && { logo: logoUrl }),
             ...(signatureUrl && { signature: signatureUrl }),
 
-            schoolId: user.id
+            schoolId: user._id
         });
 
         return NextResponse.json({
@@ -112,8 +117,7 @@ export async function POST(req: Request) {
 
 export async function PUT(req: Request) {
     try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get("token")?.value;
+        const token = req.headers.get("cookie")?.split("token=")[1]?.split(";")[0];
 
         if (!token) {
             return NextResponse.json({ message: "Unauthorized ❌" }, { status: 401 });
@@ -178,8 +182,7 @@ export async function PUT(req: Request) {
 
 export async function DELETE(req: Request) {
     try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get("token")?.value;
+        const token = req.headers.get("cookie")?.split("token=")[1]?.split(";")[0];
 
         if (!token) {
             return NextResponse.json({ message: "Unauthorized ❌" }, { status: 401 });
@@ -200,7 +203,9 @@ export async function DELETE(req: Request) {
             return NextResponse.json({ message: "Student ID required" }, { status: 400 });
         }
 
-        await Student.findByIdAndDelete(id);
+        await Student.findByIdAndDelete(
+            id
+        );
 
         return NextResponse.json({
             success: true,

@@ -65,6 +65,15 @@ export default function CreateIDPage() {
                 credentials: "include"
             });
 
+            if (res.status === 401) {
+                toast.error("Session expired. Please login again 🔒");
+
+                localStorage.removeItem("schoolId");
+
+                window.location.href = "/login";
+                return;
+            }
+
             const data = await res.json();
 
             if (Array.isArray(data)) {
@@ -124,6 +133,15 @@ export default function CreateIDPage() {
                 credentials: "include",
                 body: JSON.stringify(studentData)
             });
+
+            if (res.status === 401) {
+                toast.error("Session expired. Please login again 🔒");
+
+                localStorage.removeItem("schoolId");
+
+                window.location.href = "/login";
+                return;
+            }
 
             const data = await res.json();
 
@@ -192,6 +210,15 @@ export default function CreateIDPage() {
                 credentials: "include",
                 body: JSON.stringify(studentData)
             });
+
+            if (res.status === 401) {
+                toast.error("Session expired. Please login again 🔒");
+
+                localStorage.removeItem("schoolId");
+
+                window.location.href = "/login";
+                return;
+            }
 
             const data = await res.json();
 

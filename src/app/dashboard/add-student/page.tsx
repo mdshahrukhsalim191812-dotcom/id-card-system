@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function AddStudentPage() {
     const [form, setForm] = useState({
@@ -34,6 +35,15 @@ export default function AddStudentPage() {
                 },
                 body: JSON.stringify(form),
             });
+
+            if (res.status === 401) {
+                toast.error("Session expired. Please login again 🔒");
+
+                localStorage.removeItem("schoolId");
+
+                window.location.href = "/login";
+                return;
+            }
 
             const data = await res.json();
 

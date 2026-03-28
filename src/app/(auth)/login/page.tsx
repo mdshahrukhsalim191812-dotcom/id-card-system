@@ -50,7 +50,7 @@ export default function LoginPage() {
                 localStorage.setItem("schoolId", data.school._id);
 
                 toast.success("Login Successfully.")
-                router.push("/dashboard");
+                window.location.href = "/dashboard";
                 setLoading(false);
                 return;
 
