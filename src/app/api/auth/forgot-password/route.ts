@@ -2,6 +2,7 @@ import { connectDB } from "@/lib/db";
 import School from "@/models/School";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
+import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
     try {
@@ -42,11 +43,31 @@ export async function POST(req: Request) {
         // 🔗 reset link (temporary console)
         const resetLink = `http://localhost:3000/reset-password/${token}`;
 
-        console.log("🔗 RESET LINK:", resetLink);
+        // 📧 EMAIL SENDING START
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
+
+        await transporter.sendMail({
+            from: `"Work GeniX" <${process.env.EMAIL_USER}>`,
+            to: user.email,
+            subject: "Reset Password",
+            html: `
+        <h2>Password Reset</h2>
+        <p>Click below to reset your password:</p>
+        <a href="${resetLink}">${resetLink}</a>
+        <p>This link expires in 1 hour.</p>
+    `,
+        });
+        // 📧 EMAIL SENDING END
 
         return NextResponse.json({
             success: true,
-            message: "Reset link generated ✅ (check terminal)",
+            message: "Reset link sent to your email. ✅",
         });
 
     } catch (error) {

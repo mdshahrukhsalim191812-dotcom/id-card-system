@@ -32,7 +32,7 @@ export default function ForgotPasswordPage() {
             const data = await res.json();
 
             if (res.ok) {
-                toast.success("Reset link sent (check console) ✅");
+                toast.success("Reset link sent to your email. 📬");
                 setEmail(""); // clear input
             } else {
                 toast.error(data.message || "Something went wrong ❌");
