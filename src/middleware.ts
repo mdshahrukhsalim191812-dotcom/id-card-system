@@ -9,8 +9,6 @@ export function middleware(req: NextRequest) {
 
     const isDashboard = req.nextUrl.pathname.startsWith("/dashboard");
 
-    console.log("token :", token)
-    console.log("Path :", req.nextUrl.pathname)
     // Protect dashboard
     if (isDashboard) {
         if (!token) {
