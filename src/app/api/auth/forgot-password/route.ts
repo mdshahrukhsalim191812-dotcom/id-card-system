@@ -1,7 +1,6 @@
 import { connectDB } from "@/lib/db";
 import School from "@/models/School";
 import { NextResponse } from "next/server";
-import crypto from "crypto";
 import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
@@ -28,22 +27,19 @@ export async function POST(req: Request) {
             );
         }
 
-        // 🔐 generate secure token
-        const token = crypto.randomBytes(32).toString("hex");
+        // 🔐 generate OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-        // ⏳ set expiry (1 hour)
-        const expiry = new Date(Date.now() + 60 * 60 * 1000);
+        // ⏳ expiry (5 min)
+        const expiry = new Date(Date.now() + 5 * 60 * 1000);
 
-        // 💾 save token in DB
-        user.resetToken = token;
-        user.resetTokenExpiry = expiry;
+        // 💾 save OTP
+        user.resetOTP = otp;
+        user.resetOTPExpiry = expiry;
 
         await user.save();
 
-        // 🔗 reset link (temporary console)
-        const resetLink = `http://localhost:3000/reset-password/${token}`;
-
-        // 📧 EMAIL SENDING START
+        // 📧 EMAIL SETUP
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
@@ -52,22 +48,22 @@ export async function POST(req: Request) {
             },
         });
 
+        // 📧 SEND EMAIL
         await transporter.sendMail({
             from: `"Work GeniX" <${process.env.EMAIL_USER}>`,
             to: user.email,
-            subject: "Reset Password",
+            subject: "Your OTP Code",
             html: `
-        <h2>Password Reset</h2>
-        <p>Click below to reset your password:</p>
-        <a href="${resetLink}">${resetLink}</a>
-        <p>This link expires in 1 hour.</p>
-    `,
+                <h2>Password Reset OTP</h2>
+                <p>Your OTP is:</p>
+                <h1 style="font-size:24px; letter-spacing:5px;">${otp}</h1>
+                <p>This OTP expires in 5 minutes.</p>
+            `,
         });
-        // 📧 EMAIL SENDING END
 
         return NextResponse.json({
             success: true,
-            message: "Reset link sent to your email. ✅",
+            message: "OTP sent to your email ✅",
         });
 
     } catch (error) {

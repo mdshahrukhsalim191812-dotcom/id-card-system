@@ -7,46 +7,32 @@ export async function POST(req: Request) {
     try {
         await connectDB();
 
-        const { token, password } = await req.json();
+        const { email, password } = await req.json();
 
-        if (!token || !password) {
-            return NextResponse.json(
-                { message: "Missing data ❌" },
-                { status: 400 }
-            );
-        }
-
-        // 🔍 find user by token
-        const user = await School.findOne({
-            resetToken: token,
-            resetTokenExpiry: { $gt: new Date() },
-        });
+        const user = await School.findOne({ email });
 
         if (!user) {
             return NextResponse.json(
-                { message: "Invalid try again later! ❌" },
-                { status: 400 }
+                { message: "User not found ❌" },
+                { status: 404 }
             );
         }
 
-        // 🔐 hash new password
         const hashedPassword = await bcrypt.hash(password, 10);
 
         user.password = hashedPassword;
-
-        // 🧹 clear token after use
-        user.resetToken = undefined;
-        user.resetTokenExpiry = undefined;
+        user.resetOTP = undefined;
+        user.resetOTPExpiry = undefined;
 
         await user.save();
 
         return NextResponse.json({
-            message: "Password updated successfully ✅",
+            success: true,
+            message: "Password updated ✅",
         });
 
     } catch (error) {
-        console.log("Reset Password Error:", error);
-
+        console.log(error);
         return NextResponse.json(
             { message: "Server error ❌" },
             { status: 500 }

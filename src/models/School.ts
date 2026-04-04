@@ -29,11 +29,11 @@ const SchoolSchema = new mongoose.Schema(
         },
 
         // 🔥 NEW FIELDS (FOR FORGOT PASSWORD)
-        resetToken: {
+        resetOTP: {
             type: String,
         },
 
-        resetTokenExpiry: {
+        resetOTPExpiry: {
             type: Date,
         },
     },
