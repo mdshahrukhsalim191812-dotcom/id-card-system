@@ -10,6 +10,7 @@ import Template4 from "@/components/templates/Template4";
 import Template5 from "@/components/templates/Template5";
 import Template6 from "@/components/templates/Template6";
 import Template7 from "@/components/templates/Template7";
+import Template8 from "@/components/templates/Template8";
 
 export default function CreateIDPage() {
     const [student, setStudent] = useState({
@@ -408,6 +409,7 @@ export default function CreateIDPage() {
                         <option value="5">Design 5</option>
                         <option value="6">Design 6</option>
                         <option value="7">Design 7</option>
+                        <option value="8">Design 8</option>
 
                     </select>
 
@@ -631,6 +633,8 @@ export default function CreateIDPage() {
                         {template === "6" && < Template6 student={student} image={image} logo={logo} formatDate={formatDate} signature={signature} />}
 
                         {template === "7" && < Template7 student={student} image={image} logo={logo} formatDate={formatDate} signature={signature} />}
+
+                        {template === "8" && < Template8 student={student} image={image} logo={logo} formatDate={formatDate} signature={signature} />}
                     </div>
                 </div >
             </div>

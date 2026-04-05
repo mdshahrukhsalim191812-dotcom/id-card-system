@@ -9,7 +9,7 @@ const StudentSchema = new mongoose.Schema(
         },
         tag: {
             type: String,
-            required: true,
+            required: false,
             trim: true,
         },
         name: {
