@@ -50,6 +50,7 @@ export default function LoginPage() {
                 localStorage.setItem("schoolId", data.school._id);
 
                 toast.success("Login Successfully.")
+                localStorage.setItem("school", JSON.stringify(data.school));
                 window.location.href = "/dashboard";
                 setLoading(false);
                 return;
@@ -129,7 +130,7 @@ export default function LoginPage() {
                         type="submit"
                         disabled={loading}
                         className={`w-full p-2 rounded text-white transition 
-    ${loading
+                                ${loading
                                 ? "bg-red-600 cursor-not-allowed"
                                 : "bg-blue-500 hover:bg-blue-600"}`}
                     >

@@ -10,7 +10,8 @@ import School from "@/models/School"
 
 export async function GET(req: Request) {
     try {
-        const token = req.headers.get("cookie")?.split("token=")[1]?.split(";")[0];
+        const cookieStore = cookies();
+        const token = cookieStore.get("token")?.value;
 
         if (!token) {
             return NextResponse.json({ message: "Unauthorized ❌" }, { status: 401 });
@@ -25,11 +26,9 @@ export async function GET(req: Request) {
         await connectDB();
 
         if (user.role === "admin") {
-            const students = await Student.find().populate("schoolId");
-            return NextResponse.json(students);
+            return NextResponse.json(await Student.find());
         } else {
-            const students = await Student.find({ schoolId: user._id }).populate("schoolId");
-            return NextResponse.json(students);
+            return NextResponse.json(await Student.find({ schoolId: user.id }));
         }
 
     } catch (error) {
@@ -40,7 +39,8 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
     try {
-        const token = req.headers.get("cookie")?.split("token=")[1]?.split(";")[0];
+        const cookieStore = cookies();
+        const token = cookieStore.get("token")?.value;
 
         if (!token) {
             return NextResponse.json({ message: "Unauthorized ❌" }, { status: 401 });
@@ -101,7 +101,7 @@ export async function POST(req: Request) {
             ...(logoUrl && { logo: logoUrl }),
             ...(signatureUrl && { signature: signatureUrl }),
 
-            schoolId: user._id
+            schoolId: user.id
         });
 
         return NextResponse.json({
@@ -117,7 +117,8 @@ export async function POST(req: Request) {
 
 export async function PUT(req: Request) {
     try {
-        const token = req.headers.get("cookie")?.split("token=")[1]?.split(";")[0];
+        const cookieStore = cookies();
+        const token = cookieStore.get("token")?.value;
 
         if (!token) {
             return NextResponse.json({ message: "Unauthorized ❌" }, { status: 401 });
@@ -163,8 +164,8 @@ export async function PUT(req: Request) {
 
         delete updateData.id;
 
-        const updatedStudent = await Student.findByIdAndUpdate(
-            id,
+        const updatedStudent = await Student.findOneAndUpdate(
+            { _id: id, schoolId: user.id },
             updateData,
             { new: true }
         );
@@ -182,7 +183,8 @@ export async function PUT(req: Request) {
 
 export async function DELETE(req: Request) {
     try {
-        const token = req.headers.get("cookie")?.split("token=")[1]?.split(";")[0];
+        const cookieStore = cookies();
+        const token = cookieStore.get("token")?.value;
 
         if (!token) {
             return NextResponse.json({ message: "Unauthorized ❌" }, { status: 401 });
@@ -203,9 +205,10 @@ export async function DELETE(req: Request) {
             return NextResponse.json({ message: "Student ID required" }, { status: 400 });
         }
 
-        await Student.findByIdAndDelete(
-            id
-        );
+        await Student.findOneAndDelete({
+            _id: id,
+            schoolId: user.id,
+        });
 
         return NextResponse.json({
             success: true,

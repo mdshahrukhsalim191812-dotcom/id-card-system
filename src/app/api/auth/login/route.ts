@@ -22,7 +22,7 @@ export async function POST(req: Request) {
         }
 
         const body = await req.json();
-        
+
         const parsed = loginSchema.safeParse(body);
 
         if (!parsed.success) {
@@ -56,7 +56,12 @@ export async function POST(req: Request) {
 
         const response = NextResponse.json({
             message: "Login successful ✅",
-            school,
+            school: {
+                _id: school._id,
+                name: school.name,
+                email: school.email,
+                template: school.template,
+            },
         });
 
         response.cookies.set("token", token, {

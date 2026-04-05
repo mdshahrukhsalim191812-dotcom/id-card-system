@@ -1,5 +1,6 @@
 /*eslint-disable @next/next/no-img-element*/
 import Image from "next/image";
+import { getSchool } from "@/lib/getSchool";
 
 type Student = {
     name: string;
@@ -23,13 +24,14 @@ type Props = {
 
 export default function IDCard({ student, image, logo, formatDate }: Props) {
     const isBlobImage = image?.startsWith("blob:");
+    const school = getSchool();
 
     return (
         <div
             id="card"
             className="relative w-[270px] h-[440px] bg-cover bg-center border"
             style={{
-                backgroundImage: "url('/templates/bg-1.jpeg')",
+                backgroundImage: `url(${school?.template} || '/templates/bg-1.jpeg')`,
             }}
         >
             {/* 🔵 LOGO */}

@@ -28,6 +28,11 @@ const SchoolSchema = new mongoose.Schema(
             default: "school",
         },
 
+        template: {
+            type: String,
+            default: "/templates/bg-1.jpeg",
+        },
+
         // 🔥 NEW FIELDS (FOR FORGOT PASSWORD)
         resetOTP: {
             type: String,
