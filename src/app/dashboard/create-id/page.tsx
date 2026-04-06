@@ -3,14 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import html2canvas from "html2canvas";
 import toast from "react-hot-toast";
-import Template1 from "@/components/templates/Template1";
-import Template2 from "@/components/templates/Template2";
-import Template3 from "@/components/templates/Template3";
-import Template4 from "@/components/templates/Template4";
-import Template5 from "@/components/templates/Template5";
-import Template6 from "@/components/templates/Template6";
-import Template7 from "@/components/templates/Template7";
-import Template8 from "@/components/templates/Template8";
+import TemplateRenderer from "@/components/TemplateRenderer";
 
 export default function CreateIDPage() {
     const [student, setStudent] = useState({
@@ -55,10 +48,14 @@ export default function CreateIDPage() {
     const [signature, setSignature] = useState<string | null>(null);
     const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
     const [selectedId, setSelectedId] = useState<string | null>(null);
-    const [template, setTemplate] = useState("1")
     const [loading, setLoading] = useState(false);
     const [updateloading, setUpdateLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
+    const [school, setSchool] = useState<any>(null);
+    const [form, setForm] = useState<any>(null);
+
+    const templateId = school?.templateId;
+    const templateImage = school?.templateImage;
 
 
     const fetchStudents = async () => {
@@ -109,6 +106,15 @@ export default function CreateIDPage() {
         });
     };
 
+    useEffect(() => {
+        fetch("/api/auth/me")
+            .then(res => res.json())
+            .then(data => {
+                console.log("School data:", data);
+                setSchool(data);
+            });
+    }, []);
+
     const handleSave = async () => {
         try {
             if (!student.name || !student.class || !student.roll || !student.father || !student.mother || !student.phone || !student.address || !student.dob || !student.school) {
@@ -120,7 +126,7 @@ export default function CreateIDPage() {
 
             const studentData = {
                 ...student,
-                template,
+                template: templateId,
                 dob: student.dob ? new Date(student.dob) : null,
                 image,
                 logo,
@@ -170,8 +176,6 @@ export default function CreateIDPage() {
                 setLogo(null);
                 setSignature(null);
 
-                setTemplate("1")
-
                 fetchStudents();
             } else {
                 toast.error(data.message || "Error saving!");
@@ -197,7 +201,7 @@ export default function CreateIDPage() {
             const studentData = {
                 id: selectedId,
                 ...student,
-                template,
+                template: templateId,
                 dob: student.dob ? new Date(student.dob) : null,
                 image,
                 logo,
@@ -247,8 +251,6 @@ export default function CreateIDPage() {
                 setLogo(null);
                 setSignature(null);
                 setSelectedId(null);
-
-                setTemplate("1")
 
                 fetchStudents();
 
@@ -315,7 +317,6 @@ export default function CreateIDPage() {
                                         setLogo(null);
                                         setSignature(null);
                                         setSelectedId(null);
-                                        setTemplate("1");
 
                                         fetchStudents();
 
@@ -365,8 +366,6 @@ export default function CreateIDPage() {
                             if (selected) {
                                 setSelectedId(selected._id);
 
-                                setTemplate(selected.template || "1")
-
                                 setStudent({
                                     school: selected.school || "",
                                     tag: selected.tag || "",
@@ -395,22 +394,6 @@ export default function CreateIDPage() {
                                 {s.name} - Class {s.class}
                             </option>
                         ))}
-                    </select>
-
-                    <select
-                        value={template}
-                        onChange={(e) => setTemplate(e.target.value)}
-                        className="w-full border p-2 rounded"
-                    >
-                        <option value="1">Design 1</option>
-                        <option value="2">Design 2</option>
-                        <option value="3">Design 3</option>
-                        <option value="4">Design 4</option>
-                        <option value="5">Design 5</option>
-                        <option value="6">Design 6</option>
-                        <option value="7">Design 7</option>
-                        <option value="8">Design 8</option>
-
                     </select>
 
                     <div><span>School Logo </span>
@@ -475,7 +458,7 @@ export default function CreateIDPage() {
                     <input
                         type="text"
                         placeholder="School Name"
-                        value={student.school}
+                        value={student?.name}
                         onChange={(e) =>
                             setStudent({ ...student, school: e.target.value })
                         }
@@ -619,22 +602,14 @@ export default function CreateIDPage() {
                 {/* PREVIEW */}
                 <div className="flex justify-center items-center">
                     <div>
-                        {template === "1" && <Template1 student={student} image={image}
-                            logo={logo} formatDate={formatDate} />}
-
-                        {template === "2" && < Template2 student={student} image={image} logo={logo} formatDate={formatDate} />}
-
-                        {template === "3" && < Template3 student={student} image={image} logo={logo} formatDate={formatDate} />}
-
-                        {template === "4" && < Template4 student={student} image={image} logo={logo} formatDate={formatDate} signature={signature} />}
-
-                        {template === "5" && < Template5 student={student} image={image} logo={logo} formatDate={formatDate} />}
-
-                        {template === "6" && < Template6 student={student} image={image} logo={logo} formatDate={formatDate} signature={signature} />}
-
-                        {template === "7" && < Template7 student={student} image={image} logo={logo} formatDate={formatDate} signature={signature} />}
-
-                        {template === "8" && < Template8 student={student} image={image} logo={logo} formatDate={formatDate} signature={signature} />}
+                        <TemplateRenderer
+                            templateId={templateId}
+                            student={student}
+                            image={image}
+                            logo={logo}
+                            signature={signature}
+                            formatDate={formatDate}
+                        />
                     </div>
                 </div >
             </div>

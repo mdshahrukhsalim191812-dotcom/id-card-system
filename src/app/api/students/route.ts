@@ -28,7 +28,7 @@ export async function GET(req: Request) {
         if (user.role === "admin") {
             return NextResponse.json(await Student.find());
         } else {
-            return NextResponse.json(await Student.find({ schoolId: user.id }));
+            return NextResponse.json(await Student.find({ schoolId: user._id }));
         }
 
     } catch (error) {
@@ -101,7 +101,7 @@ export async function POST(req: Request) {
             ...(logoUrl && { logo: logoUrl }),
             ...(signatureUrl && { signature: signatureUrl }),
 
-            schoolId: user.id
+            schoolId: user._id
         });
 
         return NextResponse.json({
@@ -165,7 +165,7 @@ export async function PUT(req: Request) {
         delete updateData.id;
 
         const updatedStudent = await Student.findOneAndUpdate(
-            { _id: id, schoolId: user.id },
+            { _id: id, schoolId: user._id },
             updateData,
             { new: true }
         );

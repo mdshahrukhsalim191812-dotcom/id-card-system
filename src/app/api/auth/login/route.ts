@@ -57,7 +57,7 @@ export async function POST(req: Request) {
         const response = NextResponse.json({
             message: "Login successful ✅",
             school: {
-                _id: school._id,
+                id: school.id,
                 name: school.name,
                 email: school.email,
                 template: school.template,

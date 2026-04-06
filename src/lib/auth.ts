@@ -1,17 +1,17 @@
 import jwt from "jsonwebtoken";
 
 type UserPayload = {
-    _id: string;
+    _id: string;  
     email: string;
     role: string;
 };
 
-export const generateToken = (user: UserPayload) => {
+export const generateToken = (user: any) => {
     return jwt.sign(
         {
-            _id: user._id,
+            _id: user._id, 
             email: user.email,
-            role: user.role || "school" // fallback
+            role: user.role || "school"
         },
         process.env.JWT_SECRET as string,
         { expiresIn: "7d" }
