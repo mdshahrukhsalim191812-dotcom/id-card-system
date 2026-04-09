@@ -26,7 +26,7 @@ export default function Template7({
             id="card"
             className="relative w-[270px] h-[440px] bg-cover bg-center border overflow-hidden"
             style={{
-                backgroundImage: `url(${school?.templateImage || "/templates/new-era.jpeg"})`,
+                backgroundImage: `url(${school?.templateImage || "/templates/bal-bharti.jpeg"})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center"
             }}

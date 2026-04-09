@@ -28,19 +28,20 @@ const SchoolSchema = new mongoose.Schema(
             default: "school",
         },
 
+        // 🔥 TEMPLATE SYSTEM
         templateId: {
             type: String,
-            default: "NewEraEnglishSchool", // logical template
+            default: "new-era", // 👈 IMPORTANT
         },
 
         templateImage: {
             type: String,
-            default: "/templates/NewEraEnglishSchool.jpeg", // public folder path
+            default: "/templates/new-era.jpeg", // 👈 IMPORTANT
         },
 
         templateConfig: {
             type: Object,
-            default: {}, // positions, colors, etc (future powerful feature)
+            default: {},
         },
 
         resetOTP: String,
@@ -49,6 +50,7 @@ const SchoolSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+// 🔐 Hide password
 SchoolSchema.methods.toJSON = function () {
     const obj = this.toObject();
     delete obj.password;

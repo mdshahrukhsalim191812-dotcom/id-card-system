@@ -55,8 +55,9 @@ export default function CreateIDPage() {
     const [form, setForm] = useState<any>(null);
 
     const templateId = school?.templateId;
-    const templateImage = school?.templateImage;
 
+    console.log("STUDENT STATE:", student);
+    console.log("TEMPLATE:", templateId);
 
     const fetchStudents = async () => {
         try {
@@ -110,10 +111,18 @@ export default function CreateIDPage() {
         fetch("/api/auth/me")
             .then(res => res.json())
             .then(data => {
-                console.log("School data:", data);
-                setSchool(data);
+                setSchool(data.school);
             });
     }, []);
+
+    useEffect(() => {
+        if (school?.name) {
+            setStudent((prev) => ({
+                ...prev,
+                school: school.name
+            }));
+        }
+    }, [school]);
 
     const handleSave = async () => {
         try {
@@ -458,7 +467,7 @@ export default function CreateIDPage() {
                     <input
                         type="text"
                         placeholder="School Name"
-                        value={student?.name}
+                        value={student.school}
                         onChange={(e) =>
                             setStudent({ ...student, school: e.target.value })
                         }
@@ -601,7 +610,7 @@ export default function CreateIDPage() {
 
                 {/* PREVIEW */}
                 <div className="flex justify-center items-center">
-                    <div>
+                    <div ref={cardRef}>
                         <TemplateRenderer
                             templateId={templateId}
                             student={student}
@@ -609,6 +618,7 @@ export default function CreateIDPage() {
                             logo={logo}
                             signature={signature}
                             formatDate={formatDate}
+                            school={school}
                         />
                     </div>
                 </div >

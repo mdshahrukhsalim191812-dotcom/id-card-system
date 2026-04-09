@@ -22,14 +22,37 @@ export async function POST(req: Request) {
         // ✅ Hash password
         const hashedPassword = await bcrypt.hash(body.password, 10);
 
-        // ✅ Create school
+        // 🔥 AUTO TEMPLATE ASSIGN LOGIC
+        let templateId = "template1";
+        let templateImage = "/templates/bg-1.jpeg";
+
+        // 👉 Customize based on school name
+        if (body.name.toLowerCase().includes("new era")) {
+            templateId = "NewEraEnglishSchool";
+            templateImage = "/templates/new-era.jpeg";
+        }
+
+        else if (body.name.toLowerCase().includes("bal bharti")) {
+            templateId = "BalBhartiSchool";
+            templateImage = "/templates/bal-bharti.jpeg";
+        }
+
+        else if (body.name.toLowerCase().includes("school a")) {
+            templateId = "template2";
+            templateImage = "/templates/bg-2.jpeg";
+        }
+
+        // 👉 You can add more schools here later
+
+        // ✅ Create school with template
         await School.create({
             name: body.name,
             email: body.email,
             password: hashedPassword,
+            templateId,
+            templateImage
         });
 
-        // ✅ DO NOT return password
         return NextResponse.json({
             success: true,
             message: "School registered successfully ✅",

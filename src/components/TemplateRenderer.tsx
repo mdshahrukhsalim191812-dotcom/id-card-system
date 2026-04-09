@@ -1,11 +1,20 @@
 import Template1 from "./templates/Template1";
 import Template2 from "./templates/Template2";
 import Template7 from "./templates/Template7";
-import NewEraEnglishSchool from "../../public/templates/NewEraEnglishSchool.jpeg"
+import BalBhartiSchool from "./templates/BalBhartiSchool";
 
-export default function TemplateRenderer({ templateId, student, image, logo, signature, formatDate }: any) {
+export default function TemplateRenderer({
+    templateId,
+    student,
+    image,
+    logo,
+    signature,
+    formatDate,
+    school
+}: any) {
 
     switch (templateId) {
+
         case "NewEraEnglishSchool":
             return (
                 <Template7
@@ -14,6 +23,19 @@ export default function TemplateRenderer({ templateId, student, image, logo, sig
                     logo={logo}
                     signature={signature}
                     formatDate={formatDate}
+                    school={school}
+                />
+            );
+
+        case "BalBhartiSchool":
+            return (
+                <BalBhartiSchool
+                    student={student}
+                    image={image}
+                    logo={logo}
+                    signature={signature}
+                    formatDate={formatDate}
+                    school={school}
                 />
             );
 
@@ -24,6 +46,8 @@ export default function TemplateRenderer({ templateId, student, image, logo, sig
             return <Template2 student={student} formatDate={formatDate} />;
 
         default:
-            return <Template1 student={student} formatDate={formatDate} />;
+            return (
+                <h1 className="text-[20px]">Wait....</h1>
+            );
     }
 }
