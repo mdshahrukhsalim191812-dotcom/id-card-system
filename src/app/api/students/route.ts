@@ -26,9 +26,12 @@ export async function GET(req: Request) {
         await connectDB();
 
         if (user.role === "admin") {
-            return NextResponse.json(await Student.find());
+            const students = await Student.find().populate("schoolId", "name email");
+            return NextResponse.json(students);
         } else {
-            return NextResponse.json(await Student.find({ schoolId: user._id }));
+            const students = await Student.find({ schoolId: user._id })
+                .populate("schoolId", "name email");
+            return NextResponse.json(students);
         }
 
     } catch (error) {

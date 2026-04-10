@@ -62,10 +62,6 @@ export default function Template3(
                     </p>
                 </div>
 
-                <p className="text-[9px] mt-1">
-                    {student.tag || "Tag Line"}
-                </p>
-
                 {/* CURVE SHAPE */}
                 <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
                     <svg viewBox="0 0 500 100" className="w-full h-20">
