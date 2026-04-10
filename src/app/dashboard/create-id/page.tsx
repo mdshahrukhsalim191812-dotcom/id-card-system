@@ -8,7 +8,8 @@ import TemplateRenderer from "@/components/TemplateRenderer";
 export default function CreateIDPage() {
     const [student, setStudent] = useState({
         school: "",
-        tag: "",
+        admissionNo: "",
+        sec: "",
         name: "",
         roll: "",
         class: "",
@@ -24,8 +25,10 @@ export default function CreateIDPage() {
 
     type Student = {
         _id: string;
+        admissionNo: string;
         name: string;
         class: string;
+        sec: string;
         roll: string;
         father: string;
         mother: string;
@@ -167,7 +170,8 @@ export default function CreateIDPage() {
 
                 setStudent({
                     school: "",
-                    tag: "",
+                    admissionNo: "",
+                    sec: "",
                     name: "",
                     roll: "",
                     class: "",
@@ -242,7 +246,8 @@ export default function CreateIDPage() {
 
                 setStudent({
                     school: "",
-                    tag: "",
+                    admissionNo: "",
+                    sec: "",
                     name: "",
                     roll: "",
                     class: "",
@@ -307,8 +312,9 @@ export default function CreateIDPage() {
                                         toast.success("Deleted successfully 🗑️");
 
                                         setStudent({
-                                            school: "",
-                                            tag: "",
+                                            school: school?.name || "",
+                                            admissionNo: "",
+                                            sec: "",
                                             name: "",
                                             roll: "",
                                             class: "",
@@ -325,9 +331,9 @@ export default function CreateIDPage() {
                                         setImage(null);
                                         setLogo(null);
                                         setSignature(null);
-                                        setSelectedId(null);
+                                        setSelectedId("");
 
-                                        fetchStudents();
+                                        await fetchStudents();
 
                                     } else {
                                         toast.error(data.message || "Delete failed ❌");
@@ -377,7 +383,8 @@ export default function CreateIDPage() {
 
                                 setStudent({
                                     school: selected.school || "",
-                                    tag: selected.tag || "",
+                                    admissionNo: selected.admissionNo || "",
+                                    sec: selected.sec || "",
                                     name: selected.name || "",
                                     roll: selected.roll || "",
                                     class: selected.class || "",
@@ -466,19 +473,20 @@ export default function CreateIDPage() {
 
                     <input
                         type="text"
+                        placeholder="Admission No."
+                        value={student.admissionNo}
+                        onChange={(e) =>
+                            setStudent({ ...student, admissionNo: e.target.value })
+                        }
+                        className="w-full border p-2 rounded"
+                    />
+
+                    <input
+                        type="text"
                         placeholder="School Name"
                         value={student.school}
                         onChange={(e) =>
                             setStudent({ ...student, school: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Tag Line/ School Address"
-                        value={student.tag}
-                        onChange={(e) =>
-                            setStudent({ ...student, tag: e.target.value })
                         }
                         className="w-full border p-2 rounded"
                     />
@@ -499,6 +507,16 @@ export default function CreateIDPage() {
                         value={student.class}
                         onChange={(e) =>
                             setStudent({ ...student, class: e.target.value })
+                        }
+                        className="w-full border p-2 rounded"
+                    />
+
+                    <input
+                        type="text"
+                        placeholder="Sec"
+                        value={student.sec}
+                        onChange={(e) =>
+                            setStudent({ ...student, sec: e.target.value })
                         }
                         className="w-full border p-2 rounded"
                     />

@@ -7,7 +7,12 @@ const StudentSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
-        tag: {
+        admissionNo: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        sec: {
             type: String,
             required: false,
             trim: true,

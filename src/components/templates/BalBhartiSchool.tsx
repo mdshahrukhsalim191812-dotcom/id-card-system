@@ -60,7 +60,7 @@ export default function Template7({
             </div>
 
             <div className="absolute top-[290px] left-[20px] text-[13px] font-bold text-indigo-900" style={{fontFamily:"Arial Narrow, Arial, sans serif"}}>
-                <p className="relative bottom-[-20.5px] right-[2.9px]">Admn. No : {student.admn || "-"}</p>
+                <p className="relative bottom-[-20.5px] right-[2.9px]">Admn. No : {student.admissionNo || "-"}</p>
                 <p className="relative bottom-[-16.5px] right-[2.9px]">F. Name : {student.father || "-"}</p>
                 <p className="relative bottom-[-11.5px] right-[2.9px]">M. Name : {student.mother || "-"}</p>
                 <p className="relative bottom-[-7px] right-[2.9px]">Ph. No. : {student.phone || "-"}</p>

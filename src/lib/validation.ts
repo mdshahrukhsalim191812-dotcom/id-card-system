@@ -8,6 +8,8 @@ export const loginSchema = z.object({
 
 // 🧑‍🎓 STUDENT VALIDATION
 export const studentSchema = z.object({
+    admissionNo: z.string().optional(),
+    sec: z.string().optional(),
     name: z.string().min(1, "Name required"),
     class: z.string().min(1, "Class required"),
     roll: z.string().min(1, "Roll required"),

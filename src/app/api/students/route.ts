@@ -84,7 +84,8 @@ export async function POST(req: Request) {
 
         const student = await Student.create({
             school: body.school,
-            tag: body.tag,
+            admissionNo: body.admissionNo,
+            sec: body.sec,
             name: body.name,
             class: body.class,
             roll: body.roll,
@@ -207,7 +208,7 @@ export async function DELETE(req: Request) {
 
         await Student.findOneAndDelete({
             _id: id,
-            schoolId: user.id,
+            schoolId: user._id,
         });
 
         return NextResponse.json({

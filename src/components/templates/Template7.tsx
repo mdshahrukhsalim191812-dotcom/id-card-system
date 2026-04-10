@@ -60,7 +60,8 @@ export default function Template7({
                 <p>Address : {student.address || "-"}</p>
             </div>
 
-            <div className="absolute top-[290px] right-[20px] text-[13px] font-bold text-blue-800">
+            <div className="absolute top-[266px] right-[20px] text-[13px] font-bold text-blue-800">
+                <p className="relative top-[2px]">Sec : {student.sec || "-"}</p>
                 <p>Roll No : {student.roll || "-"}</p>
             </div>
 
