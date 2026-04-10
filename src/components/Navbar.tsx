@@ -17,6 +17,7 @@ export default function Navbar() {
             </div>
 
             <div className="space-x-[12px]">
+                <Link href="/">Home</Link>
                 <Link href="/dashboard">Dashboard</Link>
                 <Link href="/dashboard/add-student">Add Student</Link>
                 <Link href="/dashboard/students">Students</Link>
