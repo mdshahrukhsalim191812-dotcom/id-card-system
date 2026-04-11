@@ -1,6 +1,6 @@
 import Template1 from "./templates/Template1";
 import Template2 from "./templates/Template2";
-import Template7 from "./templates/Template7";
+import Template7 from "./templates/NewEraEnglishSchool";
 import BalBhartiSchool from "./templates/BalBhartiSchool";
 
 export default function TemplateRenderer({

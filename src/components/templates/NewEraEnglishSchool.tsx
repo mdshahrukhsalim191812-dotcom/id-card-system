@@ -44,7 +44,7 @@ export default function Template7({
                 <img
                     src={logo}
                     alt="logo"
-                    className="absolute top-[140px] left-[20px] w-[60px] h-[60px] object-contain"
+                    className="absolute top-[128px] left-[15px] w-[70px] h-[70px] object-contain"
                 />
             )}
 
