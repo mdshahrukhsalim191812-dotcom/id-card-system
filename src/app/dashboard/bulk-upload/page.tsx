@@ -1,25 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import toast from "react-hot-toast";
 
-export default function BulkUploadPage() {
+export default function BulkUploadPage({
+    onUploadSuccess,
+}: {
+    onUploadSuccess: () => void;
+}) {
     const [file, setFile] = useState<File | null>(null);
     const [zipFile, setZipFile] = useState<File | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [uploaded, setUploaded] = useState(false);
+
+    const fileRef = useRef<HTMLInputElement>(null);
+    const zipRef = useRef<HTMLInputElement>(null);
 
     const handleUpload = async () => {
+        if (loading) return;
+
         if (!file) {
-            toast.error("Select Excel file first ❌");
+            toast.error("Select Excel file ❌");
             return;
         }
 
+        setLoading(true);
+
         const formData = new FormData();
         formData.append("file", file);
-
-        // ✅ Add ZIP if selected
-        if (zipFile) {
-            formData.append("images", zipFile);
-        }
+        if (zipFile) formData.append("images", zipFile);
 
         try {
             const res = await fetch("/api/students/bulk", {
@@ -31,55 +40,93 @@ export default function BulkUploadPage() {
             const data = await res.json();
 
             if (data.success) {
-                toast.success(`Uploaded ${data.count} students ✅`);
+                toast.success(
+                    `Maybe already exists ${data.inserted} added | ⚠️ ${data.skipped} skipped`
+                );
+
+                setUploaded(true);
+                onUploadSuccess();
+
+                // reset
+                setFile(null);
+                setZipFile(null);
+
+                if (fileRef.current) fileRef.current.value = "";
+                if (zipRef.current) zipRef.current.value = "";
             } else {
-                toast.error(data.message || "Upload failed ❌");
+                toast.error(data.message);
             }
-        } catch (error) {
-            console.error(error);
+        } catch (err) {
             toast.error("Server error ❌");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div className="p-6 max-w-xl mx-auto">
-            <h1 className="text-2xl font-bold mb-6">
-                Bulk Upload Students
+            <h1 className="text-2xl font-bold mb-6 text-center">
+            Bulk Upload Students
             </h1>
 
-            {/* 📊 Excel Upload */}
+            {/* Excel */}
             <div className="mb-4">
-                <label className="block font-semibold mb-1">
-                    Upload Excel File
-                </label>
+                <label className="font-semibold">Excel File</label>
                 <input
+                    ref={fileRef}
                     type="file"
-                    accept=".xlsx, .xls"
-                    onChange={(e) => setFile(e.target.files?.[0] || null)}
-                    className="border p-2 w-full"
+                    accept=".xlsx,.xls"
+                    onChange={(e) => {
+                        setUploaded(false);
+                        setFile(e.target.files?.[0] || null);
+                    }}
+                    className="border p-2 w-full rounded mt-1"
                 />
             </div>
 
-            {/* 📦 ZIP Upload */}
+            {/* ZIP */}
             <div className="mb-4">
-                <label className="block font-semibold mb-1">
-                    Upload Images ZIP (optional)
-                </label>
+                <label className="font-semibold">Images ZIP</label>
                 <input
+                    ref={zipRef}
                     type="file"
                     accept=".zip"
-                    onChange={(e) => setZipFile(e.target.files?.[0] || null)}
-                    className="border p-2 w-full"
+                    onChange={(e) => {
+                        setUploaded(false);
+                        setZipFile(e.target.files?.[0] || null);
+                    }}
+                    className="border p-2 w-full rounded mt-1"
                 />
             </div>
 
-            {/* 🚀 Upload Button */}
+            {/* Button */}
             <button
                 onClick={handleUpload}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded w-full"
+                disabled={loading || uploaded || !file}
+                className={`w-full py-2 rounded text-white font-semibold transition ${loading || uploaded || !file
+                        ? "bg-gray-400"
+                        : "bg-blue-600 hover:bg-blue-700"
+                    }`}
             >
-                Upload Data
+                {loading
+                    ? "⏳ Uploading..."
+                    : uploaded
+                        ? "Uploaded"
+                        : "Upload Data"}
             </button>
+
+            {/* Reset */}
+            {uploaded && (
+                <button
+                    onClick={() => {
+                        setUploaded(false);
+                        toast("Ready for new upload 👍");
+                    }}
+                    className="mt-3 w-full py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                >
+                    Upload New File
+                </button>
+            )}
         </div>
     );
 }

@@ -123,7 +123,7 @@ export default function SchoolAdmin() {
 
             {/* STATS */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div className="bg-white p-[1-px] rounded-xl shadow">
+                <div className="bg-white p-[1-px] rounded-md shadow">
                     <p className="text-gray-500 text-sm font-bold flex justify-center">
                         Total Students
                     </p>
@@ -135,7 +135,7 @@ export default function SchoolAdmin() {
                 <input
                     type="text"
                     placeholder="Search students..."
-                    className="border p-3 rounded shadow-sm focus:ring-2 focus:ring-blue-400"
+                    className="border p-3 rounded-md shadow-sm focus:ring-2 focus:ring-blue-400"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />

@@ -631,7 +631,8 @@ export default function CreateIDPage() {
                 <div>
 
                     <div >
-                        <BulkUploadPage />
+                        <BulkUploadPage
+                        onUploadSuccess={fetchStudents} />
                     </div>
 
                     <div ref={cardRef} className="flex justify-center">
