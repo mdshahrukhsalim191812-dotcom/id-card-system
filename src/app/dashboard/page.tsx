@@ -32,10 +32,10 @@ export default function DashboardPage() {
             {/* Actions */}
             <div className="mt-8 flex gap-4 justify-center">
                 <Link
-                    href="/dashboard/add-student"
+                    href="/dashboard/students"
                     className="font-semibold bg-gradient-to-r from-blue-500 to-blue-900 hover:bg-gradient-to-l from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg"
                 >
-                    Add Student
+                    Students
                 </Link>
 
                 <Link

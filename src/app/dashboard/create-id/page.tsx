@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import html2canvas from "html2canvas";
 import toast from "react-hot-toast";
 import TemplateRenderer from "@/components/TemplateRenderer";
+import BulkUploadPage from "../bulk-upload/page";
 
 export default function CreateIDPage() {
     const [student, setStudent] = useState({
@@ -627,8 +628,13 @@ export default function CreateIDPage() {
                 </div>
 
                 {/* PREVIEW */}
-                <div className="flex justify-center items-center">
-                    <div ref={cardRef}>
+                <div>
+
+                    <div >
+                        <BulkUploadPage />
+                    </div>
+
+                    <div ref={cardRef} className="flex justify-center">
                         <TemplateRenderer
                             templateId={templateId}
                             student={student}
