@@ -5,47 +5,80 @@ import toast from "react-hot-toast";
 
 export default function BulkUploadPage() {
     const [file, setFile] = useState<File | null>(null);
+    const [zipFile, setZipFile] = useState<File | null>(null);
 
     const handleUpload = async () => {
         if (!file) {
-            toast.error("Select file first ❌");
+            toast.error("Select Excel file first ❌");
             return;
         }
 
         const formData = new FormData();
         formData.append("file", file);
 
-        const res = await fetch("/api/students/bulk", {
-            method: "POST",
-            body: formData,
-            credentials: "include",
-        });
+        // ✅ Add ZIP if selected
+        if (zipFile) {
+            formData.append("images", zipFile);
+        }
 
-        const data = await res.json();
+        try {
+            const res = await fetch("/api/students/bulk", {
+                method: "POST",
+                body: formData,
+                credentials: "include",
+            });
 
-        if (data.success) {
-            toast.success(`Uploaded ${data.count} students ✅`);
-        } else {
-            toast.error("Upload failed ❌");
+            const data = await res.json();
+
+            if (data.success) {
+                toast.success(`Uploaded ${data.count} students ✅`);
+            } else {
+                toast.error(data.message || "Upload failed ❌");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("Server error ❌");
         }
     };
 
     return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Bulk Upload Students</h1>
+        <div className="p-6 max-w-xl mx-auto">
+            <h1 className="text-2xl font-bold mb-6">
+                Bulk Upload Students
+            </h1>
 
-            <input
-                type="file"
-                accept=".xlsx, .xls"
-                onChange={(e) => setFile(e.target.files?.[0] || null)}
-                className="mb-4"
-            />
+            {/* 📊 Excel Upload */}
+            <div className="mb-4">
+                <label className="block font-semibold mb-1">
+                    Upload Excel File
+                </label>
+                <input
+                    type="file"
+                    accept=".xlsx, .xls"
+                    onChange={(e) => setFile(e.target.files?.[0] || null)}
+                    className="border p-2 w-full"
+                />
+            </div>
 
+            {/* 📦 ZIP Upload */}
+            <div className="mb-4">
+                <label className="block font-semibold mb-1">
+                    Upload Images ZIP (optional)
+                </label>
+                <input
+                    type="file"
+                    accept=".zip"
+                    onChange={(e) => setZipFile(e.target.files?.[0] || null)}
+                    className="border p-2 w-full"
+                />
+            </div>
+
+            {/* 🚀 Upload Button */}
             <button
                 onClick={handleUpload}
-                className="bg-blue-600 text-white px-4 py-2 rounded"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded w-full"
             >
-                Upload Excel
+                Upload Data
             </button>
         </div>
     );

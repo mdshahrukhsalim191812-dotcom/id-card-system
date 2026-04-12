@@ -47,7 +47,7 @@ export default function TemplateRenderer({
 
         default:
             return (
-                <h1 className="text-[20px]">Wait....</h1>
+                <h1 className="text-[20px] absolute top-[500px]">Wait....</h1>
             );
     }
 }
