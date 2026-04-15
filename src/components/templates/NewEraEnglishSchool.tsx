@@ -24,10 +24,10 @@ export default function Template7({
     return (
         <div
             id="card"
-            className="relative w-[270px] h-[440px] bg-cover bg-center border overflow-hidden"
+            className="relative w-[270px] h-[440px] bg-cover bg-center overflow-hidden"
             style={{
                 backgroundImage: `url(${school?.templateImage || "/templates/new-era.jpeg"})`,
-                backgroundSize: "cover",
+                backgroundSize: "100% 100%",
                 backgroundPosition: "center"
             }}
         >
@@ -48,7 +48,7 @@ export default function Template7({
                 />
             )}
 
-            <div className="absolute top-[229px] left-1/2 -translate-x-1/2 w-[200px] text-center text-white font-bold text-sm py-1 rounded">
+            <div className="absolute top-[229px] left-1/2 -translate-x-1/2 w-[200px] text-center text-white font-bold text-sm py-1 rounded z-10">
                 {student.name || "----"}
             </div>
 

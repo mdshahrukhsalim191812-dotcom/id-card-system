@@ -5,6 +5,7 @@ import html2canvas from "html2canvas";
 import toast from "react-hot-toast";
 import TemplateRenderer from "@/components/TemplateRenderer";
 import BulkUploadPage from "../bulk-upload/page";
+import jsPDF from "jspdf";
 
 export default function CreateIDPage() {
     const [student, setStudent] = useState({
@@ -60,8 +61,7 @@ export default function CreateIDPage() {
 
     const templateId = school?.templateId;
 
-    console.log("STUDENT STATE:", student);
-    console.log("TEMPLATE:", templateId);
+    const cardRef = useRef<HTMLDivElement>(null);
 
     const fetchStudents = async () => {
         try {
@@ -98,8 +98,6 @@ export default function CreateIDPage() {
     useEffect(() => {
         fetchStudents();
     }, []);
-
-    const cardRef = useRef<HTMLDivElement>(null);
 
     const formatDate = (date: string) => {
         if (!date) return "";
@@ -367,6 +365,74 @@ export default function CreateIDPage() {
         }
     };
 
+    const handleBulkDownload = async () => {
+        if (!students.length) return;
+
+        const pdf = new jsPDF("p", "mm", "a4");
+
+        // 📄 A4 size
+        const pageWidth = 210;
+        const pageHeight = 297;
+
+        // 📏 PVC CARD SIZE (CR80)
+        const cardWidth = 52;     // mm
+        const cardHeight = 83;  // mm
+
+        // 📐 spacing
+        const gapX = 2;
+        const gapY = 2;
+
+        const marginX = (pageWidth - (cardWidth * 2 + gapX)) / 2;
+        const marginY = (pageHeight - (cardHeight * 3 + gapY * 2)) / 2;
+
+        let count = 0;
+
+        for (let i = 0; i < students.length; i++) {
+            const student = students[i];
+
+            // 🔄 render student
+            setStudent(student);
+            setImage(student.image || null);
+            setLogo(student.logo || null);
+            setSignature(student.signature || null);
+
+            await new Promise((res) => setTimeout(res, 400));
+
+            if (!cardRef.current) continue;
+
+            const canvas = await html2canvas(cardRef.current, {
+                scale: 3,
+                useCORS: true,
+                width: 300,
+                height: 476,
+                windowWidth: 300,
+                windowHeight: 476,
+            });
+
+            const imgData = canvas.toDataURL("image/png");
+
+            // 📍 POSITION
+            const col = count % 2;
+            const row = Math.floor(count / 2) % 3;
+
+            const x = marginX + col * (cardWidth + gapX);
+            const y = marginY + row * (cardHeight + gapY);
+
+            pdf.addImage(imgData, "PNG", x + 1, y + 1, cardWidth, cardHeight);
+
+            // ✂️ OPTIONAL CUTTING BORDER
+            pdf.setDrawColor(200);
+
+            count++;
+
+            // 🆕 new page
+            if (count % 6 === 0 && i !== students.length - 1) {
+                pdf.addPage();
+            }
+        }
+
+        pdf.save(`${school?.name || "ID"} ID Cards.pdf`);
+    };
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-6">Create ID Card</h1>
@@ -632,10 +698,21 @@ export default function CreateIDPage() {
 
                     <div >
                         <BulkUploadPage
-                        onUploadSuccess={fetchStudents} />
+                            onUploadSuccess={fetchStudents} />
                     </div>
 
-                    <div ref={cardRef} className="flex justify-center">
+                    <div
+                        ref={cardRef}
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "300px",
+                            height: "476px",
+                            background: "white",
+                            zIndex: 1, // hide from UI
+                        }}
+                    >
                         <TemplateRenderer
                             templateId={templateId}
                             student={student}
@@ -646,6 +723,13 @@ export default function CreateIDPage() {
                             school={school}
                         />
                     </div>
+
+                    <button
+                        onClick={handleBulkDownload}
+                        className="bg-purple-600 text-white px-4 py-2 rounded"
+                    >
+                        Download All ID Cards
+                    </button>
                 </div >
             </div>
         </div >

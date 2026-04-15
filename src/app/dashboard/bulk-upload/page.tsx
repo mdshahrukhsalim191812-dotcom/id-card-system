@@ -41,7 +41,7 @@ export default function BulkUploadPage({
 
             if (data.success) {
                 toast.success(
-                    `Maybe already exists ${data.inserted} added | ⚠️ ${data.skipped} skipped`
+                    `${data.inserted} added | ⚠️ ${data.skipped} skipped`
                 );
 
                 setUploaded(true);

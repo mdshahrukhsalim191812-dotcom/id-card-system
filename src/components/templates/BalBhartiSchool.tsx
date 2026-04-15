@@ -64,7 +64,7 @@ export default function Template7({
                 <p className="relative bottom-[-16.5px] right-[2.9px]">F. Name : {student.father || "-"}</p>
                 <p className="relative bottom-[-11.5px] right-[2.9px]">M. Name : {student.mother || "-"}</p>
                 <p className="relative bottom-[-7px] right-[2.9px]">Ph. No. : {student.phone || "-"}</p>
-                <p className="relative bottom-[-2px] right-[2.9px] leading-tight">Address : {student.address || "-"}</p>
+                <p className="relative bottom-[-2px] w-[195px] right-[2.9px] leading-tight">Address : {student.address || "-"}</p>
             </div>
 
             {signature && (
