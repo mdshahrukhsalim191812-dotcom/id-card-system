@@ -696,13 +696,7 @@ export default function CreateIDPage() {
 
                 {/* PREVIEW */}
                 <div>
-
-                    <div >
-                        <BulkUploadPage
-                            onUploadSuccess={fetchStudents} />
-                    </div>
-
-                    <button className="bg-purple-600 text-white px-4 py-2 rounded mb-4">
+                    <button className="bg-purple-600 text-white px-4 py-2 rounded mb-4 m-4">
                         <Link href="/dashboard/bulk-upload">Bulk Upload</Link>
                     </button>
 
