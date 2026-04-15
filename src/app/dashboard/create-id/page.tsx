@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import TemplateRenderer from "@/components/TemplateRenderer";
 import BulkUploadPage from "../bulk-upload/page";
 import jsPDF from "jspdf";
+import Link from "next/link"; 
 
 export default function CreateIDPage() {
     const [student, setStudent] = useState({
@@ -700,6 +701,10 @@ export default function CreateIDPage() {
                         <BulkUploadPage
                             onUploadSuccess={fetchStudents} />
                     </div>
+
+                    <button className="bg-purple-600 text-white px-4 py-2 rounded mb-4">
+                        <Link href="/dashboard/bulk-upload">Bulk Upload</Link>
+                    </button>
 
                     <div
                         ref={cardRef}
