@@ -376,20 +376,22 @@ export default function CreateIDPage() {
         const pdf = new jsPDF("p", "mm", "a4");
 
         // 📄 A4 size
-        const pageWidth = 210; // A4 width (mm)
+        const pageWidth = 210;
         const pageHeight = 297;
 
-        // PVC card size
+        // 🪪 PVC card size
         const cardWidth = 52;
         const cardHeight = 83;
 
-        // spacing
-        const gapX = 2;
-        const gapY = 2;
+        // 🔥 spacing (increase/decrease if needed)
+        const gapX = 6;
+        const gapY = 6;
 
-        // 🔥 FIXED margins
-        const marginX = 5;
-        const marginY = 5;
+        // ✅ CENTER ALIGN CALCULATION
+        const totalRowWidth = cardWidth * 3 + gapX * 2;
+        const marginX = (pageWidth - totalRowWidth) / 2;
+
+        const marginY = 10;
 
         let count = 0;
 
@@ -402,10 +404,12 @@ export default function CreateIDPage() {
             setLogo(student.logo || null);
             setSignature(student.signature || null);
 
+            // ⏳ wait for render
             await new Promise((res) => setTimeout(res, 400));
 
             if (!cardRef.current) continue;
 
+            // 📸 capture card
             const canvas = await html2canvas(cardRef.current, {
                 scale: 3,
                 useCORS: true,
@@ -417,28 +421,32 @@ export default function CreateIDPage() {
 
             const imgData = canvas.toDataURL("image/png");
 
-            // 📍 POSITION
+            // 📍 POSITION (3x3 GRID)
             const col = count % 3;
-            const row = Math.floor(count / 3) % 2;
+            const row = Math.floor(count / 3) % 3;
 
             const x = marginX + col * (cardWidth + gapX);
             const y = marginY + row * (cardHeight + gapY);
 
-            pdf.addImage(imgData, "PNG", x + 1, y + 1, cardWidth, cardHeight);
+            // 🖼️ add to pdf
+            pdf.addImage(imgData, "PNG", x, y, cardWidth, cardHeight);
 
-            // ✂️ OPTIONAL CUTTING BORDER
+            // ✂️ OPTIONAL BORDER (for cutting guide)
             pdf.setDrawColor(200);
+            pdf.rect(x, y, cardWidth, cardHeight);
 
             count++;
 
-            // 🆕 new page
-            if (count % 6 === 0 && i !== students.length - 1) {
+            // 📄 NEW PAGE AFTER 9 CARDS
+            if (count % 9 === 0 && i !== students.length - 1) {
                 pdf.addPage();
             }
         }
 
+        // 💾 SAVE FILE
         pdf.save(`${school?.name || "ID"} ID Cards.pdf`);
     };
+
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-6">Create ID Card</h1>
