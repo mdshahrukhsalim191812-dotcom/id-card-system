@@ -720,7 +720,7 @@ export default function CreateIDPage() {
                     {/* CARD PREVIEW */}
                     <div
                         ref={cardRef}
-                        className="border shadow-md"
+                        className="border shadow-md overflow-hidden"
                         style={{
                             width: "300px",
                             height: "476px",

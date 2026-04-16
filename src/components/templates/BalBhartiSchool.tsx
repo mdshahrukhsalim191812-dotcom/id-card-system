@@ -24,7 +24,7 @@ export default function Template7({
     return (
         <div
             id="card"
-            className="relative w-[270px] h-[440px] bg-cover bg-center border overflow-hidden"
+            className="relative w-[300px] h-[476px] bg-cover bg-center border overflow-hidden"
             style={{
                 backgroundImage: `url(${school?.templateImage || "/templates/bal-bharti.jpeg"})`,
                 backgroundSize: "cover",
@@ -36,7 +36,7 @@ export default function Template7({
                 <img
                     src={image}
                     alt="student"
-                    className="absolute top-[110px] left-[130px] w-[116px] h-[147px] object-cover"
+                    className="absolute top-[118px] left-[144.5px] w-[126px] h-[160px] object-cover"
                 />
             )}
 
@@ -48,7 +48,7 @@ export default function Template7({
                 />
             )}
 
-            <div className="absolute top-[270px] left-[20px] text-[13px] font-bold text-indigo-900 leading-tight space-y-[2px]" style={{ fontFamily: "Arial Narrow, Arial, sans-serif" }}>
+            <div className="absolute top-[270px] left-[20px] text-[13.5px] font-bold text-indigo-900 leading-tight space-y-[2px]" style={{ fontFamily: "Arial Narrow, Arial, sans-serif" }}>
                 <p className="relative top-[-54px] right-[2px]">Class : <span className="text-black">{student.class || "-"}</span> </p>
                 <p className="relative top-[-58px] right-[2px]">Sec : {student.sec || "-"}</p>
                 <p className="relative top-[-61px] right-[2px]">Roll No : {student.roll || "-"}</p>
@@ -59,7 +59,7 @@ export default function Template7({
                 {student.name || "----"}
             </div>
 
-            <div className="absolute top-[290px] left-[20px] text-[13px] font-bold text-indigo-900" style={{fontFamily:"Arial Narrow, Arial, sans serif"}}>
+            <div className="absolute top-[290px] left-[20px] text-[13.5px] font-bold text-indigo-900" style={{fontFamily:"Arial Narrow, Arial, sans serif"}}>
                 <p className="relative bottom-[-20.5px] right-[2.9px]">Admn. No : {student.admissionNo || "-"}</p>
                 <p className="relative bottom-[-16.5px] right-[2.9px]">F. Name : {student.father || "-"}</p>
                 <p className="relative bottom-[-11.5px] right-[2.9px]">M. Name : {student.mother || "-"}</p>
