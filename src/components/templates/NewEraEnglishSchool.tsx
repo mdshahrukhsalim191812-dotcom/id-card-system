@@ -57,6 +57,7 @@ export default function Template7({
                 <p>D.O.B : {formatDate(student.dob) || "-"}</p>
                 <p>F. Name : {student.father || "-"}</p>
                 <p>Mobile : {student.phone || "-"}</p>
+                <p>Admn. No : {student.admissionNo || "-"}</p>
                 <p>Address : {student.address || "-"}</p>
             </div>
 

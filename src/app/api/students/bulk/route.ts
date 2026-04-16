@@ -134,16 +134,58 @@ export async function POST(req: Request) {
 
             if (!image) imageMissing++;
 
+            function parseExcelDate(excelDate: any) {
+                if (!excelDate) return null;
+
+                // ✅ If already Date object
+                if (excelDate instanceof Date) return excelDate;
+
+                // ✅ If Excel number (serial)
+                if (typeof excelDate === "number") {
+                    return new Date((excelDate - 25569) * 86400 * 1000);
+                }
+
+                // ✅ If string (IMPORTANT FIX)
+                if (typeof excelDate === "string") {
+                    // Handle formats like 17-01-2014 or 17-Jan-14
+                    const parts = excelDate.split(/[-\/]/);
+
+                    if (parts.length === 3) {
+                        let [day, month, year] = parts;
+
+                        // Convert month name → number
+                        const months: any = {
+                            jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
+                            jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11
+                        };
+
+                        if (isNaN(Number(month))) {
+                            month = months[month.toLowerCase()];
+                        } else {
+                            month = Number(month) - 1;
+                        }
+
+                        // Fix 2-digit year
+                        year = Number(year);
+                        if (year < 100) year += 2000;
+
+                        return new Date(Number(year), Number(month), Number(day));
+                    }
+                }
+
+                return null;
+            }
+
             newStudents.push({
                 name: row.name || "",
                 class: row.class || "",
                 roll,
-                admissionNo,
-                sec: row.sec || "",
+                admissionNo: String(row.admissionNo || row.admission || ""),
+                sec: row.sec || row.section || "",
                 father: row.father || "",
                 mother: row.mother || "",
                 phone: row.phone || "",
-                dob: row.dob || "",
+                dob: parseExcelDate(row.dob) || null,
                 address: row.address || "",
                 school: schoolData?.name || "",
                 schoolId: user._id,

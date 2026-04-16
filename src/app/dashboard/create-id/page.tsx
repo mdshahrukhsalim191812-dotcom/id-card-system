@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import TemplateRenderer from "@/components/TemplateRenderer";
 import BulkUploadPage from "../bulk-upload/page";
 import jsPDF from "jspdf";
-import Link from "next/link"; 
+import Link from "next/link";
 
 export default function CreateIDPage() {
     const [student, setStudent] = useState({
@@ -100,13 +100,17 @@ export default function CreateIDPage() {
         fetchStudents();
     }, []);
 
-    const formatDate = (date: string) => {
-        if (!date) return "";
+    const formatDate = (date: any) => {
+        if (!date) return "-";
 
-        return new Date(date).toLocaleDateString("en-GB", {
+        const d = new Date(date);
+
+        if (isNaN(d.getTime())) return "-";
+
+        return d.toLocaleDateString("en-GB", {
             day: "2-digit",
             month: "short",
-            year: "numeric"
+            year: "numeric",
         });
     };
 
