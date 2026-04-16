@@ -1,82 +1,117 @@
 "use client";
 
 import { useState, useRef } from "react";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
-export default function BulkUploadPage({
-    onUploadSuccess,
-}: {
-    onUploadSuccess: () => void;
-}) {
+export default function BulkUploadPage() {
     const [file, setFile] = useState<File | null>(null);
     const [zipFile, setZipFile] = useState<File | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [uploaded, setUploaded] = useState(false);
+
+    const [progress, setProgress] = useState(0);
+    const [uploading, setUploading] = useState(false);
+    const [processing, setProcessing] = useState(false);
+
+    const [imageProgress, setImageProgress] = useState(0);
+    const [totalImages, setTotalImages] = useState(0);
+
+    const xhrRef = useRef<XMLHttpRequest | null>(null);
 
     const fileRef = useRef<HTMLInputElement>(null);
     const zipRef = useRef<HTMLInputElement>(null);
 
     const router = useRouter();
 
-    const handleUpload = async () => {
-        if (loading) return;
-
+    const handleUpload = () => {
         if (!file) {
             toast.error("Select Excel file ❌");
             return;
         }
 
-        setLoading(true);
-
         const formData = new FormData();
         formData.append("file", file);
         if (zipFile) formData.append("images", zipFile);
 
-        try {
-            const res = await fetch("/api/students/bulk", {
-                method: "POST",
-                body: formData,
-                credentials: "include",
-            });
+        const xhr = new XMLHttpRequest();
+        xhrRef.current = xhr;
 
-            let data;
+        xhr.open("POST", "/api/students/bulk", true);
+        xhr.withCredentials = true;
+
+        setUploading(true);
+        setProgress(0);
+        setProcessing(false);
+
+        // 🔥 Upload progress
+        xhr.upload.onprogress = (event) => {
+            if (event.lengthComputable) {
+                const percent = Math.round((event.loaded / event.total) * 100);
+                setProgress(percent);
+            }
+        };
+
+        xhr.onload = () => {
+            let data: any = {};
+
             try {
-                data = await res.json();
+                data = JSON.parse(xhr.responseText);
             } catch {
-                throw new Error("Invalid JSON response");
+                data = {};
             }
 
-            // 🔥 MAIN FIX HERE
-            if (!res.ok) {
-                throw new Error(data.message || "Upload failed");
+            if (xhr.status === 200) {
+                setProgress(100);
+
+                // 🔥 START PROCESSING UI
+                setUploading(false);
+                setProcessing(true);
+
+                // simulate image processing (UX purpose)
+                const total = data.inserted || 10;
+                setTotalImages(total);
+
+                let count = 0;
+
+                const interval = setInterval(() => {
+                    count++;
+                    setImageProgress(count);
+
+                    if (count >= total) {
+                        clearInterval(interval);
+
+                        setTimeout(() => {
+                            router.push("/dashboard/create-id");
+                        }, 800);
+                    }
+                }, 80); // speed of animation
+
+            } else {
+                setUploading(false);
+                setProgress(0);
+                toast.error(data.message || "Upload failed ❌");
             }
+        };
 
-            // ✅ SUCCESS
-            toast.success(
-                `${data.inserted} added | ⚠️ ${data.skipped} skipped | 🖼️ Missing: ${data.imageMissing}`
-            );
+        xhr.onerror = () => {
+            setUploading(false);
+            setProgress(0);
+            toast.error("Server error ❌");
+        };
 
-            setUploaded(true);
-            onUploadSuccess?.();
+        xhr.send(formData);
+    };
 
-            setTimeout(() => {
-                router.push("/dashboard/create-id");
-            }, 500);
-
-            // reset
-            setFile(null);
-            setZipFile(null);
-
-            if (fileRef.current) fileRef.current.value = "";
-            if (zipRef.current) zipRef.current.value = "";
-
-        } catch (err: any) {
-            console.error(err);
-            toast.error(err.message || "Server error ❌");
-        } finally {
-            setLoading(false);
+    // ❌ Cancel Upload
+    const handleCancel = () => {
+        if (xhrRef.current) {
+            xhrRef.current.abort();
         }
+
+        setUploading(false);
+        setProcessing(false);
+        setProgress(0);
+
+        toast("Upload cancelled ❌");
     };
 
     return (
@@ -85,63 +120,95 @@ export default function BulkUploadPage({
                 Bulk Upload Students
             </h1>
 
-            {/* Excel */}
-            <div className="mb-4">
-                <label className="font-semibold">Excel File</label>
-                <input
-                    ref={fileRef}
-                    type="file"
-                    accept=".xlsx,.xls"
-                    onChange={(e) => {
-                        setUploaded(false);
-                        setFile(e.target.files?.[0] || null);
-                    }}
-                    className="border p-2 w-full rounded mt-1"
-                />
-            </div>
+            {/* FORM */}
+            {!uploading && !processing && (
+                <>
+                    <div className="mb-4">
+                        <label className="font-semibold">Excel File</label>
+                        <input
+                            ref={fileRef}
+                            type="file"
+                            accept=".xlsx,.xls"
+                            onChange={(e) =>
+                                setFile(e.target.files?.[0] || null)
+                            }
+                            className="border p-2 w-full rounded mt-1"
+                        />
+                    </div>
 
-            {/* ZIP */}
-            <div className="mb-4">
-                <label className="font-semibold">Images ZIP</label>
-                <input
-                    ref={zipRef}
-                    type="file"
-                    accept=".zip"
-                    onChange={(e) => {
-                        setUploaded(false);
-                        setZipFile(e.target.files?.[0] || null);
-                    }}
-                    className="border p-2 w-full rounded mt-1"
-                />
-            </div>
+                    <div className="mb-4">
+                        <label className="font-semibold">Images ZIP</label>
+                        <input
+                            ref={zipRef}
+                            type="file"
+                            accept=".zip"
+                            onChange={(e) =>
+                                setZipFile(e.target.files?.[0] || null)
+                            }
+                            className="border p-2 w-full rounded mt-1"
+                        />
+                    </div>
 
-            {/* Button */}
-            <button
-                onClick={handleUpload}
-                disabled={loading || uploaded || !file}
-                className={`w-full py-2 rounded text-white font-semibold transition ${loading || uploaded || !file
-                    ? "bg-gray-400"
-                    : "bg-blue-600 hover:bg-blue-700"
-                    }`}
-            >
-                {loading
-                    ? "⏳ Uploading..."
-                    : uploaded
-                        ? "Uploaded"
-                        : "Upload Data"}
-            </button>
+                    <button
+                        onClick={handleUpload}
+                        disabled={!file}
+                        className={`w-full py-2 rounded text-white font-semibold ${!file
+                                ? "bg-gray-400"
+                                : "bg-blue-600 hover:bg-blue-700"
+                            }`}
+                    >
+                        Upload Data
+                    </button>
+                </>
+            )}
 
-            {/* Reset */}
-            {uploaded && (
-                <button
-                    onClick={() => {
-                        setUploaded(false);
-                        toast("Ready for new upload 👍");
-                    }}
-                    className="mt-3 w-full py-2 bg-green-600 text-white rounded hover:bg-green-700"
-                >
-                    Upload New File
-                </button>
+            {/* 🔥 UPLOADING UI */}
+            {uploading && (
+                <div className="mt-10 text-center">
+                    <p className="text-lg font-semibold mb-4">
+                        Uploading Files...
+                    </p>
+
+                    <div className="w-full bg-gray-200 rounded-full h-5 overflow-hidden">
+                        <div
+                            className="bg-blue-600 h-5 transition-all"
+                            style={{ width: `${progress}%` }}
+                        />
+                    </div>
+
+                    <p className="mt-3 text-sm">{progress}% uploaded</p>
+
+                    {/* ❌ Cancel Button */}
+                    <button
+                        onClick={handleCancel}
+                        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                    >
+                        Cancel Upload
+                    </button>
+                </div>
+            )}
+
+            {/* 🔥 PROCESSING UI */}
+            {processing && (
+                <div className="mt-10 text-center">
+                    <p className="text-lg font-semibold mb-4">
+                        Processing Excel & Images...
+                    </p>
+
+                    <div className="w-full bg-gray-200 rounded-full h-5 overflow-hidden">
+                        <div
+                            className="bg-green-600 h-5 transition-all"
+                            style={{
+                                width: `${(imageProgress / totalImages) * 100
+                                    }%`,
+                            }}
+                        />
+                    </div>
+
+                    <p className="mt-3 text-sm">
+                        Uploading images ({imageProgress}/{totalImages})
+                    </p>
+                </div>
             )}
         </div>
     );

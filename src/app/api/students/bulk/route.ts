@@ -8,9 +8,12 @@ import School from "@/models/School";
 import AdmZip from "adm-zip";
 import cloudinary from "@/lib/cloudinary";
 import crypto from "crypto";
+import { getIO } from "@/lib/socket"; // 🔥 ADD THIS
 
 export async function POST(req: Request) {
     try {
+        const io = getIO(); // 🔥 SOCKET INSTANCE
+
         // 🔐 AUTH
         const cookieStore = cookies();
         const token = cookieStore.get("token")?.value;
@@ -39,7 +42,7 @@ export async function POST(req: Request) {
             );
         }
 
-        // 🔥 FILE HASH (prevent duplicate file)
+        // 🔥 FILE HASH
         const buffer = Buffer.from(await file.arrayBuffer());
         const fileHash = crypto.createHash("md5").update(buffer).digest("hex");
 
@@ -66,24 +69,31 @@ export async function POST(req: Request) {
         let imageMap: Record<string, string> = {};
         let imageMissing = 0;
 
+        // 🔥 ZIP PROCESSING WITH REAL-TIME SOCKET
         if (zipFile) {
             const zipBuffer = Buffer.from(await zipFile.arrayBuffer());
             const zip = new AdmZip(zipBuffer);
             const entries = zip.getEntries();
 
+            let uploadedCount = 0;
+            const totalImages = entries.filter(e => !e.isDirectory).length;
+
             for (const entry of entries) {
                 if (!entry.isDirectory) {
                     const fileName = entry.entryName.split("/").pop();
+
+                    // 🔥 LIVE LOG
+                    io.emit("upload-log", `Uploading ${fileName}...`);
+
                     const ext = fileName?.split(".").pop()?.toLowerCase();
 
-                    // ❌ skip invalid files
                     if (!["jpg", "jpeg", "png", "webp"].includes(ext || "")) {
                         continue;
                     }
 
-                    const key = fileName?.split(".")[0]; // roll or admissionNo
+                    const key = fileName?.split(".")[0];
 
-                    if (key) {
+                    try {
                         const fileBuffer = entry.getData();
                         const base64 = fileBuffer.toString("base64");
 
@@ -91,18 +101,52 @@ export async function POST(req: Request) {
                         if (ext === "png") mimeType = "image/png";
                         if (ext === "webp") mimeType = "image/webp";
 
+                        // 🔥 FACE FOCUS + CROP
                         const uploadRes = await cloudinary.uploader.upload(
                             `data:${mimeType};base64,${base64}`,
-                            { folder: "students" }
+                            {
+                                folder: "students",
+                                gravity: "face",
+                                crop: "fill",
+                                width: 300,
+                                height: 400,
+                            }
                         );
 
                         imageMap[key] = uploadRes.secure_url;
+
+                    } catch (err) {
+                        // 🔁 RETRY LOGIC
+                        io.emit("upload-log", `Retrying ${fileName}...`);
+
+                        try {
+                            const fileBuffer = entry.getData();
+                            const base64 = fileBuffer.toString("base64");
+
+                            const uploadRes = await cloudinary.uploader.upload(
+                                `data:image/jpeg;base64,${base64}`,
+                                { folder: "students" }
+                            );
+
+                            imageMap[key] = uploadRes.secure_url;
+
+                        } catch {
+                            io.emit("upload-log", `❌ Failed ${fileName}`);
+                        }
                     }
+
+                    uploadedCount++;
+
+                    // 📊 REAL PROGRESS
+                    io.emit("upload-progress", {
+                        current: uploadedCount,
+                        total: totalImages,
+                    });
                 }
             }
         }
 
-        // 🔥 FETCH ALL EXISTING STUDENTS (OPTIMIZED)
+        // 🔥 EXISTING STUDENTS
         const existingStudents = await Student.find({
             schoolId: user._id,
         }).select("roll admissionNo");
@@ -116,6 +160,44 @@ export async function POST(req: Request) {
         const newStudents = [];
         let skipped = 0;
 
+        // 📅 DATE PARSER
+        function parseExcelDate(excelDate: any) {
+            if (!excelDate) return null;
+
+            if (excelDate instanceof Date) return excelDate;
+
+            if (typeof excelDate === "number") {
+                return new Date((excelDate - 25569) * 86400 * 1000);
+            }
+
+            if (typeof excelDate === "string") {
+                const parts = excelDate.split(/[-\/]/);
+
+                if (parts.length === 3) {
+                    let [day, month, year] = parts;
+
+                    const months: any = {
+                        jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
+                        jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11
+                    };
+
+                    if (isNaN(Number(month))) {
+                        month = months[month.toLowerCase()];
+                    } else {
+                        month = Number(month) - 1;
+                    }
+
+                    year = Number(year);
+                    if (year < 100) year += 2000;
+
+                    return new Date(Number(year), Number(month), Number(day));
+                }
+            }
+
+            return null;
+        }
+
+        // 👨‍🎓 CREATE STUDENTS
         for (const row of data) {
             const roll = String(row.roll || "");
             const admissionNo = String(row.admissionNo || "");
@@ -134,58 +216,16 @@ export async function POST(req: Request) {
 
             if (!image) imageMissing++;
 
-            function parseExcelDate(excelDate: any) {
-                if (!excelDate) return null;
-
-                // ✅ If already Date object
-                if (excelDate instanceof Date) return excelDate;
-
-                // ✅ If Excel number (serial)
-                if (typeof excelDate === "number") {
-                    return new Date((excelDate - 25569) * 86400 * 1000);
-                }
-
-                // ✅ If string (IMPORTANT FIX)
-                if (typeof excelDate === "string") {
-                    // Handle formats like 17-01-2014 or 17-Jan-14
-                    const parts = excelDate.split(/[-\/]/);
-
-                    if (parts.length === 3) {
-                        let [day, month, year] = parts;
-
-                        // Convert month name → number
-                        const months: any = {
-                            jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
-                            jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11
-                        };
-
-                        if (isNaN(Number(month))) {
-                            month = months[month.toLowerCase()];
-                        } else {
-                            month = Number(month) - 1;
-                        }
-
-                        // Fix 2-digit year
-                        year = Number(year);
-                        if (year < 100) year += 2000;
-
-                        return new Date(Number(year), Number(month), Number(day));
-                    }
-                }
-
-                return null;
-            }
-
             newStudents.push({
                 name: row.name || "",
                 class: row.class || "",
                 roll,
-                admissionNo: String(row.admissionNo || row.admission || ""),
+                admissionNo,
                 sec: row.sec || row.section || "",
                 father: row.father || "",
                 mother: row.mother || "",
                 phone: row.phone || "",
-                dob: parseExcelDate(row.dob) || null,
+                dob: parseExcelDate(row.dob),
                 address: row.address || "",
                 school: schoolData?.name || "",
                 schoolId: user._id,
@@ -194,7 +234,7 @@ export async function POST(req: Request) {
             });
         }
 
-        // 💾 INSERT
+        // 💾 SAVE
         if (newStudents.length > 0) {
             await Student.insertMany(newStudents);
         }
@@ -206,8 +246,7 @@ export async function POST(req: Request) {
             imageMissing,
         });
 
-    }
-    catch (error: any) {
+    } catch (error: any) {
         console.error("Bulk Upload Error:", error);
 
         return NextResponse.json(
