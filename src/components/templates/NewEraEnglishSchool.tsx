@@ -36,7 +36,7 @@ export default function Template7({
                 <img
                     src={image}
                     alt="student"
-                    className="absolute top-[102px] left-[85px] w-[98px] h-[120px] object-cover rounded-md border"
+                    className="absolute top-[112.5px] left-[97.5px] w-[104.5px] h-[128.9px] object-cover rounded-[10px] border"
                 />
             )}
 
@@ -48,7 +48,7 @@ export default function Template7({
                 />
             )}
 
-            <div className="absolute top-[229px] left-1/2 -translate-x-1/2 w-[200px] text-center text-white font-bold text-sm py-1 rounded z-10">
+            <div className="absolute top-[248px] left-1/2 -translate-x-1/2 w-[200px] text-center text-white font-bold text-sm py-1 rounded z-10">
                 {student.name || "----"}
             </div>
 
