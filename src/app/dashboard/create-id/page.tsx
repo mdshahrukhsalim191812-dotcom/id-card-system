@@ -699,21 +699,31 @@ export default function CreateIDPage() {
                 </div>
 
                 {/* PREVIEW */}
-                <div>
-                    <button className="bg-purple-600 text-white px-4 py-2 rounded mb-4 m-4">
-                        <Link href="/dashboard/bulk-upload">Bulk Upload</Link>
-                    </button>
+                <div className="flex flex-col items-start">
 
+                    {/* TOP BUTTONS */}
+                    <div className="flex gap-4 mb-4">
+                        <Link href="/dashboard/bulk-upload">
+                            <button className="bg-purple-600 text-white px-4 py-2 rounded">
+                                Bulk Upload
+                            </button>
+                        </Link>
+
+                        <button
+                            onClick={handleBulkDownload}
+                            className="bg-purple-600 text-white px-4 py-2 rounded"
+                        >
+                            Download All ID Cards
+                        </button>
+                    </div>
+
+                    {/* CARD PREVIEW */}
                     <div
                         ref={cardRef}
+                        className="border shadow-md"
                         style={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
                             width: "300px",
                             height: "476px",
-                            background: "white",
-                            zIndex: 1, // hide from UI
                         }}
                     >
                         <TemplateRenderer
@@ -727,13 +737,7 @@ export default function CreateIDPage() {
                         />
                     </div>
 
-                    <button
-                        onClick={handleBulkDownload}
-                        className="bg-purple-600 text-white px-4 py-2 rounded"
-                    >
-                        Download All ID Cards
-                    </button>
-                </div >
+                </div>
             </div>
         </div >
     );

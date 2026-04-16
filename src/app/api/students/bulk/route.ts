@@ -206,10 +206,15 @@ export async function POST(req: Request) {
             imageMissing,
         });
 
-    } catch (error) {
+    }
+    catch (error: any) {
         console.error("Bulk Upload Error:", error);
+
         return NextResponse.json(
-            { message: "Error uploading" },
+            {
+                success: false,
+                message: error.message || "Error uploading",
+            },
             { status: 500 }
         );
     }

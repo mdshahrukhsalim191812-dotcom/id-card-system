@@ -224,3 +224,47 @@ export async function DELETE(req: Request) {
         return NextResponse.json({ message: "Server Error ❌" }, { status: 500 });
     }
 }
+// 🔥 DELETE MANY (BULK)
+export async function PATCH(req: Request) {
+    try {
+        const cookieStore = cookies();
+        const token = cookieStore.get("token")?.value;
+
+        if (!token) {
+            return NextResponse.json({ message: "Unauthorized ❌" }, { status: 401 });
+        }
+
+        const user = verifyToken(token);
+
+        if (!user) {
+            return NextResponse.json({ message: "Invalid Token ❌" }, { status: 401 });
+        }
+
+        await connectDB();
+
+        const body = await req.json();
+        const { ids } = body;
+
+        if (!ids || !Array.isArray(ids) || ids.length === 0) {
+            return NextResponse.json(
+                { message: "IDs required" },
+                { status: 400 }
+            );
+        }
+
+        // 🔥 DELETE ONLY USER'S STUDENTS (SECURITY)
+        const result = await Student.deleteMany({
+            _id: { $in: ids },
+            schoolId: user._id,
+        });
+
+        return NextResponse.json({
+            success: true,
+            deletedCount: result.deletedCount,
+        });
+
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ message: "Server Error ❌" }, { status: 500 });
+    }
+}

@@ -40,7 +40,7 @@ export default function SchoolAdmin() {
         fetchStudents();
     }, []);
 
-    // 🔥 UPDATED DELETE WITH TOAST CONFIRM
+    // 🔴 DELETE ONE
     const handleDelete = async (id: string) => {
         toast((t) => (
             <div className="flex flex-col gap-3">
@@ -49,7 +49,6 @@ export default function SchoolAdmin() {
                 </p>
 
                 <div className="flex gap-2 justify-end">
-                    {/* YES */}
                     <button
                         onClick={async () => {
                             toast.dismiss(t.id);
@@ -81,7 +80,68 @@ export default function SchoolAdmin() {
                         Yes
                     </button>
 
-                    {/* CANCEL */}
+                    <button
+                        onClick={() => toast.dismiss(t.id)}
+                        className="bg-gray-300 hover:bg-gray-400 px-3 py-1 rounded"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        ));
+    };
+
+    // 🔥 DELETE ALL
+    const handleDeleteAll = () => {
+        if (filteredStudents.length === 0) {
+            toast.error("No students to delete ❌");
+            return;
+        }
+
+        toast((t) => (
+            <div className="flex flex-col gap-3">
+                <p className="font-semibold text-black">
+                    ⚠️ Delete ALL filtered students?
+                </p>
+
+                <div className="flex gap-2 justify-end">
+                    <button
+                        onClick={async () => {
+                            toast.dismiss(t.id);
+
+                            try {
+                                const ids = filteredStudents.map((s) => s._id);
+
+                                const res = await fetch("/api/students", {
+                                    method: "PATCH",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    credentials: "include",
+                                    body: JSON.stringify({ ids }),
+                                });
+
+                                const data = await res.json();
+
+                                if (data.success) {
+                                    toast.success(`Deleted ${ids.length} students 🗑️`);
+
+                                    setStudents((prev) =>
+                                        prev.filter((s) => !ids.includes(s._id))
+                                    );
+                                } else {
+                                    toast.error(data.message || "Delete failed ❌");
+                                }
+                            } catch (error) {
+                                console.error(error);
+                                toast.error("Error deleting ❌");
+                            }
+                        }}
+                        className="bg-red-600 hover:bg-red-800 text-white px-3 py-1 rounded"
+                    >
+                        Yes, Delete All
+                    </button>
+
                     <button
                         onClick={() => toast.dismiss(t.id)}
                         className="bg-gray-300 hover:bg-gray-400 px-3 py-1 rounded"
@@ -107,12 +167,6 @@ export default function SchoolAdmin() {
         return matchesSchool && matchesSearch;
     });
 
-    const uniqueSchools = [
-        ...new Map(
-            students.map((s) => [s.schoolId?._id, s.schoolId])
-        ).values(),
-    ];
-
     return (
         <div className="p-6 bg-gray-50 min-h-screen">
 
@@ -121,8 +175,9 @@ export default function SchoolAdmin() {
                 All students of school
             </h1>
 
-            {/* STATS */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            {/* STATS + SEARCH + DELETE ALL */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 items-center">
+
                 <div className="bg-white p-[1-px] rounded-md shadow">
                     <p className="text-gray-500 text-sm font-bold flex justify-center">
                         Total Students
@@ -139,6 +194,15 @@ export default function SchoolAdmin() {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
+
+                {/* 🔥 DELETE ALL BUTTON */}
+                <button
+                    onClick={handleDeleteAll}
+                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow"
+                >
+                    Delete All
+                </button>
+
             </div>
 
             {/* TABLE */}
@@ -182,7 +246,6 @@ export default function SchoolAdmin() {
                     </table>
                 )}
             </div>
-
         </div>
     );
 }

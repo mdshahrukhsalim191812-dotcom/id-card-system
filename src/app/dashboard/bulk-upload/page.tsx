@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function BulkUploadPage({
     onUploadSuccess,
@@ -15,6 +16,8 @@ export default function BulkUploadPage({
 
     const fileRef = useRef<HTMLInputElement>(null);
     const zipRef = useRef<HTMLInputElement>(null);
+
+    const router = useRouter();
 
     const handleUpload = async () => {
         if (loading) return;
@@ -37,27 +40,40 @@ export default function BulkUploadPage({
                 credentials: "include",
             });
 
-            const data = await res.json();
-
-            if (data.success) {
-                toast.success(
-                    `${data.inserted} added | ⚠️ ${data.skipped} skipped`
-                );
-
-                setUploaded(true);
-                onUploadSuccess();
-
-                // reset
-                setFile(null);
-                setZipFile(null);
-
-                if (fileRef.current) fileRef.current.value = "";
-                if (zipRef.current) zipRef.current.value = "";
-            } else {
-                toast.error(data.message);
+            let data;
+            try {
+                data = await res.json();
+            } catch {
+                throw new Error("Invalid JSON response");
             }
-        } catch (err) {
-            toast.error("Server error ❌");
+
+            // 🔥 MAIN FIX HERE
+            if (!res.ok) {
+                throw new Error(data.message || "Upload failed");
+            }
+
+            // ✅ SUCCESS
+            toast.success(
+                `${data.inserted} added | ⚠️ ${data.skipped} skipped | 🖼️ Missing: ${data.imageMissing}`
+            );
+
+            setUploaded(true);
+            onUploadSuccess?.();
+
+            setTimeout(() => {
+                router.push("/dashboard/create-id");
+            }, 500);
+
+            // reset
+            setFile(null);
+            setZipFile(null);
+
+            if (fileRef.current) fileRef.current.value = "";
+            if (zipRef.current) zipRef.current.value = "";
+
+        } catch (err: any) {
+            console.error(err);
+            toast.error(err.message || "Server error ❌");
         } finally {
             setLoading(false);
         }
@@ -66,7 +82,7 @@ export default function BulkUploadPage({
     return (
         <div className="p-6 max-w-xl mx-auto">
             <h1 className="text-2xl font-bold mb-6 text-center">
-            Bulk Upload Students
+                Bulk Upload Students
             </h1>
 
             {/* Excel */}
@@ -104,8 +120,8 @@ export default function BulkUploadPage({
                 onClick={handleUpload}
                 disabled={loading || uploaded || !file}
                 className={`w-full py-2 rounded text-white font-semibold transition ${loading || uploaded || !file
-                        ? "bg-gray-400"
-                        : "bg-blue-600 hover:bg-blue-700"
+                    ? "bg-gray-400"
+                    : "bg-blue-600 hover:bg-blue-700"
                     }`}
             >
                 {loading
