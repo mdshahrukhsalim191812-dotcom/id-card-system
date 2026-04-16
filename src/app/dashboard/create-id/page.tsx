@@ -376,19 +376,20 @@ export default function CreateIDPage() {
         const pdf = new jsPDF("p", "mm", "a4");
 
         // 📄 A4 size
-        const pageWidth = 210;
+        const pageWidth = 210; // A4 width (mm)
         const pageHeight = 297;
 
-        // 📏 PVC CARD SIZE (CR80)
-        const cardWidth = 52;     // mm
-        const cardHeight = 83;  // mm
+        // PVC card size
+        const cardWidth = 52;
+        const cardHeight = 83;
 
-        // 📐 spacing
+        // spacing
         const gapX = 2;
         const gapY = 2;
 
-        const marginX = (pageWidth - (cardWidth * 2 + gapX)) / 2;
-        const marginY = (pageHeight - (cardHeight * 3 + gapY * 2)) / 2;
+        // 🔥 FIXED margins
+        const marginX = 5;
+        const marginY = 5;
 
         let count = 0;
 
@@ -417,8 +418,8 @@ export default function CreateIDPage() {
             const imgData = canvas.toDataURL("image/png");
 
             // 📍 POSITION
-            const col = count % 2;
-            const row = Math.floor(count / 2) % 3;
+            const col = count % 3;
+            const row = Math.floor(count / 3) % 2;
 
             const x = marginX + col * (cardWidth + gapX);
             const y = marginY + row * (cardHeight + gapY);
