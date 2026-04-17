@@ -8,12 +8,9 @@ import School from "@/models/School";
 import AdmZip from "adm-zip";
 import cloudinary from "@/lib/cloudinary";
 import crypto from "crypto";
-import { getIO } from "@/lib/socket"; // 🔥 ADD THIS
 
 export async function POST(req: Request) {
     try {
-        const io = getIO(); // 🔥 SOCKET INSTANCE
-
         // 🔐 AUTH
         const cookieStore = cookies();
         const token = cookieStore.get("token")?.value;
@@ -42,7 +39,7 @@ export async function POST(req: Request) {
             );
         }
 
-        // 🔥 FILE HASH
+        // 🔥 FILE HASH (prevent duplicate upload)
         const buffer = Buffer.from(await file.arrayBuffer());
         const fileHash = crypto.createHash("md5").update(buffer).digest("hex");
 
@@ -53,7 +50,7 @@ export async function POST(req: Request) {
 
         if (alreadyUploaded) {
             return NextResponse.json(
-                { message: "⚠️ This Excel file already uploaded" },
+                { message: "This Excel file already uploaded" },
                 { status: 400 }
             );
         }
@@ -69,22 +66,15 @@ export async function POST(req: Request) {
         let imageMap: Record<string, string> = {};
         let imageMissing = 0;
 
-        // 🔥 ZIP PROCESSING WITH REAL-TIME SOCKET
+        // 🔥 ZIP PROCESSING
         if (zipFile) {
             const zipBuffer = Buffer.from(await zipFile.arrayBuffer());
             const zip = new AdmZip(zipBuffer);
             const entries = zip.getEntries();
 
-            let uploadedCount = 0;
-            const totalImages = entries.filter(e => !e.isDirectory).length;
-
             for (const entry of entries) {
                 if (!entry.isDirectory) {
                     const fileName = entry.entryName.split("/").pop();
-
-                    // 🔥 LIVE LOG
-                    io.emit("upload-log", `Uploading ${fileName}...`);
-
                     const ext = fileName?.split(".").pop()?.toLowerCase();
 
                     if (!["jpg", "jpeg", "png", "webp"].includes(ext || "")) {
@@ -101,7 +91,7 @@ export async function POST(req: Request) {
                         if (ext === "png") mimeType = "image/png";
                         if (ext === "webp") mimeType = "image/webp";
 
-                        // 🔥 FACE FOCUS + CROP
+                        // 🔥 FACE CENTER CROP
                         const uploadRes = await cloudinary.uploader.upload(
                             `data:${mimeType};base64,${base64}`,
                             {
@@ -116,9 +106,7 @@ export async function POST(req: Request) {
                         imageMap[key] = uploadRes.secure_url;
 
                     } catch (err) {
-                        // 🔁 RETRY LOGIC
-                        io.emit("upload-log", `Retrying ${fileName}...`);
-
+                        // 🔁 RETRY ON FAIL
                         try {
                             const fileBuffer = entry.getData();
                             const base64 = fileBuffer.toString("base64");
@@ -129,19 +117,10 @@ export async function POST(req: Request) {
                             );
 
                             imageMap[key] = uploadRes.secure_url;
-
                         } catch {
-                            io.emit("upload-log", `❌ Failed ${fileName}`);
+                            console.error(`❌ Failed upload: ${fileName}`);
                         }
                     }
-
-                    uploadedCount++;
-
-                    // 📊 REAL PROGRESS
-                    io.emit("upload-progress", {
-                        current: uploadedCount,
-                        total: totalImages,
-                    });
                 }
             }
         }
@@ -152,9 +131,7 @@ export async function POST(req: Request) {
         }).select("roll admissionNo");
 
         const existingSet = new Set(
-            existingStudents.map(
-                (s) => `${s.roll}-${s.admissionNo}`
-            )
+            existingStudents.map((s) => `${s.roll}-${s.admissionNo}`)
         );
 
         const newStudents = [];
