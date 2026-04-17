@@ -64,6 +64,10 @@ export default function CreateIDPage() {
 
     const cardRef = useRef<HTMLDivElement>(null);
 
+    const [cameraOn, setCameraOn] = useState(false);
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
     const fetchStudents = async () => {
         try {
             const res = await fetch("/api/students", {
@@ -130,6 +134,61 @@ export default function CreateIDPage() {
             }));
         }
     }, [school]);
+
+    const startCamera = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: true,
+            });
+
+            if (videoRef.current) {
+                videoRef.current.srcObject = stream;
+            }
+
+            setCameraOn(true);
+        } catch (err) {
+            console.error(err);
+            alert("Camera not accessible ❌");
+        }
+    };
+
+    const capturePhoto = () => {
+        const video = videoRef.current;
+        const canvas = canvasRef.current;
+
+        if (!video || !canvas) return;
+
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        ctx?.drawImage(video, 0, 0);
+
+        const imageData = canvas.toDataURL("image/png");
+        setImage(imageData);
+
+        // ✅ SAFE CAMERA STOP (FIXED)
+        const stream = video.srcObject as MediaStream | null;
+
+        if (stream) {
+            stream.getTracks().forEach((track) => track.stop());
+        }
+
+        video.srcObject = null; // 🔥 IMPORTANT
+
+        setCameraOn(false);
+    };
+
+    useEffect(() => {
+        return () => {
+            const video = videoRef.current;
+            if (video && video.srcObject) {
+                const stream = video.srcObject as MediaStream;
+                stream.getTracks().forEach(track => track.stop());
+            }
+        };
+    }, []);
 
     const handleSave = async () => {
         try {
@@ -501,28 +560,97 @@ export default function CreateIDPage() {
                     </select>
 
                     {/* FILE INPUTS */}
-                    {["School Logo", "Student Image", "Principal Signature"].map((label, i) => (
-                        <div key={i}>
-                            <p className="font-medium mb-1">{label}</p>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                className="w-full border border-gray-300 p-2 rounded-md hover:border-blue-400 focus:ring-2 focus:ring-blue-400 transition"
-                                onChange={(e) => {
-                                    const file = e.target.files?.[0];
-                                    if (file) {
-                                        const reader = new FileReader();
-                                        reader.onloadend = () => {
-                                            if (i === 0) setLogo(reader.result as string);
-                                            if (i === 1) setImage(reader.result as string);
-                                            if (i === 2) setSignature(reader.result as string);
-                                        };
-                                        reader.readAsDataURL(file);
-                                    }
-                                }}
+                    <div>
+                        <p className="font-medium mb-1">School Logo</p>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            className="w-full border border-gray-300 p-2 rounded-md hover:border-blue-400 focus:ring-2 focus:ring-blue-400 transition"
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onloadend = () => setLogo(reader.result as string);
+                                    reader.readAsDataURL(file);
+                                }
+                            }}
+                        />
+                    </div>
+
+                    {/* 🔥 STUDENT IMAGE (UPLOAD + CAMERA) */}
+                    <div>
+                        <p className="font-medium mb-1">Student Image</p>
+
+                        {/* Upload */}
+                        <input
+                            type="file"
+                            accept="image/*"
+                            className="w-full border border-gray-300 p-2 rounded-md hover:border-blue-400 focus:ring-2 focus:ring-blue-400 transition mb-2"
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onloadend = () => setImage(reader.result as string);
+                                    reader.readAsDataURL(file);
+                                }
+                            }}
+                        />
+
+                        {/* Camera Button */}
+                        <button
+                            onClick={startCamera}
+                            className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 py-1 rounded shadow hover:brightness-110 active:scale-95 transition mb-2"
+                        >
+                            📸 Click Photo
+                        </button>
+
+                        {/* Camera Preview */}
+                        {cameraOn && (
+                            <div className="mt-2 space-y-2">
+                                <video
+                                    ref={videoRef}
+                                    autoPlay
+                                    className="w-full rounded border shadow"
+                                />
+
+                                <button
+                                    onClick={capturePhoto}
+                                    className="w-full bg-green-600 text-white py-2 rounded shadow hover:brightness-110 active:scale-95 transition"
+                                >
+                                    Capture Photo
+                                </button>
+                            </div>
+                        )}
+
+                        {/* Hidden Canvas */}
+                        <canvas ref={canvasRef} className="hidden" />
+
+                        {/* Preview Image */}
+                        {image && (
+                            <img
+                                src={image}
+                                alt="Preview"
+                                className="mt-2 w-24 h-32 object-cover rounded border"
                             />
-                        </div>
-                    ))}
+                        )}
+                    </div>
+
+                    <div>
+                        <p className="font-medium mb-1">Principal Signature</p>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            className="w-full border border-gray-300 p-2 rounded-md hover:border-blue-400 focus:ring-2 focus:ring-blue-400 transition"
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onloadend = () => setSignature(reader.result as string);
+                                    reader.readAsDataURL(file);
+                                }
+                            }}
+                        />
+                    </div>
 
                     {/* INPUTS */}
                     {[
