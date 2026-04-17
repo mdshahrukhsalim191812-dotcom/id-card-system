@@ -456,13 +456,13 @@ export default function CreateIDPage() {
             {/* MAIN GRID */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                {/* 🔥 LEFT SIDE (FORM) */}
-                <div className="space-y-4">
+                {/* 🔥 LEFT SIDE */}
+                <div className="space-y-4 bg-white p-4 rounded-xl shadow">
 
                     {/* SELECT */}
                     <select
                         value={selectedId || ""}
-                        className="w-full border p-2 rounded"
+                        className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                         onChange={(e) => {
                             const selected = students.find(s => s._id === e.target.value);
 
@@ -501,41 +501,28 @@ export default function CreateIDPage() {
                     </select>
 
                     {/* FILE INPUTS */}
-                    <div>
-                        <p className="font-medium">School Logo</p>
-                        <input type="file" accept="image/*" onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) {
-                                const reader = new FileReader();
-                                reader.onloadend = () => setLogo(reader.result as string);
-                                reader.readAsDataURL(file);
-                            }
-                        }} />
-                    </div>
-
-                    <div>
-                        <p className="font-medium">Student Image</p>
-                        <input type="file" accept="image/*" onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) {
-                                const reader = new FileReader();
-                                reader.onloadend = () => setImage(reader.result as string);
-                                reader.readAsDataURL(file);
-                            }
-                        }} />
-                    </div>
-
-                    <div>
-                        <p className="font-medium">Principal Signature</p>
-                        <input type="file" accept="image/*" onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) {
-                                const reader = new FileReader();
-                                reader.onloadend = () => setSignature(reader.result as string);
-                                reader.readAsDataURL(file);
-                            }
-                        }} />
-                    </div>
+                    {["School Logo", "Student Image", "Principal Signature"].map((label, i) => (
+                        <div key={i}>
+                            <p className="font-medium mb-1">{label}</p>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="w-full border border-gray-300 p-2 rounded-md hover:border-blue-400 focus:ring-2 focus:ring-blue-400 transition"
+                                onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) {
+                                        const reader = new FileReader();
+                                        reader.onloadend = () => {
+                                            if (i === 0) setLogo(reader.result as string);
+                                            if (i === 1) setImage(reader.result as string);
+                                            if (i === 2) setSignature(reader.result as string);
+                                        };
+                                        reader.readAsDataURL(file);
+                                    }
+                                }}
+                            />
+                        </div>
+                    ))}
 
                     {/* INPUTS */}
                     {[
@@ -559,7 +546,7 @@ export default function CreateIDPage() {
                             onChange={(e) =>
                                 setStudent({ ...student, [field.key]: e.target.value })
                             }
-                            className="w-full border p-2 rounded"
+                            className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                         />
                     ))}
 
@@ -570,12 +557,13 @@ export default function CreateIDPage() {
                         onChange={(e) =>
                             setStudent({ ...student, dob: e.target.value })
                         }
-                        className="w-full border p-2 rounded"
+                        className="w-full border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-blue-500 transition"
                     />
 
                     {/* 🔥 BUTTONS */}
                     <div className="flex flex-wrap gap-3 mt-4">
 
+                        {/* DOWNLOAD */}
                         <button
                             onClick={async () => {
                                 if (!cardRef.current) return;
@@ -585,48 +573,54 @@ export default function CreateIDPage() {
                                 link.href = canvas.toDataURL();
                                 link.click();
                             }}
-                            className="bg-green-600 text-white px-4 py-2 rounded"
+                            className="bg-gradient-to-r from-green-600 to-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200"
                         >
                             Download
                         </button>
 
+                        {/* SAVE */}
                         <button
                             onClick={handleSave}
-                            className="bg-blue-600 text-white px-4 py-2 rounded"
+                            disabled={loading}
+                            className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200 disabled:opacity-50"
                         >
                             {loading ? "Saving..." : "Save"}
                         </button>
 
+                        {/* UPDATE */}
                         <button
                             onClick={handleUpdate}
-                            className="bg-yellow-600 text-white px-4 py-2 rounded"
+                            disabled={updateloading}
+                            className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200 disabled:opacity-50"
                         >
                             {updateloading ? "Updating..." : "Update"}
                         </button>
 
+                        {/* DELETE */}
                         <button
                             onClick={handleDelete}
-                            className="bg-red-600 text-white px-4 py-2 rounded"
+                            className="bg-gradient-to-r from-red-600 to-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200"
                         >
                             Delete
                         </button>
                     </div>
                 </div>
 
-                {/* 🔥 RIGHT SIDE (PREVIEW) */}
+                {/* 🔥 RIGHT SIDE */}
                 <div className="flex flex-col items-center md:items-start">
 
                     {/* BUTTONS */}
                     <div className="flex flex-wrap gap-3 mb-4 justify-center md:justify-start">
+
                         <Link href="/dashboard/bulk-upload">
-                            <button className="bg-purple-600 text-white px-4 py-2 rounded">
+                            <button className="bg-gradient-to-r from-purple-600 to-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all">
                                 Bulk Upload
                             </button>
                         </Link>
 
                         <button
                             onClick={handleBulkDownload}
-                            className="bg-purple-600 text-white px-4 py-2 rounded"
+                            className="bg-gradient-to-r from-purple-700 to-purple-600 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all"
                         >
                             Download All
                         </button>
@@ -635,7 +629,7 @@ export default function CreateIDPage() {
                     {/* CARD */}
                     <div
                         ref={cardRef}
-                        className="border shadow-md overflow-hidden mx-auto md:mx-0"
+                        className="border shadow-xl overflow-hidden mx-auto md:mx-0 hover:shadow-2xl transition duration-300"
                         style={{
                             width: "300px",
                             height: "476px",

@@ -168,51 +168,51 @@ export default function SchoolAdmin() {
     });
 
     return (
-        <div className="p-6 bg-gray-50 min-h-screen">
+        <div className="p-4 md:p-6 bg-gray-50 min-h-screen">
 
-            {/* HEADER */}
-            <h1 className="text-3xl font-bold mb-6 text-gray-800">
-                All students of school
+            {/* 🔥 HEADER */}
+            <h1 className="text-xl md:text-3xl font-bold mb-6 text-gray-800 text-center md:text-left">
+                All Students
             </h1>
 
-            {/* STATS + SEARCH + DELETE ALL */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 items-center">
+            {/* 🔥 STATS + SEARCH */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
 
-                <div className="bg-white p-[1-px] rounded-md shadow">
-                    <p className="text-gray-500 text-sm font-bold flex justify-center">
+                {/* TOTAL */}
+                <div className="bg-white p-0 rounded-xl shadow text-center h-[50px]">
+                    <p className="text-gray-500 text-sm font-semibold">
                         Total Students
                     </p>
-                    <h2 className="text-2xl font-bold text-blue-600 flex justify-center">
+                    <h2 className="text-2xl font-bold text-blue-600">
                         {students.length}
                     </h2>
                 </div>
 
+                {/* SEARCH */}
                 <input
                     type="text"
                     placeholder="Search students..."
-                    className="border p-3 rounded-md shadow-sm focus:ring-2 focus:ring-blue-400"
+                    className="border p-3 rounded-md shadow-sm focus:ring-2 h-[50px] focus:ring-blue-400 w-full"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
 
-                {/* 🔥 DELETE ALL BUTTON */}
+                {/* DELETE ALL */}
                 <button
                     onClick={handleDeleteAll}
-                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow"
+                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow h-[50px] w-full"
                 >
                     Delete All
                 </button>
 
             </div>
 
-            {/* TABLE */}
-            <div className="bg-white rounded-xl shadow overflow-hidden">
-
+            {/* 🔥 DESKTOP TABLE */}
+            <div className="hidden md:block bg-white rounded-xl shadow overflow-hidden">
                 {loading ? (
                     <p className="p-4">Loading...</p>
                 ) : (
                     <table className="w-full text-left">
-
                         <thead className="bg-gray-100 text-gray-700">
                             <tr>
                                 <th className="p-3">Name</th>
@@ -224,17 +224,14 @@ export default function SchoolAdmin() {
 
                         <tbody>
                             {filteredStudents.map((s) => (
-                                <tr
-                                    key={s._id}
-                                    className="border-t hover:bg-gray-50 transition"
-                                >
+                                <tr key={s._id} className="border-t hover:bg-gray-50">
                                     <td className="p-3 font-medium">{s.name}</td>
                                     <td className="p-3">{s.class}</td>
                                     <td className="p-3">{s.roll}</td>
                                     <td className="p-3 text-center">
                                         <button
                                             onClick={() => handleDelete(s._id)}
-                                            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
+                                            className="bg-red-500 text-white px-3 py-1 rounded"
                                         >
                                             Delete
                                         </button>
@@ -242,9 +239,30 @@ export default function SchoolAdmin() {
                                 </tr>
                             ))}
                         </tbody>
-
                     </table>
                 )}
+            </div>
+
+            {/* 🔥 MOBILE CARD VIEW */}
+            <div className="md:hidden space-y-4">
+                {filteredStudents.map((s) => (
+                    <div key={s._id} className="bg-white p-4 rounded-xl shadow">
+                        <p className="font-semibold">{s.name}</p>
+                        <p className="text-sm text-gray-500">
+                            Class: {s.class}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                            Roll: {s.roll}
+                        </p>
+
+                        <button
+                            onClick={() => handleDelete(s._id)}
+                            className="mt-3 w-full bg-red-500 text-white py-2 rounded"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                ))}
             </div>
         </div>
     );
