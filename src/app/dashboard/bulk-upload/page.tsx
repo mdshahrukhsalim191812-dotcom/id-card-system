@@ -131,7 +131,7 @@ export default function BulkUploadPage() {
 
                         <div
                             onClick={() => setShowImage(true)}
-                            className="border rounded-lg overflow-hidden cursor-pointer hover:scale-[1.02] transition"
+                            className="border rounded-lg overflow-hidden cursor-pointer hover:scale-[1.2] transition"
                         >
                             <img
                                 src="/excel format.jpeg"

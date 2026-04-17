@@ -448,13 +448,20 @@ export default function CreateIDPage() {
     };
 
     return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-6">Create ID Card</h1>
+        <div className="p-4 md:p-6">
+            <h1 className="text-xl md:text-2xl font-bold mb-6 text-center md:text-left">
+                Create ID Card
+            </h1>
 
-            {/* FORM */}
-            <div className="grid grid-cols-2 gap-6">
+            {/* MAIN GRID */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                {/* 🔥 LEFT SIDE (FORM) */}
                 <div className="space-y-4">
-                    <select value={selectedId || ""}
+
+                    {/* SELECT */}
+                    <select
+                        value={selectedId || ""}
                         className="w-full border p-2 rounded"
                         onChange={(e) => {
                             const selected = students.find(s => s._id === e.target.value);
@@ -486,232 +493,131 @@ export default function CreateIDPage() {
                         }}
                     >
                         <option>Select Student</option>
-                        {Array.isArray(students) && students.map((s) => (
+                        {students.map((s) => (
                             <option key={s._id} value={s._id}>
                                 {s.name} - Class {s.class}
                             </option>
                         ))}
                     </select>
 
-                    <div><span>School Logo </span>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    const reader = new FileReader();
-
-                                    reader.onloadend = () => {
-                                        setLogo(reader.result as string);
-                                    };
-
-                                    reader.readAsDataURL(file);
-                                }
-                            }}
-                        />
+                    {/* FILE INPUTS */}
+                    <div>
+                        <p className="font-medium">School Logo</p>
+                        <input type="file" accept="image/*" onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onloadend = () => setLogo(reader.result as string);
+                                reader.readAsDataURL(file);
+                            }
+                        }} />
                     </div>
 
                     <div>
-                        <span>Student Image </span>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    const reader = new FileReader();
-
-                                    reader.onloadend = () => {
-                                        setImage(reader.result as string);
-                                    };
-
-                                    reader.readAsDataURL(file);
-                                }
-                            }}
-                        />
+                        <p className="font-medium">Student Image</p>
+                        <input type="file" accept="image/*" onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onloadend = () => setImage(reader.result as string);
+                                reader.readAsDataURL(file);
+                            }
+                        }} />
                     </div>
 
                     <div>
-                        <span>Principal Signature </span>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    const reader = new FileReader();
-
-                                    reader.onloadend = () => {
-                                        setSignature(reader.result as string);
-                                    };
-
-                                    reader.readAsDataURL(file);
-                                }
-                            }}
-                        />
+                        <p className="font-medium">Principal Signature</p>
+                        <input type="file" accept="image/*" onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onloadend = () => setSignature(reader.result as string);
+                                reader.readAsDataURL(file);
+                            }
+                        }} />
                     </div>
 
-                    <input
-                        type="text"
-                        placeholder="Admission No."
-                        value={student.admissionNo}
-                        onChange={(e) =>
-                            setStudent({ ...student, admissionNo: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
+                    {/* INPUTS */}
+                    {[
+                        { key: "admissionNo", placeholder: "Admission No." },
+                        { key: "school", placeholder: "School Name" },
+                        { key: "name", placeholder: "Student Name" },
+                        { key: "class", placeholder: "Class" },
+                        { key: "sec", placeholder: "Section" },
+                        { key: "roll", placeholder: "Roll" },
+                        { key: "father", placeholder: "Father Name" },
+                        { key: "mother", placeholder: "Mother Name" },
+                        { key: "phone", placeholder: "Phone" },
+                        { key: "address", placeholder: "Address" },
+                        { key: "blood", placeholder: "Blood Group" }
+                    ].map((field) => (
+                        <input
+                            key={field.key}
+                            type="text"
+                            placeholder={field.placeholder}
+                            value={(student as any)[field.key]}
+                            onChange={(e) =>
+                                setStudent({ ...student, [field.key]: e.target.value })
+                            }
+                            className="w-full border p-2 rounded"
+                        />
+                    ))}
 
-                    <input
-                        type="text"
-                        placeholder="School Name"
-                        value={student.school}
-                        onChange={(e) =>
-                            setStudent({ ...student, school: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-
-                    <input
-                        type="text"
-                        placeholder="Student Name"
-                        value={student.name}
-                        onChange={(e) =>
-                            setStudent({ ...student, name: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-
-                    <input
-                        type="text"
-                        placeholder="Class"
-                        value={student.class}
-                        onChange={(e) =>
-                            setStudent({ ...student, class: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-
-                    <input
-                        type="text"
-                        placeholder="Sec"
-                        value={student.sec}
-                        onChange={(e) =>
-                            setStudent({ ...student, sec: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-
-                    <input
-                        type="text"
-                        placeholder="Roll"
-                        value={student.roll}
-                        onChange={(e) =>
-                            setStudent({ ...student, roll: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Father's Name"
-                        value={student.father}
-                        onChange={(e) =>
-                            setStudent({ ...student, father: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Mother's Name"
-                        value={student.mother}
-                        onChange={(e) =>
-                            setStudent({ ...student, mother: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
+                    {/* DOB */}
                     <input
                         type="date"
-                        placeholder="D.O.B"
                         value={student.dob}
                         onChange={(e) =>
                             setStudent({ ...student, dob: e.target.value })
                         }
                         className="w-full border p-2 rounded"
                     />
-                    <input
-                        type="text"
-                        placeholder="Address"
-                        value={student.address}
-                        onChange={(e) =>
-                            setStudent({ ...student, address: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Phone No."
-                        value={student.phone}
-                        onChange={(e) =>
-                            setStudent({ ...student, phone: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Blood Group"
-                        value={student.blood}
-                        onChange={(e) =>
-                            setStudent({ ...student, blood: e.target.value })
-                        }
-                        className="w-full border p-2 rounded"
-                    />
 
-                    <div className="flex gap-4 mt-4">
+                    {/* 🔥 BUTTONS */}
+                    <div className="flex flex-wrap gap-3 mt-4">
+
                         <button
                             onClick={async () => {
                                 if (!cardRef.current) return;
-
                                 const canvas = await html2canvas(cardRef.current);
                                 const link = document.createElement("a");
-
                                 link.download = "id-card.png";
                                 link.href = canvas.toDataURL();
                                 link.click();
                             }}
-                            className="bg-gradient-to-tr from-green-800 to-green-500 text-white px-4 py-2 rounded"
+                            className="bg-green-600 text-white px-4 py-2 rounded"
                         >
-                            Download ID Card
+                            Download
                         </button>
 
                         <button
                             onClick={handleSave}
-                            className="bg-gradient-to-tr from-blue-900 to-blue-500 text-white px-4 py-2 rounded"
+                            className="bg-blue-600 text-white px-4 py-2 rounded"
                         >
                             {loading ? "Saving..." : "Save"}
                         </button>
 
                         <button
                             onClick={handleUpdate}
-                            className="bg-gradient-to-tr from-yellow-800 to-yellow-500 text-white px-4 py-2 rounded"
+                            className="bg-yellow-600 text-white px-4 py-2 rounded"
                         >
                             {updateloading ? "Updating..." : "Update"}
                         </button>
 
                         <button
                             onClick={handleDelete}
-                            className="bg-gradient-to-tr from-red-800 to-red-500 text-white px-4 py-2 rounded"
+                            className="bg-red-600 text-white px-4 py-2 rounded"
                         >
                             Delete
                         </button>
                     </div>
-
                 </div>
 
-                {/* PREVIEW */}
-                <div className="flex flex-col items-start">
+                {/* 🔥 RIGHT SIDE (PREVIEW) */}
+                <div className="flex flex-col items-center md:items-start">
 
-                    {/* TOP BUTTONS */}
-                    <div className="flex gap-4 mb-4">
+                    {/* BUTTONS */}
+                    <div className="flex flex-wrap gap-3 mb-4 justify-center md:justify-start">
                         <Link href="/dashboard/bulk-upload">
                             <button className="bg-purple-600 text-white px-4 py-2 rounded">
                                 Bulk Upload
@@ -722,14 +628,14 @@ export default function CreateIDPage() {
                             onClick={handleBulkDownload}
                             className="bg-purple-600 text-white px-4 py-2 rounded"
                         >
-                            Download All ID Cards
+                            Download All
                         </button>
                     </div>
 
-                    {/* CARD PREVIEW */}
+                    {/* CARD */}
                     <div
                         ref={cardRef}
-                        className="border shadow-md overflow-hidden"
+                        className="border shadow-md overflow-hidden mx-auto md:mx-0"
                         style={{
                             width: "300px",
                             height: "476px",
@@ -745,9 +651,8 @@ export default function CreateIDPage() {
                             school={school}
                         />
                     </div>
-
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
