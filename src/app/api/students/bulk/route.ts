@@ -96,7 +96,7 @@ export async function POST(req: Request) {
                             `data:${mimeType};base64,${base64}`,
                             {
                                 folder: "students",
-                                gravity: "face",
+                                gravity: "auto : face",
                                 crop: "fill",
                                 width: 300,
                                 height: 400,
