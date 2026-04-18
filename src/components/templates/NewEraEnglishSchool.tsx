@@ -48,10 +48,10 @@ export default function Template7({
                 />
             )}
 
-            <div
-                className="absolute top-[250px] left-0 w-full text-center text-white font-bold text-[14px] tracking-wide py-1 z-10"
-            >
-                {student.name || "----"}
+            <div className="absolute top-[253px] left-0 w-full flex justify-center">
+                <span className="text-white font-bold text-[14px] tracking-wide">
+                    {student.name || "----"}
+                </span>
             </div>
 
             <div className="absolute top-[295px] left-[20px] text-[13px] font-bold text-blue-800 leading-tight space-y-[2px]">

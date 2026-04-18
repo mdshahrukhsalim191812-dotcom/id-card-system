@@ -196,19 +196,6 @@ export default function CreateIDPage() {
         setCameraOn(false);
     };
 
-    useEffect(() => {
-        if (cameraOn && videoRef.current) {
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(stream => {
-                    videoRef.current!.srcObject = stream;
-                    videoRef.current!.play();
-                })
-                .catch(() => {
-                    alert("Camera not accessible ❌");
-                });
-        }
-    }, [cameraOn]);
-
     const handleSave = async () => {
         try {
             if (!student.name || !student.class || !student.roll || !student.father || !student.mother || !student.phone || !student.address || !student.dob || !student.school) {
@@ -718,7 +705,19 @@ export default function CreateIDPage() {
                         <button
                             onClick={async () => {
                                 if (!cardRef.current) return;
-                                const canvas = await html2canvas(cardRef.current);
+
+                                // 🔥 wait for layout to settle
+                                await new Promise((res) => setTimeout(res, 300));
+
+                                const canvas = await html2canvas(cardRef.current, {
+                                    scale: 3,
+                                    useCORS: true,
+                                    width: 300,
+                                    height: 476,
+                                    windowWidth: 300,
+                                    windowHeight: 476,
+                                });
+
                                 const link = document.createElement("a");
                                 link.download = "id-card.png";
                                 link.href = canvas.toDataURL();

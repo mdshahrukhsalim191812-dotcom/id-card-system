@@ -85,7 +85,6 @@ const TemplateRenderer = forwardRef(
                     minHeight: "476px",
                     maxWidth: "300px",
                     maxHeight: "476px",
-                    transform: "scale(1)",
                     transformOrigin: "top left",
                     overflow: "hidden",
                 }}
