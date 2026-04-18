@@ -137,58 +137,77 @@ export default function CreateIDPage() {
 
     const startCamera = async () => {
         try {
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: true,
-            });
+            setCameraOn(true); // 🔥 FIRST render video
 
-            if (videoRef.current) {
-                videoRef.current.srcObject = stream;
-            }
+            // wait for video to mount
+            setTimeout(async () => {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({
+                        video: true,
+                    });
 
-            setCameraOn(true);
+                    if (videoRef.current) {
+                        videoRef.current.srcObject = stream;
+                        await videoRef.current.play();
+                    }
+
+                } catch (err) {
+                    console.error(err);
+                    alert("Camera not accessible ❌");
+                }
+            }, 300); // small delay
+
         } catch (err) {
             console.error(err);
-            alert("Camera not accessible ❌");
         }
     };
 
     const capturePhoto = () => {
+        if (!videoRef.current) return;
+
         const video = videoRef.current;
-        const canvas = canvasRef.current;
 
-        if (!video || !canvas) return;
-
-        const ctx = canvas.getContext("2d");
-
+        const canvas = document.createElement("canvas");
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
 
-        ctx?.drawImage(video, 0, 0);
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
         const imageData = canvas.toDataURL("image/png");
+
         setImage(imageData);
 
-        // ✅ SAFE CAMERA STOP (FIXED)
-        const stream = video.srcObject as MediaStream | null;
+        stopCamera(); // 🔥 stop safely
+    };
+
+    const stopCamera = () => {
+        if (!videoRef.current) return;
+
+        const stream = videoRef.current.srcObject as MediaStream | null;
 
         if (stream) {
             stream.getTracks().forEach((track) => track.stop());
+            videoRef.current.srcObject = null;
         }
-
-        video.srcObject = null; // 🔥 IMPORTANT
 
         setCameraOn(false);
     };
 
     useEffect(() => {
-        return () => {
-            const video = videoRef.current;
-            if (video && video.srcObject) {
-                const stream = video.srcObject as MediaStream;
-                stream.getTracks().forEach(track => track.stop());
-            }
-        };
-    }, []);
+        if (cameraOn && videoRef.current) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    videoRef.current!.srcObject = stream;
+                    videoRef.current!.play();
+                })
+                .catch(() => {
+                    alert("Camera not accessible ❌");
+                });
+        }
+    }, [cameraOn]);
 
     const handleSave = async () => {
         try {
@@ -610,15 +629,19 @@ export default function CreateIDPage() {
                                 <video
                                     ref={videoRef}
                                     autoPlay
+                                    playsInline
+                                    muted
                                     className="w-full rounded border shadow"
                                 />
 
-                                <button
-                                    onClick={capturePhoto}
-                                    className="w-full bg-green-600 text-white py-2 rounded shadow hover:brightness-110 active:scale-95 transition"
-                                >
-                                    Capture Photo
-                                </button>
+                                {cameraOn && (
+                                    <button
+                                        onClick={capturePhoto}
+                                        className="w-full mt-3 bg-green-600 text-white py-2 rounded-lg"
+                                    >
+                                        Capture Photo
+                                    </button>
+                                )}
                             </div>
                         )}
 
@@ -689,7 +712,7 @@ export default function CreateIDPage() {
                     />
 
                     {/* 🔥 BUTTONS */}
-                    <div className="flex flex-wrap gap-3 mt-4">
+                    <div className="flex flex-wrap gap-3 mt-4 justify-center md:justify-center">
 
                         {/* DOWNLOAD */}
                         <button
@@ -710,7 +733,14 @@ export default function CreateIDPage() {
                         <button
                             onClick={handleSave}
                             disabled={loading}
-                            className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200 disabled:opacity-50"
+                            className="
+    bg-gradient-to-r from-blue-600 to-blue-500 text-white 
+    px-3 py-1.5 text-sm rounded-md 
+    sm:px-4 sm:py-2 sm:text-base sm:rounded-lg
+    shadow-md hover:shadow-lg hover:brightness-110 
+    active:scale-95 transition-all duration-200 
+    disabled:opacity-50
+    "
                         >
                             {loading ? "Saving..." : "Save"}
                         </button>

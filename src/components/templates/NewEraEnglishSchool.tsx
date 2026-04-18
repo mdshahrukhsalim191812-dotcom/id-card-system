@@ -48,11 +48,13 @@ export default function Template7({
                 />
             )}
 
-            <div className="absolute top-[248px] left-1/2 -translate-x-1/2 w-[200px] text-center text-white font-bold text-sm py-1 rounded z-10">
+            <div
+                className="absolute top-[250px] left-0 w-full text-center text-white font-bold text-[14px] tracking-wide py-1 z-10"
+            >
                 {student.name || "----"}
             </div>
 
-            <div className="absolute top-[270px] left-[20px] text-[13px] font-bold text-blue-800 leading-tight space-y-[2px]">
+            <div className="absolute top-[295px] left-[20px] text-[13px] font-bold text-blue-800 leading-tight space-y-[2px]">
                 <p>Class : {student.class || "-"}</p>
                 <p>D.O.B : {formatDate(student.dob) || "-"}</p>
                 <p>F. Name : {student.father || "-"}</p>
@@ -61,7 +63,7 @@ export default function Template7({
                 <p>Address : {student.address || "-"}</p>
             </div>
 
-            <div className="absolute top-[266px] right-[20px] text-[13px] font-bold text-blue-800">
+            <div className="absolute top-[291px] right-[20px] text-[13px] font-bold text-blue-800">
                 <p className="relative top-[2px]">Sec : {student.sec || "-"}</p>
                 <p>Roll No : {student.roll || "-"}</p>
             </div>
