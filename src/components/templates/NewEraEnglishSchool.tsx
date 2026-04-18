@@ -48,7 +48,7 @@ export default function Template7({
                 />
             )}
 
-            <div className="absolute top-[253px] left-0 w-full flex justify-center">
+            <div className="absolute top-[247px] left-0 w-full flex justify-center">
                 <span className="text-white font-bold text-[14px] tracking-wide">
                     {student.name || "----"}
                 </span>
