@@ -36,7 +36,7 @@ export default function Template7({
                 <img
                     src={image}
                     alt="student"
-                    className="absolute top-[112.5px] left-[97.5px] w-[104.5px] h-[128.9px] object-cover rounded-[10px] border"
+                    className="absolute top-[111px] left-[96.5px] w-[107px] h-[132px] object-cover rounded-[10px] border"
                 />
             )}
 
