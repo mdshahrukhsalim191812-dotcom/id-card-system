@@ -733,7 +733,7 @@ export default function CreateIDPage() {
                                 link.href = canvas.toDataURL();
                                 link.click();
                             }}
-                            className="bg-gradient-to-r from-green-600 to-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200"
+                            className="bg-gradient-to-r from-green-800 to-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200"
                         >
                             Download
                         </button>
@@ -743,7 +743,7 @@ export default function CreateIDPage() {
                             onClick={handleSave}
                             disabled={loading}
                             className="
-                            bg-gradient-to-r from-blue-600 to-blue-500 text-white 
+                            bg-gradient-to-r from-blue-900 to-blue-500 text-white 
                             px-3 py-1.5 text-sm rounded-md 
                             sm:px-4 sm:py-2 sm:text-base sm:rounded-lg
                             shadow-md hover:shadow-lg hover:brightness-110 
@@ -766,7 +766,7 @@ export default function CreateIDPage() {
                         {/* DELETE */}
                         <button
                             onClick={handleDelete}
-                            className="bg-gradient-to-r from-red-600 to-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200"
+                            className="bg-gradient-to-r from-red-800 to-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200"
                         >
                             Delete
                         </button>
@@ -780,14 +780,14 @@ export default function CreateIDPage() {
                     <div className="flex flex-wrap gap-3 mb-4 justify-center md:justify-start">
 
                         <Link href="/dashboard/bulk-upload">
-                            <button className="bg-gradient-to-r from-purple-600 to-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all">
+                            <button className="bg-gradient-to-r from-purple-900 to-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all">
                                 Bulk Upload
                             </button>
                         </Link>
 
                         <button
                             onClick={handleBulkDownload}
-                            className="bg-gradient-to-r from-purple-700 to-purple-600 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all"
+                            className="bg-gradient-to-r from-purple-900 to-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all"
                         >
                             Download All
                         </button>
