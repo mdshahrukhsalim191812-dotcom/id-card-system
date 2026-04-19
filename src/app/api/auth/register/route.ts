@@ -34,7 +34,7 @@ export async function POST(req: Request) {
 
         else if (body.name.toLowerCase().includes("bal bharti")) {
             templateId = "BalBhartiSchool";
-            templateImage = "/templates/bal-bharti.jpeg";
+            templateImage = "/templates/bal-bharti2.jpg";
         }
 
         else if (body.name.toLowerCase().includes("school a")) {

@@ -26,7 +26,7 @@ export default function Template7({
             id="card"
             className="relative w-[300px] h-[476px] bg-cover bg-center border overflow-hidden"
             style={{
-                backgroundImage: `url(${school?.templateImage || "/templates/bal-bharti.jpeg"})`,
+                backgroundImage: `url(${"/templates/bal-bharti.jpeg"})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center"
             }}
@@ -48,23 +48,23 @@ export default function Template7({
                 />
             )}
 
-            <div className="absolute top-[270px] left-[20px] text-[13.5px] font-bold text-indigo-900 leading-tight space-y-[2px]" style={{ fontFamily: "Arial Narrow, Arial, sans-serif" }}>
-                <p className="relative top-[-54px] right-[2px]">Class : <span className="text-black">{student.class || "-"}</span> </p>
-                <p className="relative top-[-58px] right-[2px]">Sec : {student.sec || "-"}</p>
-                <p className="relative top-[-61px] right-[2px]">Roll No : {student.roll || "-"}</p>
-                <p className="relative top-[-65px] right-[2px]">D.O.B : {formatDate(student.dob) || "-"}</p>
+            <div className="absolute top-[270px] left-[20px] text-[13px] font-bold text-indigo-900 leading-tight space-y-[2px]" style={{ fontFamily: "Arial Narrow, Arial, sans-serif" }}>
+                <p className="relative top-[-35px] left-[3.5px]">Class <span className="text-black">: {student.class || "-"}</span> </p>
+                <p className="relative top-[-37px] left-[3.5px]">Sec <span className="text-black">: {student.sec || "-"}</span></p>
+                <p className="relative top-[-39.5px] left-[3.5px]">Roll No  <span className="text-black">: {student.roll || "-"}</span></p>
+                <p className="relative top-[-42px] left-[3.5px]">D.O.B  <span className="text-black">: {formatDate(student.dob) || "-"}</span></p>
             </div>
 
-            <div className="absolute top-[276px] left-1/2 -translate-x-1/2 w-[220px] text-center text-black font-bold text-[18px] py-1 rounded">
+            <div className="absolute top-[298px] left-1/2 -translate-x-1/2 w-[220px] text-center text-black font-bold text-[20px] py-1 rounded">
                 {student.name || "----"}
             </div>
 
-            <div className="absolute top-[290px] left-[20px] text-[13.5px] font-bold text-indigo-900" style={{fontFamily:"Arial Narrow, Arial, sans serif"}}>
-                <p className="relative bottom-[-20.5px] right-[2.9px]">Admn. No : {student.admissionNo || "-"}</p>
-                <p className="relative bottom-[-16.5px] right-[2.9px]">F. Name : {student.father || "-"}</p>
-                <p className="relative bottom-[-11.5px] right-[2.9px]">M. Name : {student.mother || "-"}</p>
-                <p className="relative bottom-[-7px] right-[2.9px]">Ph. No. : {student.phone || "-"}</p>
-                <p className="relative bottom-[-2px] w-[195px] right-[2.9px] leading-tight">Address : {student.address || "-"}</p>
+            <div className="absolute top-[290px] left-[20px] text-[13px] font-bold text-indigo-900" style={{ fontFamily: "Arial Narrow, Arial, sans serif" }}>
+                <p className="relative bottom-[-47.5px] left-[3px]">Admn. No <span className="text-black">: {student.admissionNo || "-"}</span></p>
+                <p className="relative bottom-[-44px] left-[3px]">F. Name  <span className="text-black">: {student.father || "-"}</span></p>
+                <p className="relative bottom-[-40.5px] left-[3px]">M. Name  <span className="text-black">: {student.mother || "-"}</span></p>
+                <p className="relative bottom-[-37px] left-[3px]">Ph. No.  <span className="text-black">: {student.phone || "-"}</span></p>
+                <p className="relative bottom-[-35px] w-[195px] left-[3px] leading-tight">Address  <span className="text-black">: {student.address || "-"}</span></p>
             </div>
 
             {signature && (
