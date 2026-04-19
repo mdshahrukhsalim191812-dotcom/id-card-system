@@ -7,6 +7,8 @@ import TemplateRenderer from "@/components/TemplateRenderer";
 import BulkUploadPage from "../bulk-upload/page";
 import jsPDF from "jspdf";
 import Link from "next/link";
+import { getCroppedImg } from "@/lib/cropImage";
+import ImageCropper from "@/components/ImageCropper";
 
 export default function CreateIDPage() {
     const [student, setStudent] = useState({
@@ -67,6 +69,10 @@ export default function CreateIDPage() {
     const [cameraOn, setCameraOn] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const [cropImageSrc, setCropImageSrc] = useState<string | null>(null);
+    const [croppedArea, setCroppedArea] = useState(null);
+    const [showCrop, setShowCrop] = useState(false);
 
     const fetchStudents = async () => {
         try {
@@ -178,7 +184,8 @@ export default function CreateIDPage() {
 
         const imageData = canvas.toDataURL("image/png");
 
-        setImage(imageData);
+        setCropImageSrc(imageData);
+        setShowCrop(true);
 
         stopCamera(); // 🔥 stop safely
     };
@@ -596,7 +603,10 @@ export default function CreateIDPage() {
                                 const file = e.target.files?.[0];
                                 if (file) {
                                     const reader = new FileReader();
-                                    reader.onloadend = () => setImage(reader.result as string);
+                                    reader.onloadend = () => {
+                                        setCropImageSrc(reader.result as string);
+                                        setShowCrop(true); // open cropper
+                                    };
                                     reader.readAsDataURL(file);
                                 }
                             }}
@@ -733,13 +743,13 @@ export default function CreateIDPage() {
                             onClick={handleSave}
                             disabled={loading}
                             className="
-    bg-gradient-to-r from-blue-600 to-blue-500 text-white 
-    px-3 py-1.5 text-sm rounded-md 
-    sm:px-4 sm:py-2 sm:text-base sm:rounded-lg
-    shadow-md hover:shadow-lg hover:brightness-110 
-    active:scale-95 transition-all duration-200 
-    disabled:opacity-50
-    "
+                            bg-gradient-to-r from-blue-600 to-blue-500 text-white 
+                            px-3 py-1.5 text-sm rounded-md 
+                            sm:px-4 sm:py-2 sm:text-base sm:rounded-lg
+                            shadow-md hover:shadow-lg hover:brightness-110 
+                            active:scale-95 transition-all duration-200 
+                            disabled:opacity-50
+                            "
                         >
                             {loading ? "Saving..." : "Save"}
                         </button>
@@ -786,7 +796,7 @@ export default function CreateIDPage() {
                     {/* CARD */}
                     <div
                         ref={cardRef}
-                        className="border shadow-xl overflow-hidden mx-auto md:mx-0 hover:shadow-2xl transition duration-300"
+                        className="border shadow-xl overflow-hidden md:mx-0 hover:shadow-2xl transition duration-300"
                         style={{
                             width: "300px",
                             height: "476px",
@@ -804,6 +814,29 @@ export default function CreateIDPage() {
                     </div>
                 </div>
             </div>
+            {showCrop && cropImageSrc && (
+                <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+                    <div className="bg-white p-4 rounded-lg w-[90%] max-w-md">
+
+                        <ImageCropper
+                            image={cropImageSrc}
+                            onCropComplete={(area: any) => setCroppedArea(area)}
+                        />
+
+                        <button
+                            onClick={async () => {
+                                const cropped = await getCroppedImg(cropImageSrc, croppedArea);
+                                setImage(cropped as string);
+                                setShowCrop(false);
+                            }}
+                            className="mt-3 w-full bg-green-600 text-white py-2 rounded"
+                        >
+                            Crop & Use Image
+                        </button>
+
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
