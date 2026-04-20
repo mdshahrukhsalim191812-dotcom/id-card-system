@@ -366,7 +366,7 @@ export default function BulkUploadPage() {
                         className="max-w-[90%] max-h-[90%] rounded-lg shadow-2xl"
                     />
                 </div>
-            )}
+            )} 
         </div>
     );
 }
