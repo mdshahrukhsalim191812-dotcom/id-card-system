@@ -61,6 +61,7 @@ export default function CreateIDPage() {
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [school, setSchool] = useState<any>(null);
     const [form, setForm] = useState<any>(null);
+    const [loadingPage, setLoadingPage] = useState(true);
 
     const templateId = school?.templateId;
 
@@ -76,6 +77,8 @@ export default function CreateIDPage() {
 
     const fetchStudents = async () => {
         try {
+            setLoadingPage(true); // 🔥 START LOADING
+
             const res = await fetch("/api/students", {
                 credentials: "include"
             });
@@ -95,7 +98,7 @@ export default function CreateIDPage() {
                 setStudents(data);
             } else {
                 console.error("Not array:", data);
-                setStudents([]); // fallback
+                setStudents([]);
                 toast.error(data.message || "Failed to fetch students");
             }
 
@@ -103,6 +106,8 @@ export default function CreateIDPage() {
             console.error(error);
             setStudents([]);
             toast.error("Fetch error!");
+        } finally {
+            setLoadingPage(false); // 🔥 STOP LOADING
         }
     };
 
@@ -518,6 +523,25 @@ export default function CreateIDPage() {
         // 💾 SAVE FILE
         pdf.save(`${school?.name || "ID"} ID Cards.pdf`);
     };
+
+    if (loadingPage) {
+        return (
+            <div className="fixed inset-0 bg-gradient-to-br from-blue-900 via-blue-700 to-blue-500 flex flex-col items-center justify-center text-white z-50">
+
+                <h1 className="text-2xl font-bold mb-4">
+                    <img className="w-[90px] h-[90px]" src="/genix-logo.png" alt="logo" />
+                </h1>
+
+                <div className="w-[40px] h-[40px] border-4 border-white border-t-transparent rounded-full animate-spin">
+
+                </div>
+
+                <p className="mt-4 text-sm opacity-80">
+                    Loading your dashboard...
+                </p>
+            </div>
+        );
+    }
 
     return (
         <div className="p-4 md:p-6">

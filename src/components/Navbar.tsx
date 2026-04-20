@@ -41,10 +41,10 @@ export default function Navbar() {
 
                     {/* 🔥 CTA BUTTON */}
                     <Link
-                        href="/dashboard/create-id"
+                        href="/login"
                         className="bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-2 rounded-lg text-white font-semibold shadow hover:scale-105 hover:brightness-110 transition"
                     >
-                        Create ID
+                        Login
                     </Link>
 
                 </div>
