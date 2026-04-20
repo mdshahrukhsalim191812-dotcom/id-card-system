@@ -15,6 +15,9 @@ export default function BulkUploadPage() {
     const [imageProgress, setImageProgress] = useState(0);
     const [totalImages, setTotalImages] = useState(0);
 
+    const [dragActive, setDragActive] = useState(false);
+    const [lastFileName, setLastFileName] = useState("");
+
     const [showImage, setShowImage] = useState(false);
 
     const xhrRef = useRef<XMLHttpRequest | null>(null);
@@ -23,16 +26,39 @@ export default function BulkUploadPage() {
 
     const router = useRouter();
 
-    // 📂 DRAG DROP
-    const handleDrop = (e: React.DragEvent) => {
-        e.preventDefault();
-        const droppedFile = e.dataTransfer.files[0];
-        if (droppedFile) {
-            setFile(droppedFile);
-            toast.success("File selected 👍");
-        }
+    // 🔥 RESET
+    const resetFiles = () => {
+        setFile(null);
+        setZipFile(null);
+        setLastFileName("");
+
+        if (fileRef.current) fileRef.current.value = "";
+        if (zipRef.current) zipRef.current.value = "";
     };
 
+    // 📂 DRAG
+    const handleDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        setDragActive(false);
+
+        const droppedFile = e.dataTransfer.files[0];
+        if (!droppedFile) return;
+
+        if (droppedFile.name === lastFileName) {
+            toast.error("Same file already selected ❌");
+            return;
+        }
+
+        setFile(droppedFile);
+        setLastFileName(droppedFile.name);
+        toast.success("File selected 👍");
+    };
+
+    const formatSize = (size: number) => {
+        return (size / 1024 / 1024).toFixed(2) + " MB";
+    };
+
+    // 🚀 UPLOAD
     const handleUpload = () => {
         if (!file) {
             toast.error("Select Excel file ❌");
@@ -72,6 +98,8 @@ export default function BulkUploadPage() {
                 setUploading(false);
                 setProcessing(true);
 
+                toast.success("Upload successful ✅");
+
                 const total = data.inserted || 10;
                 setTotalImages(total);
 
@@ -83,6 +111,9 @@ export default function BulkUploadPage() {
 
                     if (count >= total) {
                         clearInterval(interval);
+
+                        resetFiles();
+
                         setTimeout(() => {
                             router.push("/dashboard/create-id");
                         }, 800);
@@ -92,6 +123,7 @@ export default function BulkUploadPage() {
             } else {
                 setUploading(false);
                 setProgress(0);
+                resetFiles();
                 toast.error(data.message || "Upload failed ❌");
             }
         };
@@ -99,6 +131,7 @@ export default function BulkUploadPage() {
         xhr.onerror = () => {
             setUploading(false);
             setProgress(0);
+            resetFiles();
             toast.error("Server error ❌");
         };
 
@@ -107,36 +140,40 @@ export default function BulkUploadPage() {
 
     const handleCancel = () => {
         xhrRef.current?.abort();
+
         setUploading(false);
         setProcessing(false);
         setProgress(0);
+
+        resetFiles();
         toast("Upload cancelled ❌");
     };
 
     return (
-        <div className="p-6 max-w-5xl mx-auto">
-            <h1 className="text-3xl font-bold mb-8 text-center">
-                Bulk Upload Students
+        <div className="p-4 md:p-6 max-w-6xl mx-auto">
+
+            <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center">
+                Bulk Upload Students 🚀
             </h1>
 
-            {/* 🔥 GRID LAYOUT */}
             {!uploading && !processing && (
                 <div className="grid md:grid-cols-2 gap-6">
 
-                    {/* LEFT SIDE (GUIDE) */}
-                    <div className="bg-white p-4 rounded-xl shadow">
-                        <p className="text-sm font-semibold mb-3 text-gray-700">
-                            📌 Excel Format (Click to zoom)
+                    {/* LEFT GUIDE */}
+                    <div className="bg-white p-5 rounded-2xl shadow-md">
+                        <p className="font-semibold mb-3 text-gray-700">
+                            📌 Excel Format
                         </p>
 
+                        {/* 🔥 IMAGE WITH HOVER + CLICK */}
                         <div
                             onClick={() => setShowImage(true)}
-                            className="border rounded-lg overflow-hidden cursor-pointer hover:scale-[1.2] transition"
+                            className="overflow-hidden rounded-lg cursor-pointer group"
                         >
                             <img
                                 src="/excel format.jpeg"
                                 alt="Excel Format"
-                                className="w-full object-contain"
+                                className="w-full rounded-lg shadow transition-transform duration-300 group-hover:scale-110"
                             />
                         </div>
 
@@ -144,56 +181,128 @@ export default function BulkUploadPage() {
                         <a
                             href="/sample.xlsx"
                             download
-                            className="block mt-4 text-center bg-green-600 text-white py-2 rounded hover:bg-green-700"
+                            className="block mt-4 text-center bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
                         >
-                            📥 Download Sample Excel
+                            📥 Download Sample
                         </a>
                     </div>
 
-                    {/* RIGHT SIDE (UPLOAD) */}
-                    <div className="bg-white p-4 rounded-xl shadow">
+                    {/* RIGHT UPLOAD */}
+                    <div className="bg-white p-5 rounded-2xl shadow-md">
 
-                        {/* DRAG DROP */}
+                        {/* DRAG AREA */}
                         <div
-                            onDragOver={(e) => e.preventDefault()}
+                            onDragOver={(e) => {
+                                e.preventDefault();
+                                setDragActive(true);
+                            }}
+                            onDragLeave={() => setDragActive(false)}
                             onDrop={handleDrop}
-                            className="mb-4 border-2 border-dashed border-blue-400 p-6 rounded text-center"
+                            className={`border-2 border-dashed p-6 text-center rounded-lg transition ${dragActive
+                                ? "border-blue-600 bg-blue-50"
+                                : "border-gray-300"
+                                }`}
                         >
-                            Drag & Drop Excel Here 📂
+                            Drag & Drop Excel 📂
                         </div>
 
-                        {/* FILE INPUT */}
-                        <div className="mb-4">
-                            <label className="font-semibold">Excel File</label>
+                        {/* 🔥 EXCEL INPUT */}
+                        <div className="mt-4">
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">
+                                Excel File
+                            </label>
+
                             <input
                                 ref={fileRef}
                                 type="file"
                                 accept=".xlsx,.xls"
-                                onChange={(e) =>
-                                    setFile(e.target.files?.[0] || null)
-                                }
-                                className="border p-2 w-full rounded mt-1"
+                                onChange={(e) => {
+                                    const selected = e.target.files?.[0];
+                                    if (!selected) return;
+
+                                    if (selected.name === lastFileName) {
+                                        toast.error("Same file ❌");
+                                        return;
+                                    }
+
+                                    setFile(selected);
+                                    setLastFileName(selected.name);
+                                }}
+                                className="w-full border p-2 rounded-md"
                             />
+
+                            {/* EXCEL PREVIEW */}
+                            {file && (
+                                <div className="mt-3 bg-gray-100 p-3 rounded flex justify-between items-center">
+                                    <div>
+                                        <p className="text-sm font-semibold">{file.name}</p>
+                                        <p className="text-xs text-gray-500">
+                                            {formatSize(file.size)}
+                                        </p>
+                                    </div>
+
+                                    <button
+                                        onClick={() => {
+                                            setFile(null);
+                                            setLastFileName("");
+                                            if (fileRef.current) fileRef.current.value = "";
+                                        }}
+                                        className="text-red-500 font-bold text-lg"
+                                    >
+                                        ✖
+                                    </button>
+                                </div>
+                            )}
                         </div>
 
-                        <div className="mb-4">
-                            <label className="font-semibold">Images ZIP</label>
+                        {/* 🔥 ZIP INPUT */}
+                        <div className="mt-4">
+                            <label className="block text-sm font-semibold text-gray-700 mb-1">
+                                Images ZIP (Optional)
+                            </label>
+
                             <input
                                 ref={zipRef}
                                 type="file"
                                 accept=".zip"
-                                onChange={(e) =>
-                                    setZipFile(e.target.files?.[0] || null)
-                                }
-                                className="border p-2 w-full rounded mt-1"
+                                onChange={(e) => {
+                                    const selected = e.target.files?.[0];
+                                    if (!selected) return;
+
+                                    setZipFile(selected);
+                                }}
+                                className="w-full border p-2 rounded-md"
                             />
+
+                            {/* ZIP PREVIEW */}
+                            {zipFile && (
+                                <div className="mt-3 bg-gray-100 p-3 rounded flex justify-between items-center">
+                                    <div>
+                                        <p className="text-sm font-semibold">{zipFile.name}</p>
+                                        <p className="text-xs text-gray-500">
+                                            {formatSize(zipFile.size)}
+                                        </p>
+                                    </div>
+
+                                    <button
+                                        onClick={() => {
+                                            setZipFile(null);
+                                            if (zipRef.current) zipRef.current.value = "";
+                                        }}
+                                        className="text-red-500 font-bold text-lg"
+                                    >
+                                        ✖
+                                    </button>
+                                </div>
+                            )}
                         </div>
 
+                        {/* 🔥 BUTTON */}
                         <button
                             onClick={handleUpload}
                             disabled={!file}
-                            className={`w-full py-2 rounded text-white font-semibold ${!file
-                                ? "bg-gray-400"
+                            className={`w-full mt-5 py-2.5 rounded-lg text-white font-semibold transition ${!file
+                                ? "bg-gray-400 cursor-not-allowed"
                                 : "bg-blue-600 hover:bg-blue-700"
                                 }`}
                         >
@@ -205,60 +314,56 @@ export default function BulkUploadPage() {
 
             {/* UPLOADING */}
             {uploading && (
-                <div className="mt-10 text-center">
-                    <p className="text-lg font-semibold mb-4">
-                        Uploading Files...
-                    </p>
+                <div className="text-center mt-10">
+                    <p className="font-semibold mb-3">Uploading...</p>
 
-                    <div className="w-full bg-gray-200 rounded-full h-5 overflow-hidden">
+                    <div className="w-full bg-gray-200 h-4 rounded-full">
                         <div
-                            className="bg-blue-600 h-5 transition-all"
+                            className="bg-blue-600 h-4 rounded-full transition-all"
                             style={{ width: `${progress}%` }}
                         />
                     </div>
 
-                    <p className="mt-3 text-sm">{progress}% uploaded</p>
+                    <p className="mt-2 text-sm">{progress}%</p>
 
                     <button
                         onClick={handleCancel}
-                        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                        className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
                     >
-                        Cancel Upload
+                        Cancel
                     </button>
                 </div>
             )}
 
             {/* PROCESSING */}
             {processing && (
-                <div className="mt-10 text-center">
-                    <p className="text-lg font-semibold mb-4">
-                        Processing Excel & Images...
+                <div className="text-center mt-10">
+                    <p className="font-semibold mb-3">
+                        Processing Images...
                     </p>
 
-                    <div className="w-full bg-gray-200 rounded-full h-5 overflow-hidden">
+                    <div className="w-full bg-gray-200 h-4 rounded-full">
                         <div
-                            className="bg-green-600 h-5 transition-all"
+                            className="bg-green-600 h-4 rounded-full"
                             style={{
                                 width: `${(imageProgress / totalImages) * 100}%`,
                             }}
                         />
                     </div>
 
-                    <p className="mt-3 text-sm">
-                        Uploading images ({imageProgress}/{totalImages})
+                    <p className="mt-2 text-sm">
+                        {imageProgress}/{totalImages}
                     </p>
                 </div>
             )}
-
-            {/* IMAGE ZOOM */}
             {showImage && (
                 <div
                     onClick={() => setShowImage(false)}
-                    className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+                    className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
                 >
                     <img
                         src="/excel format.jpeg"
-                        className="max-w-[90%] max-h-[90%] rounded shadow-lg"
+                        className="max-w-[90%] max-h-[90%] rounded-lg shadow-2xl"
                     />
                 </div>
             )}

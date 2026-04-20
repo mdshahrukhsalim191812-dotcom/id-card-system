@@ -536,8 +536,8 @@ export default function CreateIDPage() {
 
                 </div>
 
-                <p className="mt-4 text-sm opacity-80">
-                    Loading your dashboard...
+                <p className="mt-4 text-[20px] opacity-80">
+                    Loading your creation...
                 </p>
             </div>
         );
