@@ -9,6 +9,7 @@ import jsPDF from "jspdf";
 import Link from "next/link";
 import { getCroppedImg } from "@/lib/cropImage";
 import ImageCropper from "@/components/ImageCropper";
+import * as faceapi from "face-api.js";
 
 export default function CreateIDPage() {
     const [student, setStudent] = useState({
@@ -70,10 +71,6 @@ export default function CreateIDPage() {
     const [cameraOn, setCameraOn] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-
-    const [cropImageSrc, setCropImageSrc] = useState<string | null>(null);
-    const [croppedArea, setCroppedArea] = useState(null);
-    const [showCrop, setShowCrop] = useState(false);
 
     const fetchStudents = async () => {
         try {
@@ -146,6 +143,19 @@ export default function CreateIDPage() {
         }
     }, [school]);
 
+    useEffect(() => {
+        const loadModels = async () => {
+            const MODEL_URL = "/models";
+
+            await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+            await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+
+            console.log("Face Models Loaded ✅");
+        };
+
+        loadModels();
+    }, []);
+
     const startCamera = async () => {
         try {
             setCameraOn(true); // 🔥 FIRST render video
@@ -173,7 +183,7 @@ export default function CreateIDPage() {
         }
     };
 
-    const capturePhoto = () => {
+    const capturePhoto = async () => {
         if (!videoRef.current) return;
 
         const video = videoRef.current;
@@ -185,14 +195,16 @@ export default function CreateIDPage() {
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(video, 0, 0);
 
-        const imageData = canvas.toDataURL("image/png");
+        const rawImage = canvas.toDataURL("image/jpeg");
 
-        setCropImageSrc(imageData);
-        setShowCrop(true);
+        // 🔥 APPLY AI CROP HERE
+        const processed = await autoCropFace(rawImage);
 
-        stopCamera(); // 🔥 stop safely
+        setImage(processed);
+
+        stopCamera();
     };
 
     const stopCamera = () => {
@@ -206,6 +218,54 @@ export default function CreateIDPage() {
         }
 
         setCameraOn(false);
+    };
+
+    const autoCropFace = async (imageSrc: string) => {
+        const img = new Image();
+        img.src = imageSrc;
+
+        await new Promise((res) => (img.onload = res));
+
+        const detection = await faceapi
+            .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
+            .withFaceLandmarks();
+
+        if (!detection) {
+            console.log("No face detected ❌");
+            return imageSrc;
+        }
+
+        console.log
+
+        const { x, y, width, height } = detection.detection.box;
+
+        const padding = 0.6;
+
+        const cropX = Math.max(0, x - width * padding);
+        const cropY = Math.max(0, y - height * padding);
+
+        const cropW = Math.min(img.width - cropX, width * (1 + padding * 2));
+        const cropH = Math.min(img.height - cropY, height * (1 + padding * 2));
+
+        const canvas = document.createElement("canvas");
+        canvas.width = 300;
+        canvas.height = 400;
+
+        const ctx = canvas.getContext("2d");
+
+        ctx?.drawImage(
+            img,
+            cropX,
+            cropY,
+            cropW,
+            cropH,
+            0,
+            0,
+            300,
+            400
+        );
+
+        return canvas.toDataURL("image/jpeg", 0.9);
     };
 
     const handleSave = async () => {
@@ -627,9 +687,12 @@ export default function CreateIDPage() {
                                 const file = e.target.files?.[0];
                                 if (file) {
                                     const reader = new FileReader();
-                                    reader.onloadend = () => {
-                                        setCropImageSrc(reader.result as string);
-                                        setShowCrop(true); // open cropper
+                                    reader.onloadend = async () => {
+                                        const rawImage = reader.result as string;
+
+                                        const processed = await autoCropFace(rawImage);
+
+                                        setImage(processed); // 🔥 directly set cropped image
                                     };
                                     reader.readAsDataURL(file);
                                 }
@@ -838,29 +901,6 @@ export default function CreateIDPage() {
                     </div>
                 </div>
             </div>
-            {showCrop && cropImageSrc && (
-                <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-                    <div className="bg-white p-4 rounded-lg w-[90%] max-w-md">
-
-                        <ImageCropper
-                            image={cropImageSrc}
-                            onCropComplete={(area: any) => setCroppedArea(area)}
-                        />
-
-                        <button
-                            onClick={async () => {
-                                const cropped = await getCroppedImg(cropImageSrc, croppedArea);
-                                setImage(cropped as string);
-                                setShowCrop(false);
-                            }}
-                            className="mt-3 w-full bg-green-600 text-white py-2 rounded"
-                        >
-                            Crop & Use Image
-                        </button>
-
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
