@@ -10,6 +10,8 @@ import Link from "next/link";
 import { getCroppedImg } from "@/lib/cropImage";
 import ImageCropper from "@/components/ImageCropper";
 import * as faceapi from "face-api.js";
+import { removeBackground } from "@/lib/removeBg";
+import { addWhiteBackground } from "@/lib/addWhiteBg";
 
 export default function CreateIDPage() {
     const [student, setStudent] = useState({
@@ -200,9 +202,13 @@ export default function CreateIDPage() {
         const rawImage = canvas.toDataURL("image/jpeg");
 
         // 🔥 APPLY AI CROP HERE
-        const processed = await autoCropFace(rawImage);
+        const cropped = await autoCropFace(rawImage);
 
-        setImage(processed);
+        const noBg = await removeBackground(cropped);
+
+        const finalImage = await addWhiteBackground(noBg);
+
+        setImage(finalImage);
 
         stopCamera();
     };
@@ -266,6 +272,26 @@ export default function CreateIDPage() {
         );
 
         return canvas.toDataURL("image/jpeg", 0.9);
+    };
+
+    const removeBackground = async (base64Image: string) => {
+        const blob = await fetch(base64Image).then(res => res.blob());
+
+        const formData = new FormData();
+        formData.append("file", blob);
+
+        const res = await fetch("/api/remove-bg", {
+            method: "POST",
+            body: formData,
+        });
+
+        const resultBlob = await res.blob();
+
+        return await new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result as string);
+            reader.readAsDataURL(resultBlob);
+        });
     };
 
     const handleSave = async () => {
@@ -690,9 +716,13 @@ export default function CreateIDPage() {
                                     reader.onloadend = async () => {
                                         const rawImage = reader.result as string;
 
-                                        const processed = await autoCropFace(rawImage);
+                                        const cropped = await autoCropFace(rawImage);
 
-                                        setImage(processed); // 🔥 directly set cropped image
+                                        const noBg = await removeBackground(cropped);
+
+                                        const finalImage = await addWhiteBackground(noBg);
+
+                                        setImage(finalImage);
                                     };
                                     reader.readAsDataURL(file);
                                 }
