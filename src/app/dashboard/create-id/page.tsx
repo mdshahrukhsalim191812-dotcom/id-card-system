@@ -65,6 +65,7 @@ export default function CreateIDPage() {
     const [school, setSchool] = useState<any>(null);
     const [form, setForm] = useState<any>(null);
     const [loadingPage, setLoadingPage] = useState(true);
+    const [modelsLoaded, setModelsLoaded] = useState(false);
 
     const templateId = school?.templateId;
 
@@ -153,6 +154,8 @@ export default function CreateIDPage() {
             await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
 
             console.log("Face Models Loaded ✅");
+
+            setModelsLoaded(true); // 🔥 IMPORTANT
         };
 
         loadModels();
@@ -227,6 +230,12 @@ export default function CreateIDPage() {
     };
 
     const autoCropFace = async (imageSrc: string) => {
+        if (!modelsLoaded) {
+            console.log("Models not loaded yet ❌");
+            toast.error("AI loading... please wait ⏳");
+            return imageSrc;
+        }
+
         const img = new Image();
         img.src = imageSrc;
 
@@ -240,8 +249,6 @@ export default function CreateIDPage() {
             console.log("No face detected ❌");
             return imageSrc;
         }
-
-        console.log
 
         const { x, y, width, height } = detection.detection.box;
 
@@ -259,17 +266,7 @@ export default function CreateIDPage() {
 
         const ctx = canvas.getContext("2d");
 
-        ctx?.drawImage(
-            img,
-            cropX,
-            cropY,
-            cropW,
-            cropH,
-            0,
-            0,
-            300,
-            400
-        );
+        ctx?.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, 300, 400);
 
         return canvas.toDataURL("image/jpeg", 0.9);
     };
@@ -732,9 +729,13 @@ export default function CreateIDPage() {
                         {/* Camera Button */}
                         <button
                             onClick={startCamera}
-                            className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 py-1 rounded shadow hover:brightness-110 active:scale-95 transition mb-2"
+                            disabled={!modelsLoaded}
+                            className={`px-3 py-1 rounded shadow transition mb-2 
+                            ${modelsLoaded
+                                    ? "bg-blue-600 hover:brightness-110 text-white"
+                                    : "bg-gray-400 text-white cursor-not-allowed"}`}
                         >
-                            📸 Click Photo
+                            {modelsLoaded ? "📸 Click Photo" : "⏳ Loading AI..."}
                         </button>
 
                         {/* Camera Preview */}
