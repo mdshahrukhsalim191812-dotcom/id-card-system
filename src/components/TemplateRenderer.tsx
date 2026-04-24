@@ -4,6 +4,7 @@ import Template1 from "./templates/Template1";
 import Template2 from "./templates/Template2";
 import Template7 from "./templates/NewEraEnglishSchool";
 import BalBhartiSchool from "./templates/BalBhartiSchool";
+import HappyValleySchoolBhagalpur from "./templates/HappyValleySchoolBhagalpur";
 
 const TemplateRenderer = forwardRef(
     (
@@ -38,6 +39,19 @@ const TemplateRenderer = forwardRef(
             case "BalBhartiSchool":
                 content = (
                     <BalBhartiSchool
+                        student={student}
+                        image={image}
+                        logo={logo}
+                        signature={signature}
+                        formatDate={formatDate}
+                        school={school}
+                    />
+                );
+                break;
+
+            case "HappyValleySchoolBhagalpur":
+                content = (
+                    <HappyValleySchoolBhagalpur
                         student={student}
                         image={image}
                         logo={logo}

@@ -9,7 +9,7 @@ type Props = {
     school: any;
 };
 
-export default function Template7({
+export default function HappyValleySchoolBhagalpur({
     student,
     image,
     logo,
@@ -26,7 +26,7 @@ export default function Template7({
             id="card"
             className="relative w-[300px] h-[476px] bg-cover bg-center overflow-hidden"
             style={{
-                backgroundImage: `url(${school?.templateImage || "/templates/new-era.jpeg"})`,
+                backgroundImage: `url(${school?.templateImage || "/templates/happy-valley-school-bhagalpur.jpg"})`,
                 backgroundSize: "100% 100%",
                 backgroundPosition: "center"
             }}
