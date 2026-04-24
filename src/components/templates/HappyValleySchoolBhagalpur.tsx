@@ -21,7 +21,7 @@ export default function HappyValleySchoolBhagalpur({
     return (
         <div
             id="card"
-            className="relative w-[300px] h-[476px] bg-cover bg-center overflow-hidden"
+            className="relative w-[300px] h-[479px] bg-cover bg-center overflow-hidden"
             style={{
                 backgroundImage: `url(${school?.templateImage || "/templates/happy-valley-school-bhagalpur.jpg"})`,
                 backgroundSize: "100% 100%",
@@ -33,7 +33,7 @@ export default function HappyValleySchoolBhagalpur({
                 <img
                     src={image}
                     alt="student"
-                    className="absolute top-[111px] left-[96.5px] w-[107px] h-[132px] object-cover rounded-[10px] border"
+                    className="absolute top-[133px] left-[170px] w-[105px] h-[130px] object-cover border"
                 />
             )}
 
@@ -45,24 +45,26 @@ export default function HappyValleySchoolBhagalpur({
                 />
             )}
 
-            <div className="absolute top-[240px] left-0 w-full flex justify-center">
-                <span className="text-white font-bold text-[20px] tracking-wide">
+
+
+            <div className="absolute left-[20px] text-[14px] font-bold text-black leading-tight space-y-[2px]">
+                <p className="relative left-[66px] top-[220px]">{student.admissionNo || "1234"}</p>
+                <p className="relative left-[66px] top-[220px] tracking-tighter">{formatDate(student.dob) || "17 jan 2005"}</p>
+                <p className="relative left-[66px] top-[219px]">{student.roll || "12"}</p>
+                <p className="relative left-[2.5px] top-[256.5px] tracking-tighter">{student.father || "Md Salim Uddin Ansari"}</p>
+                <p className="relative left-[2.5px] top-[267.5px] tracking-tighter">{student.mother || "Md Salim Uddin Ansari"}</p>
+                <p className="relative left-[2.5px] top-[278px] tracking-tighter">{student.phone || "91 8229090931"}</p>
+                <p className="relative left-[2.5px] top-[288px] w-[200px] leading-tight tracking-tighter">{student.address || "Kasba, Champanagar, Bhagalpur"}</p>
+            </div>
+
+            <div className="absolute top-[269px] left-[22px] w-full">
+                <span className="text-black font-bold text-[22px] tracking-tighter">
                     {student.name || "----"}
                 </span>
             </div>
 
-            <div className="absolute top-[295px] left-[20px] text-[13px] font-bold text-blue-800 leading-tight space-y-[2px]">
-                <p>Class : {student.class || "-"}</p>
-                <p>D.O.B : {formatDate(student.dob) || "-"}</p>
-                <p>F. Name : {student.father || "-"}</p>
-                <p>Mobile : {student.phone || "-"}</p>
-                <p>Admn. No : {student.admissionNo || "-"}</p>
-                <p>Address : {student.address || "-"}</p>
-            </div>
-
-            <div className="absolute top-[291px] right-[20px] text-[13px] font-bold text-blue-800">
-                <p className="relative top-[2px]">Sec : {student.sec || "-"}</p>
-                <p>Roll No : {student.roll || "-"}</p>
+            <div className="absolute text-[23px] font-bold text-blue-800">
+                <p className="relative left-[198px] top-[350px]">{student.class || "Nur A"}</p>
             </div>
 
             {signature && (

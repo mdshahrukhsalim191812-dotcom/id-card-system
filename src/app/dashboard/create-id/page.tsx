@@ -528,81 +528,58 @@ export default function CreateIDPage() {
     };
 
     const handleBulkDownload = async () => {
-        if (!students.length) return;
+    if (!students.length) return;
 
-        const pdf = new jsPDF("p", "mm", "a4");
+    const pdf = new jsPDF("p", "mm", "a4");
 
-        // 📄 A4 size
-        const pageWidth = 210;
-        const pageHeight = 297;
+    const pageWidth = 210;
+    const pageHeight = 297;
 
-        // 🪪 PVC card size
-        const cardWidth = 52;
-        const cardHeight = 83;
+    // 🔥 Card size (centered)
+    const cardWidth = 70;   // you can adjust
+    const cardHeight = 110; // maintain ratio
 
-        // 🔥 spacing (increase/decrease if needed)
-        const gapX = 6;
-        const gapY = 6;
+    // center position
+    const x = (pageWidth - cardWidth) / 2;
+    const y = (pageHeight - cardHeight) / 2;
 
-        // ✅ CENTER ALIGN CALCULATION
-        const totalRowWidth = cardWidth * 3 + gapX * 2;
-        const marginX = (pageWidth - totalRowWidth) / 2;
+    for (let i = 0; i < students.length; i++) {
+        const student = students[i];
 
-        const marginY = 10;
+        // 🔄 render student
+        setStudent(student);
+        setImage(student.image || null);
+        setLogo(student.logo || null);
+        setSignature(student.signature || null);
 
-        let count = 0;
+        // ⏳ wait for render
+        await new Promise((res) => setTimeout(res, 400));
 
-        for (let i = 0; i < students.length; i++) {
-            const student = students[i];
+        if (!cardRef.current) continue;
 
-            // 🔄 render student
-            setStudent(student);
-            setImage(student.image || null);
-            setLogo(student.logo || null);
-            setSignature(student.signature || null);
+        // 📸 capture
+        const canvas = await html2canvas(cardRef.current, {
+            scale: 4, // 🔥 better quality
+            useCORS: true,
+        });
 
-            // ⏳ wait for render
-            await new Promise((res) => setTimeout(res, 400));
+        const imgData = canvas.toDataURL("image/png");
 
-            if (!cardRef.current) continue;
+        // 🖼️ add to center
+        pdf.addImage(imgData, "PNG", x, y, cardWidth, cardHeight);
 
-            // 📸 capture card
-            const canvas = await html2canvas(cardRef.current, {
-                scale: 3,
-                useCORS: true,
-                width: 300,
-                height: 476,
-                windowWidth: 300,
-                windowHeight: 476,
-            });
+        // ✂️ optional border
+        pdf.setDrawColor(200);
+        pdf.rect(x, y, cardWidth, cardHeight);
 
-            const imgData = canvas.toDataURL("image/png");
-
-            // 📍 POSITION (3x3 GRID)
-            const col = count % 3;
-            const row = Math.floor(count / 3) % 3;
-
-            const x = marginX + col * (cardWidth + gapX);
-            const y = marginY + row * (cardHeight + gapY);
-
-            // 🖼️ add to pdf
-            pdf.addImage(imgData, "PNG", x, y, cardWidth, cardHeight);
-
-            // ✂️ OPTIONAL BORDER (for cutting guide)
-            pdf.setDrawColor(200);
-            pdf.rect(x, y, cardWidth, cardHeight);
-
-            count++;
-
-            // 📄 NEW PAGE AFTER 9 CARDS
-            if (count % 9 === 0 && i !== students.length - 1) {
-                pdf.addPage();
-            }
+        // 📄 add new page except last
+        if (i !== students.length - 1) {
+            pdf.addPage();
         }
+    }
 
-        // 💾 SAVE FILE
-        pdf.save(`${school?.name || "ID"} ID Cards.pdf`);
-    };
+    pdf.save(`${school?.name || "ID"} ID Cards.pdf`);
+};
 
     if (loadingPage) {
         return (
