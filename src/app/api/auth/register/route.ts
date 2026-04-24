@@ -37,6 +37,11 @@ export async function POST(req: Request) {
             templateImage = "/templates/bal-bharti2.jpg";
         }
 
+        else if (body.name.toLowerCase().includes("happy valley school bhagalpur")) {
+            templateId = "HappyValleySchoolBhagalpur";
+            templateImage = "/templates/happy-valley-school-bhagalpur.jpg";
+        }
+
         else if (body.name.toLowerCase().includes("school a")) {
             templateId = "template2";
             templateImage = "/templates/bg-2.jpeg";

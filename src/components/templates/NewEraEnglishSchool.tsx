@@ -9,7 +9,7 @@ type Props = {
     school: any;
 };
 
-export default function Template7({
+export default function NewEraEnglishSchool({
     student,
     image,
     logo,
@@ -17,9 +17,6 @@ export default function Template7({
     formatDate,
     school
 }: Props) {
-
-    console.log("School:", school);
-    console.log("Template Image:", school?.templateImage);
 
     return (
         <div

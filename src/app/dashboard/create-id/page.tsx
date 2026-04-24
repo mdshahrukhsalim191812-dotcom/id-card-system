@@ -153,8 +153,6 @@ export default function CreateIDPage() {
             await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
             await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
 
-            console.log("Face Models Loaded ✅");
-
             setModelsLoaded(true); // 🔥 IMPORTANT
         };
 
@@ -231,7 +229,6 @@ export default function CreateIDPage() {
 
     const autoCropFace = async (imageSrc: string) => {
         if (!modelsLoaded) {
-            console.log("Models not loaded yet ❌");
             toast.error("AI loading... please wait ⏳");
             return imageSrc;
         }
@@ -246,7 +243,7 @@ export default function CreateIDPage() {
             .withFaceLandmarks();
 
         if (!detection) {
-            console.log("No face detected ❌");
+            toast.error("No face detected 🙁");
             return imageSrc;
         }
 

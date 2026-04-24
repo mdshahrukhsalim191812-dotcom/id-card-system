@@ -18,9 +18,6 @@ export default function HappyValleySchoolBhagalpur({
     school
 }: Props) {
 
-    console.log("School:", school);
-    console.log("Template Image:", school?.templateImage);
-
     return (
         <div
             id="card"

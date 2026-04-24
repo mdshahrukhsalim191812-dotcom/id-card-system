@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 
 import Template1 from "./templates/Template1";
 import Template2 from "./templates/Template2";
-import Template7 from "./templates/NewEraEnglishSchool";
+import NewEraEnglishSchool from "./templates/NewEraEnglishSchool";
 import BalBhartiSchool from "./templates/BalBhartiSchool";
 import HappyValleySchoolBhagalpur from "./templates/HappyValleySchoolBhagalpur";
 
@@ -25,7 +25,7 @@ const TemplateRenderer = forwardRef(
         switch (templateId) {
             case "NewEraEnglishSchool":
                 content = (
-                    <Template7
+                    <NewEraEnglishSchool
                         student={student}
                         image={image}
                         logo={logo}
