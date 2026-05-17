@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Navbar from "@/components/Navbar";
 import {
   Menu,
   Phone,
@@ -17,7 +18,7 @@ export default function HomePage() {
   const products = [
     {
       title: "Brochures & Pamphlets",
-      image: "/products/brochure.jpg",
+      image: "/products/Brochure-&-Pamphlet.jpeg",
       desc: "Creative brochures to promote your business.",
     },
     {
@@ -69,48 +70,13 @@ export default function HomePage() {
     <div className="bg-white text-gray-800 overflow-x-hidden">
 
       {/* ================= NAVBAR ================= */}
-      <header className="bg-[#021B33] text-white sticky top-0 z-50 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-
-          <div className="flex items-center gap-3">
-            <Image
-              src="/genix-logo.png"
-              alt="logo"
-              width={50}
-              height={50}
-            />
-
-            <div>
-              <h1 className="font-bold text-xl sm:text-2xl">
-                Work GeniX
-              </h1>
-
-              <p className="text-xs sm:text-sm text-gray-300">
-                Printing | Designing | Branding
-              </p>
-            </div>
-          </div>
-
-          <nav className="hidden lg:flex gap-8 font-medium">
-            <a href="#" className="hover:text-blue-400">Home</a>
-            <a href="#" className="hover:text-blue-400">About</a>
-            <a href="#" className="hover:text-blue-400">Products</a>
-            <a href="#" className="hover:text-blue-400">Services</a>
-            <a href="#" className="hover:text-blue-400">Gallery</a>
-            <a href="#" className="hover:text-blue-400">Contact</a>
-          </nav>
-
-          <button className="lg:hidden">
-            <Menu size={30} />
-          </button>
-        </div>
-      </header>
+      <Navbar />
 
       {/* ================= HERO ================= */}
       <section className="relative min-h-screen flex items-center">
 
         <Image
-          src="/hero.jpg"
+          src="/hero/1.jpeg"
           alt="hero"
           fill
           priority
@@ -271,8 +237,8 @@ export default function HomePage() {
                   src={item.image}
                   alt={item.title}
                   width={400}
-                  height={300}
-                  className="w-full h-56 object-cover"
+                  height={200}
+                  className="w-full h-46 object-contain"
                 />
 
                 <div className="p-6">
