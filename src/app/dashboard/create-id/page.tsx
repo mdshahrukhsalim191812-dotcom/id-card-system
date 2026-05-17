@@ -528,58 +528,40 @@ export default function CreateIDPage() {
     };
 
     const handleBulkDownload = async () => {
-    if (!students.length) return;
+        if (!students.length) return;
 
-    const pdf = new jsPDF("p", "mm", "a4");
-
-    const pageWidth = 210;
-    const pageHeight = 297;
-
-    // 🔥 Card size (centered)
-    const cardWidth = 70;   // you can adjust
-    const cardHeight = 110; // maintain ratio
-
-    // center position
-    const x = (pageWidth - cardWidth) / 2;
-    const y = (pageHeight - cardHeight) / 2;
-
-    for (let i = 0; i < students.length; i++) {
-        const student = students[i];
-
-        // 🔄 render student
-        setStudent(student);
-        setImage(student.image || null);
-        setLogo(student.logo || null);
-        setSignature(student.signature || null);
-
-        // ⏳ wait for render
-        await new Promise((res) => setTimeout(res, 400));
-
-        if (!cardRef.current) continue;
-
-        // 📸 capture
-        const canvas = await html2canvas(cardRef.current, {
-            scale: 4, // 🔥 better quality
-            useCORS: true,
+        const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "px",
+            format: [300, 476],
         });
 
-        const imgData = canvas.toDataURL("image/png");
+        for (let i = 0; i < students.length; i++) {
+            const student = students[i];
 
-        // 🖼️ add to center
-        pdf.addImage(imgData, "PNG", x, y, cardWidth, cardHeight);
+            setStudent(student);
+            setImage(student.image || null);
+            setLogo(student.logo || null);
+            setSignature(student.signature || null);
 
-        // ✂️ optional border
-        pdf.setDrawColor(200);
-        pdf.rect(x, y, cardWidth, cardHeight);
+            await new Promise((res) => setTimeout(res, 300));
 
-        // 📄 add new page except last
-        if (i !== students.length - 1) {
-            pdf.addPage();
+            const canvas = await html2canvas(cardRef.current, {
+                scale: 1, // 🔥 CRITICAL FIX
+                useCORS: true,
+                width: 300,
+                height: 476,
+            });
+
+            const imgData = canvas.toDataURL("image/png");
+
+            if (i !== 0) pdf.addPage();
+
+            pdf.addImage(imgData, "PNG", 0, 0, 300, 476);
         }
-    }
 
-    pdf.save(`${school?.name || "ID"} ID Cards.pdf`);
-};
+        pdf.save(`${school?.name || "ID"}.pdf`);
+    };
 
     if (loadingPage) {
         return (

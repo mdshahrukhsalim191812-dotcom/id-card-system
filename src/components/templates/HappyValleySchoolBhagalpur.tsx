@@ -21,57 +21,142 @@ export default function HappyValleySchoolBhagalpur({
     return (
         <div
             id="card"
-            className="relative w-[300px] h-[479px] bg-cover bg-center overflow-hidden"
             style={{
+                width: "300px",
+                height: "476px",
+                position: "relative",
+                overflow: "hidden",
                 backgroundImage: `url(${school?.templateImage || "/templates/happy-valley-school-bhagalpur.jpg"})`,
                 backgroundSize: "100% 100%",
-                backgroundPosition: "center"
+                backgroundPosition: "center",
+                boxSizing: "border-box"
             }}
         >
 
+            {/* 🔹 STUDENT IMAGE */}
             {image && (
                 <img
                     src={image}
                     alt="student"
-                    className="absolute top-[133px] left-[170px] w-[105px] h-[130px] object-cover border"
+                    style={{
+                        position: "absolute",
+                        top: "130px",
+                        left: "165px",
+                        width: "105px",
+                        height: "130px",
+                        objectFit: "cover",
+                        border: "2px solid #fff"
+                    }}
                 />
             )}
 
+            {/* 🔹 LOGO */}
             {logo && (
                 <img
                     src={logo}
                     alt="logo"
-                    className="absolute top-[128px] left-[15px] w-[70px] h-[70px] object-contain"
+                    style={{
+                        position: "absolute",
+                        top: "125px",
+                        left: "15px",
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "contain"
+                    }}
                 />
             )}
 
-
-
-            <div className="absolute left-[20px] text-[14px] font-bold text-black leading-tight space-y-[2px]">
-                <p className="relative left-[66px] top-[220px]">{student.admissionNo || "1234"}</p>
-                <p className="relative left-[66px] top-[220px] tracking-tighter">{formatDate(student.dob) || "17 jan 2005"}</p>
-                <p className="relative left-[66px] top-[219px]">{student.roll || "12"}</p>
-                <p className="relative left-[2.5px] top-[256.5px] tracking-tighter">{student.father || "Md Salim Uddin Ansari"}</p>
-                <p className="relative left-[2.5px] top-[267.5px] tracking-tighter">{student.mother || "Md Salim Uddin Ansari"}</p>
-                <p className="relative left-[2.5px] top-[278px] tracking-tighter">{student.phone || "91 8229090931"}</p>
-                <p className="relative left-[2.5px] top-[288px] w-[200px] leading-tight tracking-tighter">{student.address || "Kasba, Champanagar, Bhagalpur"}</p>
-            </div>
-
-            <div className="absolute top-[269px] left-[22px] w-full">
-                <span className="text-black font-bold text-[22px] tracking-tighter">
+            {/* 🔹 NAME */}
+            <div
+                style={{
+                    position: "absolute",
+                    top: "268px",
+                    left: "22px",
+                    width: "250px"
+                }}
+            >
+                <span
+                    style={{
+                        fontSize: "22px",
+                        fontWeight: "bold",
+                        color: "#fff",
+                        display: "block",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis"
+                    }}
+                >
                     {student.name || "----"}
                 </span>
             </div>
 
-            <div className="absolute text-[23px] font-bold text-blue-800">
-                <p className="relative left-[198px] top-[350px]">{student.class || "Nur A"}</p>
-            </div>
+            {/* 🔹 ADMISSION */}
+            <p style={{ position: "absolute", left: "86px", top: "220px", fontSize: "14px", fontWeight: "bold" }}>
+                {student.admissionNo || "---"}
+            </p>
 
+            {/* 🔹 DOB */}
+            <p style={{ position: "absolute", left: "86px", top: "235px", fontSize: "14px", fontWeight: "bold" }}>
+                {formatDate(student.dob) || "---"}
+            </p>
+
+            {/* 🔹 ROLL */}
+            <p style={{ position: "absolute", left: "86px", top: "250px", fontSize: "14px", fontWeight: "bold" }}>
+                {student.roll || "---"}
+            </p>
+
+            {/* 🔹 FATHER */}
+            <p style={{ position: "absolute", left: "22px", top: "285px", fontSize: "14px", fontWeight: "bold" }}>
+                {student.father || "---"}
+            </p>
+
+            {/* 🔹 MOTHER */}
+            <p style={{ position: "absolute", left: "22px", top: "300px", fontSize: "14px", fontWeight: "bold" }}>
+                {student.mother || "---"}
+            </p>
+
+            {/* 🔹 PHONE */}
+            <p style={{ position: "absolute", left: "22px", top: "315px", fontSize: "14px", fontWeight: "bold" }}>
+                {student.phone || "---"}
+            </p>
+
+            {/* 🔹 ADDRESS */}
+            <p style={{
+                position: "absolute",
+                left: "22px",
+                top: "330px",
+                width: "200px",
+                fontSize: "14px",
+                fontWeight: "bold",
+                lineHeight: "16px",
+                wordBreak: "break-word"
+            }}>
+                {student.address || "---"}
+            </p>
+
+            {/* 🔹 CLASS */}
+            <p style={{
+                position: "absolute",
+                left: "200px",
+                top: "350px",
+                fontSize: "22px",
+                fontWeight: "bold",
+                color: "#1e40af"
+            }}>
+                {student.class || "---"}
+            </p>
+
+            {/* 🔹 SIGNATURE */}
             {signature && (
                 <img
                     src={signature}
                     alt="signature"
-                    className="absolute bottom-[20px] right-[20px] w-[80px]"
+                    style={{
+                        position: "absolute",
+                        bottom: "20px",
+                        right: "20px",
+                        width: "80px"
+                    }}
                 />
             )}
 
