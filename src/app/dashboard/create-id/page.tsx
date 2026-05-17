@@ -243,7 +243,7 @@ export default function CreateIDPage() {
             .withFaceLandmarks();
 
         if (!detection) {
-            toast.error("No face detected 🙁");
+            toast.error("No face detected! 🙁");
             return imageSrc;
         }
 
