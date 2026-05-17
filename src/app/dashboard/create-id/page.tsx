@@ -565,7 +565,7 @@ export default function CreateIDPage() {
 
     if (loadingPage) {
         return (
-            <div className="fixed inset-0 bg-gradient-to-br from-blue-900 via-blue-700 to-blue-500 flex flex-col items-center justify-center text-white z-50">
+            <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#063B6E] to-blue-500 flex flex-col items-center justify-center text-white z-50">
 
                 <h1 className="text-2xl font-bold mb-4">
                     <img className="w-[90px] h-[90px]" src="/genix-logo.png" alt="logo" />
