@@ -234,7 +234,7 @@ export default function SchoolAdmin() {
 
                         <div className="relative w-28 h-28 rounded-full bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center shadow-2xl">
 
-                            <LayoutDashboard
+                            <Users
                                 size={50}
                                 className="text-white animate-pulse"
                             />

@@ -12,7 +12,7 @@ import ImageCropper from "@/components/ImageCropper";
 import * as faceapi from "face-api.js";
 import { removeBackground } from "@/lib/removeBg";
 import { addWhiteBackground } from "@/lib/addWhiteBg";
-import { LayoutDashboard } from "lucide-react";
+import { FileBadge2, LoaderCircle } from "lucide-react";
 
 export default function CreateIDPage() {
     const [student, setStudent] = useState({
@@ -581,10 +581,25 @@ export default function CreateIDPage() {
 
                         <div className="relative w-28 h-28 rounded-full bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center shadow-2xl">
 
-                            <LayoutDashboard
-                                size={50}
-                                className="text-white animate-pulse"
-                            />
+                            <div className="relative">
+
+                                <FileBadge2
+                                    size={70}
+                                    className="text-white animate-pulse"
+                                />
+
+                                <LoaderCircle
+                                    size={24}
+                                    className="
+                absolute
+                -bottom-2
+                -right-2
+                animate-spin
+                text-white
+            "
+                                />
+
+                            </div>
 
                         </div>
 

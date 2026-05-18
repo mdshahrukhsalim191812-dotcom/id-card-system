@@ -5,7 +5,7 @@ import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import { LayoutDashboard } from "lucide-react";
+import { UserRoundCheck } from "lucide-react";
 
 export default function LoginPage() {
     const [form, setForm] = useState({
@@ -83,7 +83,7 @@ export default function LoginPage() {
 
                         <div className="relative w-28 h-28 rounded-full bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center shadow-2xl">
 
-                            <LayoutDashboard
+                            <UserRoundCheck
                                 size={50}
                                 className="text-white animate-pulse"
                             />
