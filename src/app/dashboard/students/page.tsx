@@ -11,6 +11,7 @@ import {
     GraduationCap,
     Hash,
     School,
+    LayoutDashboard,
 } from "lucide-react";
 
 type Student = {
@@ -218,21 +219,51 @@ export default function SchoolAdmin() {
     // ================= LOADER =================
     if (loading) {
         return (
-            <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#063B6E] to-blue-500 flex flex-col items-center justify-center text-white z-50">
+            <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#04284B] to-[#063B6E] flex items-center justify-center overflow-hidden z-50">
 
-                <Image
-                    src="/genix-logo.png"
-                    alt="logo"
-                    width={90}
-                    height={90}
-                    className="mb-5"
-                />
+                {/* Glow */}
+                <div className="absolute w-[350px] h-[350px] bg-blue-500/20 blur-3xl rounded-full animate-pulse"></div>
 
-                <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                {/* Content */}
+                <div className="relative z-10 flex flex-col items-center">
 
-                <p className="mt-5 text-lg opacity-90">
-                    Loading students...
-                </p>
+                    {/* Logo Circle */}
+                    <div className="relative">
+
+                        <div className="absolute inset-0 rounded-full bg-blue-400 blur-2xl opacity-40 animate-pulse"></div>
+
+                        <div className="relative w-28 h-28 rounded-full bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center shadow-2xl">
+
+                            <LayoutDashboard
+                                size={50}
+                                className="text-white animate-pulse"
+                            />
+
+                        </div>
+
+                    </div>
+
+                    {/* Loading Dots */}
+                    <div className="mt-10 flex gap-3">
+
+                        <div className="w-4 h-4 rounded-full bg-white animate-bounce"></div>
+
+                        <div className="w-4 h-4 rounded-full bg-white animate-bounce [animation-delay:0.2s]"></div>
+
+                        <div className="w-4 h-4 rounded-full bg-white animate-bounce [animation-delay:0.4s]"></div>
+
+                    </div>
+
+                    {/* Text */}
+                    <h2 className="mt-8 text-3xl sm:text-4xl font-extrabold text-white tracking-wide">
+                        Loading Students
+                    </h2>
+
+                    <p className="mt-3 text-blue-100 text-center text-sm sm:text-base max-w-md leading-relaxed">
+                        Please wait while we prepare your students list.
+                    </p>
+
+                </div>
 
             </div>
         );

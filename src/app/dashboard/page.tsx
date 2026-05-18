@@ -11,8 +11,19 @@ import {
     PlusCircle,
     LayoutDashboard,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
+
+    const [loadingPage, setLoadingPage] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoadingPage(false);
+        }, 1000); // Simulate a 2-second loading time
+
+        return () => clearTimeout(timer);
+    })
 
     const stats = [
         {
@@ -40,6 +51,58 @@ export default function DashboardPage() {
             text: "text-orange-500",
         },
     ];
+
+    if (loadingPage) {
+        return (
+            <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#04284B] to-[#063B6E] flex items-center justify-center overflow-hidden z-50">
+
+                {/* Glow */}
+                <div className="absolute w-[350px] h-[350px] bg-blue-500/20 blur-3xl rounded-full animate-pulse"></div>
+
+                {/* Content */}
+                <div className="relative z-10 flex flex-col items-center">
+
+                    {/* Logo Circle */}
+                    <div className="relative">
+
+                        <div className="absolute inset-0 rounded-full bg-blue-400 blur-2xl opacity-40 animate-pulse"></div>
+
+                        <div className="relative w-28 h-28 rounded-full bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center shadow-2xl">
+
+                            <LayoutDashboard
+                                size={50}
+                                className="text-white animate-pulse"
+                            />
+
+                        </div>
+
+                    </div>
+
+                    {/* Loading Dots */}
+                    <div className="mt-10 flex gap-3">
+
+                        <div className="w-4 h-4 rounded-full bg-white animate-bounce"></div>
+
+                        <div className="w-4 h-4 rounded-full bg-white animate-bounce [animation-delay:0.2s]"></div>
+
+                        <div className="w-4 h-4 rounded-full bg-white animate-bounce [animation-delay:0.4s]"></div>
+
+                    </div>
+
+                    {/* Text */}
+                    <h2 className="mt-8 text-3xl sm:text-4xl font-extrabold text-white tracking-wide">
+                        Loading Dashboard
+                    </h2>
+
+                    <p className="mt-3 text-blue-100 text-center text-sm sm:text-base max-w-md leading-relaxed">
+                        Please wait while we prepare your dashborad.
+                    </p>
+
+                </div>
+
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-[#F4F7FB]">

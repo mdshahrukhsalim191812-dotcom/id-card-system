@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import { LayoutDashboard } from "lucide-react";
 
 export default function LoginPage() {
     const [form, setForm] = useState({
@@ -67,24 +68,52 @@ export default function LoginPage() {
     // 🔥 FULL SCREEN LOADER
     if (loading) {
         return (
-            <div className="fixed inset-0 bg-gradient-to-br from-blue-900 via-blue-700 to-blue-500 flex flex-col items-center justify-center text-white z-50">
+            <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#04284B] to-[#063B6E] flex items-center justify-center overflow-hidden z-50">
 
-                {/* LOGO */}
-                <Image
-                    src="/genix-logo.png"
-                    alt="logo"
-                    width={100}
-                    height={100}
-                    className="mb-4"
-                />
+                {/* Glow */}
+                <div className="absolute w-[350px] h-[350px] bg-blue-500/20 blur-3xl rounded-full animate-pulse"></div>
 
-                {/* SPINNER */}
-                <div className="w-14 h-14 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                {/* Content */}
+                <div className="relative z-10 flex flex-col items-center">
 
-                {/* TEXT */}
-                <p className="mt-4 text-[20px] opacity-80">
-                    Logging you in...
-                </p>
+                    {/* Logo Circle */}
+                    <div className="relative">
+
+                        <div className="absolute inset-0 rounded-full bg-blue-400 blur-2xl opacity-40 animate-pulse"></div>
+
+                        <div className="relative w-28 h-28 rounded-full bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center shadow-2xl">
+
+                            <LayoutDashboard
+                                size={50}
+                                className="text-white animate-pulse"
+                            />
+
+                        </div>
+
+                    </div>
+
+                    {/* Loading Dots */}
+                    <div className="mt-10 flex gap-3">
+
+                        <div className="w-4 h-4 rounded-full bg-white animate-bounce"></div>
+
+                        <div className="w-4 h-4 rounded-full bg-white animate-bounce [animation-delay:0.2s]"></div>
+
+                        <div className="w-4 h-4 rounded-full bg-white animate-bounce [animation-delay:0.4s]"></div>
+
+                    </div>
+
+                    {/* Text */}
+                    <h2 className="mt-8 text-3xl sm:text-4xl font-extrabold text-white tracking-wide">
+                        Login In...
+                    </h2>
+
+                    <p className="mt-3 text-blue-100 text-center text-sm sm:text-base max-w-md leading-relaxed">
+                        Please wait! We are logging you in.
+                    </p>
+
+                </div>
+
             </div>
         );
     }

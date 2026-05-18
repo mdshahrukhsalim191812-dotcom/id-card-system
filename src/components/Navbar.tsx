@@ -37,7 +37,7 @@ export default function Navbar() {
                 </div>
 
                 <nav className="hidden lg:flex gap-8 font-medium">
-                    <a href="#" className="hover:text-blue-400">Home</a>
+                    <a href="/" className="hover:text-blue-400">Home</a>
                     <a href="/dashboard" className="hover:text-blue-400">Dashboard</a>
                     <a href="#" className="hover:text-blue-400">Products</a>
                     <a href="#" className="hover:text-blue-400">Services</a>
