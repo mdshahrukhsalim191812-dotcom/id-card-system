@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
 import {
     Search,
     Users,
     School,
     GraduationCap,
+    Trash2,
 } from "lucide-react";
 
 type Student = {
@@ -114,6 +117,115 @@ export default function AdminStudentsPage() {
             </div>
         );
     }
+
+    const handleDelete = async (
+        id: string,
+        studentName: string
+    ) => {
+
+        toast((t) => (
+
+            <div className="flex flex-col gap-4">
+
+                <div>
+
+                    <h2 className="font-bold text-gray-800 text-lg">
+                        Delete Student?
+                    </h2>
+
+                    <p className="text-sm text-gray-500 mt-1">
+                        {studentName} will be permanently deleted.
+                    </p>
+
+                </div>
+
+                <div className="flex justify-end gap-3">
+
+                    {/* CANCEL */}
+                    <button
+                        onClick={() => toast.dismiss(t.id)}
+                        className="
+                        px-4 py-2 rounded-xl
+                        bg-gray-100 hover:bg-gray-200
+                        text-gray-700 font-medium
+                        transition
+                    "
+                    >
+                        Cancel
+                    </button>
+
+                    {/* DELETE */}
+                    <button
+                        onClick={async () => {
+
+                            toast.dismiss(t.id);
+
+                            const loadingToast = toast.loading(
+                                "Deleting student..."
+                            );
+
+                            try {
+
+                                const res = await fetch(
+                                    `/api/students?id=${id}`,
+                                    {
+                                        method: "DELETE",
+                                    }
+                                );
+
+                                const data = await res.json();
+
+                                toast.dismiss(loadingToast);
+
+                                if (data.success) {
+
+                                    setStudents((prev) =>
+                                        prev.filter(
+                                            (student) =>
+                                                student._id !== id
+                                        )
+                                    );
+
+                                    toast.success(
+                                        "Student deleted successfully"
+                                    );
+
+                                } else {
+
+                                    toast.error(
+                                        data.message ||
+                                        "Delete failed"
+                                    );
+                                }
+
+                            } catch (error) {
+
+                                console.log(error);
+
+                                toast.dismiss(loadingToast);
+
+                                toast.error(
+                                    "Something went wrong"
+                                );
+                            }
+
+                        }}
+                        className="
+                        px-4 py-2 rounded-xl
+                        bg-red-500 hover:bg-red-600
+                        text-white font-semibold
+                        transition
+                    "
+                    >
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
+
+        ));
+    };
 
     return (
         <div className="min-h-screen bg-[#F4F7FB] p-4 sm:p-6">
@@ -284,6 +396,10 @@ export default function AdminStudentsPage() {
                                 School
                             </th>
 
+                            <th className="p-5 font-bold text-gray-700 text-center">
+                                Action
+                            </th>
+
                         </tr>
 
                     </thead>
@@ -311,6 +427,32 @@ export default function AdminStudentsPage() {
 
                                 <td className="p-5">
                                     {student.schoolId?.name}
+                                </td>
+
+                                <td className="p-5 text-center">
+
+                                    <button
+                                        onClick={() =>
+                                            handleDelete(
+                                                student._id,
+                                                student.name
+                                            )
+                                        }
+                                        className="
+            inline-flex items-center gap-2
+            bg-red-500 hover:bg-red-600
+            text-white px-4 py-2
+            rounded-xl font-semibold
+            transition
+        "
+                                    >
+
+                                        <Trash2 size={16} />
+
+                                        Delete
+
+                                    </button>
+
                                 </td>
 
                             </tr>

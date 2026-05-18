@@ -62,29 +62,12 @@ const TemplateRenderer = forwardRef(
                 );
                 break;
 
-            case "template1":
-                content = (
-                    <Template1
-                        student={student}
-                        formatDate={formatDate}
-                    />
-                );
-                break;
-
-            case "template2":
+            default:
                 content = (
                     <Template2
                         student={student}
                         formatDate={formatDate}
                     />
-                );
-                break;
-
-            default:
-                content = (
-                    <h1 className="text-xl text-center">
-                        Loading template...
-                    </h1>
                 );
         }
 
