@@ -4,7 +4,20 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
+import {
+    Upload,
+    FileSpreadsheet,
+    FileArchive,
+    CheckCircle2,
+    X,
+    LoaderCircle,
+    ImageIcon,
+    CloudUpload,
+    Sparkles,
+} from "lucide-react";
+
 export default function BulkUploadPage() {
+
     const [file, setFile] = useState<File | null>(null);
     const [zipFile, setZipFile] = useState<File | null>(null);
 
@@ -26,8 +39,9 @@ export default function BulkUploadPage() {
 
     const router = useRouter();
 
-    // 🔥 RESET
+    // RESET
     const resetFiles = () => {
+
         setFile(null);
         setZipFile(null);
         setLastFileName("");
@@ -36,43 +50,60 @@ export default function BulkUploadPage() {
         if (zipRef.current) zipRef.current.value = "";
     };
 
-    // 📂 DRAG
-    const handleDrop = (e: React.DragEvent) => {
-        e.preventDefault();
-        setDragActive(false);
-
-        const droppedFile = e.dataTransfer.files[0];
-        if (!droppedFile) return;
-
-        if (droppedFile.name === lastFileName) {
-            toast.error("Same file already selected ❌");
-            return;
-        }
-
-        setFile(droppedFile);
-        setLastFileName(droppedFile.name);
-        toast.success("File selected 👍");
-    };
-
+    // FILE SIZE
     const formatSize = (size: number) => {
         return (size / 1024 / 1024).toFixed(2) + " MB";
     };
 
-    // 🚀 UPLOAD
+    // DRAG DROP
+    const handleDrop = (e: React.DragEvent) => {
+
+        e.preventDefault();
+
+        setDragActive(false);
+
+        const droppedFile = e.dataTransfer.files[0];
+
+        if (!droppedFile) return;
+
+        if (droppedFile.name === lastFileName) {
+
+            toast.error("Same file already selected ❌");
+
+            return;
+        }
+
+        setFile(droppedFile);
+
+        setLastFileName(droppedFile.name);
+
+        toast.success("Excel file selected ✅");
+    };
+
+    // UPLOAD
     const handleUpload = () => {
+
         if (!file) {
-            toast.error("Select Excel file ❌");
+
+            toast.error("Please select Excel file ❌");
+
             return;
         }
 
         const formData = new FormData();
+
         formData.append("file", file);
-        if (zipFile) formData.append("images", zipFile);
+
+        if (zipFile) {
+            formData.append("images", zipFile);
+        }
 
         const xhr = new XMLHttpRequest();
+
         xhrRef.current = xhr;
 
         xhr.open("POST", "/api/students/bulk", true);
+
         xhr.withCredentials = true;
 
         setUploading(true);
@@ -80,293 +111,685 @@ export default function BulkUploadPage() {
         setProcessing(false);
 
         xhr.upload.onprogress = (event) => {
+
             if (event.lengthComputable) {
-                const percent = Math.round((event.loaded / event.total) * 100);
+
+                const percent = Math.round(
+                    (event.loaded / event.total) * 100
+                );
+
                 setProgress(percent);
             }
         };
 
         xhr.onload = () => {
+
             let data: any = {};
 
             try {
+
                 data = JSON.parse(xhr.responseText);
+
             } catch { }
 
             if (xhr.status === 200) {
+
                 setProgress(100);
+
                 setUploading(false);
+
                 setProcessing(true);
 
-                toast.success("Upload successful ✅");
+                toast.success("Students uploaded successfully ✅");
 
                 const total = data.inserted || 10;
+
                 setTotalImages(total);
 
                 let count = 0;
 
                 const interval = setInterval(() => {
+
                     count++;
+
                     setImageProgress(count);
 
                     if (count >= total) {
+
                         clearInterval(interval);
 
                         resetFiles();
 
                         setTimeout(() => {
+
                             router.push("/dashboard/create-id");
-                        }, 800);
+
+                        }, 1200);
                     }
+
                 }, 80);
 
             } else {
+
                 setUploading(false);
+
                 setProgress(0);
+
                 resetFiles();
-                toast.error(data.message || "Upload failed ❌");
+
+                toast.error(
+                    data.message || "Upload failed ❌"
+                );
             }
         };
 
         xhr.onerror = () => {
+
             setUploading(false);
+
             setProgress(0);
+
             resetFiles();
+
             toast.error("Server error ❌");
         };
 
         xhr.send(formData);
     };
 
+    // CANCEL
     const handleCancel = () => {
+
         xhrRef.current?.abort();
 
         setUploading(false);
+
         setProcessing(false);
+
         setProgress(0);
 
         resetFiles();
+
         toast("Upload cancelled ❌");
     };
 
     return (
-        <div className="p-4 md:p-6 max-w-6xl mx-auto">
 
-            <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center">
-                Bulk Upload Students 🚀
-            </h1>
+        <div className="min-h-screen bg-[#F4F7FB]">
 
-            {!uploading && !processing && (
-                <div className="grid md:grid-cols-2 gap-6">
+            {/* HEADER */}
+            <div className="bg-gradient-to-r from-[#021B33] via-[#04284B] to-[#063B6E] text-white">
 
-                    {/* LEFT GUIDE */}
-                    <div className="bg-white p-5 rounded-2xl shadow-md">
-                        <p className="font-semibold mb-3 text-gray-700">
-                            📌 Excel Format
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+                    <div className="flex items-center gap-4">
+
+                        <div className="
+                            w-16 h-16 rounded-2xl
+                            bg-white/10 border border-white/10
+                            flex items-center justify-center
+                            backdrop-blur-xl
+                        ">
+                            <CloudUpload size={34} />
+                        </div>
+
+                        <div>
+
+                            <h1 className="
+                                text-3xl sm:text-4xl
+                                font-extrabold tracking-tight
+                            ">
+                                Bulk Upload Students
+                            </h1>
+
+                            <p className="
+                                mt-2 text-blue-100
+                                text-sm sm:text-base
+                            ">
+                                Upload Excel files and generate student records instantly.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div className="
+                max-w-7xl mx-auto
+                px-4 sm:px-6 lg:px-8
+                py-8
+            ">
+
+                {/* NORMAL UI */}
+                {!uploading && !processing && (
+
+                    <div className="grid lg:grid-cols-2 gap-8">
+
+                        {/* LEFT */}
+                        <div className="
+                            bg-white rounded-3xl
+                            shadow-sm border border-gray-100
+                            p-6
+                        ">
+
+                            <div className="flex items-center gap-3">
+
+                                <Sparkles className="text-blue-600" />
+
+                                <h2 className="
+                                    text-2xl font-bold text-gray-800
+                                ">
+                                    Excel Format Guide
+                                </h2>
+
+                            </div>
+
+                            <p className="
+                                text-gray-500 mt-2 text-sm leading-relaxed
+                            ">
+                                Use the correct Excel format for successful uploads.
+                            </p>
+
+                            {/* IMAGE */}
+                            <div
+                                onClick={() => setShowImage(true)}
+                                className="
+                                    mt-6 overflow-hidden
+                                    rounded-2xl cursor-pointer
+                                    group border
+                                "
+                            >
+
+                                <img
+                                    src="/excel format.jpeg"
+                                    alt="Excel Format"
+                                    className="
+                                        w-full transition duration-500
+                                        group-hover:scale-105
+                                    "
+                                />
+
+                            </div>
+
+                            {/* DOWNLOAD */}
+                            <a
+                                href="/sample.xlsx"
+                                download
+                                className="
+                                    mt-6 w-full flex items-center
+                                    justify-center gap-2
+                                    bg-green-600 hover:bg-green-700
+                                    text-white py-3 rounded-2xl
+                                    font-semibold transition
+                                "
+                            >
+
+                                <FileSpreadsheet size={20} />
+
+                                Download Sample Excel
+
+                            </a>
+
+                        </div>
+
+                        {/* RIGHT */}
+                        <div className="
+                            bg-white rounded-3xl
+                            shadow-sm border border-gray-100
+                            p-6
+                        ">
+
+                            <div className="flex items-center gap-3">
+
+                                <Upload className="text-blue-600" />
+
+                                <h2 className="
+                                    text-2xl font-bold text-gray-800
+                                ">
+                                    Upload Files
+                                </h2>
+
+                            </div>
+
+                            {/* DRAG AREA */}
+                            <div
+                                onDragOver={(e) => {
+                                    e.preventDefault();
+                                    setDragActive(true);
+                                }}
+                                onDragLeave={() =>
+                                    setDragActive(false)
+                                }
+                                onDrop={handleDrop}
+                                className={`
+                                    mt-6 border-2 border-dashed
+                                    rounded-3xl p-10
+                                    text-center transition-all duration-300
+                                    ${dragActive
+                                        ? "border-blue-600 bg-blue-50"
+                                        : "border-gray-300"
+                                    }
+                                `}
+                            >
+
+                                <div className="
+                                    w-20 h-20 mx-auto rounded-full
+                                    bg-blue-100 flex items-center justify-center
+                                ">
+                                    <CloudUpload
+                                        size={40}
+                                        className="text-blue-600"
+                                    />
+                                </div>
+
+                                <h3 className="
+                                    mt-5 text-xl font-bold text-gray-800
+                                ">
+                                    Drag & Drop Excel File
+                                </h3>
+
+                                <p className="
+                                    mt-2 text-sm text-gray-500
+                                ">
+                                    Upload .xlsx or .xls files
+                                </p>
+
+                            </div>
+
+                            {/* EXCEL */}
+                            <div className="mt-6">
+
+                                <label className="
+                                    text-sm font-semibold text-gray-700
+                                ">
+                                    Excel File
+                                </label>
+
+                                <input
+                                    ref={fileRef}
+                                    type="file"
+                                    accept=".xlsx,.xls"
+                                    onChange={(e) => {
+
+                                        const selected =
+                                            e.target.files?.[0];
+
+                                        if (!selected) return;
+
+                                        if (
+                                            selected.name === lastFileName
+                                        ) {
+
+                                            toast.error("Same file ❌");
+
+                                            return;
+                                        }
+
+                                        setFile(selected);
+
+                                        setLastFileName(selected.name);
+                                    }}
+                                    className="
+                                        mt-2 w-full border border-gray-200
+                                        rounded-2xl p-3
+                                    "
+                                />
+
+                                {file && (
+
+                                    <div className="
+                                        mt-4 bg-blue-50
+                                        border border-blue-100
+                                        rounded-2xl p-4
+                                        flex items-center justify-between
+                                    ">
+
+                                        <div className="flex items-center gap-3">
+
+                                            <div className="
+                                                w-12 h-12 rounded-xl
+                                                bg-blue-600 text-white
+                                                flex items-center justify-center
+                                            ">
+                                                <FileSpreadsheet size={24} />
+                                            </div>
+
+                                            <div>
+
+                                                <h4 className="
+                                                    font-semibold text-gray-800
+                                                ">
+                                                    {file.name}
+                                                </h4>
+
+                                                <p className="
+                                                    text-xs text-gray-500
+                                                ">
+                                                    {formatSize(file.size)}
+                                                </p>
+
+                                            </div>
+
+                                        </div>
+
+                                        <button
+                                            onClick={() => {
+
+                                                setFile(null);
+
+                                                setLastFileName("");
+
+                                                if (fileRef.current) {
+                                                    fileRef.current.value = "";
+                                                }
+                                            }}
+                                            className="
+                                                w-9 h-9 rounded-full
+                                                bg-red-100 text-red-500
+                                                flex items-center justify-center
+                                            "
+                                        >
+                                            <X size={18} />
+                                        </button>
+
+                                    </div>
+                                )}
+
+                            </div>
+
+                            {/* ZIP */}
+                            <div className="mt-6">
+
+                                <label className="
+                                    text-sm font-semibold text-gray-700
+                                ">
+                                    Images ZIP (Optional)
+                                </label>
+
+                                <input
+                                    ref={zipRef}
+                                    type="file"
+                                    accept=".zip"
+                                    onChange={(e) => {
+
+                                        const selected =
+                                            e.target.files?.[0];
+
+                                        if (!selected) return;
+
+                                        setZipFile(selected);
+                                    }}
+                                    className="
+                                        mt-2 w-full border border-gray-200
+                                        rounded-2xl p-3
+                                    "
+                                />
+
+                                {zipFile && (
+
+                                    <div className="
+                                        mt-4 bg-orange-50
+                                        border border-orange-100
+                                        rounded-2xl p-4
+                                        flex items-center justify-between
+                                    ">
+
+                                        <div className="flex items-center gap-3">
+
+                                            <div className="
+                                                w-12 h-12 rounded-xl
+                                                bg-orange-500 text-white
+                                                flex items-center justify-center
+                                            ">
+                                                <FileArchive size={24} />
+                                            </div>
+
+                                            <div>
+
+                                                <h4 className="
+                                                    font-semibold text-gray-800
+                                                ">
+                                                    {zipFile.name}
+                                                </h4>
+
+                                                <p className="
+                                                    text-xs text-gray-500
+                                                ">
+                                                    {formatSize(zipFile.size)}
+                                                </p>
+
+                                            </div>
+
+                                        </div>
+
+                                        <button
+                                            onClick={() => {
+
+                                                setZipFile(null);
+
+                                                if (zipRef.current) {
+                                                    zipRef.current.value = "";
+                                                }
+                                            }}
+                                            className="
+                                                w-9 h-9 rounded-full
+                                                bg-red-100 text-red-500
+                                                flex items-center justify-center
+                                            "
+                                        >
+                                            <X size={18} />
+                                        </button>
+
+                                    </div>
+                                )}
+
+                            </div>
+
+                            {/* BUTTON */}
+                            <button
+                                onClick={handleUpload}
+                                disabled={!file}
+                                className={`
+                                    mt-8 w-full py-4 rounded-2xl
+                                    font-semibold text-white
+                                    transition-all duration-300
+                                    flex items-center justify-center gap-3
+                                    ${!file
+                                        ? "bg-gray-300 cursor-not-allowed"
+                                        : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:shadow-xl hover:scale-[1.01]"
+                                    }
+                                `}
+                            >
+
+                                <Upload size={20} />
+
+                                Upload Student Data
+
+                            </button>
+
+                        </div>
+
+                    </div>
+                )}
+
+                {/* UPLOADING */}
+                {uploading && (
+
+                    <div className="
+                        max-w-2xl mx-auto
+                        bg-white rounded-3xl
+                        p-10 shadow-sm border
+                        text-center
+                    ">
+
+                        <div className="
+                            w-24 h-24 mx-auto rounded-full
+                            bg-blue-100 flex items-center justify-center
+                        ">
+
+                            <LoaderCircle
+                                size={50}
+                                className="
+                                    text-blue-600 animate-spin
+                                "
+                            />
+
+                        </div>
+
+                        <h2 className="
+                            mt-6 text-3xl font-extrabold text-gray-800
+                        ">
+                            Uploading Files...
+                        </h2>
+
+                        <p className="
+                            mt-2 text-gray-500
+                        ">
+                            Please wait while your data is uploading.
                         </p>
 
-                        {/* 🔥 IMAGE WITH HOVER + CLICK */}
-                        <div
-                            onClick={() => setShowImage(true)}
-                            className="overflow-hidden rounded-lg cursor-pointer group"
-                        >
-                            <img
-                                src="/excel format.jpeg"
-                                alt="Excel Format"
-                                className="w-full rounded-lg shadow transition-transform duration-300 group-hover:scale-110"
-                            />
-                        </div>
+                        {/* PROGRESS */}
+                        <div className="
+                            mt-8 w-full bg-gray-200
+                            h-4 rounded-full overflow-hidden
+                        ">
 
-                        {/* DOWNLOAD */}
-                        <a
-                            href="/sample.xlsx"
-                            download
-                            className="block mt-4 text-center bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
-                        >
-                            📥 Download Sample
-                        </a>
-                    </div>
-
-                    {/* RIGHT UPLOAD */}
-                    <div className="bg-white p-5 rounded-2xl shadow-md">
-
-                        {/* DRAG AREA */}
-                        <div
-                            onDragOver={(e) => {
-                                e.preventDefault();
-                                setDragActive(true);
-                            }}
-                            onDragLeave={() => setDragActive(false)}
-                            onDrop={handleDrop}
-                            className={`border-2 border-dashed p-6 text-center rounded-lg transition ${dragActive
-                                ? "border-blue-600 bg-blue-50"
-                                : "border-gray-300"
-                                }`}
-                        >
-                            Drag & Drop Excel 📂
-                        </div>
-
-                        {/* 🔥 EXCEL INPUT */}
-                        <div className="mt-4">
-                            <label className="block text-sm font-semibold text-gray-700 mb-1">
-                                Excel File
-                            </label>
-
-                            <input
-                                ref={fileRef}
-                                type="file"
-                                accept=".xlsx,.xls"
-                                onChange={(e) => {
-                                    const selected = e.target.files?.[0];
-                                    if (!selected) return;
-
-                                    if (selected.name === lastFileName) {
-                                        toast.error("Same file ❌");
-                                        return;
-                                    }
-
-                                    setFile(selected);
-                                    setLastFileName(selected.name);
+                            <div
+                                className="
+                                    bg-gradient-to-r
+                                    from-blue-600 to-cyan-500
+                                    h-4 rounded-full transition-all
+                                "
+                                style={{
+                                    width: `${progress}%`,
                                 }}
-                                className="w-full border p-2 rounded-md"
                             />
 
-                            {/* EXCEL PREVIEW */}
-                            {file && (
-                                <div className="mt-3 bg-gray-100 p-3 rounded flex justify-between items-center">
-                                    <div>
-                                        <p className="text-sm font-semibold">{file.name}</p>
-                                        <p className="text-xs text-gray-500">
-                                            {formatSize(file.size)}
-                                        </p>
-                                    </div>
-
-                                    <button
-                                        onClick={() => {
-                                            setFile(null);
-                                            setLastFileName("");
-                                            if (fileRef.current) fileRef.current.value = "";
-                                        }}
-                                        className="text-red-500 font-bold text-lg"
-                                    >
-                                        ✖
-                                    </button>
-                                </div>
-                            )}
                         </div>
 
-                        {/* 🔥 ZIP INPUT */}
-                        <div className="mt-4">
-                            <label className="block text-sm font-semibold text-gray-700 mb-1">
-                                Images ZIP (Optional)
-                            </label>
+                        <p className="
+                            mt-3 text-lg font-bold text-blue-600
+                        ">
+                            {progress}%
+                        </p>
 
-                            <input
-                                ref={zipRef}
-                                type="file"
-                                accept=".zip"
-                                onChange={(e) => {
-                                    const selected = e.target.files?.[0];
-                                    if (!selected) return;
-
-                                    setZipFile(selected);
-                                }}
-                                className="w-full border p-2 rounded-md"
-                            />
-
-                            {/* ZIP PREVIEW */}
-                            {zipFile && (
-                                <div className="mt-3 bg-gray-100 p-3 rounded flex justify-between items-center">
-                                    <div>
-                                        <p className="text-sm font-semibold">{zipFile.name}</p>
-                                        <p className="text-xs text-gray-500">
-                                            {formatSize(zipFile.size)}
-                                        </p>
-                                    </div>
-
-                                    <button
-                                        onClick={() => {
-                                            setZipFile(null);
-                                            if (zipRef.current) zipRef.current.value = "";
-                                        }}
-                                        className="text-red-500 font-bold text-lg"
-                                    >
-                                        ✖
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-
-                        {/* 🔥 BUTTON */}
                         <button
-                            onClick={handleUpload}
-                            disabled={!file}
-                            className={`w-full mt-5 py-2.5 rounded-lg text-white font-semibold transition ${!file
-                                ? "bg-gray-400 cursor-not-allowed"
-                                : "bg-blue-600 hover:bg-blue-700"
-                                }`}
+                            onClick={handleCancel}
+                            className="
+                                mt-6 bg-red-500 hover:bg-red-600
+                                text-white px-6 py-3 rounded-2xl
+                                font-semibold transition
+                            "
                         >
-                            Upload Data
+                            Cancel Upload
                         </button>
+
                     </div>
-                </div>
-            )}
+                )}
 
-            {/* UPLOADING */}
-            {uploading && (
-                <div className="text-center mt-10">
-                    <p className="font-semibold mb-3">Uploading...</p>
+                {/* PROCESSING */}
+                {processing && (
 
-                    <div className="w-full bg-gray-200 h-4 rounded-full">
-                        <div
-                            className="bg-blue-600 h-4 rounded-full transition-all"
-                            style={{ width: `${progress}%` }}
-                        />
+                    <div className="
+                        max-w-2xl mx-auto
+                        bg-white rounded-3xl
+                        p-10 shadow-sm border
+                        text-center
+                    ">
+
+                        <div className="
+                            w-24 h-24 mx-auto rounded-full
+                            bg-green-100 flex items-center justify-center
+                        ">
+
+                            <ImageIcon
+                                size={50}
+                                className="
+                                    text-green-600 animate-pulse
+                                "
+                            />
+
+                        </div>
+
+                        <h2 className="
+                            mt-6 text-3xl font-extrabold text-gray-800
+                        ">
+                            Processing Images
+                        </h2>
+
+                        <p className="
+                            mt-2 text-gray-500
+                        ">
+                            Optimizing student photos and preparing records.
+                        </p>
+
+                        <div className="
+                            mt-8 w-full bg-gray-200
+                            h-4 rounded-full overflow-hidden
+                        ">
+
+                            <div
+                                className="
+                                    bg-gradient-to-r
+                                    from-green-500 to-emerald-500
+                                    h-4 rounded-full transition-all
+                                "
+                                style={{
+                                    width: `${(imageProgress / totalImages) * 100}%`,
+                                }}
+                            />
+
+                        </div>
+
+                        <p className="
+                            mt-4 text-lg font-bold text-green-600
+                        ">
+                            {imageProgress}/{totalImages}
+                        </p>
+
+                        <div className="
+                            mt-6 flex items-center justify-center gap-2
+                            text-green-600 font-semibold
+                        ">
+
+                            <CheckCircle2 size={22} />
+
+                            Processing student data...
+
+                        </div>
+
                     </div>
+                )}
 
-                    <p className="mt-2 text-sm">{progress}%</p>
+            </div>
 
-                    <button
-                        onClick={handleCancel}
-                        className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
-                    >
-                        Cancel
-                    </button>
-                </div>
-            )}
-
-            {/* PROCESSING */}
-            {processing && (
-                <div className="text-center mt-10">
-                    <p className="font-semibold mb-3">
-                        Processing Images...
-                    </p>
-
-                    <div className="w-full bg-gray-200 h-4 rounded-full">
-                        <div
-                            className="bg-green-600 h-4 rounded-full"
-                            style={{
-                                width: `${(imageProgress / totalImages) * 100}%`,
-                            }}
-                        />
-                    </div>
-
-                    <p className="mt-2 text-sm">
-                        {imageProgress}/{totalImages}
-                    </p>
-                </div>
-            )}
+            {/* IMAGE MODAL */}
             {showImage && (
+
                 <div
                     onClick={() => setShowImage(false)}
-                    className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+                    className="
+                        fixed inset-0 bg-black/80
+                        flex items-center justify-center
+                        z-50 p-4
+                    "
                 >
+
                     <img
                         src="/excel format.jpeg"
-                        className="max-w-[90%] max-h-[90%] rounded-lg shadow-2xl"
+                        alt="Excel Preview"
+                        className="
+                            max-w-full max-h-full
+                            rounded-3xl shadow-2xl
+                        "
                     />
+
                 </div>
-            )} 
+            )}
+
         </div>
     );
 }
