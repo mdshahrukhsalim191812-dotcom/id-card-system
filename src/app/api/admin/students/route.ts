@@ -9,8 +9,15 @@ export async function GET() {
         await connectDB();
 
         const students = await Student.find()
-            .populate("schoolId", "name email")
-            .sort({ createdAt: -1 });
+
+            .populate(
+                "schoolId",
+                "name email templateId templateImage"
+            )
+
+            .sort({
+                createdAt: -1,
+            });
 
         return NextResponse.json(students);
 

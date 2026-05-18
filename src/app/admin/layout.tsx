@@ -7,7 +7,7 @@ import {
     LayoutDashboard,
     School,
     Users,
-    Settings,
+    Download,
     LogOut,
     Menu,
     X,
@@ -42,9 +42,9 @@ export default function AdminLayout({
             href: "/admin/students",
         },
         {
-            title: "Settings",
-            icon: <Settings size={20} />,
-            href: "/admin/settings",
+            title: "Download ID Cards",
+            icon: <Download size={20} />,
+            href: "/admin/download-id",
         },
     ];
 
