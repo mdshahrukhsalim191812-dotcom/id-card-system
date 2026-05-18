@@ -544,7 +544,7 @@ export default function SchoolAdmin() {
 
                                 </div>
 
-                                <School className="text-gray-300" size={24} />
+                                <School className="text-blue-400" size={24} />
 
                             </div>
 

@@ -528,42 +528,6 @@ export default function CreateIDPage() {
         }
     };
 
-    const handleBulkDownload = async () => {
-        if (!students.length) return;
-
-        const pdf = new jsPDF({
-            orientation: "portrait",
-            unit: "px",
-            format: [300, 476],
-        });
-
-        for (let i = 0; i < students.length; i++) {
-            const student = students[i];
-
-            setStudent(student);
-            setImage(student.image || null);
-            setLogo(student.logo || null);
-            setSignature(student.signature || null);
-
-            await new Promise((res) => setTimeout(res, 300));
-
-            const canvas = await html2canvas(cardRef.current, {
-                scale: 1, // 🔥 CRITICAL FIX
-                useCORS: true,
-                width: 300,
-                height: 476,
-            });
-
-            const imgData = canvas.toDataURL("image/png");
-
-            if (i !== 0) pdf.addPage();
-
-            pdf.addImage(imgData, "PNG", 0, 0, 300, 476);
-        }
-
-        pdf.save(`${school?.name || "ID"}.pdf`);
-    };
-
     if (loadingPage) {
         return (
             <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#04284B] to-[#063B6E] flex items-center justify-center overflow-hidden z-50">
@@ -581,23 +545,50 @@ export default function CreateIDPage() {
 
                         <div className="relative w-28 h-28 rounded-full bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center shadow-2xl">
 
-                            <div className="relative">
+                            <div className="relative w-fit mx-auto">
 
-                                <FileBadge2
-                                    size={70}
-                                    className="text-white animate-pulse"
-                                />
+                                {/* GLOW */}
+                                <div className="
+                            absolute inset-0
+                            bg-cyan-400/30 blur-3xl
+                            rounded-full animate-pulse
+                        " />
 
-                                <LoaderCircle
-                                    size={24}
-                                    className="
-                absolute
-                -bottom-2
-                -right-2
-                animate-spin
-                text-white
-            "
-                                />
+                                {/* MAIN CIRCLE */}
+                                <div className="
+                            relative
+                            w-28 h-28
+                            rounded-full
+                            bg-white/10
+                            border border-white/10
+                            flex items-center justify-center
+                            shadow-2xl
+                        ">
+
+                                    <FileBadge2
+                                        size={52}
+                                        className="text-white"
+                                    />
+
+                                    {/* SPINNER */}
+                                    <div className="
+                                absolute -bottom-1 -right-1
+                                w-10 h-10 rounded-full
+                                bg-cyan-500
+                                flex items-center justify-center
+                                shadow-lg
+                            ">
+
+                                        <LoaderCircle
+                                            size={22}
+                                            className="
+                                        text-white animate-spin
+                                    "
+                                        />
+
+                                    </div>
+
+                                </div>
 
                             </div>
 
@@ -908,12 +899,6 @@ export default function CreateIDPage() {
                             </button>
                         </Link>
 
-                        <button
-                            onClick={handleBulkDownload}
-                            className="bg-gradient-to-r from-purple-900 to-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all"
-                        >
-                            Download All
-                        </button>
                     </div>
 
                     {/* CARD */}

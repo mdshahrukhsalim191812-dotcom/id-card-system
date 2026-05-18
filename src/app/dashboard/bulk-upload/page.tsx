@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -33,11 +33,20 @@ export default function BulkUploadPage() {
 
     const [showImage, setShowImage] = useState(false);
 
+    const [loadingPage, setLoadingPage] = useState(true);
+
     const xhrRef = useRef<XMLHttpRequest | null>(null);
     const fileRef = useRef<HTMLInputElement>(null);
     const zipRef = useRef<HTMLInputElement>(null);
 
     const router = useRouter();
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoadingPage(false);
+        }, 4000);
+    }, []);
+
 
     // RESET
     const resetFiles = () => {
@@ -212,6 +221,248 @@ export default function BulkUploadPage() {
 
         toast("Upload cancelled ❌");
     };
+
+    if (loadingPage) {
+
+        return (
+
+            <div className="
+            fixed inset-0 z-50
+            bg-gradient-to-br
+            from-[#021B33]
+            via-[#04284B]
+            to-[#063B6E]
+            overflow-hidden
+        ">
+
+                {/* BACKGROUND GLOW */}
+                <div className="
+                absolute top-[-120px] left-[-120px]
+                w-[320px] h-[320px]
+                bg-cyan-400/20 blur-3xl rounded-full
+                animate-pulse
+            " />
+
+                <div className="
+                absolute bottom-[-120px] right-[-120px]
+                w-[320px] h-[320px]
+                bg-blue-500/20 blur-3xl rounded-full
+                animate-pulse
+            " />
+
+                {/* MAIN */}
+                <div className="
+                relative z-10
+                min-h-screen
+                flex items-center justify-center
+                px-4
+            ">
+
+                    <div className="
+                    w-full max-w-xl
+                    bg-white/10 backdrop-blur-2xl
+                    border border-white/10
+                    rounded-[32px]
+                    p-8 sm:p-12
+                    shadow-2xl
+                    text-center
+                ">
+
+                        {/* ICON */}
+                        <div className="relative w-fit mx-auto">
+
+                            {/* GLOW */}
+                            <div className="
+                            absolute inset-0
+                            bg-cyan-400/30 blur-3xl
+                            rounded-full animate-pulse
+                        " />
+
+                            {/* MAIN CIRCLE */}
+                            <div className="
+                            relative
+                            w-28 h-28
+                            rounded-full
+                            bg-white/10
+                            border border-white/10
+                            flex items-center justify-center
+                            shadow-2xl
+                        ">
+
+                                <CloudUpload
+                                    size={52}
+                                    className="text-white"
+                                />
+
+                                {/* SPINNER */}
+                                <div className="
+                                absolute -bottom-1 -right-1
+                                w-10 h-10 rounded-full
+                                bg-cyan-500
+                                flex items-center justify-center
+                                shadow-lg
+                            ">
+
+                                    <LoaderCircle
+                                        size={22}
+                                        className="
+                                        text-white animate-spin
+                                    "
+                                    />
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {/* TITLE */}
+                        <h1 className="
+                        mt-10
+                        text-3xl sm:text-4xl
+                        font-extrabold
+                        text-white
+                        tracking-tight
+                    ">
+                            Loading Bulk Upload
+                        </h1>
+
+                        {/* DESCRIPTION */}
+                        <p className="
+                        mt-4
+                        text-blue-100
+                        text-sm sm:text-base
+                        leading-relaxed
+                        max-w-md mx-auto
+                    ">
+                            Preparing upload system, Excel engine and image processing tools...
+                        </p>
+
+                        {/* FEATURE CARDS */}
+                        <div className="
+                        mt-10
+                        grid grid-cols-1 sm:grid-cols-2
+                        gap-4
+                    ">
+
+                            {/* CARD */}
+                            <div className="
+                            bg-white/10
+                            border border-white/10
+                            rounded-2xl
+                            p-5
+                            text-left
+                        ">
+
+                                <div className="
+                                w-12 h-12
+                                rounded-xl
+                                bg-cyan-500/20
+                                flex items-center justify-center
+                            ">
+
+                                    <FileSpreadsheet
+                                        className="text-cyan-300"
+                                        size={24}
+                                    />
+
+                                </div>
+
+                                <h3 className="
+                                mt-4
+                                text-white
+                                font-bold
+                                text-lg
+                            ">
+                                    Excel Validator
+                                </h3>
+
+                                <p className="
+                                mt-2
+                                text-blue-100
+                                text-sm
+                            ">
+                                    Loading spreadsheet validation engine.
+                                </p>
+
+                            </div>
+
+                            {/* CARD */}
+                            <div className="
+                            bg-white/10
+                            border border-white/10
+                            rounded-2xl
+                            p-5
+                            text-left
+                        ">
+
+                                <div className="
+                                w-12 h-12
+                                rounded-xl
+                                bg-green-500/20
+                                flex items-center justify-center
+                            ">
+
+                                    <ImageIcon
+                                        className="text-green-300"
+                                        size={24}
+                                    />
+
+                                </div>
+
+                                <h3 className="
+                                mt-4
+                                text-white
+                                font-bold
+                                text-lg
+                            ">
+                                    Image Processor
+                                </h3>
+
+                                <p className="
+                                mt-2
+                                text-blue-100
+                                text-sm
+                            ">
+                                    Initializing image optimization system.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        {/* LOADING DOTS */}
+                        <div className="
+                        mt-10
+                        flex justify-center gap-3
+                    ">
+
+                            <div className="
+                            w-3 h-3 rounded-full
+                            bg-white animate-bounce
+                        " />
+
+                            <div className="
+                            w-3 h-3 rounded-full
+                            bg-white animate-bounce
+                            [animation-delay:0.2s]
+                        " />
+
+                            <div className="
+                            w-3 h-3 rounded-full
+                            bg-white animate-bounce
+                            [animation-delay:0.4s]
+                        " />
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        );
+    }
 
     return (
 
