@@ -12,7 +12,7 @@ export async function GET() {
 
             .populate(
                 "schoolId",
-                "name email templateId templateImage"
+                "name email"
             )
 
             .sort({
