@@ -1,13 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import {
     LayoutDashboard,
     School,
     Users,
     Settings,
     LogOut,
+    Menu,
+    X,
 } from "lucide-react";
+
+import { useState } from "react";
 
 export default function AdminLayout({
     children,
@@ -15,101 +21,154 @@ export default function AdminLayout({
     children: React.ReactNode;
 }) {
 
+    const pathname = usePathname();
+
+    const [open, setOpen] = useState(false);
+
+    const menus = [
+        {
+            title: "Dashboard",
+            icon: <LayoutDashboard size={20} />,
+            href: "/admin",
+        },
+        {
+            title: "Schools",
+            icon: <School size={20} />,
+            href: "/admin/schools",
+        },
+        {
+            title: "Students",
+            icon: <Users size={20} />,
+            href: "/admin/students",
+        },
+        {
+            title: "Settings",
+            icon: <Settings size={20} />,
+            href: "/admin/settings",
+        },
+    ];
+
     return (
-        <div className="min-h-screen bg-[#F4F7FB] flex">
+        <div className="min-h-screen bg-[#F4F7FB]">
+
+            {/* MOBILE HEADER */}
+            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b h-16 flex items-center justify-between px-4">
+
+                <h1 className="text-xl font-extrabold text-[#021B33]">
+                    Work GeniX
+                </h1>
+
+                <button
+                    onClick={() => setOpen(true)}
+                    className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center"
+                >
+                    <Menu size={22} />
+                </button>
+
+            </div>
+
+            {/* MOBILE OVERLAY */}
+            {open && (
+                <div
+                    className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+                    onClick={() => setOpen(false)}
+                />
+            )}
 
             {/* SIDEBAR */}
-            <aside className="w-[260px] bg-[#021B33] text-white hidden md:flex flex-col">
+            <aside
+                className={`
+                    fixed top-0 left-0 z-50 h-screen w-[280px]
+                    bg-gradient-to-b from-[#021B33] to-[#063B6E]
+                    text-white p-6 flex flex-col justify-between
+                    transition-all duration-300
 
-                {/* LOGO */}
-                <div className="p-6 border-b border-white/10">
+                    ${open ? "translate-x-0" : "-translate-x-full"}
+                    lg:translate-x-0
+                `}
+            >
 
-                    <h1 className="text-2xl font-bold">
-                        Super Admin
-                    </h1>
+                <div>
 
-                    <p className="text-sm text-blue-200 mt-1">
-                        Work GeniX Panel
-                    </p>
+                    {/* LOGO */}
+                    <div className="flex items-center justify-between mb-10">
 
-                </div>
+                        <div>
 
-                {/* MENU */}
-                <nav className="flex-1 p-4 space-y-2">
+                            <h1 className="text-3xl font-extrabold">
+                                Super Admin
+                            </h1>
 
-                    <Link
-                        href="/admin"
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition"
-                    >
-                        <LayoutDashboard size={20} />
-                        Dashboard
-                    </Link>
+                            <p className="text-blue-200 mt-1 text-sm">
+                                Work GeniX Panel
+                            </p>
 
-                    <Link
-                        href="/admin/schools"
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition"
-                    >
-                        <School size={20} />
-                        Schools
-                    </Link>
+                        </div>
 
-                    <Link
-                        href="/admin/students"
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition"
-                    >
-                        <Users size={20} />
-                        Students
-                    </Link>
+                        {/* MOBILE CLOSE */}
+                        <button
+                            onClick={() => setOpen(false)}
+                            className="lg:hidden"
+                        >
+                            <X size={24} />
+                        </button>
 
-                    <Link
-                        href="/admin/settings"
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition"
-                    >
-                        <Settings size={20} />
-                        Settings
-                    </Link>
+                    </div>
 
-                </nav>
+                    {/* MENUS */}
+                    <div className="space-y-3">
 
-                {/* FOOTER */}
-                <div className="p-4 border-t border-white/10">
+                        {menus.map((menu, index) => {
 
-                    <button className="w-full flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 py-3 rounded-xl transition">
+                            const active = pathname === menu.href;
 
-                        <LogOut size={18} />
+                            return (
+                                <Link
+                                    key={index}
+                                    href={menu.href}
+                                    onClick={() => setOpen(false)}
+                                    className={`
+                                        flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 font-medium
 
-                        Logout
+                                        ${active
+                                            ? "bg-white text-[#021B33] shadow-lg"
+                                            : "text-blue-100 hover:bg-white/10"}
+                                    `}
+                                >
 
-                    </button>
+                                    {menu.icon}
 
-                </div>
+                                    {menu.title}
 
-            </aside>
-
-            {/* MAIN */}
-            <main className="flex-1">
-
-                {/* TOPBAR */}
-                <div className="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
-
-                    <div>
-
-                        <h2 className="text-2xl font-bold text-gray-800">
-                            Admin Panel
-                        </h2>
-
-                        <p className="text-gray-500 text-sm">
-                            Manage schools and students
-                        </p>
+                                </Link>
+                            );
+                        })}
 
                     </div>
 
                 </div>
 
-                {/* PAGE CONTENT */}
-                <div className="p-6">
-                    {children}
-                </div>
+                {/* LOGOUT */}
+                <button
+                    className="
+                        w-full flex items-center justify-center gap-2
+                        bg-red-500 hover:bg-red-600
+                        py-3 rounded-2xl font-semibold transition
+                    "
+                >
+
+                    <LogOut size={20} />
+
+                    Logout
+
+                </button>
+
+            </aside>
+
+            {/* MAIN CONTENT */}
+            <main className="lg:ml-[280px] pt-16 lg:pt-0 min-h-screen">
+
+                {children}
 
             </main>
 
