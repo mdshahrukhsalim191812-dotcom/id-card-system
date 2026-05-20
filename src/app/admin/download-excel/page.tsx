@@ -9,7 +9,6 @@ import {
     Search,
     FileSpreadsheet,
 } from "lucide-react";
-import { FaFileDownload } from "react-icons/fa";
 
 type StudentType = {
     _id: string;
@@ -35,6 +34,9 @@ export default function DownloadExcelPage() {
     const [selectedSchool, setSelectedSchool] = useState("");
     const [selectedClass, setSelectedClass] = useState("");
     const [search, setSearch] = useState("");
+
+    const [downloading, setDownloading] = useState(false);
+    const [downloadProgress, setDownloadProgress] = useState(0);
 
     // FETCH STUDENTS
     useEffect(() => {
@@ -106,78 +108,120 @@ export default function DownloadExcelPage() {
     });
 
     // DOWNLOAD EXCEL
-    const handleDownloadExcel = () => {
+    const handleDownloadExcel = async () => {
 
         if (filteredStudents.length === 0) return;
 
-        // FORMAT DATA
-        const excelData = filteredStudents.map(
-            (student, index) => ({
-                "SL No": index + 1,
-                "Student Name": student.name,
-                "Class": student.class,
-                "Roll No": student.roll,
-                "Admission No": student.admissionNo || "",
-                "Father Name": student.father || "",
-                "Mother Name": student.mother || "",
-                "Phone": student.phone || "",
-                "Address": student.address || "",
-                "School": student.schoolId?.name || "",
-            })
-        );
+        try {
 
-        // CREATE WORKSHEET
-        const worksheet =
-            XLSX.utils.json_to_sheet(excelData);
+            setDownloading(true);
+            setDownloadProgress(0);
 
-        // COLUMN WIDTH
-        worksheet["!cols"] = [
-            { wch: 8 },
-            { wch: 25 },
-            { wch: 10 },
-            { wch: 10 },
-            { wch: 18 },
-            { wch: 25 },
-            { wch: 25 },
-            { wch: 18 },
-            { wch: 35 },
-            { wch: 30 },
-        ];
+            // FAKE PROGRESS ANIMATION
+            let progress = 0;
 
-        // CREATE WORKBOOK
-        const workbook =
-            XLSX.utils.book_new();
+            const interval = setInterval(() => {
 
-        XLSX.utils.book_append_sheet(
-            workbook,
-            worksheet,
-            "Students"
-        );
+                progress += 10;
 
-        // SCHOOL NAME
-        const schoolName =
-            schools
-                .find(
-                    (s) => s?._id === selectedSchool
-                )
-                ?.name?.replace(/\s+/g, "-")
-                ?.toLowerCase() || "all-schools";
+                if (progress <= 90) {
+                    setDownloadProgress(progress);
+                }
 
-        // CLASS NAME
-        const className =
-            selectedClass
-                ? `class-${selectedClass}`
-                : "all-classes";
+            }, 200);
 
-        // FILE NAME
-        const fileName =
-            `${schoolName}-${className}-students.xlsx`;
+            // FORMAT DATA
+            const excelData = filteredStudents.map(
+                (student, index) => ({
+                    "SL No": index + 1,
+                    "Student Name": student.name,
+                    "Class": student.class,
+                    "Roll No": student.roll,
+                    "Admission No": student.admissionNo || "",
+                    "Father Name": student.father || "",
+                    "Mother Name": student.mother || "",
+                    "Phone": student.phone || "",
+                    "Address": student.address || "",
+                    "School": student.schoolId?.name || "",
+                })
+            );
 
-        // DOWNLOAD
-        XLSX.writeFile(
-            workbook,
-            fileName
-        );
+            // CREATE WORKSHEET
+            const worksheet =
+                XLSX.utils.json_to_sheet(excelData);
+
+            worksheet["!cols"] = [
+                { wch: 8 },
+                { wch: 25 },
+                { wch: 10 },
+                { wch: 10 },
+                { wch: 18 },
+                { wch: 25 },
+                { wch: 25 },
+                { wch: 18 },
+                { wch: 35 },
+                { wch: 30 },
+            ];
+
+            // CREATE WORKBOOK
+            const workbook =
+                XLSX.utils.book_new();
+
+            XLSX.utils.book_append_sheet(
+                workbook,
+                worksheet,
+                "Students"
+            );
+
+            // SCHOOL NAME
+            const schoolName =
+                schools
+                    .find(
+                        (s) => s?._id === selectedSchool
+                    )
+                    ?.name?.replace(/\s+/g, "-")
+                    ?.toLowerCase() || "all-schools";
+
+            // CLASS NAME
+            const className =
+                selectedClass
+                    ? `class-${selectedClass}`
+                    : "all-classes";
+
+            // FILE NAME
+            const fileName =
+                `${schoolName}-${className}-students.xlsx`;
+
+            // WAIT FOR UX
+            await new Promise((resolve) =>
+                setTimeout(resolve, 1800)
+            );
+
+            // DOWNLOAD FILE
+            XLSX.writeFile(
+                workbook,
+                fileName
+            );
+
+            clearInterval(interval);
+
+            setDownloadProgress(100);
+
+            // HIDE LOADER
+            setTimeout(() => {
+
+                setDownloading(false);
+                setDownloadProgress(0);
+
+            }, 1000);
+
+        } catch (error) {
+
+            console.log(error);
+
+            setDownloading(false);
+            setDownloadProgress(0);
+        }
     };
 
     // LOADING UI
@@ -232,17 +276,33 @@ export default function DownloadExcelPage() {
                         {/* RIGHT */}
                         <button
                             onClick={handleDownloadExcel}
+                            disabled={downloading}
                             className="
-                                flex items-center justify-center gap-2
-                                bg-green-500 hover:bg-green-600
-                                px-6 py-3 rounded-2xl
-                                font-semibold shadow-xl transition
-                            "
+        flex items-center justify-center gap-2
+        bg-green-500 hover:bg-green-600
+        disabled:bg-green-300
+        px-6 py-3 rounded-2xl
+        font-semibold shadow-xl transition
+    "
                         >
 
-                            <FaFileDownload size={20} />
+                            {downloading ? (
 
-                            Download Excel
+                                <>
+                                    <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin"></div>
+
+                                    Preparing Excel...
+                                </>
+
+                            ) : (
+
+                                <>
+                                    <FileSpreadsheet size={20} />
+
+                                    Download Excel
+                                </>
+
+                            )}
 
                         </button>
 
@@ -464,6 +524,95 @@ export default function DownloadExcelPage() {
                 </div>
 
             </div>
+
+            {/* DOWNLOAD OVERLAY */}
+            {downloading && (
+
+                <div className="
+        fixed inset-0 z-50
+        bg-gradient-to-br
+        from-[#021B33]
+        via-[#04284B]
+        to-[#063B6E]
+        flex items-center justify-center
+        overflow-hidden
+    ">
+
+                    {/* GLOW */}
+                    <div className="
+            absolute w-[400px] h-[400px]
+            bg-green-500/20 blur-3xl
+            rounded-full animate-pulse
+        "></div>
+
+                    {/* CONTENT */}
+                    <div className="relative z-10 text-center px-6">
+
+                        {/* ICON */}
+                        <div className="
+                w-28 h-28 rounded-full
+                bg-white/10 backdrop-blur-xl
+                border border-white/10
+                flex items-center justify-center
+                mx-auto shadow-2xl
+            ">
+
+                            <FileSpreadsheet
+                                size={55}
+                                className="text-white animate-pulse"
+                            />
+
+                        </div>
+
+                        {/* TITLE */}
+                        <h2 className="
+                mt-8 text-3xl sm:text-4xl
+                font-extrabold text-white
+            ">
+                            Preparing Excel File
+                        </h2>
+
+                        {/* TEXT */}
+                        <p className="
+                mt-3 text-blue-100
+                max-w-md mx-auto
+            ">
+                            Please wait while we generate
+                            your professional student report.
+                        </p>
+
+                        {/* PROGRESS */}
+                        <div className="
+                mt-8 w-full max-w-md
+                bg-white/10 rounded-full
+                h-4 overflow-hidden
+            ">
+
+                            <div
+                                className="
+                        h-full bg-gradient-to-r
+                        from-green-400 to-emerald-500
+                        transition-all duration-300
+                    "
+                                style={{
+                                    width: `${downloadProgress}%`,
+                                }}
+                            />
+
+                        </div>
+
+                        {/* PERCENT */}
+                        <p className="
+                mt-4 text-white font-semibold
+            ">
+                            {downloadProgress}%
+                        </p>
+
+                    </div>
+
+                </div>
+
+            )}
 
         </div>
     );
