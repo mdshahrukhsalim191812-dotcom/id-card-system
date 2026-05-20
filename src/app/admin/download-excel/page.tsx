@@ -38,6 +38,20 @@ export default function DownloadExcelPage() {
     const [downloading, setDownloading] = useState(false);
     const [downloadProgress, setDownloadProgress] = useState(0);
 
+    const [loadingPage, setLoadingPage] = useState(true);
+
+    // SIMULATE PAGE LOADING
+    useEffect(() => {
+
+        setTimeout(() => {
+
+            setLoadingPage(false);
+
+        }, 1000);
+
+    }, []);
+
+
     // FETCH STUDENTS
     useEffect(() => {
 
@@ -225,29 +239,92 @@ export default function DownloadExcelPage() {
     };
 
     // LOADING UI
-    if (loading) {
+    if (loadingPage) {
 
         return (
 
-            <div className="min-h-screen bg-gradient-to-br from-[#021B33] via-[#04284B] to-[#063B6E] flex items-center justify-center">
+            <div className="
+                min-h-screen
+                bg-gradient-to-br
+                from-[#021B33]
+                via-[#04284B]
+                to-[#063B6E]
+                flex items-center justify-center
+                overflow-hidden
+            ">
 
-                <div className="text-center">
+                {/* GLOW */}
+                <div className="
+                    absolute w-[400px] h-[400px]
+                    bg-blue-500/20 blur-3xl
+                    rounded-full animate-pulse
+                "></div>
 
-                    <div className="w-20 h-20 rounded-full border-4 border-white/20 border-t-white animate-spin mx-auto"></div>
+                <div className="relative z-10 text-center px-6">
 
-                    <h2 className="mt-6 text-3xl font-bold text-white">
-                        Loading Excel Panel
+                    {/* ICON */}
+                    <div className="
+                        w-28 h-28 rounded-full
+                        bg-white/10 backdrop-blur-xl
+                        border border-white/10
+                        flex items-center justify-center
+                        mx-auto shadow-2xl
+                    ">
+
+                        <FileSpreadsheet
+                            size={55}
+                            className="text-white animate-pulse"
+                        />
+
+                    </div>
+
+                    {/* TITLE */}
+                    <h2 className="
+                        mt-8 text-4xl
+                        font-extrabold text-white
+                    ">
+                        Loading Download Excel Panel
                     </h2>
 
-                    <p className="text-blue-100 mt-2">
-                        Please wait...
+                    <p className="
+                        text-blue-100 mt-3
+                        max-w-md mx-auto
+                    ">
+                        Preparing school database and
+                        student records...
                     </p>
+
+                    {/* LOADER */}
+                    <div className="
+                        mt-8 flex items-center
+                        justify-center gap-2
+                    ">
+
+                        <div className="
+                            w-3 h-3 rounded-full
+                            bg-white animate-bounce
+                        "></div>
+
+                        <div className="
+                            w-3 h-3 rounded-full
+                            bg-white animate-bounce
+                            delay-150
+                        "></div>
+
+                        <div className="
+                            w-3 h-3 rounded-full
+                            bg-white animate-bounce
+                            delay-300
+                        "></div>
+
+                    </div>
 
                 </div>
 
             </div>
         );
     }
+
 
     return (
 

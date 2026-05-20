@@ -10,6 +10,7 @@ import {
     GraduationCap,
     Trash2,
 } from "lucide-react";
+import Student from "@/models/Student";
 
 type Student = {
     _id: string;
@@ -31,7 +32,7 @@ export default function AdminStudentsPage() {
     const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
     const [search, setSearch] = useState("");
     const [selectedSchool, setSelectedSchool] = useState("");
-    const [loading, setLoading] = useState(true);
+    const [loadingPage, setLoadingPage] = useState(true);
 
     // FETCH STUDENTS
     useEffect(() => {
@@ -53,7 +54,7 @@ export default function AdminStudentsPage() {
 
             } finally {
 
-                setLoading(false);
+                setLoadingPage(false);
             }
         };
 
@@ -97,26 +98,6 @@ export default function AdminStudentsPage() {
             ])
         ).values()
     );
-
-    // LOADING
-    if (loading) {
-
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-[#F4F7FB]">
-
-                <div className="flex flex-col items-center">
-
-                    <div className="w-14 h-14 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-
-                    <p className="mt-4 text-gray-600 font-medium">
-                        Loading students...
-                    </p>
-
-                </div>
-
-            </div>
-        );
-    }
 
     const handleDelete = async (
         id: string,
@@ -226,6 +207,92 @@ export default function AdminStudentsPage() {
 
         ));
     };
+
+    if (loadingPage) {
+
+        return (
+
+            <div className="
+                min-h-screen
+                bg-gradient-to-br
+                from-[#021B33]
+                via-[#04284B]
+                to-[#063B6E]
+                flex items-center justify-center
+                overflow-hidden
+            ">
+
+                {/* GLOW */}
+                <div className="
+                    absolute w-[400px] h-[400px]
+                    bg-blue-500/20 blur-3xl
+                    rounded-full animate-pulse
+                "></div>
+
+                <div className="relative z-10 text-center px-6">
+
+                    {/* ICON */}
+                    <div className="
+                        w-28 h-28 rounded-full
+                        bg-white/10 backdrop-blur-xl
+                        border border-white/10
+                        flex items-center justify-center
+                        mx-auto shadow-2xl
+                    ">
+
+                        <Users
+                            size={55}
+                            className="text-white animate-pulse"
+                        />
+
+                    </div>
+
+                    {/* TITLE */}
+                    <h2 className="
+                        mt-8 text-4xl
+                        font-extrabold text-white
+                    ">
+                        Loading Students Panel
+                    </h2>
+
+                    <p className="
+                        text-blue-100 mt-3
+                        max-w-md mx-auto
+                    ">
+                        Preparing school database and
+                        student records...
+                    </p>
+
+                    {/* LOADER */}
+                    <div className="
+                        mt-8 flex items-center
+                        justify-center gap-2
+                    ">
+
+                        <div className="
+                            w-3 h-3 rounded-full
+                            bg-white animate-bounce
+                        "></div>
+
+                        <div className="
+                            w-3 h-3 rounded-full
+                            bg-white animate-bounce
+                            delay-150
+                        "></div>
+
+                        <div className="
+                            w-3 h-3 rounded-full
+                            bg-white animate-bounce
+                            delay-300
+                        "></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-[#F4F7FB] p-4 sm:p-6">
