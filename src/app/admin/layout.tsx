@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import { useState } from "react";
+import { FaFileDownload } from "react-icons/fa";
 
 export default function AdminLayout({
     children,
@@ -45,6 +46,11 @@ export default function AdminLayout({
             title: "Download ID Cards",
             icon: <Download size={20} />,
             href: "/admin/download-id",
+        },
+        {
+            title: "Download Excel",
+            icon: <FaFileDownload size={20} />,
+            href: "/admin/download-excel",
         },
     ];
 

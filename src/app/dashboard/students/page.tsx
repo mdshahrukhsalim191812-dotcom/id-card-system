@@ -142,7 +142,7 @@ export default function SchoolAdmin() {
                     </p>
 
                     <p className="text-sm text-gray-500 mt-1">
-                        This will remove all filtered students permanently.
+                        This will remove all students permanently.
                     </p>
                 </div>
 
