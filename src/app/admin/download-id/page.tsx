@@ -17,13 +17,40 @@ import {
 type SchoolType = {
     _id: string;
     name: string;
+
+    email?: string;
+
+    templateId?: string;
+
+    templateImage?: string;
 };
 
 type StudentType = {
     _id: string;
+
     name: string;
     class: string;
     roll: string;
+
+    father?: string;
+    mother?: string;
+    phone?: string;
+    address?: string;
+    blood?: string;
+    dob?: string;
+
+    image?: string;
+    logo?: string;
+    signature?: string;
+
+    schoolId?: {
+        _id: string;
+        name: string;
+        email?: string;
+
+        templateId?: string;
+        templateImage?: string;
+    };
 };
 
 export default function AdminDownloadIDPage() {
@@ -106,7 +133,7 @@ export default function AdminDownloadIDPage() {
                 const data = await res.json();
 
                 const filtered = data.filter(
-                    (student: any) =>
+                    (student: StudentType) =>
                         student.schoolId?._id === selectedSchool
                 );
 
@@ -169,7 +196,23 @@ export default function AdminDownloadIDPage() {
                     filteredStudents[i];
 
                 // SET CURRENT STUDENT
-                setCurrentStudent(student);
+                setCurrentStudent({
+                    ...student,
+
+                    schoolId: {
+                        ...student.schoolId,
+
+                        templateId:
+                            student.schoolId?.templateId,
+                    },
+                });
+
+                // WAIT FOR REACT RENDER
+                await new Promise((resolve) =>
+                    requestAnimationFrame(() =>
+                        requestAnimationFrame(resolve)
+                    )
+                );
 
                 // PROGRESS
                 const progress =
@@ -181,11 +224,7 @@ export default function AdminDownloadIDPage() {
 
                 setDownloadProgress(progress);
 
-                // WAIT FOR RENDER
-                await new Promise((resolve) =>
-                    setTimeout(resolve, 700)
-                );
-
+                // CHECK REF
                 if (!cardRef.current) continue;
 
                 // CAPTURE
@@ -195,6 +234,7 @@ export default function AdminDownloadIDPage() {
                         {
                             scale: 3,
                             useCORS: true,
+                            backgroundColor: null,
                         }
                     );
 
@@ -210,6 +250,7 @@ export default function AdminDownloadIDPage() {
                     );
                 }
 
+                // ADD IMAGE
                 pdf.addImage(
                     imgData,
                     "PNG",
@@ -813,20 +854,22 @@ export default function AdminDownloadIDPage() {
 
                         <TemplateRenderer
                             templateId={
-                                currentStudent
-                                    .schoolId?.templateId
+                                currentStudent.schoolId.templateId
                             }
+
                             student={currentStudent}
+
                             image={currentStudent.image}
+
                             logo={currentStudent.logo}
+
                             signature={currentStudent.signature}
+
                             formatDate={(date: any) =>
-                                new Date(date)
-                                    .toLocaleDateString()
+                                new Date(date).toLocaleDateString()
                             }
-                            school={
-                                currentStudent.schoolId
-                            }
+
+                            school={currentStudent.schoolId}
                         />
 
                     )}

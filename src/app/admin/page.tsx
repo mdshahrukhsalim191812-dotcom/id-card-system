@@ -21,6 +21,8 @@ type SchoolType = {
     _id: string;
     name: string;
     email: string;
+    templateId?: string;
+    templateImage?:string;
 };
 
 type StudentType = {

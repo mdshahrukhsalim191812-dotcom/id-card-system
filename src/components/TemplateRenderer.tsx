@@ -22,6 +22,9 @@ const TemplateRenderer = forwardRef(
 
         let content = null;
 
+        console.log(student, "student in template renderer");
+        console.log(templateId, "templateId in template renderer");
+
         switch (templateId) {
             case "NewEraEnglishSchool":
                 content = (
