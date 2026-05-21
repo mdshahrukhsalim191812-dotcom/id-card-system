@@ -31,7 +31,7 @@ export default function Template2(
     const isBlob = logo?.startsWith("blob:");
     return (
         <div
-            className="w-[260px] h-[420px] bg-white rounded-2xl shadow-2xl overflow-hidden border relative flex flex-col"
+            className="w-[300px] h-[476px] bg-white rounded-2xl shadow-2xl overflow-hidden border relative flex flex-col"
         >
 
             {/* HEADER */}
