@@ -15,7 +15,6 @@ import {
     BarChart3,
     ShieldCheck,
 } from "lucide-react";
-import DashboardLayout from "../dashboard/layout";
 
 type SchoolType = {
     _id: string;

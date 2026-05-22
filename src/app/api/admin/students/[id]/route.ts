@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 
 import { connectDB } from "@/lib/db";
 
-import School from "@/models/School";
 import Student from "@/models/Student";
 
 import { verifyAdmin } from "@/lib/verifyAdmin";
@@ -36,25 +35,18 @@ export async function DELETE(
             );
         }
 
-        // ✅ CONNECT DB
+        // ✅ CONNECT DATABASE
         await connectDB();
 
-        const schoolId = params.id;
-
-        // ✅ DELETE ALL STUDENTS
-        await Student.deleteMany({
-            schoolId,
-        });
-
-        // ✅ DELETE SCHOOL
-        await School.findByIdAndDelete(
-            schoolId
+        // ✅ DELETE STUDENT
+        await Student.findByIdAndDelete(
+            params.id
         );
 
         return NextResponse.json({
             success: true,
             message:
-                "School deleted successfully",
+                "Student deleted successfully",
         });
 
     } catch (error) {

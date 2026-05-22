@@ -1,27 +1,51 @@
 import jwt from "jsonwebtoken";
 
 type UserPayload = {
-    _id: string;  
+
+    id: string;
+
     email: string;
+
     role: string;
 };
 
-export const generateToken = (user: any) => {
+// ================= GENERATE TOKEN =================
+export const generateToken = (
+    user: UserPayload
+) => {
+
     return jwt.sign(
+
         {
-            _id: user._id, 
+            id: user.id,
+
             email: user.email,
-            role: user.role || "school"
+
+            role: user.role,
         },
+
         process.env.JWT_SECRET as string,
-        { expiresIn: "7d" }
+
+        {
+            expiresIn: "7d",
+        }
     );
 };
 
-export const verifyToken = (token: string) => {
+// ================= VERIFY TOKEN =================
+export const verifyToken = (
+    token: string
+) => {
+
     try {
-        return jwt.verify(token, process.env.JWT_SECRET as string) as UserPayload;
+
+        return jwt.verify(
+            token,
+            process.env.JWT_SECRET as string
+        ) as UserPayload;
+
     } catch {
+
         return null;
     }
 };
