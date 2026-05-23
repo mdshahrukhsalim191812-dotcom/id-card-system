@@ -559,51 +559,51 @@ export default function AdminSchoolsPage() {
 
             {/* ================= DESKTOP TABLE ================= */}
             <div className="
-        hidden xl:block
-        mt-8
-        bg-white
-        rounded-[32px]
-        shadow-md
-        border border-gray-100
-        overflow-hidden
-    ">
+    hidden xl:block
+    mt-6
+    bg-white
+    rounded-[28px]
+    shadow-sm
+    border border-gray-100
+    overflow-hidden
+">
 
-                {/* TABLE HEADER */}
+                {/* HEADER */}
                 <div className="
-            px-8 py-6
-            border-b border-gray-100
-            flex items-center justify-between
-            bg-gradient-to-r
-            from-white
-            to-[#F8FBFF]
-        ">
+        px-6 py-5
+        border-b border-gray-100
+        flex items-center justify-between
+        bg-white
+    ">
 
                     <div>
 
                         <h2 className="
-                    text-2xl font-bold
-                    text-gray-800
-                ">
+                text-2xl
+                font-bold
+                text-gray-800
+            ">
                             Schools Database
                         </h2>
 
                         <p className="
-                    text-gray-500
-                    text-sm mt-1
-                ">
-                            Manage and monitor all schools professionally.
+                text-gray-500
+                text-sm
+                mt-1
+            ">
+                            Manage all schools professionally
                         </p>
 
                     </div>
 
                     <div className="
-                px-5 py-2.5
-                rounded-2xl
-                bg-blue-50
-                text-blue-600
-                font-bold text-sm
-                border border-blue-100
-            ">
+            px-4 py-2
+            rounded-xl
+            bg-blue-50
+            text-blue-600
+            text-sm
+            font-semibold
+        ">
 
                         {filteredSchools.length} Results
 
@@ -612,43 +612,58 @@ export default function AdminSchoolsPage() {
                 </div>
 
                 {/* TABLE */}
-                <div className="overflow-x-auto">
+                <div>
 
-                    <table className="w-full">
+                    <table className="
+            w-full
+            table-fixed
+        ">
 
-                        <thead className="bg-[#F8FAFC]">
+                        <thead className="bg-[#FAFBFC]">
 
                             <tr>
 
                                 <th className="
-                            px-8 py-5
-                            text-left
-                            font-bold text-gray-600
-                        ">
+                        w-[28%]
+                        px-6 py-4
+                        text-left
+                        text-sm
+                        font-bold
+                        text-gray-600
+                    ">
                                     School
                                 </th>
 
                                 <th className="
-                            px-8 py-5
-                            text-left
-                            font-bold text-gray-600
-                        ">
+                        w-[34%]
+                        px-4 py-4
+                        text-left
+                        text-sm
+                        font-bold
+                        text-gray-600
+                    ">
                                     Email
                                 </th>
 
                                 <th className="
-                            px-8 py-5
-                            text-left
-                            font-bold text-gray-600
-                        ">
+                        w-[20%]
+                        px-4 py-4
+                        text-left
+                        text-sm
+                        font-bold
+                        text-gray-600
+                    ">
                                     Template
                                 </th>
 
                                 <th className="
-                            px-8 py-5
-                            text-center
-                            font-bold text-gray-600
-                        ">
+                        w-[18%]
+                        px-4 py-4
+                        text-center
+                        text-sm
+                        font-bold
+                        text-gray-600
+                    ">
                                     Action
                                 </th>
 
@@ -663,48 +678,51 @@ export default function AdminSchoolsPage() {
                                 <tr
                                     key={school._id}
                                     className="
-                                border-t border-gray-100
-                                hover:bg-[#F8FBFF]
-                                transition-all duration-300
-                            "
+                            border-t border-gray-100
+                            hover:bg-gray-50
+                            transition-all
+                        "
                                 >
 
                                     {/* SCHOOL */}
-                                    <td className="px-8 py-6">
+                                    <td className="px-6 py-5">
 
                                         <div className="
-                                    flex items-center gap-4
-                                ">
+                                flex items-center gap-3
+                            ">
 
                                             <div className="
-                                        w-14 h-14
-                                        rounded-3xl
-                                        bg-gradient-to-br
-                                        from-blue-500
-                                        to-cyan-500
-                                        text-white
-                                        flex items-center justify-center
-                                        font-bold text-lg
-                                        shadow-lg
-                                    ">
+                                    w-12 h-12
+                                    rounded-2xl
+                                    bg-gradient-to-br
+                                    from-blue-500
+                                    to-cyan-500
+                                    text-white
+                                    flex items-center justify-center
+                                    font-bold
+                                    text-lg
+                                    shrink-0
+                                ">
 
                                                 {school.name.charAt(0)}
 
                                             </div>
 
-                                            <div>
+                                            <div className="min-w-0">
 
                                                 <h3 className="
-                                            font-bold
-                                            text-gray-800
-                                            text-lg
-                                        ">
+                                        font-bold
+                                        text-gray-800
+                                        text-[17px]
+                                        leading-6
+                                    ">
                                                     {school.name}
                                                 </h3>
 
                                                 <p className="
-                                            text-sm text-gray-500
-                                        ">
+                                        text-xs
+                                        text-gray-500
+                                    ">
                                                     Registered School
                                                 </p>
 
@@ -716,25 +734,29 @@ export default function AdminSchoolsPage() {
 
                                     {/* EMAIL */}
                                     <td className="
-                                px-8 py-6
-                                text-gray-700
-                                font-medium
-                            ">
+                            px-4 py-5
+                            text-gray-700
+                            text-sm
+                            break-words
+                        ">
+
                                         {school.email}
+
                                     </td>
 
                                     {/* TEMPLATE */}
-                                    <td className="px-8 py-6">
+                                    <td className="px-4 py-5">
 
                                         <span className="
-                                    inline-flex items-center
-                                    px-4 py-2
-                                    rounded-2xl
-                                    bg-green-50
-                                    text-green-600
-                                    text-sm font-semibold
-                                    border border-green-100
-                                ">
+                                inline-block
+                                px-3 py-1.5
+                                rounded-xl
+                                bg-green-50
+                                text-green-700
+                                text-xs
+                                font-semibold
+                                break-all
+                            ">
 
                                             {school.templateId || "No Template"}
 
@@ -744,9 +766,9 @@ export default function AdminSchoolsPage() {
 
                                     {/* ACTION */}
                                     <td className="
-                                px-8 py-6
-                                text-center
-                            ">
+                            px-4 py-5
+                            text-center
+                        ">
 
                                         <button
                                             onClick={() =>
@@ -756,21 +778,24 @@ export default function AdminSchoolsPage() {
                                                 )
                                             }
                                             className="
-                                        inline-flex items-center gap-2
-                                        bg-red-500 hover:bg-red-600
-                                        text-white
-                                        px-5 py-3
-                                        rounded-2xl
-                                        font-semibold
-                                        shadow-lg
-                                        transition-all duration-300
-                                        hover:scale-105
-                                    "
+                                    inline-flex
+                                    items-center
+                                    justify-center
+                                    gap-2
+                                    bg-red-500
+                                    hover:bg-red-600
+                                    text-white
+                                    px-4 py-2.5
+                                    rounded-xl
+                                    text-sm
+                                    font-semibold
+                                    transition-all
+                                "
                                         >
 
-                                            <Trash2 size={18} />
+                                            <Trash2 size={16} />
 
-                                            Delete School
+                                            Delete
 
                                         </button>
 

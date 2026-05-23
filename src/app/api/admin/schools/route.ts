@@ -33,8 +33,12 @@ export async function GET() {
 
         // ================= GET SCHOOLS =================
         const schools =
-            await School.find()
+            await School.find({
+                role: "school",
+            })
+
                 .select("-password")
+
                 .sort({
                     createdAt: -1,
                 });

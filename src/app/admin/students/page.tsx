@@ -439,31 +439,121 @@ export default function AdminStudentsPage() {
             </div>
 
             {/* TABLE DESKTOP */}
-            <div className="hidden lg:block bg-white rounded-3xl shadow-sm border overflow-hidden">
+            <div className="
+    hidden lg:block
+    bg-white
+    rounded-[30px]
+    shadow-sm
+    border border-gray-100
+    overflow-hidden
+">
 
+                {/* HEADER */}
+                <div className="
+        px-8 py-6
+        border-b border-gray-100
+        flex items-center justify-between
+    ">
+
+                    <div>
+
+                        <h2 className="
+                text-2xl
+                font-bold
+                text-gray-800
+            ">
+                            Students Database
+                        </h2>
+
+                        <p className="
+                text-sm
+                text-gray-500
+                mt-1
+            ">
+                            Manage all students professionally
+                        </p>
+
+                    </div>
+
+                    <div className="
+            px-4 py-2
+            rounded-xl
+            bg-blue-50
+            text-blue-600
+            text-sm
+            font-semibold
+        ">
+
+                        {filteredStudents.length} Results
+
+                    </div>
+
+                </div>
+
+                {/* TABLE */}
                 <table className="w-full">
 
-                    <thead className="bg-gray-100">
+                    <thead className="bg-[#F8FAFC]">
 
-                        <tr className="text-left">
+                        <tr>
 
-                            <th className="p-5 font-bold text-gray-700">
+                            <th className="
+                    px-8 py-5
+                    text-left
+                    text-sm
+                    font-bold
+                    text-gray-600
+                ">
                                 Student
                             </th>
 
-                            <th className="p-5 font-bold text-gray-700">
+                            <th className="
+                    px-5 py-5
+                    text-left
+                    text-sm
+                    font-bold
+                    text-gray-600
+                ">
                                 Class
                             </th>
 
-                            <th className="p-5 font-bold text-gray-700">
+                            <th className="
+                    px-5 py-5
+                    text-left
+                    text-sm
+                    font-bold
+                    text-gray-600
+                ">
                                 Roll
                             </th>
 
-                            <th className="p-5 font-bold text-gray-700">
+                            <th className="
+                    px-5 py-5
+                    text-left
+                    text-sm
+                    font-bold
+                    text-gray-600
+                ">
+                                Admission No
+                            </th>
+
+                            <th className="
+                    px-5 py-5
+                    text-left
+                    text-sm
+                    font-bold
+                    text-gray-600
+                ">
                                 School
                             </th>
 
-                            <th className="p-5 font-bold text-gray-700 text-center">
+                            <th className="
+                    px-5 py-5
+                    text-center
+                    text-sm
+                    font-bold
+                    text-gray-600
+                ">
                                 Action
                             </th>
 
@@ -477,26 +567,120 @@ export default function AdminStudentsPage() {
 
                             <tr
                                 key={student._id}
-                                className="border-t hover:bg-gray-50 transition"
+                                className="
+                        border-t border-gray-100
+                        hover:bg-[#FAFCFF]
+                        transition-all
+                    "
                             >
 
-                                <td className="p-5 font-semibold text-gray-800">
-                                    {student.name}
+                                {/* STUDENT */}
+                                <td className="px-8 py-5">
+
+                                    <div className="
+                            flex items-center gap-4
+                        ">
+
+                                        {/* AVATAR */}
+                                        <div className="
+                                w-14 h-14
+                                rounded-2xl
+                                bg-gradient-to-br
+                                from-blue-500
+                                to-cyan-500
+                                text-white
+                                flex items-center justify-center
+                                font-bold text-lg
+                                shrink-0
+                            ">
+
+                                            {student.name.charAt(0)}
+
+                                        </div>
+
+                                        {/* INFO */}
+                                        <div>
+
+                                            <h3 className="
+                                    text-lg
+                                    font-bold
+                                    text-gray-800
+                                    leading-6
+                                ">
+
+                                                {student.name}
+
+                                            </h3>
+
+                                            <p className="
+                                    text-sm
+                                    text-gray-500
+                                ">
+                                                {student.schoolId?.name}
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
                                 </td>
 
-                                <td className="p-5">
-                                    {student.class}
+                                {/* CLASS */}
+                                <td className="px-5 py-5">
+
+                                    <span className="
+                            px-3 py-1.5
+                            rounded-xl
+                            bg-blue-50
+                            text-blue-600
+                            text-sm
+                            font-semibold
+                        ">
+
+                                        {student.class}
+
+                                    </span>
+
                                 </td>
 
-                                <td className="p-5">
+                                {/* ROLL */}
+                                <td className="
+                        px-5 py-5
+                        font-semibold
+                        text-gray-700
+                    ">
+
                                     {student.roll}
+
                                 </td>
 
-                                <td className="p-5">
+                                {/* ADMISSION */}
+                                <td className="
+                        px-5 py-5
+                        text-gray-700
+                        font-medium
+                    ">
+
+                                    {student.admissionNo || "N/A"}
+
+                                </td>
+
+                                {/* SCHOOL */}
+                                <td className="
+                        px-5 py-5
+                        text-gray-700
+                        font-medium
+                    ">
+
                                     {student.schoolId?.name}
+
                                 </td>
 
-                                <td className="p-5 text-center">
+                                {/* ACTION */}
+                                <td className="
+                        px-5 py-5
+                        text-center
+                    ">
 
                                     <button
                                         onClick={() =>
@@ -506,12 +690,16 @@ export default function AdminStudentsPage() {
                                             )
                                         }
                                         className="
-            inline-flex items-center gap-2
-            bg-red-500 hover:bg-red-600
-            text-white px-4 py-2
-            rounded-xl font-semibold
-            transition
-        "
+                                inline-flex
+                                items-center gap-2
+                                bg-red-500
+                                hover:bg-red-600
+                                text-white
+                                px-5 py-2.5
+                                rounded-xl
+                                font-semibold
+                                transition-all duration-300
+                            "
                                     >
 
                                         <Trash2 size={16} />
@@ -533,56 +721,192 @@ export default function AdminStudentsPage() {
             </div>
 
             {/* MOBILE CARDS */}
-            <div className="lg:hidden space-y-4">
+            <div className="lg:hidden space-y-5">
 
                 {filteredStudents.map((student) => (
 
                     <div
                         key={student._id}
-                        className="bg-white rounded-3xl p-5 shadow-sm border"
+                        className="
+                bg-white
+                rounded-[28px]
+                p-5
+                shadow-sm
+                border border-gray-100
+            "
                     >
 
-                        <div className="flex items-start justify-between gap-4">
+                        {/* TOP */}
+                        <div className="
+                flex items-start justify-between
+                gap-4
+            ">
 
-                            <div>
+                            {/* LEFT */}
+                            <div className="
+                    flex items-center gap-4
+                    min-w-0
+                ">
 
-                                <h2 className="text-xl font-bold text-gray-800">
-                                    {student.name}
-                                </h2>
+                                {/* AVATAR */}
+                                <div className="
+                        w-14 h-14
+                        rounded-2xl
+                        bg-gradient-to-br
+                        from-blue-500
+                        to-cyan-500
+                        text-white
+                        flex items-center justify-center
+                        font-bold text-xl
+                        shrink-0
+                    ">
 
-                                <p className="text-gray-500 mt-1 text-sm">
-                                    {student.schoolId?.name}
-                                </p>
+                                    {student.name.charAt(0)}
+
+                                </div>
+
+                                {/* INFO */}
+                                <div className="min-w-0">
+
+                                    <h2 className="
+                            text-lg
+                            font-bold
+                            text-gray-800
+                            leading-6
+                            break-words
+                        ">
+
+                                        {student.name}
+
+                                    </h2>
+
+                                    <p className="
+                            text-sm
+                            text-gray-500
+                            mt-1
+                            break-words
+                        ">
+
+                                        {student.schoolId?.name}
+
+                                    </p>
+
+                                </div>
 
                             </div>
 
-                            <div className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">
+                            {/* CLASS BADGE */}
+                            <div className="
+                    shrink-0
+                    bg-blue-50
+                    text-blue-600
+                    px-3 py-1.5
+                    rounded-xl
+                    text-sm
+                    font-semibold
+                    border border-blue-100
+                ">
+
                                 Class {student.class}
+
                             </div>
 
                         </div>
 
-                        <div className="mt-4 flex items-center justify-between text-sm">
+                        {/* DETAILS */}
+                        <div className="
+                mt-5
+                grid grid-cols-2
+                gap-4
+            ">
 
-                            <div>
-                                <p className="text-gray-400">
-                                    Roll
+                            {/* ROLL */}
+                            <div className="
+                    bg-gray-50
+                    rounded-2xl
+                    p-4
+                ">
+
+                                <p className="
+                        text-xs
+                        text-gray-400
+                        uppercase
+                        tracking-wide
+                    ">
+                                    Roll Number
                                 </p>
 
-                                <p className="font-semibold text-gray-700">
+                                <p className="
+                        mt-1
+                        font-bold
+                        text-gray-800
+                        text-lg
+                    ">
                                     {student.roll}
                                 </p>
+
                             </div>
 
-                            <div>
-                                <p className="text-gray-400">
+                            {/* ADMISSION */}
+                            <div className="
+                    bg-gray-50
+                    rounded-2xl
+                    p-4
+                ">
+
+                                <p className="
+                        text-xs
+                        text-gray-400
+                        uppercase
+                        tracking-wide
+                    ">
                                     Admission No
                                 </p>
 
-                                <p className="font-semibold text-gray-700">
+                                <p className="
+                        mt-1
+                        font-bold
+                        text-gray-800
+                        text-sm
+                        break-words
+                    ">
                                     {student.admissionNo || "N/A"}
                                 </p>
+
                             </div>
+
+                        </div>
+
+                        {/* DELETE BUTTON */}
+                        <div className="mt-5">
+
+                            <button
+                                onClick={() =>
+                                    handleDelete(
+                                        student._id,
+                                        student.name
+                                    )
+                                }
+                                className="
+                        w-full
+                        flex items-center justify-center
+                        gap-2
+                        bg-red-500
+                        hover:bg-red-600
+                        text-white
+                        py-3
+                        rounded-2xl
+                        font-semibold
+                        transition-all duration-300
+                        active:scale-[0.98]
+                    "
+                            >
+
+                                <Trash2 size={18} />
+
+                                Delete Student
+
+                            </button>
 
                         </div>
 
