@@ -39,10 +39,10 @@ export default function Navbar() {
                 <nav className="hidden lg:flex gap-8 font-medium">
                     <a href="/" className="hover:text-blue-400">Home</a>
                     <a href="/dashboard" className="hover:text-blue-400">Dashboard</a>
-                    <a href="#" className="hover:text-blue-400">Products</a>
+                    <a href="/products" className="hover:text-blue-400">Products</a>
                     <a href="#" className="hover:text-blue-400">Services</a>
                     <a href="#" className="hover:text-blue-400">Gallery</a>
-                    <a href="#" className="hover:text-blue-400">Contact</a>
+                    <a href="contact" className="hover:text-blue-400">Contact</a>
                 </nav>
 
                 <button className="lg:hidden">

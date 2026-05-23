@@ -33,7 +33,7 @@ export default function HomePage() {
   const products = [
     {
       title: "Brochures & Pamphlets",
-      image: "/products/Brochure-&-Pamphlet.jpeg",
+      image: "/products/Brochure-&-Pamphlet.jpg",
       desc: "Creative brochures to promote your business.",
     },
     {
