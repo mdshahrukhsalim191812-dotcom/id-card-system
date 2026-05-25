@@ -45,8 +45,6 @@ export async function GET() {
             );
         }
 
-        console.log("TOKEN USER:", user);
-
         // ================= CONNECT DB =================
         await connectDB();
 

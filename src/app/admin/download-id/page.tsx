@@ -184,6 +184,7 @@ export default function AdminDownloadIDPage() {
                 orientation: "portrait",
                 unit: "px",
                 format: [300, 476],
+                compress: true,
             });
 
             for (
@@ -228,15 +229,31 @@ export default function AdminDownloadIDPage() {
                 if (!cardRef.current) continue;
 
                 // CAPTURE
-                const canvas =
-                    await html2canvas(
-                        cardRef.current,
-                        {
-                            scale: 3,
-                            useCORS: true,
-                            backgroundColor: null,
-                        }
-                    );
+                const canvas = await html2canvas(
+                    cardRef.current,
+                    {
+                        scale: 4,
+
+                        useCORS: true,
+
+                        backgroundColor: null,
+
+                        logging: false,
+
+                        width: 300,
+                        height: 476,
+
+                        windowWidth: 300,
+                        windowHeight: 476,
+
+                        scrollX: 0,
+                        scrollY: 0,
+
+                        imageTimeout: 0,
+
+                        removeContainer: true,
+                    }
+                );
 
                 const imgData =
                     canvas.toDataURL("image/png");
@@ -257,7 +274,9 @@ export default function AdminDownloadIDPage() {
                     0,
                     0,
                     300,
-                    476
+                    476,
+                    undefined,
+                    "FAST"
                 );
             }
 

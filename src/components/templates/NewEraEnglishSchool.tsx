@@ -1,4 +1,4 @@
-/*eslint-disable @next/next/no-img-element*/
+/* eslint-disable @next/next/no-img-element */
 
 type Props = {
     student: any;
@@ -15,61 +15,164 @@ export default function NewEraEnglishSchool({
     logo,
     signature,
     formatDate,
-    school
+    school,
 }: Props) {
 
     return (
         <div
             id="card"
-            className="relative w-[300px] h-[476px] bg-cover bg-center overflow-hidden"
+            className="
+                relative
+                w-[300px]
+                h-[476px]
+                overflow-hidden
+                flex-shrink-0
+            "
             style={{
                 backgroundImage: `url(${school?.templateImage || "/templates/new-era.jpeg"})`,
-                backgroundSize: "100% 100%",
-                backgroundPosition: "center"
+                backgroundSize: "300px 476px",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
             }}
         >
 
+            {/* STUDENT IMAGE */}
             {image && (
                 <img
                     src={image}
                     alt="student"
-                    className="absolute top-[111px] left-[96.5px] w-[107px] h-[132px] object-cover rounded-[10px] border"
+                    className="
+                        absolute
+                        top-[111px]
+                        left-[96px]
+                        w-[107px]
+                        h-[132px]
+                        object-cover
+                        rounded-[10px]
+                    "
                 />
             )}
 
+            {/* SCHOOL LOGO */}
             {logo && (
                 <img
                     src={logo}
                     alt="logo"
-                    className="absolute top-[128px] left-[15px] w-[70px] h-[70px] object-contain"
+                    className="
+                        absolute
+                        top-[128px]
+                        left-[15px]
+                        w-[70px]
+                        h-[70px]
+                        object-contain
+                    "
                 />
             )}
 
-            <div className="absolute top-[240px] left-0 w-full flex justify-center">
-                <span className="text-white font-bold text-[20px] tracking-wide">
+            {/* STUDENT NAME */}
+            <div
+                className="
+                    absolute
+                    top-[248px]
+                    left-[20px]
+                    w-[260px]
+                    h-[32px]
+                    flex
+                    items-center
+                    justify-center
+                "
+            >
+                <span
+                    className="
+                        text-white
+                        font-bold
+                        text-[20px]
+                        leading-none
+                        whitespace-nowrap
+                    "
+                >
                     {student.name || "----"}
                 </span>
             </div>
 
-            <div className="absolute top-[295px] left-[20px] text-[13px] font-bold text-blue-800 leading-tight space-y-[2px]">
-                <p>Class : {student.class || "-"}</p>
-                <p>D.O.B : {formatDate(student.dob) || "-"}</p>
-                <p>F. Name : {student.father || "-"}</p>
-                <p>Mobile : {student.phone || "-"}</p>
-                <p>Admn. No : {student.admissionNo || "-"}</p>
-                <p>Address : {student.address || "-"}</p>
+            {/* LEFT DETAILS */}
+            <div
+                className="
+                    absolute
+                    top-[295px]
+                    left-[20px]
+                    w-[170px]
+                    text-[13px]
+                    font-bold
+                    text-blue-800
+                    leading-[18px]
+                "
+            >
+
+                <p className="m-0">
+                    Class : {student.class || "-"}
+                </p>
+
+                <p className="m-0">
+                    D.O.B : {formatDate(student.dob) || "-"}
+                </p>
+
+                <p className="m-0">
+                    F. Name : {student.father || "-"}
+                </p>
+
+                <p className="m-0">
+                    Mobile : {student.phone || "-"}
+                </p>
+
+                <p className="m-0">
+                    Admn. No : {student.admissionNo || "-"}
+                </p>
+
+                <p className="m-0 break-words">
+                    Address : {student.address || "-"}
+                </p>
+
             </div>
 
-            <div className="absolute top-[291px] right-[20px] text-[13px] font-bold text-blue-800">
-                <p className="relative top-[2px]">Sec : {student.sec || "-"}</p>
-                <p>Roll No : {student.roll || "-"}</p>
+            {/* RIGHT DETAILS */}
+            <div
+                className="
+                    absolute
+                    top-[295px]
+                    right-[20px]
+                    w-[80px]
+                    text-[13px]
+                    font-bold
+                    text-blue-800
+                    leading-[20px]
+                    text-left
+                "
+            >
+
+                <p className="m-0">
+                    Sec : {student.sec || "-"}
+                </p>
+
+                <p className="m-0">
+                    Roll No : {student.roll || "-"}
+                </p>
+
             </div>
 
+            {/* SIGNATURE */}
             {signature && (
                 <img
                     src={signature}
                     alt="signature"
-                    className="absolute bottom-[20px] right-[20px] w-[80px]"
+                    className="
+                        absolute
+                        bottom-[18px]
+                        right-[18px]
+                        w-[80px]
+                        h-auto
+                        object-contain
+                    "
                 />
             )}
 
