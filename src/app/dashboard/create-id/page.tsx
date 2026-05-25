@@ -269,26 +269,6 @@ export default function CreateIDPage() {
         return canvas.toDataURL("image/jpeg", 0.9);
     };
 
-    const removeBackground = async (base64Image: string) => {
-        const blob = await fetch(base64Image).then(res => res.blob());
-
-        const formData = new FormData();
-        formData.append("file", blob);
-
-        const res = await fetch("/api/remove-bg", {
-            method: "POST",
-            body: formData,
-        });
-
-        const resultBlob = await res.blob();
-
-        return await new Promise<string>((resolve) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result as string);
-            reader.readAsDataURL(resultBlob);
-        });
-    };
-
     const handleSave = async () => {
         try {
             if (!student.name || !student.class || !student.roll || !student.father || !student.mother || !student.phone || !student.address || !student.dob || !student.school) {
@@ -910,15 +890,32 @@ export default function CreateIDPage() {
                             height: "476px",
                         }}
                     >
-                        <TemplateRenderer
-                            templateId={templateId}
-                            student={student}
-                            image={image}
-                            logo={logo}
-                            signature={signature}
-                            formatDate={formatDate}
-                            school={school}
-                        />
+                        {school ? (
+
+                            <TemplateRenderer
+                                key={school.templateId}
+                                templateId={school.templateId}
+                                student={student}
+                                image={image}
+                                logo={logo}
+                                signature={signature}
+                                formatDate={formatDate}
+                                school={school}
+                            />
+
+                        ) : (
+
+                            <div className="
+        w-full h-full
+        flex items-center justify-center
+        bg-white
+    ">
+
+                                Loading ID Card Template...
+
+                            </div>
+
+                        )}
                     </div>
                 </div>
             </div>

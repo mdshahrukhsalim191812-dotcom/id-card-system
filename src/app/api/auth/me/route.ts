@@ -7,44 +7,89 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 export async function GET() {
+
     try {
-        const cookieStore = cookies();
-        const token = cookieStore.get("token")?.value;
+
+        // ================= GET TOKEN =================
+        const cookieStore = await cookies();
+
+        const token =
+            cookieStore.get("token")?.value;
 
         if (!token) {
+
             return NextResponse.json(
-                { message: "Unauthorized ❌" },
-                { status: 401 }
+                {
+                    success: false,
+                    message: "Unauthorized ❌",
+                },
+                {
+                    status: 401,
+                }
             );
         }
 
+        // ================= VERIFY TOKEN =================
         const user = verifyToken(token);
 
         if (!user) {
+
             return NextResponse.json(
-                { message: "Invalid token ❌" },
-                { status: 401 }
+                {
+                    success: false,
+                    message: "Invalid token ❌",
+                },
+                {
+                    status: 401,
+                }
             );
         }
 
+        console.log("TOKEN USER:", user);
+
+        // ================= CONNECT DB =================
         await connectDB();
 
-        const school = await School.findById(user._id).lean();
+        // ================= FIND SCHOOL =================
+        const school =
+            await School.findById(user.id)
+                .select("-password")
+                .lean();
 
         if (!school) {
+
             return NextResponse.json(
-                { message: "School not found ❌" },
-                { status: 404 }
+                {
+                    success: false,
+                    message: "School not found ❌",
+                },
+                {
+                    status: 404,
+                }
             );
         }
 
-        return NextResponse.json({ school });
+        // ================= SUCCESS =================
+        return NextResponse.json({
+            success: true,
+            school,
+        });
 
     } catch (error) {
-        console.error("Auth ME Error:", error);
+
+        console.error(
+            "AUTH ME ERROR ❌",
+            error
+        );
+
         return NextResponse.json(
-            { message: "Server error ❌" },
-            { status: 500 }
+            {
+                success: false,
+                message: "Server error ❌",
+            },
+            {
+                status: 500,
+            }
         );
     }
 }
