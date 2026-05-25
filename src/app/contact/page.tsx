@@ -178,59 +178,79 @@ ${form.message}
                 ">
 
                     {/* LEFT CONTACT CARDS */}
-                    <div className="space-y-6">
+                    <div className="
+    grid
+    grid-cols-1
+    sm:grid-cols-2
+    lg:grid-cols-1
+    gap-5 sm:gap-6
+">
 
                         {/* PHONE */}
                         <div className="
-                            bg-white
-                            rounded-[32px]
-                            p-8
-                            border border-gray-100
-                            shadow-sm
-                            hover:shadow-xl
-                            transition-all duration-300
-                        ">
+        group
+        bg-white
+        rounded-[28px]
+        sm:rounded-[32px]
+        p-5 sm:p-7 lg:p-8
+        border border-gray-100
+        shadow-sm
+        hover:shadow-2xl
+        hover:-translate-y-1
+        transition-all duration-300
+    ">
 
                             <div className="
-                                flex items-start gap-5
-                            ">
+            flex items-start
+            gap-4 sm:gap-5
+        ">
 
+                                {/* ICON */}
                                 <div className="
-                                    w-16 h-16 rounded-3xl
-                                    bg-gradient-to-br
-                                    from-blue-500 to-cyan-500
-                                    text-white
-                                    flex items-center justify-center
-                                    shadow-lg
-                                ">
+                shrink-0
+                w-14 h-14
+                sm:w-16 sm:h-16
+                rounded-2xl sm:rounded-3xl
+                bg-gradient-to-br
+                from-blue-500 to-cyan-500
+                text-white
+                flex items-center justify-center
+                shadow-lg
+                group-hover:scale-110
+                transition-transform duration-300
+            ">
 
-                                    <Phone size={30} />
+                                    <Phone size={28} />
 
                                 </div>
 
-                                <div>
+                                {/* CONTENT */}
+                                <div className="flex-1 min-w-0">
 
                                     <p className="
-                                        text-gray-500
-                                        font-medium
-                                    ">
+                    text-gray-500
+                    font-medium
+                    text-sm sm:text-base
+                ">
                                         Phone Number
                                     </p>
 
                                     <h2 className="
-                                        mt-2
-                                        text-2xl
-                                        font-extrabold
-                                        text-gray-800
-                                    ">
+                    mt-2
+                    text-xl sm:text-2xl
+                    font-extrabold
+                    text-gray-800
+                    break-words
+                ">
                                         +91 9525706529
                                     </h2>
 
                                     <p className="
-                                        mt-3
-                                        text-gray-500
-                                        leading-7
-                                    ">
+                    mt-3
+                    text-sm sm:text-base
+                    text-gray-500
+                    leading-6 sm:leading-7
+                ">
                                         Call us for school branding,
                                         printing and customized products.
                                     </p>
@@ -243,56 +263,70 @@ ${form.message}
 
                         {/* EMAIL */}
                         <div className="
-                            bg-white
-                            rounded-[32px]
-                            p-8
-                            border border-gray-100
-                            shadow-sm
-                            hover:shadow-xl
-                            transition-all duration-300
-                        ">
+        group
+        bg-white
+        rounded-[28px]
+        sm:rounded-[32px]
+        p-5 sm:p-7 lg:p-8
+        border border-gray-100
+        shadow-sm
+        hover:shadow-2xl
+        hover:-translate-y-1
+        transition-all duration-300
+    ">
 
                             <div className="
-                                flex items-start gap-5
-                            ">
+            flex items-start
+            gap-4 sm:gap-5
+        ">
 
+                                {/* ICON */}
                                 <div className="
-                                    w-16 h-16 rounded-3xl
-                                    bg-gradient-to-br
-                                    from-indigo-500 to-blue-500
-                                    text-white
-                                    flex items-center justify-center
-                                    shadow-lg
-                                ">
+                shrink-0
+                w-14 h-14
+                sm:w-16 sm:h-16
+                rounded-2xl sm:rounded-3xl
+                bg-gradient-to-br
+                from-indigo-500 to-blue-500
+                text-white
+                flex items-center justify-center
+                shadow-lg
+                group-hover:scale-110
+                transition-transform duration-300
+            ">
 
-                                    <Mail size={30} />
+                                    <Mail size={28} />
 
                                 </div>
 
-                                <div>
+                                {/* CONTENT */}
+                                <div className="flex-1 min-w-0">
 
                                     <p className="
-                                        text-gray-500
-                                        font-medium
-                                    ">
+                    text-gray-500
+                    font-medium
+                    text-sm sm:text-base
+                ">
                                         Email Address
                                     </p>
 
                                     <h2 className="
-                                        mt-2
-                                        text-xl
-                                        font-extrabold
-                                        text-gray-800
-                                        break-all
-                                    ">
+                    mt-2
+                    text-lg sm:text-xl
+                    font-extrabold
+                    text-gray-800
+                    break-all
+                    leading-7
+                ">
                                         mdhammadnaveed92010@gmail.com
                                     </h2>
 
                                     <p className="
-                                        mt-3
-                                        text-gray-500
-                                        leading-7
-                                    ">
+                    mt-3
+                    text-sm sm:text-base
+                    text-gray-500
+                    leading-6 sm:leading-7
+                ">
                                         Send us your requirements anytime.
                                     </p>
 
@@ -304,48 +338,60 @@ ${form.message}
 
                         {/* LOCATION */}
                         <div className="
-                            bg-white
-                            rounded-[32px]
-                            p-8
-                            border border-gray-100
-                            shadow-sm
-                            hover:shadow-xl
-                            transition-all duration-300
-                        ">
+        group
+        bg-white
+        rounded-[28px]
+        sm:rounded-[32px]
+        p-5 sm:p-7 lg:p-8
+        border border-gray-100
+        shadow-sm
+        hover:shadow-2xl
+        hover:-translate-y-1
+        transition-all duration-300
+    ">
 
                             <div className="
-                                flex items-start gap-5
-                            ">
+            flex items-start
+            gap-4 sm:gap-5
+        ">
 
+                                {/* ICON */}
                                 <div className="
-                                    w-16 h-16 rounded-3xl
-                                    bg-gradient-to-br
-                                    from-orange-500 to-red-500
-                                    text-white
-                                    flex items-center justify-center
-                                    shadow-lg
-                                ">
+                shrink-0
+                w-14 h-14
+                sm:w-16 sm:h-16
+                rounded-2xl sm:rounded-3xl
+                bg-gradient-to-br
+                from-orange-500 to-red-500
+                text-white
+                flex items-center justify-center
+                shadow-lg
+                group-hover:scale-110
+                transition-transform duration-300
+            ">
 
-                                    <MapPin size={30} />
+                                    <MapPin size={28} />
 
                                 </div>
 
-                                <div>
+                                {/* CONTENT */}
+                                <div className="flex-1 min-w-0">
 
                                     <p className="
-                                        text-gray-500
-                                        font-medium
-                                    ">
+                    text-gray-500
+                    font-medium
+                    text-sm sm:text-base
+                ">
                                         Office Address
                                     </p>
 
                                     <h2 className="
-                                        mt-2
-                                        text-2xl
-                                        font-extrabold
-                                        text-gray-800
-                                        leading-10
-                                    ">
+                    mt-2
+                    text-xl sm:text-2xl
+                    font-extrabold
+                    text-gray-800
+                    leading-8 sm:leading-10
+                ">
                                         Islampur, Shahjangi,
                                         Kabirpur Road,
                                         Bhagalpur
@@ -357,56 +403,69 @@ ${form.message}
 
                         </div>
 
-                        {/* TIME */}
+                        {/* WORKING HOURS */}
                         <div className="
-                            bg-white
-                            rounded-[32px]
-                            p-8
-                            border border-gray-100
-                            shadow-sm
-                            hover:shadow-xl
-                            transition-all duration-300
-                        ">
+        group
+        bg-white
+        rounded-[28px]
+        sm:rounded-[32px]
+        p-5 sm:p-7 lg:p-8
+        border border-gray-100
+        shadow-sm
+        hover:shadow-2xl
+        hover:-translate-y-1
+        transition-all duration-300
+    ">
 
                             <div className="
-                                flex items-start gap-5
-                            ">
+            flex items-start
+            gap-4 sm:gap-5
+        ">
 
+                                {/* ICON */}
                                 <div className="
-                                    w-16 h-16 rounded-3xl
-                                    bg-gradient-to-br
-                                    from-green-500 to-emerald-500
-                                    text-white
-                                    flex items-center justify-center
-                                    shadow-lg
-                                ">
+                shrink-0
+                w-14 h-14
+                sm:w-16 sm:h-16
+                rounded-2xl sm:rounded-3xl
+                bg-gradient-to-br
+                from-green-500 to-emerald-500
+                text-white
+                flex items-center justify-center
+                shadow-lg
+                group-hover:scale-110
+                transition-transform duration-300
+            ">
 
-                                    <Clock3 size={30} />
+                                    <Clock3 size={28} />
 
                                 </div>
 
-                                <div>
+                                {/* CONTENT */}
+                                <div className="flex-1 min-w-0">
 
                                     <p className="
-                                        text-gray-500
-                                        font-medium
-                                    ">
+                    text-gray-500
+                    font-medium
+                    text-sm sm:text-base
+                ">
                                         Working Hours
                                     </p>
 
                                     <h2 className="
-                                        mt-2
-                                        text-2xl
-                                        font-extrabold
-                                        text-gray-800
-                                    ">
+                    mt-2
+                    text-xl sm:text-2xl
+                    font-extrabold
+                    text-gray-800
+                ">
                                         Mon - Sat
                                     </h2>
 
                                     <p className="
-                                        mt-3
-                                        text-gray-500
-                                    ">
+                    mt-3
+                    text-sm sm:text-base
+                    text-gray-500
+                ">
                                         9:00 AM - 8:00 PM
                                     </p>
 
@@ -420,41 +479,53 @@ ${form.message}
 
                     {/* CONTACT FORM */}
                     <div className="
-                        bg-white
-                        rounded-[40px]
-                        p-8 lg:p-10
-                        border border-gray-100
-                        shadow-sm
-                    ">
+    bg-white
+    rounded-[28px] sm:rounded-[36px] lg:rounded-[40px]
+    p-5 sm:p-8 lg:p-10
+    border border-gray-100
+    shadow-sm
+    hover:shadow-2xl
+    transition-all duration-300
+">
 
+                        {/* HEADER */}
                         <div className="
-                            flex items-center gap-3
-                        ">
+        flex items-start sm:items-center
+        gap-3 sm:gap-4
+    ">
 
+                            {/* ICON */}
                             <div className="
-                                w-14 h-14 rounded-2xl
-                                bg-blue-100
-                                text-blue-600
-                                flex items-center justify-center
-                            ">
+            shrink-0
+            w-12 h-12
+            sm:w-14 sm:h-14
+            rounded-2xl
+            bg-blue-100
+            text-blue-600
+            flex items-center justify-center
+        ">
 
-                                <MessageCircle size={28} />
+                                <MessageCircle size={26} />
 
                             </div>
 
+                            {/* TEXT */}
                             <div>
 
                                 <h2 className="
-                                    text-3xl
-                                    font-extrabold
-                                    text-gray-800
-                                ">
+                text-2xl sm:text-3xl
+                font-extrabold
+                text-gray-800
+                leading-tight
+            ">
                                     Send Message
                                 </h2>
 
                                 <p className="
-                                    text-gray-500 mt-1
-                                ">
+                text-sm sm:text-base
+                text-gray-500
+                mt-1
+            ">
                                     We reply quickly to all inquiries.
                                 </p>
 
@@ -465,16 +536,20 @@ ${form.message}
                         {/* FORM */}
                         <form
                             onSubmit={handleWhatsApp}
-                            className="mt-10 space-y-6"
+                            className="
+            mt-8 sm:mt-10
+            space-y-5 sm:space-y-6
+        "
                         >
 
                             {/* NAME */}
                             <div>
 
                                 <label className="
-                                    text-sm font-semibold
-                                    text-gray-700
-                                ">
+                text-sm sm:text-[15px]
+                font-semibold
+                text-gray-700
+            ">
                                     Full Name
                                 </label>
 
@@ -489,27 +564,31 @@ ${form.message}
                                         })
                                     }
                                     className="
-w-full
-mt-3
-px-5 py-4
-rounded-2xl
-bg-white
-border border-gray-200
-text-gray-800
-placeholder:text-gray-400
-shadow-sm
+                    w-full
+                    mt-2 sm:mt-3
+                    px-4 sm:px-5
+                    py-3 sm:py-4
+                    rounded-2xl
 
-outline-none
+                    bg-white
+                    border border-gray-200
 
-transition-all duration-300
+                    text-sm sm:text-base
+                    text-gray-800
+                    placeholder:text-gray-400
 
-focus:border-blue-500
-focus:ring-4
-focus:ring-blue-100
+                    shadow-sm
+                    outline-none
 
-hover:border-blue-300
-hover:shadow-md
-"
+                    transition-all duration-300
+
+                    focus:border-blue-500
+                    focus:ring-4
+                    focus:ring-blue-100
+
+                    hover:border-blue-300
+                    hover:shadow-md
+                "
                                 />
 
                             </div>
@@ -518,9 +597,10 @@ hover:shadow-md
                             <div>
 
                                 <label className="
-                                    text-sm font-semibold
-                                    text-gray-700
-                                ">
+                text-sm sm:text-[15px]
+                font-semibold
+                text-gray-700
+            ">
                                     Email Address
                                 </label>
 
@@ -535,29 +615,32 @@ hover:shadow-md
                                         })
                                     }
                                     className="
-w-full
-mt-3
-px-5 py-4
-rounded-2xl
-bg-white
-border border-gray-200
-text-gray-800
-placeholder:text-gray-400
-shadow-sm
+                    w-full
+                    mt-2 sm:mt-3
+                    px-4 sm:px-5
+                    py-3 sm:py-4
+                    rounded-2xl
 
-outline-none
+                    bg-white
+                    border border-gray-200
 
-transition-all duration-300
+                    text-sm sm:text-base
+                    text-gray-800
+                    placeholder:text-gray-400
 
-focus:border-blue-500
-focus:ring-4
-focus:ring-blue-100
+                    shadow-sm
+                    outline-none
 
-hover:border-blue-300
-hover:shadow-md
-"
+                    transition-all duration-300
+
+                    focus:border-blue-500
+                    focus:ring-4
+                    focus:ring-blue-100
+
+                    hover:border-blue-300
+                    hover:shadow-md
+                "
                                 />
-
 
                             </div>
 
@@ -565,9 +648,10 @@ hover:shadow-md
                             <div>
 
                                 <label className="
-                                    text-sm font-semibold
-                                    text-gray-700
-                                ">
+                text-sm sm:text-[15px]
+                font-semibold
+                text-gray-700
+            ">
                                     Phone Number
                                 </label>
 
@@ -582,27 +666,31 @@ hover:shadow-md
                                         })
                                     }
                                     className="
-w-full
-mt-3
-px-5 py-4
-rounded-2xl
-bg-white
-border border-gray-200
-text-gray-800
-placeholder:text-gray-400
-shadow-sm
+                    w-full
+                    mt-2 sm:mt-3
+                    px-4 sm:px-5
+                    py-3 sm:py-4
+                    rounded-2xl
 
-outline-none
+                    bg-white
+                    border border-gray-200
 
-transition-all duration-300
+                    text-sm sm:text-base
+                    text-gray-800
+                    placeholder:text-gray-400
 
-focus:border-blue-500
-focus:ring-4
-focus:ring-blue-100
+                    shadow-sm
+                    outline-none
 
-hover:border-blue-300
-hover:shadow-md
-"
+                    transition-all duration-300
+
+                    focus:border-blue-500
+                    focus:ring-4
+                    focus:ring-blue-100
+
+                    hover:border-blue-300
+                    hover:shadow-md
+                "
                                 />
 
                             </div>
@@ -611,14 +699,15 @@ hover:shadow-md
                             <div>
 
                                 <label className="
-                                    text-sm font-semibold
-                                    text-gray-700
-                                ">
+                text-sm sm:text-[15px]
+                font-semibold
+                text-gray-700
+            ">
                                     Message
                                 </label>
 
-                                <input
-                                    type="text"
+                                <textarea
+                                    rows={5}
                                     placeholder="Enter your message"
                                     value={form.message}
                                     onChange={(e) =>
@@ -628,28 +717,32 @@ hover:shadow-md
                                         })
                                     }
                                     className="
-w-full
-mt-3
-px-5 py-4
-rounded-2xl
-bg-white
-border border-gray-200
-text-gray-800
-placeholder:text-gray-400
-shadow-sm
+                    w-full
+                    mt-2 sm:mt-3
+                    px-4 sm:px-5
+                    py-3 sm:py-4
+                    rounded-2xl
 
-outline-none
-resize-none
+                    bg-white
+                    border border-gray-200
 
-transition-all duration-300
+                    text-sm sm:text-base
+                    text-gray-800
+                    placeholder:text-gray-400
 
-focus:border-blue-500
-focus:ring-4
-focus:ring-blue-100
+                    shadow-sm
+                    outline-none
+                    resize-none
 
-hover:border-blue-300
-hover:shadow-md
-"
+                    transition-all duration-300
+
+                    focus:border-blue-500
+                    focus:ring-4
+                    focus:ring-blue-100
+
+                    hover:border-blue-300
+                    hover:shadow-md
+                "
                                 />
 
                             </div>
@@ -658,25 +751,45 @@ hover:shadow-md
                             <button
                                 type="submit"
                                 className="
-                                    w-full
-                                    py-4
-                                    rounded-2xl
-                                    bg-gradient-to-r
-                                    from-blue-600 to-cyan-500
-                                    text-white
-                                    font-bold
-                                    text-lg
-                                    shadow-xl
-                                    hover:scale-[1.02]
-                                    transition-all duration-300
-                                    flex items-center
-                                    justify-center gap-3
-                                "
+                group
+                w-full
+
+                py-3 sm:py-4
+
+                rounded-2xl
+
+                bg-gradient-to-r
+                from-blue-600
+                to-cyan-500
+
+                text-white
+                font-bold
+                text-base sm:text-lg
+
+                shadow-xl
+
+                hover:scale-[1.02]
+                hover:shadow-2xl
+
+                active:scale-[0.98]
+
+                transition-all duration-300
+
+                flex items-center
+                justify-center
+                gap-3
+            "
                             >
 
                                 Send Message
 
-                                <Send size={20} />
+                                <Send
+                                    size={20}
+                                    className="
+                    group-hover:translate-x-1
+                    transition-transform
+                "
+                                />
 
                             </button>
 
@@ -738,9 +851,9 @@ hover:shadow-md
                         hover:scale-105
                         transition-all duration-300
                     ">
-
-                        Explore Products
-
+                        <Link href="/products">
+                            Explore Products
+                        </Link>
                         <ChevronRight size={22} />
 
                     </button>
