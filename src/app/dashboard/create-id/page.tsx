@@ -148,16 +148,33 @@ export default function CreateIDPage() {
     }, [school]);
 
     useEffect(() => {
+
         const loadModels = async () => {
-            const MODEL_URL = "/models";
 
-            await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-            await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+            try {
 
-            setModelsLoaded(true); // 🔥 IMPORTANT
+                const MODEL_URL = "/models";
+
+                console.log("Loading AI models...");
+
+                await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+
+                await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+
+                console.log("AI models loaded ✅");
+
+                setModelsLoaded(true);
+
+            } catch (error) {
+
+                console.error("AI MODEL LOAD ERROR:", error);
+
+                toast.error("AI models failed to load ❌");
+            }
         };
 
         loadModels();
+
     }, []);
 
     const startCamera = async () => {
@@ -188,31 +205,64 @@ export default function CreateIDPage() {
     };
 
     const capturePhoto = async () => {
-        if (!videoRef.current) return;
 
-        const video = videoRef.current;
+        try {
 
-        const canvas = document.createElement("canvas");
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+            if (!videoRef.current) return;
 
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
+            toast.loading("Processing AI Photo...", {
+                id: "camera-ai",
+            });
 
-        ctx.drawImage(video, 0, 0);
+            const video = videoRef.current;
 
-        const rawImage = canvas.toDataURL("image/jpeg");
+            const canvas =
+                document.createElement("canvas");
 
-        // 🔥 APPLY AI CROP HERE
-        const cropped = await autoCropFace(rawImage);
+            canvas.width = video.videoWidth;
 
-        const noBg = await removeBackground(cropped);
+            canvas.height = video.videoHeight;
 
-        const finalImage = await addWhiteBackground(noBg);
+            const ctx = canvas.getContext("2d");
 
-        setImage(finalImage);
+            if (!ctx) return;
 
-        stopCamera();
+            ctx.drawImage(video, 0, 0);
+
+            const rawImage =
+                canvas.toDataURL("image/jpeg");
+
+            const cropped =
+                await autoCropFace(rawImage);
+
+            const noBg =
+                await removeBackground(cropped);
+
+            const finalImage =
+                await addWhiteBackground(noBg);
+
+            setImage(finalImage);
+
+            stopCamera();
+
+            toast.success(
+                "AI photo processed ✅",
+                {
+                    id: "camera-ai",
+                }
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            toast.error(
+                "Camera AI failed ❌",
+                {
+                    id: "camera-ai",
+                }
+            );
+        }
     };
 
     const stopCamera = () => {
@@ -229,44 +279,109 @@ export default function CreateIDPage() {
     };
 
     const autoCropFace = async (imageSrc: string) => {
-        if (!modelsLoaded) {
-            toast.error("AI loading... please wait ⏳");
+
+        try {
+
+            if (!modelsLoaded) {
+
+                toast.error("AI still loading ⏳");
+
+                return imageSrc;
+            }
+
+            console.log("FACE DETECTION START");
+
+            const img = new Image();
+
+            img.crossOrigin = "anonymous";
+
+            img.src = imageSrc;
+
+            await new Promise((resolve, reject) => {
+
+                img.onload = resolve;
+
+                img.onerror = reject;
+            });
+
+            const detection = await faceapi
+                .detectSingleFace(
+                    img,
+                    new faceapi.TinyFaceDetectorOptions({
+                        inputSize: 320,
+                        scoreThreshold: 0.5,
+                    })
+                )
+                .withFaceLandmarks();
+
+            console.log("Detection:", detection);
+
+            if (!detection) {
+
+                toast.error("Face not detected ❌");
+
+                return imageSrc;
+            }
+
+            const { x, y, width, height } =
+                detection.detection.box;
+
+            const padding = 0.5;
+
+            const cropX = Math.max(
+                0,
+                x - width * padding
+            );
+
+            const cropY = Math.max(
+                0,
+                y - height * padding
+            );
+
+            const cropW = Math.min(
+                img.width - cropX,
+                width * (1 + padding * 2)
+            );
+
+            const cropH = Math.min(
+                img.height - cropY,
+                height * (1 + padding * 2)
+            );
+
+            const canvas = document.createElement("canvas");
+
+            canvas.width = 107;
+            canvas.height = 132;
+
+            const ctx = canvas.getContext("2d");
+
+            if (!ctx) return imageSrc;
+
+            ctx.drawImage(
+                img,
+                cropX,
+                cropY,
+                cropW,
+                cropH,
+                0,
+                0,
+                107,
+                132
+            );
+
+            return canvas.toDataURL(
+                "image/png",
+                1
+            );
+
+        } catch (error) {
+
+            console.error("AUTO CROP ERROR:", error);
+
+            toast.error("Face crop failed ❌");
+
             return imageSrc;
         }
-
-        const img = new Image();
-        img.src = imageSrc;
-
-        await new Promise((res) => (img.onload = res));
-
-        const detection = await faceapi
-            .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
-            .withFaceLandmarks();
-
-        if (!detection) {
-            toast.error("No face detected! 🙁");
-            return imageSrc;
-        }
-
-        const { x, y, width, height } = detection.detection.box;
-
-        const padding = 0.6;
-
-        const cropX = Math.max(0, x - width * padding);
-        const cropY = Math.max(0, y - height * padding);
-
-        const cropW = Math.min(img.width - cropX, width * (1 + padding * 2));
-        const cropH = Math.min(img.height - cropY, height * (1 + padding * 2));
-
-        const canvas = document.createElement("canvas");
-        canvas.width = 300;
-        canvas.height = 400;
-
-        const ctx = canvas.getContext("2d");
-
-        ctx?.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, 300, 400);
-
-        return canvas.toDataURL("image/jpeg", 0.9);
     };
 
     const handleSave = async () => {
@@ -345,80 +460,188 @@ export default function CreateIDPage() {
     };
 
     const handleUpdate = async () => {
+
         try {
+
             if (!selectedId) {
+
                 toast.error("Select student first!");
+
+                return;
+            }
+
+            // 🔥 FIND ORIGINAL STUDENT
+            const originalStudent =
+                students.find(
+                    (s) => s._id === selectedId
+                );
+
+            if (!originalStudent) {
+
+                toast.error("Student not found");
+
+                return;
+            }
+
+            // 🔥 CHECK CHANGES
+            const nothingChanged =
+
+                originalStudent.school === student.school &&
+                originalStudent.admissionNo === student.admissionNo &&
+                originalStudent.sec === student.sec &&
+                originalStudent.name === student.name &&
+                originalStudent.roll === student.roll &&
+                originalStudent.class === student.class &&
+                originalStudent.father === student.father &&
+                originalStudent.mother === student.mother &&
+                originalStudent.phone === student.phone &&
+                originalStudent.address === student.address &&
+                originalStudent.blood === student.blood &&
+
+                new Date(originalStudent.dob)
+                    .toISOString()
+                    .split("T")[0] ===
+                new Date(student.dob)
+                    .toISOString()
+                    .split("T")[0] &&
+
+                (originalStudent.image || "") === (image || "") &&
+                (originalStudent.logo || "") === (logo || "") &&
+                (originalStudent.signature || "") === (signature || "");
+
+            // 🔥 NOTHING CHANGED
+            if (nothingChanged) {
+
+                toast("Nothing changed ⚠️");
+
                 return;
             }
 
             setUpdateLoading(true);
 
+            // 🔥 UPDATE DATA
             const studentData = {
+
                 id: selectedId,
+
                 ...student,
+
                 template: templateId,
-                dob: student.dob ? new Date(student.dob) : null,
+
+                dob: student.dob
+                    ? new Date(student.dob)
+                    : null,
+
                 image,
                 logo,
                 signature
             };
 
-            const res = await fetch("/api/students", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                credentials: "include",
-                body: JSON.stringify(studentData)
-            });
+            const res = await fetch(
+                "/api/students",
+                {
+                    method: "PUT",
 
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    credentials: "include",
+
+                    body: JSON.stringify(
+                        studentData
+                    )
+                }
+            );
+
+            // 🔥 SESSION EXPIRED
             if (res.status === 401) {
-                toast.error("Session expired. Please login again 🔒");
 
-                localStorage.removeItem("schoolId");
+                toast.error(
+                    "Session expired. Please login again 🔒"
+                );
 
-                window.location.href = "/login";
+                localStorage.removeItem(
+                    "schoolId"
+                );
+
+                window.location.href =
+                    "/login";
+
                 return;
             }
 
             const data = await res.json();
 
+            // 🔥 SUCCESS
             if (data.success) {
-                toast.success("Updated successfully ✅");
+
+                toast.success(
+                    "Updated successfully ✅"
+                );
 
                 setStudent({
-                    school: "",
+
+                    school:
+                        school?.name || "",
+
                     admissionNo: "",
+
                     sec: "",
+
                     name: "",
+
                     roll: "",
+
                     class: "",
+
                     father: "",
+
                     mother: "",
+
                     phone: "",
+
                     address: "",
+
                     schoolAddress: "",
+
                     dob: "",
+
                     photo: "",
+
                     blood: ""
                 });
 
                 setImage(null);
+
                 setLogo(null);
+
                 setSignature(null);
+
                 setSelectedId(null);
 
-                fetchStudents();
+                await fetchStudents();
 
-                setUpdateLoading(false);
-            }
-            else {
-                toast.error("Update failed ❌");
+            } else {
+
+                toast.error(
+                    data.message ||
+                    "Update failed ❌"
+                );
             }
 
         } catch (error) {
+
             console.error(error);
-            toast.error("Error updating!");
+
+            toast.error(
+                "Error updating!"
+            );
+
+        } finally {
+
+            setUpdateLoading(false);
         }
     };
 
@@ -687,15 +910,45 @@ export default function CreateIDPage() {
                                 if (file) {
                                     const reader = new FileReader();
                                     reader.onloadend = async () => {
-                                        const rawImage = reader.result as string;
 
-                                        const cropped = await autoCropFace(rawImage);
+                                        try {
 
-                                        const noBg = await removeBackground(cropped);
+                                            toast.loading("Processing AI Image...", {
+                                                id: "ai-processing",
+                                            });
 
-                                        const finalImage = await addWhiteBackground(noBg);
+                                            const rawImage =
+                                                reader.result as string;
 
-                                        setImage(finalImage);
+                                            const cropped =
+                                                await autoCropFace(rawImage);
+
+                                            const noBg =
+                                                await removeBackground(cropped);
+
+                                            const finalImage =
+                                                await addWhiteBackground(noBg);
+
+                                            setImage(finalImage);
+
+                                            toast.success(
+                                                "AI image processed ✅",
+                                                {
+                                                    id: "ai-processing",
+                                                }
+                                            );
+
+                                        } catch (error) {
+
+                                            console.error(error);
+
+                                            toast.error(
+                                                "AI image processing failed ❌",
+                                                {
+                                                    id: "ai-processing",
+                                                }
+                                            );
+                                        }
                                     };
                                     reader.readAsDataURL(file);
                                 }
