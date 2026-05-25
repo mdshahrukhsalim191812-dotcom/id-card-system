@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 
 import {
@@ -14,6 +15,66 @@ import {
 } from "lucide-react";
 
 export default function ContactPage() {
+
+    const [form, setForm] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+    });
+
+    const handleWhatsApp = (
+        e: React.FormEvent
+    ) => {
+
+        e.preventDefault();
+
+        // VALIDATION
+        if (
+            !form.name ||
+            !form.phone ||
+            !form.message
+        ) {
+
+            alert(
+                "Please fill required fields"
+            );
+
+            return;
+        }
+
+        const text = `
+*New Work GeniX Inquiry*
+
+Full Name:
+${form.name}
+
+Email:
+${form.email}
+
+Phone:
+${form.phone}
+
+Message:
+${form.message}
+`;
+
+        const whatsappURL =
+            `https://wa.me/919525706529?text=${encodeURIComponent(text)}`;
+
+        window.open(
+            whatsappURL,
+            "_blank"
+        );
+
+        // RESET FORM
+        setForm({
+            name: "",
+            email: "",
+            phone: "",
+            message: "",
+        });
+    };
 
     return (
 
@@ -402,7 +463,10 @@ export default function ContactPage() {
                         </div>
 
                         {/* FORM */}
-                        <form className="mt-10 space-y-6">
+                        <form
+                            onSubmit={handleWhatsApp}
+                            className="mt-10 space-y-6"
+                        >
 
                             {/* NAME */}
                             <div>
@@ -417,16 +481,35 @@ export default function ContactPage() {
                                 <input
                                     type="text"
                                     placeholder="Enter your name"
+                                    value={form.name}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            name: e.target.value
+                                        })
+                                    }
                                     className="
-                                        mt-3
-                                        w-full
-                                        px-5 py-4
-                                        rounded-2xl
-                                        border border-gray-200
-                                        outline-none
-                                        focus:ring-2
-                                        focus:ring-blue-500
-                                    "
+w-full
+mt-3
+px-5 py-4
+rounded-2xl
+bg-white
+border border-gray-200
+text-gray-800
+placeholder:text-gray-400
+shadow-sm
+
+outline-none
+
+transition-all duration-300
+
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-100
+
+hover:border-blue-300
+hover:shadow-md
+"
                                 />
 
                             </div>
@@ -444,17 +527,37 @@ export default function ContactPage() {
                                 <input
                                     type="email"
                                     placeholder="Enter your email"
+                                    value={form.email}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            email: e.target.value
+                                        })
+                                    }
                                     className="
-                                        mt-3
-                                        w-full
-                                        px-5 py-4
-                                        rounded-2xl
-                                        border border-gray-200
-                                        outline-none
-                                        focus:ring-2
-                                        focus:ring-blue-500
-                                    "
+w-full
+mt-3
+px-5 py-4
+rounded-2xl
+bg-white
+border border-gray-200
+text-gray-800
+placeholder:text-gray-400
+shadow-sm
+
+outline-none
+
+transition-all duration-300
+
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-100
+
+hover:border-blue-300
+hover:shadow-md
+"
                                 />
+
 
                             </div>
 
@@ -471,16 +574,35 @@ export default function ContactPage() {
                                 <input
                                     type="text"
                                     placeholder="Enter your phone number"
+                                    value={form.phone}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            phone: e.target.value
+                                        })
+                                    }
                                     className="
-                                        mt-3
-                                        w-full
-                                        px-5 py-4
-                                        rounded-2xl
-                                        border border-gray-200
-                                        outline-none
-                                        focus:ring-2
-                                        focus:ring-blue-500
-                                    "
+w-full
+mt-3
+px-5 py-4
+rounded-2xl
+bg-white
+border border-gray-200
+text-gray-800
+placeholder:text-gray-400
+shadow-sm
+
+outline-none
+
+transition-all duration-300
+
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-100
+
+hover:border-blue-300
+hover:shadow-md
+"
                                 />
 
                             </div>
@@ -495,21 +617,40 @@ export default function ContactPage() {
                                     Message
                                 </label>
 
-                                <textarea
-                                    rows={6}
-                                    placeholder="Write your message..."
+                                <input
+                                    type="text"
+                                    placeholder="Enter your message"
+                                    value={form.message}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            message: e.target.value
+                                        })
+                                    }
                                     className="
-                                        mt-3
-                                        w-full
-                                        px-5 py-4
-                                        rounded-2xl
-                                        border border-gray-200
-                                        outline-none
-                                        focus:ring-2
-                                        focus:ring-blue-500
-                                        resize-none
-                                    "
-                                ></textarea>
+w-full
+mt-3
+px-5 py-4
+rounded-2xl
+bg-white
+border border-gray-200
+text-gray-800
+placeholder:text-gray-400
+shadow-sm
+
+outline-none
+resize-none
+
+transition-all duration-300
+
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-100
+
+hover:border-blue-300
+hover:shadow-md
+"
+                                />
 
                             </div>
 
