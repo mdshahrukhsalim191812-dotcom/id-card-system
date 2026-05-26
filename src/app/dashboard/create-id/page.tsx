@@ -1058,33 +1058,6 @@ export default function CreateIDPage() {
                     {/* 🔥 BUTTONS */}
                     <div className="flex flex-wrap gap-3 mt-4 justify-center md:justify-center">
 
-                        {/* DOWNLOAD */}
-                        <button
-                            onClick={async () => {
-                                if (!cardRef.current) return;
-
-                                // 🔥 wait for layout to settle
-                                await new Promise((res) => setTimeout(res, 300));
-
-                                const canvas = await html2canvas(cardRef.current, {
-                                    scale: 3,
-                                    useCORS: true,
-                                    width: 300,
-                                    height: 476,
-                                    windowWidth: 300,
-                                    windowHeight: 476,
-                                });
-
-                                const link = document.createElement("a");
-                                link.download = "id-card.png";
-                                link.href = canvas.toDataURL();
-                                link.click();
-                            }}
-                            className="bg-gradient-to-r from-green-800 to-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200"
-                        >
-                            Download
-                        </button>
-
                         {/* SAVE */}
                         <button
                             onClick={handleSave}
