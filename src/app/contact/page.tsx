@@ -326,7 +326,7 @@ ${form.message}
                     drop-shadow-sm
                 "
                         >
-                            School Brand
+                            Business
                         </span>
 
                     </h1>
