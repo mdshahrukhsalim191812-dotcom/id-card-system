@@ -67,6 +67,8 @@ const TemplateRenderer = forwardRef(
                     <Template2
                         student={student}
                         formatDate={formatDate}
+                        image={image}
+                        logo={logo}
                     />
                 );
         }
