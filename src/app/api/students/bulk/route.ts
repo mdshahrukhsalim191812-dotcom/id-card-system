@@ -289,15 +289,14 @@ export async function POST(req: Request) {
 
                     } else {
 
-                        month =
-                            Number(month) - 1;
+                        const monthNumber = Number(month) - 1;
 
                     }
 
-                    year = Number(year);
+                    let yearNumber = Number(year);
 
-                    if (year < 100) {
-                        year += 2000;
+                    if (yearNumber < 100) {
+                        yearNumber += 2000;
                     }
 
                     return new Date(
