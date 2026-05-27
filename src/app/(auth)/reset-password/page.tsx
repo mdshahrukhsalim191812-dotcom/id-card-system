@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -20,7 +20,9 @@ function getScore(rules: any) {
     return Object.values(rules).filter(Boolean).length;
 }
 
-export default function ResetPasswordPage() {
+// ✅ MAIN CONTENT
+function ResetPasswordContent() {
+
     const searchParams = useSearchParams();
     const router = useRouter();
 
@@ -150,19 +152,23 @@ export default function ResetPasswordPage() {
                     {password && (
                         <div className="text-sm space-y-1">
                             <p className={rules.length ? "text-green-600" : "text-red-500"}>
-                                {rules.length ? "✔" : "✖"} At least 8 characters 
+                                {rules.length ? "✔" : "✖"} At least 8 characters
                             </p>
+
                             <p className={rules.uppercase ? "text-green-600" : "text-red-500"}>
                                 {rules.uppercase ? "✔" : "✖"} Uppercase letter (A-Z)
                             </p>
+
                             <p className={rules.lowercase ? "text-green-600" : "text-red-500"}>
                                 {rules.lowercase ? "✔" : "✖"} Lowercase letter (a-z)
                             </p>
+
                             <p className={rules.number ? "text-green-600" : "text-red-500"}>
                                 {rules.number ? "✔" : "✖"} Number (0-9)
                             </p>
+
                             <p className={rules.special ? "text-green-600" : "text-red-500"}>
-                                {rules.special ? "✔" : "✖"} Special character (e.g., !@#$%^&*()-+)
+                                {rules.special ? "✔" : "✖"} Special character
                             </p>
                         </div>
                     )}
@@ -191,8 +197,8 @@ export default function ResetPasswordPage() {
                     {confirmPassword && (
                         <p
                             className={`text-sm font-semibold ${password === confirmPassword
-                                    ? "text-green-600"
-                                    : "text-red-500"
+                                ? "text-green-600"
+                                : "text-red-500"
                                 }`}
                         >
                             {password === confirmPassword
@@ -214,5 +220,14 @@ export default function ResetPasswordPage() {
 
             </div>
         </div>
+    );
+}
+
+// ✅ SUSPENSE WRAPPER
+export default function ResetPasswordPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ResetPasswordContent />
+        </Suspense>
     );
 }
