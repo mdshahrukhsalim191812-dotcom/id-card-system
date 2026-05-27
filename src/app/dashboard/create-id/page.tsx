@@ -155,13 +155,11 @@ export default function CreateIDPage() {
 
                 const MODEL_URL = "/models";
 
-                console.log("Loading AI models...");
 
                 await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
 
                 await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
 
-                console.log("AI models loaded ✅");
 
                 setModelsLoaded(true);
 
@@ -289,8 +287,6 @@ export default function CreateIDPage() {
                 return imageSrc;
             }
 
-            console.log("FACE DETECTION START");
-
             const img = new Image();
 
             img.crossOrigin = "anonymous";
@@ -313,8 +309,6 @@ export default function CreateIDPage() {
                     })
                 )
                 .withFaceLandmarks();
-
-            console.log("Detection:", detection);
 
             if (!detection) {
 

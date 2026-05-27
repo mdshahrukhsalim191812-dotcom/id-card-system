@@ -6,6 +6,8 @@ import { NextResponse } from "next/server";
 
 import { verifyAdmin } from "@/lib/verifyAdmin";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
 
     try {
