@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import toast from "react-hot-toast";
 
 import {
     LayoutDashboard,
@@ -25,6 +26,8 @@ export default function AdminLayout({
     const pathname = usePathname();
 
     const [open, setOpen] = useState(false);
+
+    const [logoutLoading, setLogoutLoading] = useState(false);
 
     const menus = [
         {
@@ -53,6 +56,150 @@ export default function AdminLayout({
             href: "/admin/download-excel",
         },
     ];
+
+    const handleLogout = async () => {
+
+        toast.custom((t) => (
+
+            <div
+                className={`
+                bg-white
+                w-[350px]
+                rounded-3xl
+                shadow-2xl
+                border border-gray-200
+                p-6
+                transition-all duration-300
+
+                ${t.visible
+                        ? "animate-enter"
+                        : "animate-leave"}
+            `}
+            >
+
+                {/* TITLE */}
+                <h2 className="
+                text-2xl
+                font-bold
+                text-gray-800
+            ">
+                    Confirm Logout
+                </h2>
+
+                {/* MESSAGE */}
+                <p className="
+                mt-3
+                text-gray-500
+                leading-7
+            ">
+                    Are you sure you want to logout
+                    from admin panel?
+                </p>
+
+                {/* BUTTONS */}
+                <div className="
+                mt-6
+                flex items-center gap-3
+            ">
+
+                    {/* CANCEL */}
+                    <button
+                        onClick={() => toast.dismiss(t.id)}
+                        className="
+                        flex-1
+                        py-3
+                        rounded-2xl
+                        bg-gray-100
+                        hover:bg-gray-200
+                        text-gray-700
+                        font-semibold
+                        transition
+                    "
+                    >
+                        Cancel
+                    </button>
+
+                    {/* CONFIRM */}
+                    <button
+                        onClick={async () => {
+
+                            toast.dismiss(t.id);
+
+                            try {
+
+                                setLogoutLoading(true);
+
+                                const res = await fetch(
+                                    "/api/auth/adminLogout",
+                                    {
+                                        method: "POST",
+                                        credentials: "include",
+                                    }
+                                );
+
+                                const data = await res.json();
+
+                                if (data.success) {
+
+                                    toast.success(
+                                        "Logged out successfully"
+                                    );
+
+                                    localStorage.clear();
+
+                                    setTimeout(() => {
+
+                                        window.location.href = "/login";
+
+                                    }, 1000);
+
+                                } else {
+
+                                    toast.error("Logout failed");
+
+                                }
+
+                            } catch (error) {
+
+                                console.log(error);
+
+                                toast.error(
+                                    "Something went wrong"
+                                );
+
+                            } finally {
+
+                                setLogoutLoading(false);
+
+                            }
+
+                        }}
+                        className="
+                        flex-1
+                        py-3
+                        rounded-2xl
+
+                        bg-gradient-to-r
+                        from-red-500 to-red-600
+
+                        hover:from-red-600
+                        hover:to-red-700
+
+                        text-white
+                        font-semibold
+                        shadow-lg
+                        transition
+                    "
+                    >
+                        Logout
+                    </button>
+
+                </div>
+
+            </div>
+
+        ));
+    };
 
     return (
         <div className="min-h-screen bg-[#F4F7FB]">
@@ -156,16 +303,32 @@ export default function AdminLayout({
 
                 {/* LOGOUT */}
                 <button
+                    onClick={handleLogout}
+                    disabled={logoutLoading}
                     className="
-                        w-full flex items-center justify-center gap-2
-                        bg-red-500 hover:bg-red-600
-                        py-3 rounded-2xl font-semibold transition
+                        w-full
+                        flex items-center justify-center gap-2
+
+                        bg-gradient-to-r
+                        from-red-500 to-red-600
+                        hover:from-red-600 hover:to-red-700
+
+                        py-3 rounded-2xl
+                        font-semibold
+
+                        transition-all duration-300
+                        shadow-lg
+                        active:scale-95
+
+                        disabled:opacity-70
                     "
                 >
 
                     <LogOut size={20} />
 
-                    Logout
+                    {logoutLoading
+                        ? "Logging out..."
+                        : "Logout"}
 
                 </button>
 
