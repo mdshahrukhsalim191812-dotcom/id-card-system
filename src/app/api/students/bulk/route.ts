@@ -10,19 +10,46 @@ import cloudinary from "@/lib/cloudinary";
 import crypto from "crypto";
 
 export async function POST(req: Request) {
+
     try {
+
         // 🔐 AUTH
         const cookieStore = cookies();
+
         const token = cookieStore.get("token")?.value;
 
         if (!token) {
-            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+
+            return NextResponse.json(
+                { message: "Unauthorized" },
+                { status: 401 }
+            );
+
         }
 
-        const user = verifyToken(token);
+        const user: any = verifyToken(token);
+
+        console.log("USER => ", user);
 
         if (!user) {
-            return NextResponse.json({ message: "Invalid token" }, { status: 401 });
+
+            return NextResponse.json(
+                { message: "Invalid token" },
+                { status: 401 }
+            );
+
+        }
+
+        // ✅ FIXED
+        const schoolId = user.id;
+
+        if (!schoolId) {
+
+            return NextResponse.json(
+                { message: "School ID missing in token" },
+                { status: 400 }
+            );
+
         }
 
         await connectDB();
@@ -30,208 +57,385 @@ export async function POST(req: Request) {
         const formData = await req.formData();
 
         const file = formData.get("file") as File;
+
         const zipFile = formData.get("images") as File;
 
         if (!file || file.size === 0) {
+
             return NextResponse.json(
                 { message: "No Excel file uploaded" },
                 { status: 400 }
             );
+
         }
 
-        // 🔥 FILE HASH (prevent duplicate upload)
-        const buffer = Buffer.from(await file.arrayBuffer());
-        const fileHash = crypto.createHash("md5").update(buffer).digest("hex");
+        // 🔥 FILE HASH
+        const buffer = Buffer.from(
+            await file.arrayBuffer()
+        );
 
+        const fileHash = crypto
+            .createHash("md5")
+            .update(buffer)
+            .digest("hex");
+
+        // 🔍 CHECK DUPLICATE
         const alreadyUploaded = await Student.findOne({
             fileHash,
-            schoolId: user._id,
+            schoolId,
         });
 
         if (alreadyUploaded) {
+
             return NextResponse.json(
-                { message: "This Excel file already uploaded" },
+                {
+                    message:
+                        "This Excel file already uploaded",
+                },
                 { status: 400 }
             );
+
         }
 
         // 📊 READ EXCEL
-        const workbook = XLSX.read(buffer, { type: "buffer" });
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const data: any[] = XLSX.utils.sheet_to_json(sheet);
+        const workbook = XLSX.read(buffer, {
+            type: "buffer",
+        });
 
-        const schoolData = await School.findById(user._id);
+        const sheet =
+            workbook.Sheets[
+            workbook.SheetNames[0]
+            ];
+
+        const data: any[] =
+            XLSX.utils.sheet_to_json(sheet);
+
+        // 🏫 SCHOOL DATA
+        const schoolData = await School.findById(
+            schoolId
+        );
 
         // 🖼️ IMAGE MAP
         let imageMap: Record<string, string> = {};
+
         let imageMissing = 0;
 
         // 🔥 ZIP PROCESSING
         if (zipFile) {
-            const zipBuffer = Buffer.from(await zipFile.arrayBuffer());
+
+            const zipBuffer = Buffer.from(
+                await zipFile.arrayBuffer()
+            );
+
             const zip = new AdmZip(zipBuffer);
+
             const entries = zip.getEntries();
 
             for (const entry of entries) {
-                if (!entry.isDirectory) {
-                    const fileName = entry.entryName.split("/").pop();
-                    const ext = fileName?.split(".").pop()?.toLowerCase();
 
-                    if (!["jpg", "jpeg", "png", "webp"].includes(ext || "")) {
+                if (!entry.isDirectory) {
+
+                    const fileName =
+                        entry.entryName
+                            .split("/")
+                            .pop();
+
+                    const ext = fileName
+                        ?.split(".")
+                        .pop()
+                        ?.toLowerCase();
+
+                    if (
+                        ![
+                            "jpg",
+                            "jpeg",
+                            "png",
+                            "webp",
+                        ].includes(ext || "")
+                    ) {
                         continue;
                     }
 
-                    const key = fileName?.split(".")[0];
+                    const key =
+                        fileName?.split(".")[0];
 
                     try {
-                        const fileBuffer = entry.getData();
-                        const base64 = fileBuffer.toString("base64");
 
-                        let mimeType = "image/jpeg";
-                        if (ext === "png") mimeType = "image/png";
-                        if (ext === "webp") mimeType = "image/webp";
+                        const fileBuffer =
+                            entry.getData();
 
-                        // 🔥 FACE CENTER CROP
-                        const uploadRes = await cloudinary.uploader.upload(
-                            `data:${mimeType};base64,${base64}`,
-                            {
-                                folder: "students",
-                                gravity: "auto : face",
-                                crop: "fill",
-                                width: 300,
-                                height: 400,
-                            }
-                        );
-
-                        imageMap[key] = uploadRes.secure_url;
-
-                    } catch (err) {
-                        // 🔁 RETRY ON FAIL
-                        try {
-                            const fileBuffer = entry.getData();
-                            const base64 = fileBuffer.toString("base64");
-
-                            const uploadRes = await cloudinary.uploader.upload(
-                                `data:image/jpeg;base64,${base64}`,
-                                { folder: "students" }
+                        const base64 =
+                            fileBuffer.toString(
+                                "base64"
                             );
 
-                            imageMap[key] = uploadRes.secure_url;
-                        } catch {
-                            console.error(`❌ Failed upload: ${fileName}`);
+                        let mimeType =
+                            "image/jpeg";
+
+                        if (ext === "png") {
+                            mimeType = "image/png";
                         }
+
+                        if (ext === "webp") {
+                            mimeType = "image/webp";
+                        }
+
+                        // ☁️ CLOUDINARY
+                        const uploadRes =
+                            await cloudinary.uploader.upload(
+                                `data:${mimeType};base64,${base64}`,
+                                {
+                                    folder: "students",
+
+                                    gravity:
+                                        "auto:face",
+
+                                    crop: "fill",
+
+                                    width: 300,
+
+                                    height: 400,
+                                }
+                            );
+
+                        imageMap[key!] =
+                            uploadRes.secure_url;
+
+                    } catch (err) {
+
+                        console.log(err);
+
+                        console.error(
+                            `❌ Failed upload: ${fileName}`
+                        );
+
                     }
+
                 }
+
             }
+
         }
 
         // 🔥 EXISTING STUDENTS
-        const existingStudents = await Student.find({
-            schoolId: user._id,
-        }).select("roll admissionNo");
+        const existingStudents =
+            await Student.find({
+                schoolId,
+            }).select("roll admissionNo");
 
         const existingSet = new Set(
-            existingStudents.map((s) => `${s.roll}-${s.admissionNo}`)
+            existingStudents.map(
+                (s: any) =>
+                    `${s.roll}-${s.admissionNo}`
+            )
         );
 
         const newStudents = [];
+
         let skipped = 0;
 
         // 📅 DATE PARSER
         function parseExcelDate(excelDate: any) {
+
             if (!excelDate) return null;
 
-            if (excelDate instanceof Date) return excelDate;
+            if (excelDate instanceof Date) {
+                return excelDate;
+            }
 
             if (typeof excelDate === "number") {
-                return new Date((excelDate - 25569) * 86400 * 1000);
+
+                return new Date(
+                    (excelDate - 25569) *
+                    86400 *
+                    1000
+                );
+
             }
 
             if (typeof excelDate === "string") {
-                const parts = excelDate.split(/[-\/]/);
+
+                const parts =
+                    excelDate.split(/[-\/]/);
 
                 if (parts.length === 3) {
-                    let [day, month, year] = parts;
+
+                    let [day, month, year] =
+                        parts;
 
                     const months: any = {
-                        jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
-                        jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11
+                        jan: 0,
+                        feb: 1,
+                        mar: 2,
+                        apr: 3,
+                        may: 4,
+                        jun: 5,
+                        jul: 6,
+                        aug: 7,
+                        sep: 8,
+                        oct: 9,
+                        nov: 10,
+                        dec: 11,
                     };
 
-                    if (isNaN(Number(month))) {
-                        month = months[month.toLowerCase()];
+                    if (
+                        isNaN(Number(month))
+                    ) {
+
+                        month =
+                            months[
+                            month.toLowerCase()
+                            ];
+
                     } else {
-                        month = Number(month) - 1;
+
+                        month =
+                            Number(month) - 1;
+
                     }
 
                     year = Number(year);
-                    if (year < 100) year += 2000;
 
-                    return new Date(Number(year), Number(month), Number(day));
+                    if (year < 100) {
+                        year += 2000;
+                    }
+
+                    return new Date(
+                        Number(year),
+                        Number(month),
+                        Number(day)
+                    );
+
                 }
+
             }
 
             return null;
+
         }
 
         // 👨‍🎓 CREATE STUDENTS
         for (const row of data) {
-            const roll = String(row.roll || "");
-            const admissionNo = String(row.admissionNo || "");
 
-            const key = `${roll}-${admissionNo}`;
+            const roll = String(
+                row.roll || ""
+            );
 
+            const admissionNo = String(
+                row.admissionNo || ""
+            );
+
+            const key =
+                `${roll}-${admissionNo}`;
+
+            // ⛔ SKIP DUPLICATE
             if (existingSet.has(key)) {
+
                 skipped++;
+
                 continue;
+
             }
 
+            // 🖼️ IMAGE
             const image =
                 imageMap[roll] ||
                 imageMap[admissionNo] ||
                 "";
 
-            if (!image) imageMissing++;
+            if (!image) {
+
+                imageMissing++;
+
+            }
 
             newStudents.push({
+
                 name: row.name || "",
+
                 class: row.class || "",
+
                 roll,
+
                 admissionNo,
-                sec: row.sec || row.section || "",
-                father: row.father || "",
-                mother: row.mother || "",
-                phone: row.phone || "",
-                dob: parseExcelDate(row.dob),
-                address: row.address || "",
-                school: schoolData?.name || "",
-                schoolId: user._id,
+
+                sec:
+                    row.sec ||
+                    row.section ||
+                    "",
+
+                father:
+                    row.father || "",
+
+                mother:
+                    row.mother || "",
+
+                phone:
+                    row.phone || "",
+
+                dob: parseExcelDate(
+                    row.dob
+                ),
+
+                address:
+                    row.address || "",
+
+                school:
+                    schoolData?.name || "",
+
+                // ✅ FIXED
+                schoolId,
+
                 image,
+
                 fileHash,
+
             });
+
         }
 
         // 💾 SAVE
         if (newStudents.length > 0) {
-            await Student.insertMany(newStudents);
+
+            await Student.insertMany(
+                newStudents
+            );
+
         }
 
         return NextResponse.json({
+
             success: true,
-            inserted: newStudents.length,
+
+            inserted:
+                newStudents.length,
+
             skipped,
+
             imageMissing,
+
         });
 
     } catch (error: any) {
-        console.error("Bulk Upload Error:", error);
+
+        console.error(
+            "Bulk Upload Error:",
+            error
+        );
 
         return NextResponse.json(
             {
                 success: false,
-                message: error.message || "Error uploading",
+
+                message:
+                    error.message ||
+                    "Error uploading",
             },
-            { status: 500 }
+            {
+                status: 500,
+            }
         );
+
     }
+
 }
