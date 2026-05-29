@@ -83,8 +83,45 @@ export default function ProductsPage() {
     const [isPaused, setIsPaused] = useState(false);
     const sliderRef = useRef<HTMLDivElement>(null);
     const [productIndex, setProductIndex] = useState(0);
-    const itemsPerSlide = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
-    const totalSlides = Math.ceil(products.length / itemsPerSlide);
+    const [itemsPerSlide, setItemsPerSlide] = useState(1);
+    const totalSlides = Math.ceil(
+        products.length / itemsPerSlide
+    );
+
+    useEffect(() => {
+
+        const handleResize = () => {
+
+            if (window.innerWidth >= 1024) {
+
+                setItemsPerSlide(3);
+
+            } else if (window.innerWidth >= 640) {
+
+                setItemsPerSlide(2);
+
+            } else {
+
+                setItemsPerSlide(1);
+
+            }
+
+        };
+
+        handleResize();
+
+        window.addEventListener(
+            "resize",
+            handleResize
+        );
+
+        return () =>
+            window.removeEventListener(
+                "resize",
+                handleResize
+            );
+
+    }, []);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -95,26 +132,23 @@ export default function ProductsPage() {
     }, []);
 
     useEffect(() => {
-        const handleResize = () => {
-            const newItemsPerSlide = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
-            const newTotalSlides = Math.ceil(products.length / newItemsPerSlide);
-            if (currentSlide >= newTotalSlides) {
-                setCurrentSlide(0);
-            }
-        };
 
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, [currentSlide]);
-
-    useEffect(() => {
-        if (isPaused) return;
+        if (isPaused || totalSlides <= 1)
+            return;
 
         const interval = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % totalSlides);
+
+            setCurrentSlide((prev) =>
+                prev === totalSlides - 1
+                    ? 0
+                    : prev + 1
+            );
+
         }, 4000);
 
-        return () => clearInterval(interval);
+        return () =>
+            clearInterval(interval);
+
     }, [isPaused, totalSlides]);
 
     useEffect(() => {
@@ -433,7 +467,7 @@ export default function ProductsPage() {
                         ease-in-out
                     "
                                 style={{
-                                    transform: `translateX(-${productIndex * 100}%)`,
+                                    transform: `translateX(-${currentSlide * 100}%)`,
                                 }}
                             >
 
