@@ -58,7 +58,7 @@ export async function GET() {
 
     } catch (error) {
 
-        console.log(
+        console.error(
             "ADMIN STUDENTS ERROR ❌",
             error
         );
