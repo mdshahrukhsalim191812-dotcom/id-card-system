@@ -10,6 +10,7 @@ import { studentSchema } from "@/lib/validation";
 export async function GET() {
 
     try {
+        await connectDB();
 
         const cookieStore = await cookies();
 
@@ -42,7 +43,6 @@ export async function GET() {
             );
         }
 
-        await connectDB();
 
         // ADMIN → ALL STUDENTS
         if (user.role === "admin") {
