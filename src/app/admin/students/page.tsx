@@ -32,6 +32,8 @@ export default function AdminStudentsPage() {
     const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
     const [search, setSearch] = useState("");
     const [selectedSchool, setSelectedSchool] = useState("");
+    const [selectedClass, setSelectedClass] = useState("");
+    const [classes, setClasses] = useState<string[]>([]);
     const [loadingPage, setLoadingPage] = useState(true);
 
     // FETCH STUDENTS
@@ -85,9 +87,46 @@ export default function AdminStudentsPage() {
             );
         }
 
+        // CLASS FILTER
+        if (selectedClass) {
+
+            filtered = filtered.filter(
+                (student) => student.class === selectedClass
+            );
+        }
+
         setFilteredStudents(filtered);
 
-    }, [search, selectedSchool, students]);
+    }, [search, selectedSchool, selectedClass, students]);
+
+    // ================= CLASSES BASED ON SELECTED SCHOOL =================
+
+    useEffect(() => {
+
+        if (!selectedSchool) {
+
+            setClasses([]);
+            setSelectedClass("");
+
+            return;
+        }
+
+        const filteredBySchool = students.filter(
+            (student) =>
+                student.schoolId?._id === selectedSchool
+        );
+
+        const uniqueClasses = Array.from(
+            new Set(
+                filteredBySchool.map(
+                    (student) => student.class
+                )
+            )
+        );
+
+        setClasses(uniqueClasses);
+
+    }, [selectedSchool, students]);
 
     // UNIQUE SCHOOLS
     const schools = Array.from(
@@ -390,7 +429,7 @@ export default function AdminStudentsPage() {
             {/* FILTERS */}
             <div className="bg-white rounded-3xl p-4 sm:p-6 shadow-sm border mb-8">
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
                     {/* SEARCH */}
                     <div className="relative">
@@ -428,6 +467,44 @@ export default function AdminStudentsPage() {
                                 value={school?._id}
                             >
                                 {school?.name}
+                            </option>
+
+                        ))}
+
+                    </select>
+
+                    {/* CLASS FILTER */}
+                    <select
+                        value={selectedClass}
+                        onChange={(e) =>
+                            setSelectedClass(e.target.value)
+                        }
+                        disabled={!selectedSchool}
+                        className="
+        w-full
+        px-4 py-3
+        rounded-2xl
+        border border-gray-200
+        focus:ring-2
+        focus:ring-blue-500
+        outline-none
+
+        disabled:bg-gray-100
+        disabled:cursor-not-allowed
+    "
+                    >
+
+                        <option value="">
+                            All Classes
+                        </option>
+
+                        {classes.map((cls, index) => (
+
+                            <option
+                                key={index}
+                                value={cls}
+                            >
+                                {cls}
                             </option>
 
                         ))}
