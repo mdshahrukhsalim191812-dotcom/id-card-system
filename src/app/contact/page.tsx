@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
+import HomeNavbar from "@/components/HomeNavbar";
 
 import {
     Phone,
@@ -144,7 +144,7 @@ ${form.message}
         <div className="min-h-screen bg-[#F5F9FF]">
 
             {/* NAVBAR */}
-            <Navbar />
+            <HomeNavbar />
 
             {/* HERO */}
             <section

@@ -270,7 +270,7 @@ export default function SchoolAdmin() {
     }
 
     return (
-        <div className="min-h-screen bg-[#F5F7FB]">
+        <div className="min-h-screen bg-[#F5F7FB] mt-[80px]">
 
             {/* ================= HEADER ================= */}
             <div className="bg-gradient-to-r from-[#021B33] to-[#063B6E] text-white">
@@ -308,7 +308,7 @@ export default function SchoolAdmin() {
                                     placeholder="Search students..."
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
-                                    className="w-full pl-11 pr-4 py-3 rounded-2xl border-none outline-none text-gray-800 shadow-lg"
+                                    className="w-full pl-11 pr-4 py-3 rounded-2xl border-none outline-none text-gray-800 shadow-lg focus:ring-2 focus:ring-blue-500 transition"
                                 />
 
                             </div>
