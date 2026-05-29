@@ -1,233 +1,733 @@
 "use client";
 
-import { Suspense, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import {
+    Suspense,
+    useState,
+} from "react";
 
-// 🔥 Password rules
-function checkPassword(password: string) {
+import Image from "next/image";
+
+import Link from "next/link";
+
+import {
+    useSearchParams,
+    useRouter,
+} from "next/navigation";
+
+import toast from "react-hot-toast";
+
+import {
+    FaEye,
+    FaEyeSlash,
+} from "react-icons/fa";
+
+// ================= PASSWORD RULES =================
+function checkPassword(
+    password: string
+) {
+
     return {
-        length: password.length >= 8,
-        uppercase: /[A-Z]/.test(password),
-        lowercase: /[a-z]/.test(password),
-        number: /[0-9]/.test(password),
-        special: /[^A-Za-z0-9]/.test(password),
+        length:
+            password.length >= 8,
+
+        uppercase:
+            /[A-Z]/.test(password),
+
+        lowercase:
+            /[a-z]/.test(password),
+
+        number:
+            /[0-9]/.test(password),
+
+        special:
+            /[^A-Za-z0-9]/.test(password),
     };
 }
 
-function getScore(rules: any) {
-    return Object.values(rules).filter(Boolean).length;
+function getScore(
+    rules: any
+) {
+
+    return Object
+        .values(rules)
+        .filter(Boolean)
+        .length;
 }
 
-// ✅ MAIN CONTENT
+// ================= MAIN CONTENT =================
 function ResetPasswordContent() {
 
-    const searchParams = useSearchParams();
-    const router = useRouter();
+    const searchParams =
+        useSearchParams();
 
-    const email = searchParams.get("email");
+    const router =
+        useRouter();
 
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const email =
+        searchParams.get("email");
 
-    const [show1, setShow1] = useState(false);
-    const [show2, setShow2] = useState(false);
+    // ================= STATES =================
+    const [password, setPassword] =
+        useState("");
 
-    const [loading, setLoading] = useState(false);
+    const [confirmPassword,
+        setConfirmPassword] =
+        useState("");
 
-    const rules = checkPassword(password);
-    const score = getScore(rules);
+    const [show1, setShow1] =
+        useState(false);
 
-    // 🔥 Strength
+    const [show2, setShow2] =
+        useState(false);
+
+    const [loading, setLoading] =
+        useState(false);
+
+    // ================= PASSWORD =================
+    const rules =
+        checkPassword(password);
+
+    const score =
+        getScore(rules);
+
     const strength =
-        score <= 2 ? "Weak" : score <= 4 ? "Medium" : "Strong";
+        score <= 2
+            ? "Weak"
+            : score <= 4
+                ? "Medium"
+                : "Strong";
 
     const color =
         score <= 2
             ? "bg-red-500"
             : score <= 4
                 ? "bg-yellow-500"
-                : "bg-green-600";
+                : "bg-green-500";
 
-    const textColor =
-        score <= 2
-            ? "text-red-500"
-            : score <= 4
-                ? "text-yellow-600"
-                : "text-green-600";
+    // ================= SUBMIT =================
+    const handleSubmit = async (
+        e: React.FormEvent
+    ) => {
 
-    const handleSubmit = async (e: any) => {
         e.preventDefault();
 
         if (!email) {
-            toast.error("Invalid request ❌");
+
+            toast.error(
+                "Invalid request ❌"
+            );
+
             return;
         }
 
-        if (password !== confirmPassword) {
-            toast.error("Passwords do not match ❌");
+        if (
+            password !==
+            confirmPassword
+        ) {
+
+            toast.error(
+                "Passwords do not match ❌"
+            );
+
             return;
         }
 
         if (score < 4) {
-            toast.error("Password is too weak ❌");
+
+            toast.error(
+                "Password is too weak ❌"
+            );
+
             return;
         }
 
         setLoading(true);
 
         try {
-            const res = await fetch("/api/auth/reset-password", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
-            });
 
-            const data = await res.json();
+            const res =
+                await fetch(
+                    "/api/auth/reset-password",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+                        },
+
+                        body: JSON.stringify({
+                            email,
+                            password,
+                        }),
+                    }
+                );
+
+            const data =
+                await res.json();
 
             if (res.ok) {
-                toast.success("Password updated ✅");
-                router.push("/login");
+
+                toast.success(
+                    "Password updated successfully ✅"
+                );
+
+                setTimeout(() => {
+
+                    router.push(
+                        "/login"
+                    );
+
+                }, 1200);
+
             } else {
-                toast.error(data.message || "Error ❌");
+
+                toast.error(
+                    data.message ||
+                    "Error ❌"
+                );
             }
 
         } catch {
-            toast.error("Server error ❌");
-        }
 
-        setLoading(false);
+            toast.error(
+                "Server Error ❌"
+            );
+
+        } finally {
+
+            setLoading(false);
+        }
     };
 
+    // ================= UI =================
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-            <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
 
-                <h2 className="text-2xl font-bold text-center text-blue-600">
-                    Reset Password
-                </h2>
+        <div className="
+            relative
+            min-h-screen
+            overflow-hidden
+            bg-gradient-to-br
+            from-slate-950
+            via-blue-950
+            to-cyan-950
+            flex
+            items-center
+            justify-center
+            px-4
+            py-8
+            sm:px-6
+            lg:px-8
+        ">
 
-                <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            {/* ================= GLOW EFFECTS ================= */}
+            <div className="
+                absolute
+                top-0 left-0
+                w-72 h-72
+                bg-cyan-500/20
+                rounded-full
+                blur-3xl
+            "></div>
 
-                    {/* 🔐 PASSWORD */}
-                    <div className="relative">
-                        <input
-                            type={show1 ? "text" : "password"}
-                            placeholder="New Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full border p-3 rounded-lg pr-10"
-                            required
-                        />
+            <div className="
+                absolute
+                bottom-0 right-0
+                w-72 h-72
+                bg-blue-500/20
+                rounded-full
+                blur-3xl
+            "></div>
 
-                        <button
-                            type="button"
-                            onClick={() => setShow1(!show1)}
-                            className="absolute right-3 top-3 text-gray-500"
-                        >
-                            {show1 ? <FaEyeSlash /> : <FaEye />}
-                        </button>
+            {/* ================= CARD ================= */}
+            <div className="
+                relative z-10
+                w-full
+                max-w-md
+                sm:max-w-lg
+            ">
+
+                <div className="
+                    backdrop-blur-2xl
+                    bg-white/10
+                    border border-white/20
+                    rounded-3xl
+                    shadow-2xl
+                    p-5
+                    sm:p-8
+                ">
+
+                    {/* ================= BRAND ================= */}
+                    <div className="
+                        flex
+                        items-center
+                        justify-center
+                        gap-3
+                        sm:gap-4
+                    ">
+
+                        {/* LOGO */}
+                        <div className="
+                            flex-shrink-0
+                        ">
+
+                            <Image
+                                src="/genix-logo.png"
+                                alt="Work GeniX Logo"
+                                width={80}
+                                height={80}
+                                priority
+                                className="
+                                    object-contain
+                                    w-14 h-14
+                                    sm:w-16 sm:h-16
+                                    md:w-20 md:h-20
+                                "
+                            />
+
+                        </div>
+
+                        {/* BRAND TEXT */}
+                        <div>
+
+                            <h1 className="
+                                text-2xl
+                                sm:text-3xl
+                                md:text-4xl
+                                font-extrabold
+                                tracking-wide
+                                text-white
+                                leading-tight
+                            ">
+
+                                Work{" "}
+
+                                <span className="
+                                    text-cyan-400
+                                ">
+                                    GeniX
+                                </span>
+
+                            </h1>
+
+                            <p className="
+                                text-gray-300
+                                text-[10px]
+                                sm:text-xs
+                                md:text-sm
+                                mt-1
+                            ">
+
+                                Printing | Designing | Branding
+
+                            </p>
+
+                        </div>
+
                     </div>
 
-                    {/* 🔥 STRENGTH BAR */}
-                    {password && (
-                        <>
-                            <div className="w-full h-2 bg-gray-200 rounded">
-                                <div
-                                    className={`h-2 rounded ${color}`}
-                                    style={{ width: `${(score / 5) * 100}%` }}
+                    {/* ================= HEADING ================= */}
+                    <div className="
+                        text-center
+                        mt-8
+                    ">
+
+                        <h2 className="
+                            text-2xl
+                            sm:text-3xl
+                            font-bold
+                            text-white
+                        ">
+
+                            Reset Password
+
+                        </h2>
+
+                        <p className="
+                            text-gray-300
+                            text-sm
+                            sm:text-base
+                            mt-2
+                        ">
+
+                            Create your new secure password
+
+                        </p>
+
+                    </div>
+
+                    {/* ================= FORM ================= */}
+                    <form
+                        onSubmit={handleSubmit}
+                        className="
+                            mt-8
+                            space-y-5
+                        "
+                    >
+
+                        {/* ================= NEW PASSWORD ================= */}
+                        <div>
+
+                            <label className="
+                                text-sm
+                                text-gray-300
+                            ">
+
+                                New Password
+
+                            </label>
+
+                            <div className="
+                                relative
+                                mt-2
+                            ">
+
+                                <input
+                                    type={
+                                        show1
+                                            ? "text"
+                                            : "password"
+                                    }
+                                    placeholder="Create strong password"
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(
+                                            e.target.value
+                                        )
+                                    }
+                                    required
+                                    className="
+                                        w-full
+                                        p-3 sm:p-4
+                                        rounded-2xl
+                                        bg-white/10
+                                        border border-white/20
+                                        text-white
+                                        placeholder-gray-400
+                                        focus:outline-none
+                                        focus:ring-2
+                                        focus:ring-cyan-400
+                                        pr-12
+                                        transition-all
+                                        duration-300
+                                    "
                                 />
+
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setShow1(
+                                            !show1
+                                        )
+                                    }
+                                    className="
+                                        absolute
+                                        right-4
+                                        top-1/2
+                                        -translate-y-1/2
+                                        text-gray-300
+                                        hover:text-white
+                                        transition
+                                    "
+                                >
+
+                                    {show1
+                                        ? <FaEyeSlash />
+                                        : <FaEye />}
+
+                                </button>
+
                             </div>
 
-                            <p className={`text-sm font-semibold ${textColor}`}>
-                                Strength: {strength}
-                            </p>
-                        </>
-                    )}
+                            {/* ================= STRENGTH ================= */}
+                            {password && (
 
-                    {/* 📋 RULES */}
-                    {password && (
-                        <div className="text-sm space-y-1">
-                            <p className={rules.length ? "text-green-600" : "text-red-500"}>
-                                {rules.length ? "✔" : "✖"} At least 8 characters
-                            </p>
+                                <div className="
+                                    mt-4
+                                ">
 
-                            <p className={rules.uppercase ? "text-green-600" : "text-red-500"}>
-                                {rules.uppercase ? "✔" : "✖"} Uppercase letter (A-Z)
-                            </p>
+                                    {/* BAR */}
+                                    <div className="
+                                        w-full
+                                        h-2
+                                        bg-white/10
+                                        rounded-full
+                                        overflow-hidden
+                                    ">
 
-                            <p className={rules.lowercase ? "text-green-600" : "text-red-500"}>
-                                {rules.lowercase ? "✔" : "✖"} Lowercase letter (a-z)
-                            </p>
+                                        <div
+                                            className={`
+                                                h-full
+                                                ${color}
+                                                transition-all
+                                                duration-300
+                                            `}
+                                            style={{
+                                                width:
+                                                    `${(score / 5) * 100}%`,
+                                            }}
+                                        />
 
-                            <p className={rules.number ? "text-green-600" : "text-red-500"}>
-                                {rules.number ? "✔" : "✖"} Number (0-9)
-                            </p>
+                                    </div>
 
-                            <p className={rules.special ? "text-green-600" : "text-red-500"}>
-                                {rules.special ? "✔" : "✖"} Special character
-                            </p>
+                                    {/* TEXT */}
+                                    <p className="
+                                        text-sm
+                                        text-gray-300
+                                        mt-2
+                                    ">
+
+                                        Password Strength:
+
+                                        <span className="
+                                            ml-1
+                                            font-semibold
+                                        ">
+
+                                            {strength}
+
+                                        </span>
+
+                                    </p>
+
+                                    {/* RULES */}
+                                    <div className="
+                                        grid
+                                        grid-cols-1
+                                        sm:grid-cols-2
+                                        gap-2
+                                        mt-4
+                                        text-sm
+                                    ">
+
+                                        <p className={
+                                            rules.length
+                                                ? "text-green-400"
+                                                : "text-red-400"
+                                        }>
+                                            {rules.length ? "✔" : "✖"} 8 Characters
+                                        </p>
+
+                                        <p className={
+                                            rules.uppercase
+                                                ? "text-green-400"
+                                                : "text-red-400"
+                                        }>
+                                            {rules.uppercase ? "✔" : "✖"} Uppercase
+                                        </p>
+
+                                        <p className={
+                                            rules.lowercase
+                                                ? "text-green-400"
+                                                : "text-red-400"
+                                        }>
+                                            {rules.lowercase ? "✔" : "✖"} Lowercase
+                                        </p>
+
+                                        <p className={
+                                            rules.number
+                                                ? "text-green-400"
+                                                : "text-red-400"
+                                        }>
+                                            {rules.number ? "✔" : "✖"} Number
+                                        </p>
+
+                                        <p className={
+                                            rules.special
+                                                ? "text-green-400"
+                                                : "text-red-400"
+                                        }>
+                                            {rules.special ? "✔" : "✖"} Special Character
+                                        </p>
+
+                                    </div>
+
+                                </div>
+                            )}
+
                         </div>
-                    )}
 
-                    {/* 🔐 CONFIRM PASSWORD */}
-                    <div className="relative">
-                        <input
-                            type={show2 ? "text" : "password"}
-                            placeholder="Confirm Password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            className="w-full border p-3 rounded-lg pr-10"
-                            required
-                        />
+                        {/* ================= CONFIRM PASSWORD ================= */}
+                        <div>
 
+                            <label className="
+                                text-sm
+                                text-gray-300
+                            ">
+
+                                Confirm Password
+
+                            </label>
+
+                            <div className="
+                                relative
+                                mt-2
+                            ">
+
+                                <input
+                                    type={
+                                        show2
+                                            ? "text"
+                                            : "password"
+                                    }
+                                    placeholder="Confirm password"
+                                    value={confirmPassword}
+                                    onChange={(e) =>
+                                        setConfirmPassword(
+                                            e.target.value
+                                        )
+                                    }
+                                    required
+                                    className="
+                                        w-full
+                                        p-3 sm:p-4
+                                        rounded-2xl
+                                        bg-white/10
+                                        border border-white/20
+                                        text-white
+                                        placeholder-gray-400
+                                        focus:outline-none
+                                        focus:ring-2
+                                        focus:ring-cyan-400
+                                        pr-12
+                                        transition-all
+                                        duration-300
+                                    "
+                                />
+
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setShow2(
+                                            !show2
+                                        )
+                                    }
+                                    className="
+                                        absolute
+                                        right-4
+                                        top-1/2
+                                        -translate-y-1/2
+                                        text-gray-300
+                                        hover:text-white
+                                        transition
+                                    "
+                                >
+
+                                    {show2
+                                        ? <FaEyeSlash />
+                                        : <FaEye />}
+
+                                </button>
+
+                            </div>
+
+                            {/* ================= MATCH STATUS ================= */}
+                            {confirmPassword && (
+
+                                <p className={`
+                                    mt-3
+                                    text-sm
+                                    font-medium
+                                    ${password === confirmPassword
+                                        ? "text-green-400"
+                                        : "text-red-400"
+                                    }
+                                `}>
+
+                                    {password === confirmPassword
+                                        ? "Passwords match ✔"
+                                        : "Passwords do not match ❌"}
+
+                                </p>
+                            )}
+
+                        </div>
+
+                        {/* ================= BUTTON ================= */}
                         <button
-                            type="button"
-                            onClick={() => setShow2(!show2)}
-                            className="absolute right-3 top-3 text-gray-500"
+                            type="submit"
+                            disabled={loading}
+                            className="
+                                w-full
+                                py-3 sm:py-4
+                                rounded-2xl
+                                bg-gradient-to-r
+                                from-cyan-500
+                                to-blue-600
+                                hover:scale-[1.02]
+                                active:scale-[0.98]
+                                transition-all
+                                duration-300
+                                text-white
+                                font-semibold
+                                text-base sm:text-lg
+                                shadow-xl
+                                shadow-cyan-500/30
+                            "
                         >
-                            {show2 ? <FaEyeSlash /> : <FaEye />}
+
+                            {loading
+                                ? "Updating Password..."
+                                : "Update Password"}
+
                         </button>
-                    </div>
 
-                    {/* ✅ MATCH STATUS */}
-                    {confirmPassword && (
-                        <p
-                            className={`text-sm font-semibold ${password === confirmPassword
-                                ? "text-green-600"
-                                : "text-red-500"
-                                }`}
+                    </form>
+
+                    {/* ================= FOOTER ================= */}
+                    <p className="
+                        text-center
+                        text-gray-300
+                        text-sm
+                        mt-7
+                    ">
+
+                        Back to
+
+                        <Link
+                            href="/login"
+                            className="
+                                text-cyan-400
+                                font-semibold
+                                ml-1
+                                hover:underline
+                            "
                         >
-                            {password === confirmPassword
-                                ? "Passwords match ✔"
-                                : "Passwords do not match ❌"}
-                        </p>
-                    )}
+                            Login
+                        </Link>
 
-                    {/* BUTTON */}
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full bg-blue-500 text-white p-2 rounded"
-                    >
-                        {loading ? "Updating..." : "Update Password"}
-                    </button>
+                    </p>
 
-                </form>
+                </div>
 
             </div>
+
         </div>
     );
 }
 
-// ✅ SUSPENSE WRAPPER
+// ================= SUSPENSE =================
 export default function ResetPasswordPage() {
+
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+
+        <Suspense
+            fallback={
+                <div className="
+                    min-h-screen
+                    flex
+                    items-center
+                    justify-center
+                    bg-slate-950
+                    text-white
+                ">
+                    Loading...
+                </div>
+            }
+        >
+
             <ResetPasswordContent />
+
         </Suspense>
     );
 }

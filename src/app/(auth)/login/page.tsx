@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 import {
     FaEye,
@@ -55,16 +56,20 @@ export default function LoginPage() {
                 "/api/auth/login",
                 {
                     method: "POST",
+
                     headers: {
                         "Content-Type":
                             "application/json",
                     },
+
                     credentials: "include",
+
                     body: JSON.stringify(form),
                 }
             );
 
-            const data = await res.json();
+            const data =
+                await res.json();
 
             // ================= ERROR =================
             if (!res.ok) {
@@ -73,8 +78,6 @@ export default function LoginPage() {
                     data.message ||
                     "Login failed ❌"
                 );
-
-                setLoading(false);
 
                 return;
             }
@@ -87,7 +90,9 @@ export default function LoginPage() {
 
             localStorage.setItem(
                 "school",
-                JSON.stringify(data.school)
+                JSON.stringify(
+                    data.school
+                )
             );
 
             toast.success(
@@ -110,8 +115,6 @@ export default function LoginPage() {
                 "Something went wrong ❌"
             );
 
-            setLoading(false);
-
         } finally {
 
             setLoading(false);
@@ -126,9 +129,9 @@ export default function LoginPage() {
             <div className="
                 fixed inset-0
                 bg-gradient-to-br
-                from-[#021B33]
-                via-[#04284B]
-                to-[#063B6E]
+                from-slate-950
+                via-blue-950
+                to-cyan-950
                 flex items-center
                 justify-center
                 overflow-hidden
@@ -140,10 +143,21 @@ export default function LoginPage() {
                     absolute
                     w-[350px]
                     h-[350px]
-                    bg-blue-500/20
-                    blur-3xl
+                    bg-cyan-500/20
                     rounded-full
+                    blur-3xl
                     animate-pulse
+                "></div>
+
+                <div className="
+                    absolute
+                    w-[300px]
+                    h-[300px]
+                    bg-blue-500/20
+                    rounded-full
+                    blur-3xl
+                    bottom-10
+                    right-10
                 "></div>
 
                 {/* CONTENT */}
@@ -159,7 +173,7 @@ export default function LoginPage() {
                         <div className="
                             absolute inset-0
                             rounded-full
-                            bg-blue-400
+                            bg-cyan-400
                             blur-2xl
                             opacity-40
                             animate-pulse
@@ -170,8 +184,8 @@ export default function LoginPage() {
                             w-28 h-28
                             rounded-full
                             bg-white/10
+                            border border-white/20
                             backdrop-blur-xl
-                            border border-white/10
                             flex items-center
                             justify-center
                             shadow-2xl
@@ -253,124 +267,218 @@ export default function LoginPage() {
     return (
 
         <div className="
+            relative
             min-h-screen
+            overflow-hidden
             bg-gradient-to-br
-            from-[#F4F7FB]
-            to-[#EAF2FF]
+            from-slate-950
+            via-blue-950
+            to-cyan-950
             flex items-center
             justify-center
             px-4
+            py-8
+            sm:px-6
+            lg:px-8
         ">
 
+            {/* ================= GLOW EFFECTS ================= */}
             <div className="
+                absolute
+                top-0 left-0
+                w-72 h-72
+                bg-cyan-500/20
+                rounded-full
+                blur-3xl
+            "></div>
+
+            <div className="
+                absolute
+                bottom-0 right-0
+                w-72 h-72
+                bg-blue-500/20
+                rounded-full
+                blur-3xl
+            "></div>
+
+            {/* ================= CARD ================= */}
+            <div className="
+                relative z-10
                 w-full
                 max-w-md
-                bg-white
-                rounded-[32px]
-                shadow-2xl
-                border border-gray-100
-                overflow-hidden
+                sm:max-w-lg
             ">
 
-                {/* TOP */}
                 <div className="
-                    bg-gradient-to-r
-                    from-[#021B33]
-                    via-[#04284B]
-                    to-[#063B6E]
-                    px-8 py-10
-                    text-center
-                    text-white
+                    backdrop-blur-2xl
+                    bg-white/10
+                    border border-white/20
+                    rounded-3xl
+                    shadow-2xl
+                    p-5
+                    sm:p-8
                 ">
 
+                    {/* ================= BRAND SECTION ================= */}
                     <div className="
-                        w-20 h-20
-                        rounded-full
-                        bg-white/10
-                        border border-white/10
-                        backdrop-blur-md
-                        flex items-center
+                        flex
+                        items-center
                         justify-center
-                        mx-auto
+                        gap-3
+                        sm:gap-4
                     ">
 
-                        <UserRoundCheck size={40} />
+                        {/* LOGO */}
+                        <div className="flex-shrink-0">
+
+                            <Image
+                                src="/genix-logo.png"
+                                alt="Work GeniX Logo"
+                                width={80}
+                                height={80}
+                                priority
+                                className="
+                                    object-contain
+                                    w-14 h-14
+                                    sm:w-16 sm:h-16
+                                    md:w-20 md:h-20
+                                "
+                            />
+
+                        </div>
+
+                        {/* BRAND TEXT */}
+                        <div>
+
+                            <h1 className="
+                                text-2xl
+                                sm:text-3xl
+                                md:text-4xl
+                                font-extrabold
+                                tracking-wide
+                                text-white
+                                leading-tight
+                            ">
+
+                                Work{" "}
+
+                                <span className="
+                                    text-cyan-400
+                                ">
+                                    GeniX
+                                </span>
+
+                            </h1>
+
+                            <p className="
+                                text-gray-300
+                                text-[10px]
+                                sm:text-xs
+                                md:text-sm
+                                mt-1
+                            ">
+
+                                Printing | Designing | Branding
+
+                            </p>
+
+                        </div>
 
                     </div>
 
-                    <h1 className="
-                        mt-6
-                        text-3xl
-                        font-extrabold
+                    {/* ================= HEADING ================= */}
+                    <div className="
+                        text-center
+                        mt-8
                     ">
-                        Welcome Back
-                    </h1>
 
-                    <p className="
-                        mt-2
-                        text-blue-100
-                    ">
-                        Login to your school dashboard
-                    </p>
+                        <h2 className="
+                            text-2xl
+                            sm:text-3xl
+                            font-bold
+                            text-white
+                        ">
 
-                </div>
+                            Welcome Back
 
-                {/* FORM */}
-                <div className="p-8">
+                        </h2>
 
+                        <p className="
+                            text-gray-300
+                            text-sm
+                            sm:text-base
+                            mt-2
+                        ">
+
+                            Login to your school dashboard
+
+                        </p>
+
+                    </div>
+
+                    {/* ================= FORM ================= */}
                     <form
                         onSubmit={handleSubmit}
-                        className="space-y-5"
+                        className="
+                            mt-8
+                            space-y-5
+                        "
                     >
 
-                        {/* EMAIL */}
+                        {/* ================= EMAIL ================= */}
                         <div>
 
                             <label className="
                                 text-sm
-                                font-semibold
-                                text-gray-700
-                                block mb-2
+                                text-gray-300
                             ">
+
                                 Email Address
+
                             </label>
 
                             <input
                                 type="email"
                                 name="email"
-                                placeholder="Enter email"
+                                placeholder="Enter email address"
                                 value={form.email}
                                 onChange={handleChange}
+                                required
                                 className="
                                     w-full
-                                    border border-gray-200
-                                    bg-gray-50
-                                    px-4 py-3
+                                    mt-2
+                                    p-3 sm:p-4
                                     rounded-2xl
-                                    outline-none
+                                    bg-white/10
+                                    border border-white/20
+                                    text-white
+                                    placeholder-gray-400
+                                    focus:outline-none
                                     focus:ring-2
-                                    focus:ring-blue-500
-                                    focus:bg-white
-                                    transition
+                                    focus:ring-cyan-400
+                                    transition-all
+                                    duration-300
                                 "
-                                required
                             />
 
                         </div>
 
-                        {/* PASSWORD */}
+                        {/* ================= PASSWORD ================= */}
                         <div>
 
                             <label className="
                                 text-sm
-                                font-semibold
-                                text-gray-700
-                                block mb-2
+                                text-gray-300
                             ">
+
                                 Password
+
                             </label>
 
-                            <div className="relative">
+                            <div className="
+                                relative
+                                mt-2
+                            ">
 
                                 <input
                                     type={
@@ -382,20 +490,22 @@ export default function LoginPage() {
                                     placeholder="Enter password"
                                     value={form.password}
                                     onChange={handleChange}
+                                    required
                                     className="
                                         w-full
-                                        border border-gray-200
-                                        bg-gray-50
-                                        px-4 py-3
-                                        pr-12
+                                        p-3 sm:p-4
                                         rounded-2xl
-                                        outline-none
+                                        bg-white/10
+                                        border border-white/20
+                                        text-white
+                                        placeholder-gray-400
+                                        focus:outline-none
                                         focus:ring-2
-                                        focus:ring-blue-500
-                                        focus:bg-white
-                                        transition
+                                        focus:ring-cyan-400
+                                        pr-12
+                                        transition-all
+                                        duration-300
                                     "
-                                    required
                                 />
 
                                 <button
@@ -407,9 +517,12 @@ export default function LoginPage() {
                                     }
                                     className="
                                         absolute
-                                        right-4 top-1/2
+                                        right-4
+                                        top-1/2
                                         -translate-y-1/2
-                                        text-gray-500
+                                        text-gray-300
+                                        hover:text-white
+                                        transition
                                     "
                                 >
 
@@ -423,14 +536,16 @@ export default function LoginPage() {
 
                         </div>
 
-                        {/* FORGOT */}
-                        <div className="text-right">
+                        {/* ================= FORGOT PASSWORD ================= */}
+                        <div className="
+                            text-right
+                        ">
 
                             <Link
                                 href="/forgot-password"
                                 className="
                                     text-sm
-                                    text-blue-600
+                                    text-cyan-400
                                     hover:underline
                                 "
                             >
@@ -439,23 +554,26 @@ export default function LoginPage() {
 
                         </div>
 
-                        {/* BUTTON */}
+                        {/* ================= BUTTON ================= */}
                         <button
                             type="submit"
                             disabled={loading}
                             className="
                                 w-full
-                                py-4
+                                py-3 sm:py-4
                                 rounded-2xl
                                 bg-gradient-to-r
-                                from-blue-600
-                                to-cyan-500
-                                hover:opacity-90
-                                text-white
-                                font-bold
-                                shadow-lg
+                                from-cyan-500
+                                to-blue-600
+                                hover:scale-[1.02]
+                                active:scale-[0.98]
                                 transition-all
                                 duration-300
+                                text-white
+                                font-semibold
+                                text-base sm:text-lg
+                                shadow-xl
+                                shadow-cyan-500/30
                             "
                         >
 
@@ -465,20 +583,22 @@ export default function LoginPage() {
 
                     </form>
 
-                    {/* REGISTER */}
+                    {/* ================= FOOTER ================= */}
                     <p className="
                         text-center
-                        text-gray-600
-                        mt-6
+                        text-gray-300
+                        text-sm
+                        mt-7
                     ">
 
-                        Don’t have an account?{" "}
+                        Don’t have an account?
 
                         <Link
                             href="/register"
                             className="
-                                text-blue-600
+                                text-cyan-400
                                 font-semibold
+                                ml-1
                                 hover:underline
                             "
                         >
