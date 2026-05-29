@@ -54,7 +54,7 @@ export default function DashboardPage() {
 
     if (loadingPage) {
         return (
-            <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#04284B] to-[#063B6E] flex items-center justify-center overflow-hidden z-50">
+            <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#04284B] to-[#063B6E] flex items-center justify-center overflow-hidden z-50 scroll-none">
 
                 {/* Glow */}
                 <div className="absolute w-[350px] h-[350px] bg-blue-500/20 blur-3xl rounded-full animate-pulse"></div>
@@ -105,61 +105,279 @@ export default function DashboardPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#F4F7FB]">
+
+        <div
+            className="
+            min-h-screen
+
+            pt-[95px]
+
+            bg-gradient-to-br
+            from-[#F4F7FB]
+            via-[#EEF4FF]
+            to-[#F8FBFF]
+
+            overflow-x-hidden
+        "
+        >
 
             {/* ================= HEADER ================= */}
-            <div className="bg-gradient-to-r from-[#021B33] via-[#04284B] to-[#063B6E] text-white">
+            <div
+                className="
+                relative
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+                overflow-hidden
 
-                    <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6">
+                bg-gradient-to-r
+                from-[#021B33]
+                via-[#04284B]
+                to-[#063B6E]
 
-                        {/* LEFT */}
+                text-white
+            "
+            >
+
+                {/* Glow */}
+                <div
+                    className="
+                    absolute
+                    -top-32
+                    -left-32
+
+                    w-[400px]
+                    h-[400px]
+
+                    bg-cyan-400/10
+
+                    blur-[120px]
+
+                    rounded-full
+                "
+                ></div>
+
+                <div
+                    className="
+                    absolute
+                    -bottom-32
+                    -right-32
+
+                    w-[400px]
+                    h-[400px]
+
+                    bg-blue-500/10
+
+                    blur-[120px]
+
+                    rounded-full
+                "
+                ></div>
+
+                {/* Grid */}
+                <div
+                    className="
+                    absolute inset-0
+
+                    opacity-[0.04]
+
+                    [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
+
+                    [background-size:60px_60px]
+                "
+                ></div>
+
+                <div
+                    className="
+                    relative z-10
+
+                    max-w-7xl
+                    mx-auto
+
+                    px-4
+                    sm:px-6
+                    lg:px-8
+
+                    py-8
+                    sm:py-10
+                "
+                >
+
+                    <div
+                        className="
+                        flex flex-col
+                        xl:flex-row
+
+                        xl:items-center
+                        xl:justify-between
+
+                        gap-6
+                    "
+                    >
+
+                        {/* ================= LEFT ================= */}
                         <div className="flex items-start gap-4">
 
-                            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/10">
-                                <LayoutDashboard size={32} />
+                            <div
+                                className="
+                                w-14 h-14
+                                sm:w-16 sm:h-16
+
+                                rounded-3xl
+
+                                bg-white/10
+                                backdrop-blur-2xl
+
+                                border border-white/10
+
+                                flex items-center justify-center
+
+                                shadow-[0_10px_40px_rgba(0,0,0,0.35)]
+
+                                shrink-0
+                            "
+                            >
+
+                                <LayoutDashboard size={34} />
+
                             </div>
 
                             <div>
-                                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
+
+                                <h1
+                                    className="
+                                    text-3xl
+                                    sm:text-4xl
+                                    lg:text-5xl
+
+                                    font-extrabold
+
+                                    tracking-tight
+                                "
+                                >
                                     Dashboard
                                 </h1>
 
-                                <p className="text-blue-100 mt-2 text-sm sm:text-base max-w-2xl leading-relaxed">
-                                    Welcome back! Manage students, generate professional ID cards
-                                    and monitor printing services from one dashboard.
+                                <p
+                                    className="
+                                    mt-3
+
+                                    text-blue-100
+
+                                    text-sm
+                                    sm:text-base
+
+                                    max-w-2xl
+
+                                    leading-relaxed
+                                "
+                                >
+                                    Welcome back! Manage students,
+                                    generate professional ID cards
+                                    and monitor printing services
+                                    from one dashboard.
                                 </p>
+
                             </div>
 
                         </div>
 
-                        {/* RIGHT BUTTONS */}
-                        <div className="flex flex-col sm:flex-row gap-3 w-full xl:w-auto">
+                        {/* ================= RIGHT BUTTONS ================= */}
+                        <div
+                            className="
+                            flex flex-col
+                            sm:flex-row
 
+                            gap-3
+
+                            w-full
+                            xl:w-auto
+                        "
+                        >
+
+                            {/* Students */}
                             <Link
                                 href="/dashboard/students"
-                                className="group flex items-center justify-center gap-2 bg-white text-[#021B33] hover:bg-blue-50 font-semibold px-5 py-3 rounded-2xl shadow-lg transition-all duration-300 w-full sm:w-auto"
+                                className="
+                                group
+
+                                flex items-center
+                                justify-center
+                                gap-2
+
+                                bg-white
+
+                                text-[#021B33]
+
+                                hover:bg-blue-50
+
+                                font-semibold
+
+                                px-5 py-3
+
+                                rounded-2xl
+
+                                shadow-xl
+
+                                transition-all duration-300
+
+                                hover:scale-[1.02]
+
+                                w-full sm:w-auto
+                            "
                             >
+
                                 <Users size={18} />
 
                                 Students
 
                                 <ArrowRight
                                     size={18}
-                                    className="group-hover:translate-x-1 transition"
+                                    className="
+                                    group-hover:translate-x-1
+                                    transition
+                                "
                                 />
+
                             </Link>
 
+                            {/* Create ID */}
                             <Link
                                 href="/dashboard/create-id"
-                                className="group flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:scale-[1.02] text-white font-semibold px-5 py-3 rounded-2xl shadow-lg transition-all duration-300 w-full sm:w-auto"
+                                className="
+                                group
+
+                                flex items-center
+                                justify-center
+                                gap-2
+
+                                bg-gradient-to-r
+                                from-cyan-500
+                                to-blue-600
+
+                                hover:scale-[1.02]
+
+                                text-white
+
+                                font-semibold
+
+                                px-5 py-3
+
+                                rounded-2xl
+
+                                shadow-[0_10px_40px_rgba(34,211,238,0.35)]
+
+                                transition-all duration-300
+
+                                w-full sm:w-auto
+                            "
                             >
+
                                 <PlusCircle size={20} />
 
                                 Create ID Card
+
                             </Link>
 
+                            {/* Logout */}
                             <div className="w-full sm:w-auto">
                                 <LogoutButton />
                             </div>
@@ -173,171 +391,308 @@ export default function DashboardPage() {
             </div>
 
             {/* ================= MAIN CONTENT ================= */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+            <div
+                className="
+                max-w-7xl
+                mx-auto
+
+                px-4
+                sm:px-6
+                lg:px-8
+
+                py-8
+                sm:py-10
+            "
+            >
 
                 {/* ================= STATS ================= */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 lg:gap-6">
+                <div
+                    className="
+                    grid
+                    grid-cols-1
+                    sm:grid-cols-2
+                    xl:grid-cols-3
+
+                    gap-5
+                    lg:gap-6
+                "
+                >
 
                     {stats.map((item, index) => (
+
                         <div
                             key={index}
-                            className="relative overflow-hidden bg-white rounded-3xl shadow-md hover:shadow-2xl transition-all duration-300 p-5 sm:p-6 border border-gray-100"
+                            className="
+                            relative
+
+                            overflow-hidden
+
+                            rounded-3xl
+
+                            bg-white/80
+                            backdrop-blur-2xl
+
+                            border border-white
+
+                            p-5
+                            sm:p-6
+
+                            shadow-[0_10px_40px_rgba(0,0,0,0.08)]
+
+                            hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+
+                            hover:-translate-y-1
+
+                            transition-all duration-500
+                        "
                         >
 
-                            {/* Gradient Background */}
+                            {/* Glow */}
                             <div
-                                className={`absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br ${item.color} opacity-10`}
+                                className={`
+                                absolute
+                                -top-10
+                                -right-10
+
+                                w-40
+                                h-40
+
+                                rounded-full
+
+                                bg-gradient-to-br ${item.color}
+
+                                opacity-10
+
+                                blur-2xl
+                            `}
                             />
 
-                            {/* CONTENT */}
-                            <div className="relative z-10 flex items-center justify-between">
+                            <div
+                                className="
+                                relative z-10
+
+                                flex items-center
+                                justify-between
+                            "
+                            >
 
                                 <div>
 
-                                    <p className="text-gray-500 text-sm sm:text-base font-medium">
+                                    <p
+                                        className="
+                                        text-gray-500
+
+                                        text-sm
+                                        sm:text-base
+
+                                        font-medium
+                                    "
+                                    >
                                         {item.title}
                                     </p>
 
-                                    <h2 className="text-3xl sm:text-4xl font-extrabold mt-2 text-gray-800">
+                                    <h2
+                                        className="
+                                        text-3xl
+                                        sm:text-4xl
+
+                                        font-extrabold
+
+                                        mt-2
+
+                                        text-gray-800
+                                    "
+                                    >
                                         {item.value}
                                     </h2>
 
                                 </div>
 
                                 <div
-                                    className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center ${item.bg} ${item.text}`}
+                                    className={`
+                                    w-14 h-14
+                                    sm:w-16 sm:h-16
+
+                                    rounded-2xl
+
+                                    flex items-center
+                                    justify-center
+
+                                    ${item.bg}
+                                    ${item.text}
+                                `}
                                 >
+
                                     {item.icon}
+
                                 </div>
 
                             </div>
 
                         </div>
+
                     ))}
 
                 </div>
 
                 {/* ================= QUICK ACTIONS ================= */}
-                <div className="mt-10 sm:mt-14">
+                <div className="mt-12 sm:mt-16">
 
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="mb-7">
 
-                        <div>
-                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
-                                Quick Actions
-                            </h2>
+                        <h2
+                            className="
+                            text-2xl
+                            sm:text-3xl
 
-                            <p className="text-gray-500 mt-1 text-sm sm:text-base">
-                                Access important tools quickly.
-                            </p>
-                        </div>
+                            font-bold
+
+                            text-gray-800
+                        "
+                        >
+                            Quick Actions
+                        </h2>
+
+                        <p
+                            className="
+                            text-gray-500
+
+                            mt-2
+
+                            text-sm
+                            sm:text-base
+                        "
+                        >
+                            Access important tools quickly.
+                        </p>
 
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <div
+                        className="
+                        grid
+                        grid-cols-1
+                        md:grid-cols-2
+                        xl:grid-cols-3
 
-                        {/* STUDENTS */}
+                        gap-6
+                    "
+                    >
+
+                        {/* Students */}
                         <Link
                             href="/dashboard/students"
-                            className="group bg-white rounded-3xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:-translate-y-1"
+                            className="
+                            group
+
+                            bg-white/80
+                            backdrop-blur-2xl
+
+                            rounded-3xl
+
+                            p-6
+
+                            border border-white
+
+                            shadow-[0_10px_40px_rgba(0,0,0,0.08)]
+
+                            hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+
+                            hover:-translate-y-1
+
+                            transition-all duration-500
+                        "
                         >
 
-                            <div className="flex items-start justify-between gap-4">
+                            <div
+                                className="
+                                flex items-start
+                                justify-between
+
+                                gap-4
+                            "
+                            >
 
                                 <div>
 
-                                    <h3 className="text-xl sm:text-2xl font-bold text-gray-800">
+                                    <h3
+                                        className="
+                                        text-xl
+                                        sm:text-2xl
+
+                                        font-bold
+
+                                        text-gray-800
+                                    "
+                                    >
                                         Manage Students
                                     </h3>
 
-                                    <p className="text-gray-500 mt-3 text-sm leading-relaxed">
-                                        Add, update and manage all student records easily.
+                                    <p
+                                        className="
+                                        text-gray-500
+
+                                        mt-3
+
+                                        text-sm
+
+                                        leading-relaxed
+                                    "
+                                    >
+                                        Add, update and manage
+                                        all student records easily.
                                     </p>
 
                                 </div>
 
-                                <div className="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                                <div
+                                    className="
+                                    w-14 h-14
+
+                                    rounded-2xl
+
+                                    bg-blue-100
+
+                                    flex items-center justify-center
+
+                                    text-blue-600
+
+                                    shrink-0
+                                "
+                                >
                                     <Users size={28} />
                                 </div>
 
                             </div>
 
-                            <div className="mt-8 flex items-center text-blue-600 font-semibold">
+                            <div
+                                className="
+                                mt-8
+
+                                flex items-center
+
+                                text-blue-600
+
+                                font-semibold
+                            "
+                            >
+
                                 Open
 
                                 <ArrowRight
                                     size={18}
-                                    className="ml-2 group-hover:translate-x-1 transition"
+                                    className="
+                                    ml-2
+
+                                    group-hover:translate-x-1
+
+                                    transition
+                                "
                                 />
+
                             </div>
 
                         </Link>
-
-                        {/* CREATE ID */}
-                        <Link
-                            href="/dashboard/create-id"
-                            className="group bg-white rounded-3xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:-translate-y-1"
-                        >
-
-                            <div className="flex items-start justify-between gap-4">
-
-                                <div>
-
-                                    <h3 className="text-xl sm:text-2xl font-bold text-gray-800">
-                                        Create ID Cards
-                                    </h3>
-
-                                    <p className="text-gray-500 mt-3 text-sm leading-relaxed">
-                                        Generate professional school ID cards instantly.
-                                    </p>
-
-                                </div>
-
-                                <div className="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-green-600 shrink-0">
-                                    <CreditCard size={28} />
-                                </div>
-
-                            </div>
-
-                            <div className="mt-8 flex items-center text-green-600 font-semibold">
-                                Create
-
-                                <ArrowRight
-                                    size={18}
-                                    className="ml-2 group-hover:translate-x-1 transition"
-                                />
-                            </div>
-
-                        </Link>
-
-                        {/* PRINTING */}
-                        <div className="group bg-white rounded-3xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
-
-                            <div className="flex items-start justify-between gap-4">
-
-                                <div>
-
-                                    <h3 className="text-xl sm:text-2xl font-bold text-gray-800">
-                                        Printing Services
-                                    </h3>
-
-                                    <p className="text-gray-500 mt-3 text-sm leading-relaxed">
-                                        Monitor printing requests and pending orders.
-                                    </p>
-
-                                </div>
-
-                                <div className="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center text-orange-500 shrink-0">
-                                    <Clock3 size={28} />
-                                </div>
-
-                            </div>
-
-                            <div className="mt-8 flex items-center text-orange-500 font-semibold">
-                                Coming Soon
-                            </div>
-
-                        </div>
 
                     </div>
 
@@ -346,5 +701,6 @@ export default function DashboardPage() {
             </div>
 
         </div>
+
     );
 }

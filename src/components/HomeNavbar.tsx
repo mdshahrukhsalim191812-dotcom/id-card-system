@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -16,6 +16,34 @@ export default function Navbar() {
     const [menuOpen, setMenuOpen] =
         useState(false);
 
+    const [scrolled, setScrolled] =
+        useState(false);
+
+    useEffect(() => {
+
+        const handleScroll = () => {
+
+            if (window.scrollY > 10) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+
+        };
+
+        window.addEventListener(
+            "scroll",
+            handleScroll
+        );
+
+        return () =>
+            window.removeEventListener(
+                "scroll",
+                handleScroll
+            );
+
+    }, []);
+
     const navLinks = [
         { name: "Home", href: "/" },
         { name: "Dashboard", href: "/dashboard" },
@@ -26,25 +54,26 @@ export default function Navbar() {
     return (
 
         <header
-            className="
+            className={`
                 fixed
                 inset-x-0
                 top-0
-                z-999
-
-                bg-gradient-to-r
-                from-[#031326]
-                via-[#062B52]
-                to-[#021B33]
-
-                border-b border-cyan-400/10
-
-                shadow-[0_10px_50px_rgba(0,0,0,0.45)]
-
-                backdrop-blur-2xl
+                z-[999]
 
                 transition-all duration-500
-            "
+
+                ${scrolled
+                    ? `
+                        bg-[#021B33]/80
+                        backdrop-blur-2xl
+                        border-b border-cyan-400/10
+                        shadow-[0_10px_50px_rgba(0,0,0,0.45)]
+                    `
+                    : `
+                        bg-transparent
+                    `
+                }
+            `}
         >
 
             {/* ================= TOP GLOW ================= */}
@@ -84,12 +113,11 @@ export default function Navbar() {
                 className="
                     relative z-10
 
-                    max-w-7xl
-                    mx-auto
+                    w-full
 
                     px-4
                     sm:px-6
-                    lg:px-8
+                    lg:px-10
                 "
             >
 
@@ -321,9 +349,9 @@ export default function Navbar() {
                                 text-white
 
                                 bg-gradient-to-r
-                                from-cyan-500
+                                from-blue-500
                                 via-blue-600
-                                to-cyan-500
+                                to-blue-800
 
                                 hover:scale-105
                                 active:scale-95
@@ -437,7 +465,8 @@ export default function Navbar() {
                     className="
                         relative
 
-                        bg-[#021B33]
+                        bg-[#021B33]/95
+                        backdrop-blur-2xl
 
                         border-t border-white/10
 

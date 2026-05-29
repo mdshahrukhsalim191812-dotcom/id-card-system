@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
+import HomeNavbar from "@/components/HomeNavbar";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -341,7 +341,7 @@ export default function HomePage() {
 
   return (
 
-    <div className="bg-white text-gray-800 overflow-x-hidden scroll-smooth">
+  <div className="bg-white text-gray-800 scroll-smooth">
 
       {/* ================= WHATSAPP FLOAT ================= */}
       <a
@@ -366,7 +366,7 @@ export default function HomePage() {
       </a>
 
       {/* ================= NAVBAR ================= */}
-      <Navbar />
+      <HomeNavbar />
 
       {/* ================= HERO ================= */}
       <section className="
@@ -1732,50 +1732,48 @@ export default function HomePage() {
             {/* ================= LOCATION ================= */}
             <div>
 
-              <h3 className="
-          text-2xl
-          font-bold
-          mb-7
-        ">
+              <h3
+                className="
+      text-2xl
+      font-bold
+      mb-7
+      text-white
+    "
+              >
                 Location
               </h3>
 
-              <div className="
-          group
-          relative
-          overflow-hidden
-          rounded-[28px]
-          border border-white/10
-          bg-white/[0.06]
-          backdrop-blur-xl
-          shadow-[0_10px_40px_rgba(0,0,0,0.3)]
-        ">
+              <Link
+                href="https://maps.app.goo.gl/9AoEaHakFHWNiWyS7"
+                className="
+      group
+      flex items-center justify-center
+      w-[180px]
+      h-[180px]
+      rounded-[28px]
+      border border-white/10
+      bg-white/[0.04]
+      backdrop-blur-xl
+      hover:border-cyan-400/30
+      transition-all duration-500
+      hover:scale-105
+    "
+              >
 
-                {/* Glow */}
-                <div className="
-            absolute inset-0
-            bg-cyan-400/20
-            blur-3xl
-            opacity-0
-            group-hover:opacity-100
-            transition duration-500
-          "></div>
-
+                {/* SVG ICON */}
                 <Image
                   src="/icons/map.svg"
                   alt="map"
-                  width={500}
-                  height={300}
+                  width={110}
+                  height={110}
                   className="
-              w-full
-              h-[220px]
-              object-cover
-              transition-transform duration-700
-              group-hover:scale-105
-            "
+        object-contain
+        transition-transform duration-500
+        group-hover:scale-110
+      "
                 />
 
-              </div>
+              </Link>
 
             </div>
 
