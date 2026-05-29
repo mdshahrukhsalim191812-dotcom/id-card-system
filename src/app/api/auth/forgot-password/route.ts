@@ -67,7 +67,7 @@ export async function POST(req: Request) {
         });
 
     } catch (error) {
-        console.log("Forgot Password Error:", error);
+        console.error("Forgot Password Error:", error);
 
         return NextResponse.json(
             { message: "Server error ❌" },
