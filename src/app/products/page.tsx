@@ -13,6 +13,7 @@ import {
     CheckCircle2,
     ChevronRight,
     ChevronLeft,
+    ArrowRight,
 } from "lucide-react";
 
 
@@ -814,8 +815,8 @@ export default function ProductsPage() {
                         "
                             >
 
-                        {/* HOVER GLOW */}
-                        <div className="
+                                {/* HOVER GLOW */}
+                                <div className="
     absolute inset-0
 
     bg-gradient-to-br
@@ -835,19 +836,19 @@ export default function ProductsPage() {
     duration-700
 "></div>
 
-                        {/* IMAGE */}
-                        <div className="
+                                {/* IMAGE */}
+                                <div className="
                                     relative
                                     overflow-hidden
                                 ">
 
-                            <Image
-                                src={item.image}
-                                alt={item.title}
-                                width={500}
-                                height={300}
-                                priority={false}
-                                className="
+                                    <Image
+                                        src={item.image}
+                                        alt={item.title}
+                                        width={500}
+                                        height={300}
+                                        priority={false}
+                                        className="
                                             w-full
                                             h-60
 
@@ -859,9 +860,9 @@ export default function ProductsPage() {
                                             group-hover:scale-125
                                             group-hover:rotate-1
                                         "
-                            />
+                                    />
 
-                            <div className="
+                                    <div className="
                                         absolute inset-0
 
                                         bg-gradient-to-t
@@ -870,15 +871,15 @@ export default function ProductsPage() {
                                         to-transparent
                                     "></div>
 
-                        </div>
+                                </div>
 
-                        {/* CONTENT */}
-                        <div className="
+                                {/* CONTENT */}
+                                <div className="
                                     relative z-10
                                     p-7
                                 ">
 
-                            <h3 className="
+                                    <h3 className="
                                         text-2xl
                                         font-bold
                                         text-white
@@ -891,20 +892,20 @@ export default function ProductsPage() {
                                         duration-300
                                     ">
 
-                                {item.title}
+                                        {item.title}
 
-                            </h3>
+                                    </h3>
 
-                            <p className="
+                                    <p className="
                                         text-gray-300
                                         leading-relaxed
                                     ">
 
-                                {item.desc}
+                                        {item.desc}
 
-                            </p>
+                                    </p>
 
-                            <div className="
+                                    <div className="
                                         mt-6
 
                                         w-12 h-[3px]
@@ -921,266 +922,558 @@ export default function ProductsPage() {
                                         duration-500
                                     "></div>
 
-                        </div>
+                                </div>
 
-                    </motion.div>
+                            </motion.div>
 
                         ))}
 
-                </div>
+                    </div>
 
-        </div>
+                </div>
 
             </section >
 
-        {/* ================= CONTACT SECTION ================= */ }
-        <section className="
-    bg - [#021B33]
-    text - white
-    py - 20
-    ">
+            {/* ================= CONTACT SECTION ================= */}
+            <section
+                className="
+    relative
+    overflow-hidden
+    bg-gradient-to-b
+    from-[#021B33]
+    via-[#062B52]
+    to-[#021B33]
+    text-white
+    py-24
+  "
+            >
+
+                {/* GRID BACKGROUND */}
+                <div
+                    className="
+      absolute inset-0
+      opacity-[0.03]
+
+      [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
+
+      [background-size:60px_60px]
+    "
+                ></div>
+
+                {/* GLOW EFFECTS */}
+                <div
+                    className="
+      absolute
+      -top-40
+      -left-40
+
+      w-[500px]
+      h-[500px]
+
+      bg-cyan-400/10
+
+      blur-[120px]
+      rounded-full
+    "
+                ></div>
+
+                <div
+                    className="
+      absolute
+      -bottom-40
+      -right-40
+
+      w-[500px]
+      h-[500px]
+
+      bg-blue-500/10
+
+      blur-[120px]
+      rounded-full
+    "
+                ></div>
+
+                {/* MAIN CONTAINER */}
+                <div
+                    className="
+      relative z-10
+
+      max-w-7xl
+      mx-auto
+
+      px-6
+      lg:px-10
+    "
+                >
+
+                    <div
+                        className="
+        grid
+        grid-cols-1
+        lg:grid-cols-2
+
+        gap-16
+        items-center
+      "
+                    >
+
+                        {/* ================= LEFT CONTENT ================= */}
+                        <div
+                            className="
+          animate-[fadeInUp_1s_ease]
+        "
+                        >
+
+                            {/* SMALL BADGE */}
+                            <div
+                                className="
+            inline-flex items-center
+            gap-2
+
+            px-5 py-2
+
+            rounded-full
+
+            bg-cyan-400/10
+            border border-cyan-400/20
 
-        < div className="
-    max - w - 7xl
-    mx - auto
+            backdrop-blur-xl
 
-    px - 6 lg: px - 10
-    ">
+            text-cyan-300
+            text-sm
+            font-semibold
 
-        <div className="
-    grid
-    grid-cols-1
-    lg:grid-cols-2
+            mb-7
+          "
+                            >
 
-    gap - 12
-    items - center
-    ">
+                                Contact Our Team
 
-    {/* LEFT */ }
-    <div>
+                            </div>
 
-        <h2 className="
-                                text-4xl
-                                lg:text-5xl
+                            {/* HEADING */}
+                            <h2
+                                className="
+            text-4xl
+            sm:text-5xl
+            lg:text-6xl
 
-                                font-extrabold
-                                leading-tight
-                            ">
+            font-black
 
-            Ready To Grow
-            <br />
-            Your Business?
+            leading-tight
+          "
+                            >
 
-        </h2>
+                                Ready To Grow
+                                <br />
 
-        <p className="
-                                mt-6
+                                <span
+                                    className="
+              bg-gradient-to-r
+              from-cyan-300
+              via-blue-300
+              to-cyan-400
 
-                                text-blue-100
-                                text-lg
+              bg-clip-text
+              text-transparent
+            "
+                                >
 
-                                leading-8
-                            ">
+                                    Your Business?
 
-            Contact us today for premium
-            printing and branding services.
+                                </span>
 
-        </p>
+                            </h2>
 
-    </div>
+                            {/* DESCRIPTION */}
+                            <p
+                                className="
+            mt-8
 
-    {/* RIGHT */ }
-    <div className="
-                            bg-white/10
-                            backdrop-blur-2xl
+            text-blue-100
 
-                            rounded-[28px]
-                            sm:rounded-[32px]
+            text-base
+            sm:text-lg
 
-                            p-5 sm:p-7 lg:p-8
+            leading-8
 
-                            border border-white/10
+            max-w-xl
+          "
+                            >
 
-                            shadow-2xl
+                                Contact us today for premium printing,
+                                branding and professional design services
+                                tailored for schools, institutes and businesses.
 
-                            space-y-5 sm:space-y-6
+                            </p>
 
-                            hover:bg-white/15
+                            {/* BUTTONS */}
+                            <div
+                                className="
+            mt-10
 
-                            transition-all duration-300
-                        ">
+            flex flex-col
+            sm:flex-row
 
-        {/* PHONE */}
-        <div className="
-                                group
-                                flex items-start
-                                sm:items-center
-                                gap-4
-                            ">
+            gap-4
+          "
+                            >
 
-            <div className="
-                                    shrink-0
+                                {/* CALL BUTTON */}
+                                <a
+                                    href="tel:+919525706529"
+                                    className="
+              group
 
-                                    w-12 h-12
-                                    sm:w-14 sm:h-14
+              inline-flex
+              items-center
+              justify-center
+              gap-3
 
-                                    rounded-2xl
+              px-8 py-4
 
-                                    bg-blue-500/20
+              rounded-2xl
 
-                                    flex items-center
-                                    justify-center
+              bg-gradient-to-r
+              from-cyan-500
+              to-blue-600
 
-                                    text-white
+              font-semibold
 
-                                    group-hover:scale-110
+              shadow-[0_10px_40px_rgba(6,182,212,0.35)]
 
-                                    transition-transform duration-300
-                                ">
+              hover:scale-105
+              hover:shadow-cyan-500/40
 
-                <Phone size={22} />
+              transition-all
+              duration-300
+            "
+                                >
 
-            </div>
+                                    Call Now
 
-            <div>
+                                    <ArrowRight
+                                        size={20}
+                                        className="
+                transition-transform
+                duration-300
 
-                <p className="
-                                        text-blue-100
-                                        text-xs sm:text-sm
-                                    ">
-                    Phone
-                </p>
+                group-hover:translate-x-1
+              "
+                                    />
 
-                <h3 className="
-                                        mt-1
-                                        font-bold
-                                        text-lg sm:text-xl
-                                    ">
-                    +91 9525706529
-                </h3>
+                                </a>
 
-            </div>
+                                {/* EMAIL BUTTON */}
+                                <a
+                                    href="mailto:mdhammadnaveed92010@gmail.com"
+                                    className="
+              inline-flex
+              items-center
+              justify-center
 
-        </div>
+              px-8 py-4
 
-        {/* EMAIL */}
-        <div className="
-                                group
-                                flex items-start
-                                gap-4
-                            ">
+              rounded-2xl
 
-            <div className="
-                                    shrink-0
+              border border-white/15
 
-                                    w-12 h-12
-                                    sm:w-14 sm:h-14
+              bg-white/10
+              backdrop-blur-2xl
 
-                                    rounded-2xl
+              hover:bg-white/20
 
-                                    bg-cyan-500/20
+              font-semibold
 
-                                    flex items-center
-                                    justify-center
+              transition-all
+              duration-300
 
-                                    text-white
+              hover:scale-105
+            "
+                                >
 
-                                    group-hover:scale-110
+                                    Send Email
 
-                                    transition-transform duration-300
-                                ">
+                                </a>
 
-                <Mail size={22} />
+                            </div>
 
-            </div>
+                        </div>
 
-            <div>
+                        {/* ================= RIGHT CONTACT CARD ================= */}
+                        <div
+                            className="
+          relative
 
-                <p className="
-                                        text-blue-100
-                                        text-xs sm:text-sm
-                                    ">
-                    Email
-                </p>
+          rounded-[35px]
 
-                <h3 className="
-                                        mt-1
-                                        font-bold
-                                        text-sm sm:text-lg
-                                        break-all
-                                    ">
-                    mdhammadnaveed92010@gmail.com
-                </h3>
+          bg-white/[0.08]
+          backdrop-blur-2xl
 
-            </div>
+          border border-white/10
 
-        </div>
+          p-6
+          sm:p-8
+          lg:p-10
 
-        {/* ADDRESS */}
-        <div className="
-                                group
-                                flex items-start
-                                gap-4
-                            ">
+          shadow-[0_20px_80px_rgba(0,0,0,0.35)]
 
-            <div className="
-                                    shrink-0
+          overflow-hidden
 
-                                    w-12 h-12
-                                    sm:w-14 sm:h-14
+          animate-[fadeInUp_1.2s_ease]
+        "
+                        >
 
-                                    rounded-2xl
+                            {/* CARD GLOW */}
+                            <div
+                                className="
+            absolute
+            top-0
+            right-0
 
-                                    bg-blue-500/20
+            w-72
+            h-72
 
-                                    flex items-center
-                                    justify-center
+            bg-cyan-400/10
 
-                                    text-white
+            blur-3xl
+            rounded-full
+          "
+                            ></div>
 
-                                    group-hover:scale-110
+                            <div className="relative z-10 space-y-7">
 
-                                    transition-transform duration-300
-                                ">
+                                {/* PHONE */}
+                                <div
+                                    className="
+              group
 
-                <MapPin size={22} />
+              flex
+              items-start
 
-            </div>
+              gap-5
 
-            <div>
+              p-5
 
-                <p className="
-                                        text-blue-100
-                                        text-xs sm:text-sm
-                                    ">
-                    Office
-                </p>
+              rounded-3xl
 
-                <h3 className="
-                                        mt-1
-                                        font-bold
-                                        text-base sm:text-lg lg:text-xl
+              bg-white/[0.04]
 
-                                        leading-7 sm:leading-8
-                                    ">
+              border border-white/10
 
-                    Islampur, Shahjangi,
-                    Kabirpur Road,
-                    Bhagalpur
+              hover:border-cyan-400/30
+              hover:bg-white/[0.08]
 
-                </h3>
+              transition-all
+              duration-300
+            "
+                                >
 
-            </div>
+                                    <div
+                                        className="
+                shrink-0
 
-        </div>
+                w-14 h-14
 
-    </div>
+                rounded-2xl
+
+                bg-blue-500/20
+
+                flex items-center justify-center
+
+                text-cyan-300
+
+                group-hover:scale-110
+                transition-transform duration-300
+              "
+                                    >
+
+                                        <Phone size={24} />
+
+                                    </div>
+
+                                    <div>
+
+                                        <p className="text-blue-100 text-sm">
+                                            Phone
+                                        </p>
+
+                                        <h3
+                                            className="
+                  mt-1
+
+                  text-xl
+                  font-bold
+                "
+                                        >
+                                            +91 9525706529
+                                        </h3>
+
+                                    </div>
+
+                                </div>
+
+                                {/* EMAIL */}
+                                <div
+                                    className="
+              group
+
+              flex
+              items-start
+
+              gap-5
+
+              p-5
+
+              rounded-3xl
+
+              bg-white/[0.04]
+
+              border border-white/10
+
+              hover:border-cyan-400/30
+              hover:bg-white/[0.08]
+
+              transition-all
+              duration-300
+            "
+                                >
+
+                                    <div
+                                        className="
+                shrink-0
+
+                w-14 h-14
+
+                rounded-2xl
+
+                bg-cyan-500/20
+
+                flex items-center justify-center
+
+                text-cyan-300
+
+                group-hover:scale-110
+                transition-transform duration-300
+              "
+                                    >
+
+                                        <Mail size={24} />
+
+                                    </div>
+
+                                    <div>
+
+                                        <p className="text-blue-100 text-sm">
+                                            Email
+                                        </p>
+
+                                        <h3
+                                            className="
+                  mt-1
+
+                  text-base
+                  sm:text-lg
+
+                  font-bold
+
+                  break-all
+                "
+                                        >
+                                            mdhammadnaveed92010@gmail.com
+                                        </h3>
+
+                                    </div>
+
+                                </div>
+
+                                {/* ADDRESS */}
+                                <div
+                                    className="
+              group
+
+              flex
+              items-start
+
+              gap-5
+
+              p-5
+
+              rounded-3xl
+
+              bg-white/[0.04]
+
+              border border-white/10
+
+              hover:border-cyan-400/30
+              hover:bg-white/[0.08]
+
+              transition-all
+              duration-300
+            "
+                                >
+
+                                    <div
+                                        className="
+                shrink-0
+
+                w-14 h-14
+
+                rounded-2xl
+
+                bg-blue-500/20
+
+                flex items-center justify-center
+
+                text-cyan-300
+
+                group-hover:scale-110
+                transition-transform duration-300
+              "
+                                    >
+
+                                        <MapPin size={24} />
+
+                                    </div>
+
+                                    <div>
+
+                                        <p className="text-blue-100 text-sm">
+                                            Office
+                                        </p>
+
+                                        <h3
+                                            className="
+                  mt-1
+
+                  text-base
+                  sm:text-lg
+
+                  font-bold
+
+                  leading-8
+                "
+                                        >
+
+                                            Islampur, Shahjangi,
+                                            Kabirpur Road,
+                                            Bhagalpur
+
+                                        </h3>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
-                </div >
+                </div>
 
-            </section >
+            </section>
 
         </div >
 
