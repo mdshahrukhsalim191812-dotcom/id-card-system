@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 export default function DashboardPage() {
 
     const [loadingPage, setLoadingPage] = useState(true);
+    const [totalStudents, setTotalStudents] = useState(0);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -25,10 +26,35 @@ export default function DashboardPage() {
         return () => clearTimeout(timer);
     })
 
+    useEffect(() => {
+
+        const fetchStudents = async () => {
+
+            try {
+
+                const res = await fetch("/api/students");
+
+                const data = await res.json();
+
+                // Save total students count
+                setTotalStudents(data.length);
+
+            } catch (error) {
+
+                console.log("Failed to fetch students", error);
+
+            }
+
+        };
+
+        fetchStudents();
+
+    }, []);
+
     const stats = [
         {
             title: "Total Students",
-            value: "120",
+            value: totalStudents,
             icon: <Users size={30} />,
             color: "from-blue-600 to-cyan-500",
             bg: "bg-blue-50",
@@ -54,7 +80,7 @@ export default function DashboardPage() {
 
     if (loadingPage) {
         return (
-            <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#04284B] to-[#063B6E] flex items-center justify-center overflow-hidden z-50 scroll-none">
+            <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#04284B] to-[#063B6E] flex items-center justify-center overflow-hidden z-[999] scroll-none">
 
                 {/* Glow */}
                 <div className="absolute w-[350px] h-[350px] bg-blue-500/20 blur-3xl rounded-full animate-pulse"></div>
@@ -350,8 +376,8 @@ export default function DashboardPage() {
                                 gap-2
 
                                 bg-gradient-to-r
-                                from-cyan-500
-                                to-blue-600
+                                from-green-500
+                                to-green-700
 
                                 hover:scale-[1.02]
 

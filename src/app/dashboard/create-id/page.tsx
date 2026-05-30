@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import html2canvas from "html2canvas";
 import toast from "react-hot-toast";
 import TemplateRenderer from "@/components/TemplateRenderer";
-import BulkUploadPage from "../bulk-upload/page";
 import jsPDF from "jspdf";
 import Link from "next/link";
 import { getCroppedImg } from "@/lib/cropImage";
@@ -12,7 +11,7 @@ import ImageCropper from "@/components/ImageCropper";
 import * as faceapi from "face-api.js";
 import { removeBackground } from "@/lib/removeBg";
 import { addWhiteBackground } from "@/lib/addWhiteBg";
-import { FileBadge2, LoaderCircle } from "lucide-react";
+import { FileBadge2, LoaderCircle, CreditCard, Users, Upload, ArrowRight, PlusCircle, LayoutDashboard } from "lucide-react";
 
 export default function CreateIDPage() {
     const [student, setStudent] = useState({
@@ -727,7 +726,7 @@ export default function CreateIDPage() {
 
     if (loadingPage) {
         return (
-            <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#04284B] to-[#063B6E] flex items-center justify-center overflow-hidden z-50">
+            <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#04284B] to-[#063B6E] flex items-center justify-center overflow-hidden z-[999]">
 
                 {/* Glow */}
                 <div className="absolute w-[350px] h-[350px] bg-blue-500/20 blur-3xl rounded-full animate-pulse"></div>
@@ -820,13 +819,337 @@ export default function CreateIDPage() {
     }
 
     return (
-        <div className="p-4 md:p-6">
-            <h1 className="text-xl md:text-2xl font-bold mb-6 text-center md:text-left">
-                Create ID Card
-            </h1>
+        <div >
+            {/* ================= PAGE HEADER ================= */}
+            <div
+                className="
+                relative
+
+                overflow-hidden
+
+                bg-gradient-to-r
+                from-[#021B33]
+                via-[#04284B]
+                to-[#063B6E]
+
+                text-white
+                mt-[80px]
+            "
+            >
+
+                {/* Glow */}
+                <div
+                    className="
+                    absolute
+                    -top-32
+                    -left-32
+
+                    w-[400px]
+                    h-[400px]
+
+                    bg-cyan-400/10
+
+                    blur-[120px]
+
+                    rounded-full
+                "
+                ></div>
+
+                <div
+                    className="
+                    absolute
+                    -bottom-32
+                    -right-32
+
+                    w-[400px]
+                    h-[400px]
+
+                    bg-blue-500/10
+
+                    blur-[120px]
+
+                    rounded-full
+                "
+                ></div>
+
+                {/* Grid */}
+                <div
+                    className="
+                    absolute inset-0
+
+                    opacity-[0.04]
+
+                    [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
+
+                    [background-size:60px_60px]
+                "
+                ></div>
+
+                <div
+                    className="
+                    relative z-10
+
+                    max-w-7xl
+                    mx-auto
+
+                    px-4
+                    sm:px-6
+                    lg:px-8
+
+                    py-8
+                    sm:py-10
+                "
+                >
+
+                    <div
+                        className="
+                        flex flex-col
+                        xl:flex-row
+
+                        xl:items-center
+                        xl:justify-between
+
+                        gap-6
+                    "
+                    >
+
+                        {/* ================= LEFT ================= */}
+                        <div className="flex items-start gap-4">
+
+                            <div
+                                className="
+                                w-14 h-14
+                                sm:w-16 sm:h-16
+
+                                rounded-3xl
+
+                                bg-white/10
+                                backdrop-blur-2xl
+
+                                border border-white/10
+
+                                flex items-center justify-center
+
+                                shadow-[0_10px_40px_rgba(0,0,0,0.35)]
+
+                                shrink-0
+                            "
+                            >
+
+                                <CreditCard size={34} />
+
+                            </div>
+
+                            <div>
+
+                                <h1
+                                    className="
+                                    text-3xl
+                                    sm:text-4xl
+                                    lg:text-5xl
+
+                                    font-extrabold
+
+                                    tracking-tight
+                                "
+                                >
+                                    Create ID Cards
+                                </h1>
+
+                                <p
+                                    className="
+                                    mt-3
+
+                                    text-blue-100
+
+                                    text-sm
+                                    sm:text-base
+
+                                    max-w-2xl
+
+                                    leading-relaxed
+                                "
+                                >
+                                    Welcome! Create Id Cards. Fill in the details, upload a photo, and generate professional ID cards in seconds. 
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        {/* ================= RIGHT BUTTONS ================= */}
+                        <div
+                            className="
+                            flex flex-col
+                            sm:flex-row
+
+                            gap-3
+
+                            w-full
+                            xl:w-auto
+                        "
+                        >
+
+                            {/* Students */}
+                            <Link
+                                href="/dashboard/students"
+                                className="
+                                                            group
+                            
+                                                            flex items-center
+                                                            justify-center
+                                                            gap-2
+                            
+                                                            bg-white
+                            
+                                                            text-[#021B33]
+                            
+                                                            hover:bg-blue-50
+                            
+                                                            font-semibold
+                            
+                                                            px-5 py-3
+                            
+                                                            rounded-2xl
+                            
+                                                            shadow-xl
+                            
+                                                            transition-all duration-300
+                            
+                                                            hover:scale-[1.02]
+                            
+                                                            w-full h-[50px] sm:w-auto
+                                                        "
+                            >
+
+                                <Users size={18} />
+
+                                Students
+
+                                <ArrowRight
+                                    size={18}
+                                    className="
+                                                                group-hover:translate-x-1
+                                                                transition
+                                                            "
+                                />
+
+                            </Link>
+
+                            {/* Dashboard */}
+                            <Link
+                                href="/dashboard"
+                                className="
+                                group
+
+                                flex items-center
+                                justify-center
+                                gap-2
+
+                                bg-gradient-to-r
+                                from-cyan-500
+                                to-blue-600
+
+                                hover:scale-[1.02]
+
+                                text-white
+
+                                font-semibold
+
+                                px-5 py-3
+
+                                rounded-2xl
+
+                                shadow-[0_10px_40px_rgba(34,211,238,0.35)]
+
+                                transition-all duration-300
+
+                                w-full h-[50px] sm:w-auto
+                            "
+                            >
+
+                                <LayoutDashboard size={20} />
+
+                                Dashboard
+
+                            </Link>
+
+                            {/* Bulk Upload */}
+                            <Link
+                                href="/dashboard/bulk-upload"
+                                className="
+    group
+
+    inline-flex
+    items-center
+    justify-center
+
+    gap-2
+
+    w-full
+    sm:w-auto
+
+    min-h-[52px]
+
+    px-5
+    sm:px-6
+
+    py-3
+
+    rounded-2xl
+
+    bg-gradient-to-r
+    from-purple-700
+    to-purple-500
+
+    text-white
+    font-semibold
+    text-sm
+    sm:text-base
+
+    whitespace-nowrap
+
+    shadow-[0_10px_30px_rgba(168,85,247,0.35)]
+
+    hover:scale-[1.03]
+    hover:shadow-purple-500/40
+    hover:brightness-110
+
+    active:scale-95
+
+    transition-all
+    duration-300
+  "
+                            >
+
+                                <Upload
+                                    size={18}
+                                    className="
+      shrink-0
+
+      group-hover:-translate-y-0.5
+
+      transition-transform
+      duration-300
+    "
+                                />
+
+                                <span className="leading-none">
+                                    Bulk Upload
+                                </span>
+
+                            </Link>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
 
             {/* MAIN GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-[20px]">
 
                 {/* 🔥 LEFT SIDE */}
                 <div className="space-y-4 bg-white p-4 rounded-xl shadow">
@@ -1089,17 +1412,6 @@ export default function CreateIDPage() {
 
                 {/* 🔥 RIGHT SIDE */}
                 <div className="flex flex-col items-center md:items-start">
-
-                    {/* BUTTONS */}
-                    <div className="flex flex-wrap gap-3 mb-4 justify-center md:justify-start">
-
-                        <Link href="/dashboard/bulk-upload">
-                            <button className="bg-gradient-to-r from-purple-900 to-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-95 transition-all">
-                                Bulk Upload
-                            </button>
-                        </Link>
-
-                    </div>
 
                     {/* CARD */}
                     <div

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import Link from "next/link";
 
 import {
     Users,
@@ -12,7 +13,10 @@ import {
     Hash,
     School,
     LayoutDashboard,
+    ArrowRight,
+    PlusCircle,
 } from "lucide-react";
+import LogoutButton from "@/components/LogoutButton";
 
 type Student = {
     _id: string;
@@ -219,7 +223,7 @@ export default function SchoolAdmin() {
     // ================= LOADER =================
     if (loading) {
         return (
-            <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#04284B] to-[#063B6E] flex items-center justify-center overflow-hidden z-50">
+            <div className="fixed inset-0 bg-gradient-to-br from-[#021B33] via-[#04284B] to-[#063B6E] flex items-center justify-center overflow-hidden z-[999]">
 
                 {/* Glow */}
                 <div className="absolute w-[350px] h-[350px] bg-blue-500/20 blur-3xl rounded-full animate-pulse"></div>
@@ -273,55 +277,411 @@ export default function SchoolAdmin() {
         <div className="min-h-screen bg-[#F5F7FB] mt-[80px]">
 
             {/* ================= HEADER ================= */}
-            <div className="bg-gradient-to-r from-[#021B33] to-[#063B6E] text-white">
+            <div
+                className="
+                relative
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+                overflow-hidden
 
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                bg-gradient-to-r
+                from-[#021B33]
+                via-[#04284B]
+                to-[#063B6E]
 
-                        {/* LEFT */}
-                        <div>
+                text-white
+            "
+            >
 
-                            <h1 className="text-3xl sm:text-4xl font-extrabold">
-                                All Students
-                            </h1>
+                {/* Glow */}
+                <div
+                    className="
+                    absolute
+                    -top-32
+                    -left-32
 
-                            <p className="text-blue-100 mt-2 text-sm sm:text-base">
-                                Manage, search and delete students professionally.
-                            </p>
+                    w-[400px]
+                    h-[400px]
 
-                        </div>
+                    bg-cyan-400/10
 
-                        {/* RIGHT */}
-                        <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                    blur-[120px]
 
-                            {/* SEARCH */}
-                            <div className="relative w-full sm:w-[320px]">
+                    rounded-full
+                "
+                ></div>
 
-                                <Search
-                                    className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-                                    size={18}
-                                />
+                <div
+                    className="
+                    absolute
+                    -bottom-32
+                    -right-32
 
-                                <input
-                                    type="text"
-                                    placeholder="Search students..."
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    className="w-full pl-11 pr-4 py-3 rounded-2xl border-none outline-none text-gray-800 shadow-lg focus:ring-2 focus:ring-blue-500 transition"
-                                />
+                    w-[400px]
+                    h-[400px]
+
+                    bg-blue-500/10
+
+                    blur-[120px]
+
+                    rounded-full
+                "
+                ></div>
+
+                {/* Grid */}
+                <div
+                    className="
+                    absolute inset-0
+
+                    opacity-[0.04]
+
+                    [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
+
+                    [background-size:60px_60px]
+                "
+                ></div>
+
+                <div
+                    className="
+                    relative z-10
+
+                    max-w-7xl
+                    mx-auto
+
+                    px-4
+                    sm:px-6
+                    lg:px-8
+
+                    py-8
+                    sm:py-10
+                "
+                >
+
+                    <div
+                        className="
+                        flex flex-col
+                        xl:flex-row
+
+                        xl:items-center
+                        xl:justify-between
+
+                        gap-6
+                    "
+                    >
+
+                        {/* ================= LEFT ================= */}
+                        <div className="flex items-start gap-4">
+
+                            <div
+                                className="
+                                w-14 h-14
+                                sm:w-16 sm:h-16
+
+                                rounded-3xl
+
+                                bg-white/10
+                                backdrop-blur-2xl
+
+                                border border-white/10
+
+                                flex items-center justify-center
+
+                                shadow-[0_10px_40px_rgba(0,0,0,0.35)]
+
+                                shrink-0
+                            "
+                            >
+
+                                <Users size={34} />
 
                             </div>
 
-                            {/* DELETE ALL */}
-                            <button
-                                onClick={handleDeleteAll}
-                                className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 transition px-5 py-3 rounded-2xl font-semibold shadow-lg"
-                            >
-                                <Trash2 size={18} />
+                            <div>
 
-                                Delete All
-                            </button>
+                                <h1
+                                    className="
+                                    text-3xl
+                                    sm:text-4xl
+                                    lg:text-5xl
+
+                                    font-extrabold
+
+                                    tracking-tight
+                                "
+                                >
+                                    Your Students
+                                </h1>
+
+                                <p
+                                    className="
+                                    mt-3
+
+                                    text-blue-100
+
+                                    text-sm
+                                    sm:text-base
+
+                                    max-w-2xl
+
+                                    leading-relaxed
+                                "
+                                >
+                                    Welcome! Manage your students here. View details, search, and delete records as needed.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        {/* ================= RIGHT BUTTONS ================= */}
+                        <div
+                            className="
+    flex
+    flex-col
+    lg:flex-row
+
+    lg:items-center
+    lg:justify-between
+
+    gap-4
+    sm:gap-5
+
+    w-full
+  "
+                        >
+
+                            {/* ================= LEFT ACTIONS ================= */}
+                            <div
+                                className="
+      flex
+      flex-col
+      sm:flex-row
+
+      gap-3
+
+      w-full
+      lg:w-auto
+    "
+                            >
+
+                                {/* DASHBOARD BUTTON */}
+                                <Link
+                                    href="/dashboard"
+                                    className="
+        group
+
+        inline-flex
+        items-center
+        justify-center
+
+        gap-2
+
+        w-full
+        sm:w-auto
+
+        min-h-[54px]
+
+        px-5
+        sm:px-6
+
+        rounded-2xl
+        sm:rounded-3xl
+
+        bg-gradient-to-r
+        from-cyan-500
+        to-blue-600
+
+        text-white
+
+        font-semibold
+        text-sm
+        sm:text-base
+
+        whitespace-nowrap
+
+        shadow-[0_10px_35px_rgba(34,211,238,0.35)]
+
+        hover:scale-[1.03]
+        hover:shadow-cyan-500/40
+
+        active:scale-95
+
+        transition-all
+        duration-300
+      "
+                                >
+
+                                    <LayoutDashboard
+                                        size={20}
+                                        className="
+          shrink-0
+
+          group-hover:rotate-6
+
+          transition-transform
+          duration-300
+        "
+                                    />
+
+                                    <span className="leading-none">
+                                        Dashboard
+                                    </span>
+
+                                </Link>
+
+                            </div>
+
+                            {/* ================= RIGHT SECTION ================= */}
+                            <div
+                                className="
+      flex
+      flex-col
+      sm:flex-row
+
+      gap-3
+
+      w-full
+      lg:w-auto
+    "
+                            >
+
+                                {/* SEARCH INPUT */}
+                                <div
+                                    className="
+        relative
+
+        w-full
+        sm:w-[320px]
+        md:w-[380px]
+      "
+                                >
+
+                                    <Search
+                                        className="
+          absolute
+
+          left-4
+          top-1/2
+          -translate-y-1/2
+
+          text-gray-400
+
+          pointer-events-none
+        "
+                                        size={20}
+                                    />
+
+                                    <input
+                                        type="text"
+                                        placeholder="Search students..."
+                                        value={search}
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        className="
+          w-full
+
+          h-[54px]
+
+          pl-12
+          pr-4
+
+          rounded-2xl
+          sm:rounded-3xl
+
+          bg-white/95
+          backdrop-blur-xl
+
+          border border-gray-200
+
+          text-gray-800
+          text-sm
+          sm:text-base
+
+          placeholder:text-gray-400
+
+          shadow-lg
+          shadow-blue-100/40
+
+          outline-none
+
+          transition-all
+          duration-300
+
+          focus:border-blue-500
+          focus:ring-4
+          focus:ring-blue-100
+
+          hover:shadow-xl
+        "
+                                    />
+
+                                </div>
+
+                                {/* DELETE BUTTON */}
+                                <button
+                                    onClick={handleDeleteAll}
+                                    className="
+        group
+
+        flex
+        items-center
+        justify-center
+
+        gap-2
+
+        w-full
+        sm:w-auto
+
+        min-h-[54px]
+
+        px-5
+        sm:px-6
+
+        rounded-2xl
+        sm:rounded-3xl
+
+        bg-gradient-to-r
+        from-red-600
+        to-red-500
+
+        text-white
+
+        font-semibold
+        text-sm
+        sm:text-base
+
+        whitespace-nowrap
+
+        shadow-[0_10px_30px_rgba(239,68,68,0.35)]
+
+        hover:scale-[1.03]
+        hover:shadow-red-500/40
+        hover:brightness-110
+
+        active:scale-95
+
+        transition-all
+        duration-300
+      "
+                                >
+
+                                    <Trash2
+                                        size={18}
+                                        className="
+          shrink-0
+
+          group-hover:rotate-6
+
+          transition-transform
+          duration-300
+        "
+                                    />
+
+                                    <span className="leading-none">
+                                        Delete All
+                                    </span>
+
+                                </button>
+
+                            </div>
 
                         </div>
 

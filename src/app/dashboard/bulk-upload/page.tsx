@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 import {
     Upload,
@@ -14,6 +15,10 @@ import {
     ImageIcon,
     CloudUpload,
     Sparkles,
+    LayoutDashboard,
+    Users,
+    ArrowRight,
+    PlusCircle,
 } from "lucide-react";
 
 export default function BulkUploadPage() {
@@ -227,12 +232,13 @@ export default function BulkUploadPage() {
         return (
 
             <div className="
-            fixed inset-0 z-50
+            fixed inset-0
             bg-gradient-to-br
             from-[#021B33]
             via-[#04284B]
             to-[#063B6E]
             overflow-hidden
+            z-[999]
         ">
 
                 {/* BACKGROUND GLOW */}
@@ -469,36 +475,346 @@ export default function BulkUploadPage() {
         <div className="min-h-screen bg-[#F4F7FB]">
 
             {/* HEADER */}
-            <div className="bg-gradient-to-r from-[#021B33] via-[#04284B] to-[#063B6E] text-white">
+            <div
+                className="
+                relative
+mt-[80px]
+                overflow-hidden
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                bg-gradient-to-r
+                from-[#021B33]
+                via-[#04284B]
+                to-[#063B6E]
 
-                    <div className="flex items-center gap-4">
+                text-white
+            "
+            >
 
-                        <div className="
-                            w-16 h-16 rounded-2xl
-                            bg-white/10 border border-white/10
-                            flex items-center justify-center
-                            backdrop-blur-xl
-                        ">
-                            <CloudUpload size={34} />
+                {/* Glow */}
+                <div
+                    className="
+                    absolute
+                    -top-32
+                    -left-32
+
+                    w-[400px]
+                    h-[400px]
+
+                    bg-cyan-400/10
+
+                    blur-[120px]
+
+                    rounded-full
+                "
+                ></div>
+
+                <div
+                    className="
+                    absolute
+                    -bottom-32
+                    -right-32
+
+                    w-[400px]
+                    h-[400px]
+
+                    bg-blue-500/10
+
+                    blur-[120px]
+
+                    rounded-full
+                "
+                ></div>
+
+                {/* Grid */}
+                <div
+                    className="
+                    absolute inset-0
+
+                    opacity-[0.04]
+
+                    [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
+
+                    [background-size:60px_60px]
+                "
+                ></div>
+
+                <div
+                    className="
+                    relative z-10
+
+                    max-w-7xl
+                    mx-auto
+
+                    px-4
+                    sm:px-6
+                    lg:px-8
+
+                    py-8
+                    sm:py-10
+                "
+                >
+
+                    <div
+                        className="
+                        flex flex-col
+                        xl:flex-row
+
+                        xl:items-center
+                        xl:justify-between
+
+                        gap-6
+                    "
+                    >
+
+                        {/* ================= LEFT ================= */}
+                        <div className="flex items-start gap-4">
+
+                            <div
+                                className="
+                                w-14 h-14
+                                sm:w-16 sm:h-16
+
+                                rounded-3xl
+
+                                bg-white/10
+                                backdrop-blur-2xl
+
+                                border border-white/10
+
+                                flex items-center justify-center
+
+                                shadow-[0_10px_40px_rgba(0,0,0,0.35)]
+
+                                shrink-0
+                            "
+                            >
+
+                                <Upload size={34} />
+
+                            </div>
+
+                            <div>
+
+                                <h1
+                                    className="
+                                    text-3xl
+                                    sm:text-4xl
+                                    lg:text-5xl
+
+                                    font-extrabold
+
+                                    tracking-tight
+                                "
+                                >
+                                    Bulk Upload
+                                </h1>
+
+                                <p
+                                    className="
+                                    mt-3
+
+                                    text-blue-100
+
+                                    text-sm
+                                    sm:text-base
+
+                                    max-w-2xl
+
+                                    leading-relaxed
+                                "
+                                >
+                                    Welcome! Upload student data in bulk using Excel. Drag and drop your file or select it manually to get started.
+                                </p>
+
+                            </div>
+
                         </div>
 
-                        <div>
+                        {/* ================= RIGHT BUTTONS ================= */}
+                        <div
+                            className="
+    flex
 
-                            <h1 className="
-                                text-3xl sm:text-4xl
-                                font-extrabold tracking-tight
-                            ">
-                                Bulk Upload Students
-                            </h1>
+    flex-col
+    sm:flex-row
 
-                            <p className="
-                                mt-2 text-blue-100
-                                text-sm sm:text-base
-                            ">
-                                Upload Excel files and generate student records instantly.
-                            </p>
+    items-stretch
+    sm:items-center
+    justify-center
+    xl:justify-end
+
+    gap-3
+    sm:gap-4
+
+    w-full
+    xl:w-auto
+
+    mt-2
+    xl:mt-0
+  "
+                        >
+
+                            {/* ================= STUDENTS BUTTON ================= */}
+                            <Link
+                                href="/dashboard/students"
+                                className="
+group
+                            
+                                                            flex items-center
+                                                            justify-center
+                                                            gap-2
+                            
+                                                            bg-white
+                            
+                                                            text-[#021B33]
+                            
+                                                            hover:bg-blue-50
+                            
+                                                            font-semibold
+                            
+                                                            px-5 py-3
+                            
+                                                            rounded-2xl
+                            
+                                                            shadow-xl
+                            
+                                                            transition-all duration-300
+                            
+                                                            hover:scale-[1.02]
+                            
+                                                            w-full h-[50px] sm:w-auto
+    "
+                            >
+
+                                <Users
+                                    size={18}
+                                    className="
+        shrink-0
+
+        group-hover:scale-110
+
+        transition-transform
+        duration-300
+      "
+                                />
+
+                                <span className="leading-none whitespace-nowrap">
+                                    Students
+                                </span>
+
+                                <ArrowRight
+                                    size={18}
+                                    className="
+        shrink-0
+
+        group-hover:translate-x-1
+
+        transition-transform
+        duration-300
+      "
+                                />
+
+                            </Link>
+
+                            {/* ================= CREATE ID BUTTON ================= */}
+                            <Link
+                                href="/dashboard/create-id"
+                                className="
+      group
+
+                                flex items-center
+                                justify-center
+                                gap-2
+
+                                bg-gradient-to-r
+                                from-green-500
+                                to-green-700
+
+                                hover:scale-[1.02]
+
+                                text-white
+
+                                font-semibold
+
+                                px-5 py-3
+
+                                rounded-2xl
+
+                                shadow-[0_10px_40px_rgba(34,211,238,0.35)]
+
+                                transition-all duration-300
+
+                                w-full sm:w-auto h-[50px]
+    "
+                            >
+
+                                <PlusCircle
+                                    size={20}
+                                    className="
+        shrink-0
+
+        group-hover:rotate-90
+
+        transition-transform
+        duration-300
+      "
+                                />
+
+                                <span className="leading-none whitespace-nowrap">
+                                    Create ID Card
+                                </span>
+
+                            </Link>
+
+                            {/* ================= DASHBOARD BUTTON ================= */}
+                            <Link
+                                href="/dashboard"
+                                className="
+     group
+
+                                flex items-center
+                                justify-center
+                                gap-2
+
+                                bg-gradient-to-r
+                                from-cyan-500
+                                to-blue-600
+
+                                hover:scale-[1.02]
+
+                                text-white
+
+                                font-semibold
+
+                                px-5 py-3
+
+                                rounded-2xl
+
+                                shadow-[0_10px_40px_rgba(34,211,238,0.35)]
+
+                                transition-all duration-300
+
+                                w-full h-[50px] sm:w-auto
+    "
+                            >
+
+                                <LayoutDashboard
+                                    size={20}
+                                    className="
+        shrink-0
+
+        group-hover:rotate-6
+
+        transition-transform
+        duration-300
+      "
+                                />
+
+                                <span className="leading-none whitespace-nowrap">
+                                    Dashboard
+                                </span>
+
+                            </Link>
 
                         </div>
 
