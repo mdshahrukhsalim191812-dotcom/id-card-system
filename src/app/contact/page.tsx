@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import HomeNavbar from "@/components/HomeNavbar";
 
 import {
@@ -147,206 +148,314 @@ ${form.message}
             <HomeNavbar />
 
             {/* HERO */}
-            <section
+            <motion.section
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
                 className="
-        relative
+    relative
 
-        overflow-hidden
+    overflow-hidden
 
-        py-20
-        sm:py-24
-        lg:py-32
+    py-20
+    sm:py-24
+    lg:py-32
 
-        bg-gradient-to-b
-        from-[#F8FBFF]
-        via-[#F5FAFF]
-        to-white
-    "
+    bg-gradient-to-b
+    from-[#021B33]
+    via-[#062B52]
+    to-[#031326]
+  "
             >
 
-                {/* ================= BG GLOW ================= */}
+                {/* ================= GRID BACKGROUND ================= */}
                 <div
                     className="
-            absolute
-            -top-32
-            -left-32
+      absolute inset-0
 
-            w-[320px] h-[320px]
-            sm:w-[500px] sm:h-[500px]
+      opacity-[0.04]
 
-            bg-blue-200/40
+      [background-image:linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)]
 
-            blur-3xl
-
-            rounded-full
-        "
+      [background-size:60px_60px]
+    "
                 ></div>
 
+                {/* ================= TOP GLOW ================= */}
+                <motion.div
+                    animate={{
+                        scale: [1, 1.1, 1],
+                        opacity: [0.4, 0.7, 0.4],
+                    }}
+                    transition={{
+                        duration: 8,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                    }}
+                    className="
+      absolute
+      -top-40
+      -left-40
+
+      w-[320px]
+      h-[320px]
+
+      sm:w-[500px]
+      sm:h-[500px]
+
+      bg-cyan-400/20
+
+      blur-[120px]
+
+      rounded-full
+    "
+                ></motion.div>
+
+                {/* ================= BOTTOM GLOW ================= */}
+                <motion.div
+                    animate={{
+                        scale: [1, 1.15, 1],
+                        opacity: [0.4, 0.8, 0.4],
+                    }}
+                    transition={{
+                        duration: 10,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                    }}
+                    className="
+      absolute
+      -bottom-40
+      -right-40
+
+      w-[300px]
+      h-[300px]
+
+      sm:w-[450px]
+      sm:h-[450px]
+
+      bg-blue-500/20
+
+      blur-[120px]
+
+      rounded-full
+    "
+                ></motion.div>
+
+                {/* ================= CENTER LIGHT ================= */}
                 <div
                     className="
-            absolute
-            -bottom-32
-            -right-32
+      absolute
+      left-1/2
+      top-1/2
+      -translate-x-1/2
+      -translate-y-1/2
 
-            w-[300px] h-[300px]
-            sm:w-[450px] sm:h-[450px]
+      w-[700px]
+      h-[700px]
 
-            bg-cyan-200/40
+      bg-cyan-400/10
 
-            blur-3xl
+      blur-[160px]
 
-            rounded-full
-        "
+      rounded-full
+    "
                 ></div>
 
-                {/* GRID LIGHT */}
+                {/* ================= TOP DIVIDER ================= */}
+                <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "85%" }}
+                    transition={{ duration: 1.2 }}
+                    viewport={{ once: true }}
+                    className="
+      absolute
+      top-0
+      left-1/2
+      -translate-x-1/2
+
+      h-px
+
+      bg-gradient-to-r
+      from-transparent
+      via-cyan-400/40
+      to-transparent
+    "
+                ></motion.div>
+
+                {/* ================= MAIN CONTENT ================= */}
                 <div
                     className="
-            absolute inset-0
+      relative z-10
 
-            opacity-[0.03]
+      max-w-7xl
+      mx-auto
 
-            [background-image:linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)]
+      px-4
+      sm:px-6
+      lg:px-10
 
-            [background-size:60px_60px]
-        "
-                ></div>
+      text-center
 
-                {/* ================= CONTENT ================= */}
-                <div
-                    className="
-            relative z-10
-
-            max-w-7xl
-            mx-auto
-
-            px-4
-            sm:px-6
-            lg:px-10
-
-            text-center
-
-            flex flex-col
-            items-center
-        "
+      flex
+      flex-col
+      items-center
+    "
                 >
 
-                    {/* BADGE */}
-                    <div
+                    {/* ================= BADGE ================= */}
+                    <motion.div
+                        initial={{
+                            opacity: 0,
+                            y: 30,
+                        }}
+                        whileInView={{
+                            opacity: 1,
+                            y: 0,
+                        }}
+                        transition={{
+                            duration: 0.7,
+                        }}
+                        viewport={{ once: true }}
                         className="
-                inline-flex items-center
-                justify-center
+        inline-flex
+        items-center
+        justify-center
 
-                gap-2
+        gap-2
 
-                bg-white/90
-                backdrop-blur-xl
+        bg-white/[0.08]
+        backdrop-blur-2xl
 
-                text-blue-700
+        text-cyan-300
 
-                px-4 py-2
-                sm:px-5 sm:py-2.5
+        px-4 py-2
+        sm:px-5 sm:py-2.5
 
-                rounded-full
+        rounded-full
 
-                font-semibold
+        font-semibold
 
-                text-xs
-                sm:text-sm
+        text-xs
+        sm:text-sm
 
-                border border-blue-100
+        border border-cyan-400/20
 
-                shadow-lg
-            "
+        shadow-[0_10px_40px_rgba(0,0,0,0.25)]
+      "
                     >
 
                         <div
                             className="
-                    w-2 h-2
-                    rounded-full
-                    bg-blue-500
-                    animate-pulse
-                "
+          w-2 h-2
+
+          rounded-full
+
+          bg-cyan-400
+
+          animate-pulse
+        "
                         ></div>
 
                         Contact Work GeniX
 
-                    </div>
+                    </motion.div>
 
-                    {/* HEADING */}
-                    <h1
+                    {/* ================= HEADING ================= */}
+                    <motion.h1
+                        initial={{
+                            opacity: 0,
+                            y: 50,
+                        }}
+                        whileInView={{
+                            opacity: 1,
+                            y: 0,
+                        }}
+                        transition={{
+                            delay: 0.2,
+                            duration: 0.9,
+                        }}
+                        viewport={{ once: true }}
                         className="
-                mt-8 sm:mt-10
+        mt-8
+        sm:mt-10
 
-                max-w-6xl
+        max-w-6xl
 
-                text-4xl
-                sm:text-5xl
-                md:text-6xl
-                lg:text-7xl
-                xl:text-8xl
+        text-4xl
+        sm:text-5xl
+        md:text-6xl
+        lg:text-7xl
+        xl:text-8xl
 
-                font-extrabold
+        font-black
 
-                leading-[1.05]
+        leading-[1.05]
 
-                tracking-tight
-            "
+        tracking-tight
+      "
                     >
 
                         {/* LINE 1 */}
-                        <span
-                            className="
-                    inline-block
-
-                    text-gray-900
-                "
-                        >
+                        <span className="text-white">
                             Let's Build Your
                         </span>
 
-                        {/* BREAK */}
                         <br className="hidden sm:block" />
 
                         {/* LINE 2 */}
                         <span
                             className="
-                    inline-block
+          inline-block
 
-                    mt-2 sm:mt-4
+          mt-2
+          sm:mt-4
 
-                    bg-gradient-to-r
-                    from-blue-700
-                    via-cyan-500
-                    to-blue-600
+          bg-gradient-to-r
+          from-cyan-300
+          via-blue-300
+          to-cyan-400
 
-                    bg-clip-text
-                    text-transparent
+          bg-clip-text
+          text-transparent
 
-                    drop-shadow-sm
-                "
+          drop-shadow-[0_0_25px_rgba(34,211,238,0.45)]
+        "
                         >
                             Business
                         </span>
 
-                    </h1>
+                    </motion.h1>
 
-                    {/* PARAGRAPH */}
-                    <p
+                    {/* ================= PARAGRAPH ================= */}
+                    <motion.p
+                        initial={{
+                            opacity: 0,
+                            y: 40,
+                        }}
+                        whileInView={{
+                            opacity: 1,
+                            y: 0,
+                        }}
+                        transition={{
+                            delay: 0.4,
+                            duration: 0.8,
+                        }}
+                        viewport={{ once: true }}
                         className="
-                mt-6 sm:mt-8
+        mt-6
+        sm:mt-8
 
-                max-w-4xl
+        max-w-4xl
 
-                text-base
-                sm:text-lg
-                md:text-xl
+        text-sm
+        sm:text-lg
+        md:text-xl
 
-                leading-8
-                sm:leading-9
+        leading-7
+        sm:leading-9
 
-                text-gray-600
-            "
+        text-gray-300
+      "
                     >
 
                         Contact us for premium school
@@ -354,108 +463,167 @@ ${form.message}
                         belts, ties, brochures,
                         DTF printing and more.
 
-                    </p>
+                    </motion.p>
 
-                    {/* BUTTONS */}
-                    <div
+                    {/* ================= BUTTONS ================= */}
+                    <motion.div
+                        initial={{
+                            opacity: 0,
+                            y: 40,
+                        }}
+                        whileInView={{
+                            opacity: 1,
+                            y: 0,
+                        }}
+                        transition={{
+                            delay: 0.6,
+                            duration: 0.8,
+                        }}
+                        viewport={{ once: true }}
                         className="
-                mt-10 sm:mt-12
+        mt-10
+        sm:mt-12
 
-                flex flex-col
-                sm:flex-row
+        flex
+        flex-col
+        sm:flex-row
 
-                items-center
+        items-center
 
-                gap-4
-            "
+        w-full
+        sm:w-auto
+
+        gap-4
+      "
                     >
 
-                        {/* PRIMARY BUTTON */}
-                        <button
+                        {/* CONTACT BUTTON */}
+                        <motion.button
+                            whileHover={{
+                                scale: 1.05,
+                            }}
+                            whileTap={{
+                                scale: 0.95,
+                            }}
                             className="
-                    group
+          group
 
-                    px-7 py-4
-                    sm:px-8 sm:py-4
+          w-full
+          sm:w-auto
 
-                    rounded-2xl
+          px-7 py-4
+          sm:px-8 sm:py-4
 
-                    bg-gradient-to-r
-                    from-blue-600
-                    to-cyan-500
+          rounded-2xl
 
-                    text-white
+          bg-gradient-to-r
+          from-cyan-500
+          to-blue-600
 
-                    font-bold
+          text-white
 
-                    text-sm
-                    sm:text-base
+          font-bold
 
-                    shadow-2xl
+          text-sm
+          sm:text-base
 
-                    hover:scale-105
-                    hover:shadow-blue-300/40
+          shadow-[0_15px_50px_rgba(6,182,212,0.35)]
 
-                    active:scale-95
+          hover:shadow-cyan-500/40
 
-                    transition-all duration-300
-                "
+          transition-all duration-300
+        "
                         >
 
                             Contact Now
 
-                        </button>
+                        </motion.button>
 
-                        {/* SECOND BUTTON */}
-                        <button
-                            className="
-                    px-7 py-4
-                    sm:px-8 sm:py-4
-
-                    rounded-2xl
-
-                    bg-white/80
-                    backdrop-blur-xl
-
-                    border border-gray-200
-
-                    text-gray-800
-
-                    font-semibold
-
-                    text-sm
-                    sm:text-base
-
-                    shadow-lg
-
-                    hover:bg-white
-                    hover:shadow-xl
-
-                    transition-all duration-300
-                "
+                        {/* PRODUCTS BUTTON */}
+                        <motion.div
+                            whileHover={{
+                                scale: 1.05,
+                            }}
+                            whileTap={{
+                                scale: 0.95,
+                            }}
+                            className="w-full sm:w-auto"
                         >
-                            <Link href="/products">
+
+                            <Link
+                                href="/products"
+                                className="
+            flex
+            items-center
+            justify-center
+
+            w-full
+            sm:w-auto
+
+            px-7 py-4
+            sm:px-8 sm:py-4
+
+            rounded-2xl
+
+            bg-white/[0.08]
+            backdrop-blur-2xl
+
+            border border-white/10
+
+            text-white
+
+            font-semibold
+
+            text-sm
+            sm:text-base
+
+            shadow-lg
+
+            hover:bg-white/[0.12]
+            hover:border-cyan-400/30
+
+            transition-all duration-300
+          "
+                            >
+
                                 Explore Products
+
                             </Link>
 
-                        </button>
+                        </motion.div>
 
-                    </div>
+                    </motion.div>
 
-                    {/* STATS */}
-                    <div
+                    {/* ================= STATS ================= */}
+                    <motion.div
+                        initial={{
+                            opacity: 0,
+                            y: 60,
+                        }}
+                        whileInView={{
+                            opacity: 1,
+                            y: 0,
+                        }}
+                        transition={{
+                            delay: 0.8,
+                            duration: 0.9,
+                        }}
+                        viewport={{ once: true }}
                         className="
-                mt-14 sm:mt-16
+        mt-14
+        sm:mt-16
 
-                grid grid-cols-2
-                sm:grid-cols-4
+        grid
+        grid-cols-2
+        lg:grid-cols-4
 
-                gap-5
-                sm:gap-8
+        gap-4
+        sm:gap-6
+        lg:gap-8
 
-                w-full
-                max-w-5xl
-            "
+        w-full
+        max-w-6xl
+      "
                     >
 
                         {[
@@ -465,7 +633,7 @@ ${form.message}
                             },
                             {
                                 number: "500+",
-                                label: "Schools Served",
+                                label: "Customer Served",
                             },
                             {
                                 number: "35+",
@@ -477,995 +645,992 @@ ${form.message}
                             },
                         ].map((item, index) => (
 
-                            <div
+                            <motion.div
                                 key={index}
+
+                                initial={{
+                                    opacity: 0,
+                                    y: 40,
+                                }}
+
+                                whileInView={{
+                                    opacity: 1,
+                                    y: 0,
+                                }}
+
+                                transition={{
+                                    delay: index * 0.15,
+                                    duration: 0.7,
+                                }}
+
+                                viewport={{ once: true }}
+
+                                whileHover={{
+                                    y: -8,
+                                    scale: 1.03,
+                                }}
+
                                 className="
-                        bg-white/70
-                        backdrop-blur-xl
+            relative
 
-                        border border-white
+            overflow-hidden
 
-                        rounded-3xl
+            rounded-3xl
 
-                        p-5 sm:p-6
+            border border-white/10
 
-                        shadow-lg
+            bg-white/[0.06]
+            backdrop-blur-2xl
 
-                        hover:shadow-2xl
-                        hover:-translate-y-1
+            p-5
+            sm:p-6
 
-                        transition-all duration-300
-                    "
+            shadow-[0_10px_40px_rgba(0,0,0,0.25)]
+
+            transition-all duration-300
+          "
                             >
 
-                                <h3
+                                {/* CARD GLOW */}
+                                <div
                                     className="
-                            text-2xl
-                            sm:text-3xl
+              absolute inset-0
 
-                            font-extrabold
+              bg-gradient-to-br
+              from-cyan-400/0
+              to-blue-500/0
 
-                            bg-gradient-to-r
-                            from-blue-600
-                            to-cyan-500
+              group-hover:from-cyan-400/10
+              group-hover:to-blue-500/10
+            "
+                                ></div>
 
-                            bg-clip-text
-                            text-transparent
-                        "
-                                >
-                                    {item.number}
-                                </h3>
+                                <div className="relative z-10">
 
-                                <p
-                                    className="
-                            mt-2
+                                    <h3
+                                        className="
+                text-2xl
+                sm:text-3xl
+                lg:text-4xl
 
-                            text-sm
-                            sm:text-base
+                font-black
 
-                            text-gray-600
+                bg-gradient-to-r
+                from-cyan-300
+                to-blue-400
 
-                            leading-6
-                        "
-                                >
-                                    {item.label}
-                                </p>
+                bg-clip-text
+                text-transparent
+              "
+                                    >
+                                        {item.number}
+                                    </h3>
 
-                            </div>
+                                    <p
+                                        className="
+                mt-2
+
+                text-xs
+                sm:text-sm
+                lg:text-base
+
+                text-gray-300
+
+                leading-6
+              "
+                                    >
+                                        {item.label}
+                                    </p>
+
+                                </div>
+
+                            </motion.div>
 
                         ))}
 
-                    </div>
+                    </motion.div>
 
                 </div>
 
-            </section>
+            </motion.section>
 
             {/* CONTACT SECTION */}
-            <section className="
-                max-w-7xl mx-auto
-                px-6 lg:px-10
-                pb-24
-            ">
+            <section
+                className="
+    relative
 
-                <div className="
-                    grid grid-cols-1
-                    lg:grid-cols-2
-                    gap-10
-                ">
+    overflow-hidden
 
-                    {/* LEFT CONTACT CARDS */}
+    py-16
+    sm:py-20
+    lg:py-24
+
+    bg-gradient-to-b
+    from-[#021B33]
+    via-[#062B52]
+    to-[#031326]
+  "
+            >
+
+                {/* ================= GRID BG ================= */}
+                <div
+                    className="
+      absolute inset-0
+
+      opacity-[0.03]
+
+      [background-image:linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)]
+
+      [background-size:60px_60px]
+    "
+                ></div>
+
+                {/* ================= GLOW EFFECTS ================= */}
+                <div
+                    className="
+      absolute
+      -top-40
+      -left-40
+
+      w-[400px]
+      h-[400px]
+
+      bg-cyan-400/10
+
+      blur-[120px]
+
+      rounded-full
+    "
+                ></div>
+
+                <div
+                    className="
+      absolute
+      -bottom-40
+      -right-40
+
+      w-[400px]
+      h-[400px]
+
+      bg-blue-500/10
+
+      blur-[120px]
+
+      rounded-full
+    "
+                ></div>
+
+                {/* ================= MAIN CONTAINER ================= */}
+                <div
+                    className="
+      relative z-10
+
+      max-w-7xl
+      mx-auto
+
+      px-4
+      sm:px-6
+      lg:px-8
+    "
+                >
+
+                    {/* ================= SECTION HEADING ================= */}
+                    <div
+                        className="
+        text-center
+
+        max-w-3xl
+
+        mx-auto
+
+        mb-14
+        sm:mb-16
+        lg:mb-20
+      "
+                    >
+
+                        {/* BADGE */}
+                        <div
+                            className="
+          inline-flex
+          items-center
+
+          gap-2
+
+          px-5 py-2.5
+
+          rounded-full
+
+          bg-cyan-400/10
+
+          border border-cyan-400/20
+
+          backdrop-blur-xl
+
+          text-cyan-300
+
+          text-sm
+          font-semibold
+
+          shadow-lg
+        "
+                        >
+
+                            <div
+                                className="
+            w-2 h-2
+
+            rounded-full
+
+            bg-cyan-400
+
+            animate-pulse
+          "
+                            ></div>
+
+                            Contact Work GeniX
+
+                        </div>
+
+                        {/* TITLE */}
+                        <h2
+                            className="
+          mt-6
+
+          text-4xl
+          sm:text-5xl
+          lg:text-6xl
+
+          font-black
+
+          leading-tight
+
+          text-white
+        "
+                        >
+
+                            Get In{" "}
+
+                            <span
+                                className="
+            bg-gradient-to-r
+            from-cyan-300
+            via-blue-300
+            to-cyan-400
+
+            bg-clip-text
+            text-transparent
+          "
+                            >
+
+                                Touch
+
+                            </span>
+
+                        </h2>
+
+                        {/* DESC */}
+                        <p
+                            className="
+          mt-5
+
+          text-gray-300
+
+          text-sm
+          sm:text-base
+          lg:text-lg
+
+          leading-7
+          sm:leading-8
+        "
+                        >
+
+                            Contact us for premium printing,
+                            branding, ID cards, brochures,
+                            DTF printing and customized
+                            business solutions.
+
+                        </p>
+
+                    </div>
+
+                    {/* ================= GRID ================= */}
                     <div
                         className="
         grid
         grid-cols-1
-        sm:grid-cols-2
-        xl:grid-cols-1
+        xl:grid-cols-2
 
-        gap-5
-        sm:gap-6
-        lg:gap-7
-    "
+        gap-8
+        lg:gap-10
+      "
                     >
 
-                        {/* ================= PHONE ================= */}
+                        {/* ================= LEFT CONTACT CARDS ================= */}
                         <div
                             className="
-            group
+          grid
 
-            relative overflow-hidden
+          grid-cols-1
+          md:grid-cols-2
+          xl:grid-cols-1
 
-            bg-white/90
-            backdrop-blur-xl
-
-            rounded-[26px]
-            sm:rounded-[30px]
-            lg:rounded-[34px]
-
-            p-5
-            sm:p-6
-            md:p-7
-            lg:p-8
-
-            border border-white
-
-            shadow-lg
-            shadow-blue-100/40
-
-            hover:shadow-2xl
-            hover:shadow-blue-200/40
-
-            hover:-translate-y-2
-
-            transition-all duration-500
+          gap-5
+          sm:gap-6
         "
                         >
 
-                            {/* GLOW */}
-                            <div
-                                className="
-                absolute
-                -top-20
-                -right-20
+                            {[
+                                {
+                                    icon: <Phone size={28} />,
+                                    title: "Phone Number",
+                                    value: "+91 9525706529",
+                                    desc: "Call us for printing and branding services.",
+                                    color:
+                                        "from-cyan-500 to-blue-600",
+                                },
 
-                w-40 h-40
+                                {
+                                    icon: <Mail size={28} />,
+                                    title: "Email Address",
+                                    value:
+                                        "mdhammadnaved92010@gmail.com",
+                                    desc: "Send us your requirements anytime.",
+                                    color:
+                                        "from-blue-500 to-indigo-500",
+                                },
 
-                bg-blue-100/50
+                                {
+                                    icon: <MapPin size={28} />,
+                                    title: "Office Address",
+                                    value:
+                                        "Islampur, Shahjangi, Bhagalpur",
+                                    desc: "Visit our office for direct consultation.",
+                                    color:
+                                        "from-orange-500 to-red-500",
+                                },
 
-                rounded-full
+                                {
+                                    icon: <Clock3 size={28} />,
+                                    title: "Working Hours",
+                                    value: "Mon - Sat",
+                                    desc: "9:00 AM - 8:00 PM",
+                                    color:
+                                        "from-green-500 to-emerald-500",
+                                },
+                            ].map((item, i) => (
 
-                blur-3xl
+                                <div
+                                    key={i}
+                                    className="
+              group
+
+              relative
+
+              overflow-hidden
+
+              rounded-[28px]
+              sm:rounded-[32px]
+
+              border border-white/10
+
+              bg-white/[0.06]
+              backdrop-blur-2xl
+
+              p-5
+              sm:p-6
+              lg:p-7
+
+              shadow-[0_10px_40px_rgba(0,0,0,0.25)]
+
+              hover:-translate-y-2
+              hover:border-cyan-400/30
+              hover:bg-white/[0.08]
+
+              transition-all
+              duration-500
             "
-                            ></div>
+                                >
 
-                            <div
-                                className="
+                                    {/* HOVER GLOW */}
+                                    <div
+                                        className="
+                absolute inset-0
+
+                bg-gradient-to-br
+                from-cyan-400/0
+                to-blue-500/0
+
+                group-hover:from-cyan-400/10
+                group-hover:to-blue-500/10
+
+                transition-all
+                duration-500
+              "
+                                    ></div>
+
+                                    <div
+                                        className="
                 relative z-10
 
-                flex items-start
+                flex
+
+                items-start
 
                 gap-4
                 sm:gap-5
-            "
+              "
+                                    >
+
+                                        {/* ICON */}
+                                        <div
+                                            className={`
+                  shrink-0
+
+                  w-14 h-14
+                  sm:w-16 sm:h-16
+
+                  rounded-2xl
+
+                  bg-gradient-to-br ${item.color}
+
+                  flex
+                  items-center
+                  justify-center
+
+                  text-white
+
+                  shadow-xl
+
+                  group-hover:scale-110
+                  group-hover:rotate-6
+
+                  transition-all
+                  duration-500
+                `}
+                                        >
+
+                                            {item.icon}
+
+                                        </div>
+
+                                        {/* TEXT */}
+                                        <div className="min-w-0 flex-1">
+
+                                            <p
+                                                className="
+                    text-cyan-300
+
+                    text-sm
+                    sm:text-base
+
+                    font-semibold
+                  "
+                                            >
+
+                                                {item.title}
+
+                                            </p>
+
+                                            <h3
+                                                className="
+                    mt-2
+
+                    text-lg
+                    sm:text-xl
+                    lg:text-2xl
+
+                    font-black
+
+                    text-white
+
+                    break-words
+                  "
+                                            >
+
+                                                {item.value}
+
+                                            </h3>
+
+                                            <p
+                                                className="
+                    mt-3
+
+                    text-sm
+                    sm:text-base
+
+                    text-gray-300
+
+                    leading-7
+                  "
+                                            >
+
+                                                {item.desc}
+
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            ))}
+
+                        </div>
+                        {/* ================= CONTACT FORM ================= */}
+                        <div
+                            className="
+          relative
+
+          overflow-hidden
+
+          rounded-[28px]
+          sm:rounded-[36px]
+          lg:rounded-[40px]
+
+          border border-white/10
+
+          bg-white/[0.06]
+          backdrop-blur-2xl
+
+          p-5
+          sm:p-7
+          lg:p-10
+
+          shadow-[0_10px_50px_rgba(0,0,0,0.25)]
+
+          hover:border-cyan-400/30
+
+          transition-all
+          duration-500
+        "
+                        >
+
+                            {/* BG GLOW */}
+                            <div
+                                className="
+            absolute
+            -top-20
+            -right-20
+
+            w-72
+            h-72
+
+            bg-cyan-400/10
+
+            rounded-full
+
+            blur-3xl
+          "
+                            ></div>
+
+                            {/* HEADER */}
+                            <div
+                                className="
+            relative z-10
+
+            flex
+            items-start
+            sm:items-center
+
+            gap-4
+          "
                             >
 
                                 {/* ICON */}
                                 <div
                                     className="
-                    shrink-0
+              shrink-0
 
-                    w-14 h-14
-                    sm:w-16 sm:h-16
-                    lg:w-[72px] lg:h-[72px]
+              w-14
+              h-14
 
-                    rounded-2xl
-                    sm:rounded-3xl
+              rounded-2xl
 
-                    bg-gradient-to-br
-                    from-blue-600
-                    to-cyan-500
+              bg-gradient-to-br
+              from-cyan-500
+              to-blue-600
 
-                    text-white
+              text-white
 
-                    flex items-center justify-center
+              flex
+              items-center
+              justify-center
 
-                    shadow-xl
-
-                    group-hover:scale-110
-                    group-hover:rotate-6
-
-                    transition-all duration-500
-                "
+              shadow-xl
+            "
                                 >
 
-                                    <Phone size={30} />
+                                    <MessageCircle size={28} />
 
                                 </div>
 
-                                {/* CONTENT */}
-                                <div className="flex-1 min-w-0">
-
-                                    <p
-                                        className="
-                        text-gray-500
-                        font-semibold
-
-                        text-sm
-                        sm:text-base
-                    "
-                                    >
-                                        Phone Number
-                                    </p>
+                                {/* TEXT */}
+                                <div>
 
                                     <h2
                                         className="
-                        mt-2
+                text-2xl
+                sm:text-3xl
 
-                        text-xl
-                        sm:text-2xl
-                        lg:text-[28px]
+                font-black
 
-                        font-extrabold
-
-                        text-gray-900
-
-                        tracking-tight
-                    "
+                text-white
+              "
                                     >
-                                        +91 9525706529
+
+                                        Send Message
+
                                     </h2>
 
                                     <p
                                         className="
-                        mt-3
-
-                        text-sm
-                        sm:text-base
-
-                        text-gray-600
-
-                        leading-7
-                    "
-                                    >
-                                        Call us for school branding,
-                                        printing and customized products.
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        {/* ================= EMAIL ================= */}
-                        <div
-                            className="
-            group
-
-            relative overflow-hidden
-
-            bg-white/90
-            backdrop-blur-xl
-
-            rounded-[26px]
-            sm:rounded-[30px]
-            lg:rounded-[34px]
-
-            p-5
-            sm:p-6
-            md:p-7
-            lg:p-8
-
-            border border-white
-
-            shadow-lg
-            shadow-indigo-100/40
-
-            hover:shadow-2xl
-            hover:shadow-indigo-200/40
-
-            hover:-translate-y-2
-
-            transition-all duration-500
-        "
-                        >
-
-                            {/* GLOW */}
-                            <div
-                                className="
-                absolute
-                -top-20
-                -right-20
-
-                w-40 h-40
-
-                bg-indigo-100/50
-
-                rounded-full
-
-                blur-3xl
-            "
-                            ></div>
-
-                            <div
-                                className="
-                relative z-10
-
-                flex items-start
-
-                gap-4
-                sm:gap-5
-            "
-                            >
-
-                                {/* ICON */}
-                                <div
-                                    className="
-                    shrink-0
-
-                    w-14 h-14
-                    sm:w-16 sm:h-16
-                    lg:w-[72px] lg:h-[72px]
-
-                    rounded-2xl
-                    sm:rounded-3xl
-
-                    bg-gradient-to-br
-                    from-indigo-500
-                    to-blue-500
-
-                    text-white
-
-                    flex items-center justify-center
-
-                    shadow-xl
-
-                    group-hover:scale-110
-                    group-hover:rotate-6
-
-                    transition-all duration-500
-                "
-                                >
-
-                                    <Mail size={30} />
-
-                                </div>
-
-                                {/* CONTENT */}
-                                <div className="flex-1 min-w-0">
-
-                                    <p
-                                        className="
-                        text-gray-500
-                        font-semibold
-
-                        text-sm
-                        sm:text-base
-                    "
-                                    >
-                                        Email Address
-                                    </p>
-
-                                    <h2
-                                        className="
-                        mt-2
-
-                        text-base
-                        sm:text-lg
-                        md:text-xl
-
-                        font-extrabold
-
-                        text-gray-900
-
-                        break-all
-
-                        leading-7
-                    "
-                                    >
-                                       mdhammadnaved92010@gmail.com
-                                    </h2>
-
-                                    <p
-                                        className="
-                        mt-3
-
-                        text-sm
-                        sm:text-base
-
-                        text-gray-600
-
-                        leading-7
-                    "
-                                    >
-                                        Send us your requirements anytime.
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        {/* ================= LOCATION ================= */}
-                        <div
-                            className="
-            group
-
-            relative overflow-hidden
-
-            bg-white/90
-            backdrop-blur-xl
-
-            rounded-[26px]
-            sm:rounded-[30px]
-            lg:rounded-[34px]
-
-            p-5
-            sm:p-6
-            md:p-7
-            lg:p-8
-
-            border border-white
-
-            shadow-lg
-            shadow-orange-100/40
-
-            hover:shadow-2xl
-            hover:shadow-orange-200/40
-
-            hover:-translate-y-2
-
-            transition-all duration-500
-        "
-                        >
-
-                            {/* GLOW */}
-                            <div
-                                className="
-                absolute
-                -top-20
-                -right-20
-
-                w-40 h-40
-
-                bg-orange-100/50
-
-                rounded-full
-
-                blur-3xl
-            "
-                            ></div>
-
-                            <div
-                                className="
-                relative z-10
-
-                flex items-start
-
-                gap-4
-                sm:gap-5
-            "
-                            >
-
-                                {/* ICON */}
-                                <div
-                                    className="
-                    shrink-0
-
-                    w-14 h-14
-                    sm:w-16 sm:h-16
-                    lg:w-[72px] lg:h-[72px]
-
-                    rounded-2xl
-                    sm:rounded-3xl
-
-                    bg-gradient-to-br
-                    from-orange-500
-                    to-red-500
-
-                    text-white
-
-                    flex items-center justify-center
-
-                    shadow-xl
-
-                    group-hover:scale-110
-                    group-hover:rotate-6
-
-                    transition-all duration-500
-                "
-                                >
-
-                                    <MapPin size={30} />
-
-                                </div>
-
-                                {/* CONTENT */}
-                                <div className="flex-1 min-w-0">
-
-                                    <p
-                                        className="
-                        text-gray-500
-                        font-semibold
-
-                        text-sm
-                        sm:text-base
-                    "
-                                    >
-                                        Office Address
-                                    </p>
-
-                                    <h2
-                                        className="
-                        mt-2
-
-                        text-lg
-                        sm:text-xl
-                        lg:text-2xl
-
-                        font-extrabold
-
-                        text-gray-900
-
-                        leading-8
-                        sm:leading-9
-                    "
-                                    >
-                                        Islampur, Shahjangi,
-                                        Kabirpur Road,
-                                        Bhagalpur
-                                    </h2>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        {/* ================= WORKING HOURS ================= */}
-                        <div
-                            className="
-            group
-
-            relative overflow-hidden
-
-            bg-white/90
-            backdrop-blur-xl
-
-            rounded-[26px]
-            sm:rounded-[30px]
-            lg:rounded-[34px]
-
-            p-5
-            sm:p-6
-            md:p-7
-            lg:p-8
-
-            border border-white
-
-            shadow-lg
-            shadow-green-100/40
-
-            hover:shadow-2xl
-            hover:shadow-green-200/40
-
-            hover:-translate-y-2
-
-            transition-all duration-500
-        "
-                        >
-
-                            {/* GLOW */}
-                            <div
-                                className="
-                absolute
-                -top-20
-                -right-20
-
-                w-40 h-40
-
-                bg-green-100/50
-
-                rounded-full
-
-                blur-3xl
-            "
-                            ></div>
-
-                            <div
-                                className="
-                relative z-10
-
-                flex items-start
-
-                gap-4
-                sm:gap-5
-            "
-                            >
-
-                                {/* ICON */}
-                                <div
-                                    className="
-                    shrink-0
-
-                    w-14 h-14
-                    sm:w-16 sm:h-16
-                    lg:w-[72px] lg:h-[72px]
-
-                    rounded-2xl
-                    sm:rounded-3xl
-
-                    bg-gradient-to-br
-                    from-green-500
-                    to-emerald-500
-
-                    text-white
-
-                    flex items-center justify-center
-
-                    shadow-xl
-
-                    group-hover:scale-110
-                    group-hover:rotate-6
-
-                    transition-all duration-500
-                "
-                                >
-
-                                    <Clock3 size={30} />
-
-                                </div>
-
-                                {/* CONTENT */}
-                                <div className="flex-1 min-w-0">
-
-                                    <p
-                                        className="
-                        text-gray-500
-                        font-semibold
-
-                        text-sm
-                        sm:text-base
-                    "
-                                    >
-                                        Working Hours
-                                    </p>
-
-                                    <h2
-                                        className="
-                        mt-2
-
-                        text-xl
-                        sm:text-2xl
-                        lg:text-[28px]
-
-                        font-extrabold
-
-                        text-gray-900
-                    "
-                                    >
-                                        Mon - Sat
-                                    </h2>
-
-                                    <p
-                                        className="
-                        mt-3
-
-                        text-sm
-                        sm:text-base
-
-                        text-gray-600
-                    "
-                                    >
-                                        9:00 AM - 8:00 PM
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    {/* CONTACT FORM */}
-                    <div className="
-    bg-white
-    rounded-[28px] sm:rounded-[36px] lg:rounded-[40px]
-    p-5 sm:p-8 lg:p-10
-    border border-gray-100
-    shadow-sm
-    hover:shadow-2xl
-    transition-all duration-300
-">
-
-                        {/* HEADER */}
-                        <div className="
-        flex items-start sm:items-center
-        gap-3 sm:gap-4
-    ">
-
-                            {/* ICON */}
-                            <div className="
-            shrink-0
-            w-12 h-12
-            sm:w-14 sm:h-14
-            rounded-2xl
-            bg-blue-100
-            text-blue-600
-            flex items-center justify-center
-        ">
-
-                                <MessageCircle size={26} />
-
-                            </div>
-
-                            {/* TEXT */}
-                            <div>
-
-                                <h2 className="
-                text-2xl sm:text-3xl
-                font-extrabold
-                text-gray-800
-                leading-tight
-            ">
-                                    Send Message
-                                </h2>
-
-                                <p className="
-                text-sm sm:text-base
-                text-gray-500
                 mt-1
-            ">
-                                    We reply quickly to all inquiries.
-                                </p>
+
+                text-sm
+                sm:text-base
+
+                text-gray-300
+              "
+                                    >
+
+                                        We reply quickly to all inquiries.
+
+                                    </p>
+
+                                </div>
 
                             </div>
 
-                        </div>
-
-                        {/* FORM */}
-                        <form
-                            onSubmit={handleWhatsApp}
-                            className="
-            mt-8 sm:mt-10
-            space-y-5 sm:space-y-6
-        "
-                        >
-
-                            {/* NAME */}
-                            <div>
-
-                                <label className="
-                text-sm sm:text-[15px]
-                font-semibold
-                text-gray-700
-            ">
-                                    Full Name
-                                </label>
-
-                                <input
-                                    type="text"
-                                    placeholder="Enter your name"
-                                    value={form.name}
-                                    onChange={(e) =>
-                                        setForm({
-                                            ...form,
-                                            name: e.target.value
-                                        })
-                                    }
-                                    className="
-                    w-full
-                    mt-2 sm:mt-3
-                    px-4 sm:px-5
-                    py-3 sm:py-4
-                    rounded-2xl
-
-                    bg-white
-                    border border-gray-200
-
-                    text-sm sm:text-base
-                    text-gray-800
-                    placeholder:text-gray-400
-
-                    shadow-sm
-                    outline-none
-
-                    transition-all duration-300
-
-                    focus:border-blue-500
-                    focus:ring-4
-                    focus:ring-blue-100
-
-                    hover:border-blue-300
-                    hover:shadow-md
-                "
-                                />
-
-                            </div>
-
-                            {/* EMAIL */}
-                            <div>
-
-                                <label className="
-                text-sm sm:text-[15px]
-                font-semibold
-                text-gray-700
-            ">
-                                    Email Address
-                                </label>
-
-                                <input
-                                    type="email"
-                                    placeholder="Enter your email"
-                                    value={form.email}
-                                    onChange={(e) =>
-                                        setForm({
-                                            ...form,
-                                            email: e.target.value
-                                        })
-                                    }
-                                    className="
-                    w-full
-                    mt-2 sm:mt-3
-                    px-4 sm:px-5
-                    py-3 sm:py-4
-                    rounded-2xl
-
-                    bg-white
-                    border border-gray-200
-
-                    text-sm sm:text-base
-                    text-gray-800
-                    placeholder:text-gray-400
-
-                    shadow-sm
-                    outline-none
-
-                    transition-all duration-300
-
-                    focus:border-blue-500
-                    focus:ring-4
-                    focus:ring-blue-100
-
-                    hover:border-blue-300
-                    hover:shadow-md
-                "
-                                />
-
-                            </div>
-
-                            {/* PHONE */}
-                            <div>
-
-                                <label className="
-                text-sm sm:text-[15px]
-                font-semibold
-                text-gray-700
-            ">
-                                    Phone Number
-                                </label>
-
-                                <input
-                                    type="text"
-                                    placeholder="Enter your phone number"
-                                    value={form.phone}
-                                    onChange={(e) =>
-                                        setForm({
-                                            ...form,
-                                            phone: e.target.value
-                                        })
-                                    }
-                                    className="
-                    w-full
-                    mt-2 sm:mt-3
-                    px-4 sm:px-5
-                    py-3 sm:py-4
-                    rounded-2xl
-
-                    bg-white
-                    border border-gray-200
-
-                    text-sm sm:text-base
-                    text-gray-800
-                    placeholder:text-gray-400
-
-                    shadow-sm
-                    outline-none
-
-                    transition-all duration-300
-
-                    focus:border-blue-500
-                    focus:ring-4
-                    focus:ring-blue-100
-
-                    hover:border-blue-300
-                    hover:shadow-md
-                "
-                                />
-
-                            </div>
-
-                            {/* MESSAGE */}
-                            <div>
-
-                                <label className="
-                text-sm sm:text-[15px]
-                font-semibold
-                text-gray-700
-            ">
-                                    Message
-                                </label>
-
-                                <textarea
-                                    rows={5}
-                                    placeholder="Enter your message"
-                                    value={form.message}
-                                    onChange={(e) =>
-                                        setForm({
-                                            ...form,
-                                            message: e.target.value
-                                        })
-                                    }
-                                    className="
-                    w-full
-                    mt-2 sm:mt-3
-                    px-4 sm:px-5
-                    py-3 sm:py-4
-                    rounded-2xl
-
-                    bg-white
-                    border border-gray-200
-
-                    text-sm sm:text-base
-                    text-gray-800
-                    placeholder:text-gray-400
-
-                    shadow-sm
-                    outline-none
-                    resize-none
-
-                    transition-all duration-300
-
-                    focus:border-blue-500
-                    focus:ring-4
-                    focus:ring-blue-100
-
-                    hover:border-blue-300
-                    hover:shadow-md
-                "
-                                />
-
-                            </div>
-
-                            {/* BUTTON */}
-                            <button
-                                type="submit"
+                            {/* ================= FORM ================= */}
+                            <form
+                                onSubmit={handleWhatsApp}
                                 className="
-                group
+            relative z-10
+
+            mt-8
+            sm:mt-10
+
+            space-y-5
+            sm:space-y-6
+          "
+                            >
+
+                                {/* ================= NAME ================= */}
+                                <div>
+
+                                    <label
+                                        className="
+                text-sm
+                sm:text-base
+
+                font-semibold
+
+                text-cyan-300
+              "
+                                    >
+
+                                        Full Name
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        placeholder="Enter your full name"
+                                        value={form.name}
+                                        onChange={(e) =>
+                                            setForm({
+                                                ...form,
+                                                name: e.target.value,
+                                            })
+                                        }
+                                        className="
                 w-full
 
-                py-3 sm:py-4
+                mt-3
+
+                px-4
+                sm:px-5
+
+                py-3.5
+                sm:py-4
 
                 rounded-2xl
 
-                bg-gradient-to-r
-                from-blue-600
-                to-cyan-500
+                bg-white/[0.08]
+
+                border border-white/10
 
                 text-white
-                font-bold
-                text-base sm:text-lg
 
-                shadow-xl
+                placeholder:text-gray-400
 
-                hover:scale-[1.02]
-                hover:shadow-2xl
+                outline-none
 
-                active:scale-[0.98]
+                transition-all
+                duration-300
 
-                transition-all duration-300
+                focus:border-cyan-400
+                focus:ring-4
+                focus:ring-cyan-400/20
 
-                flex items-center
-                justify-center
-                gap-3
-            "
-                            >
+                hover:border-cyan-400/30
+              "
+                                    />
 
-                                Send Message
+                                </div>
 
-                                <Send
-                                    size={20}
+                                {/* ================= EMAIL ================= */}
+                                <div>
+
+                                    <label
+                                        className="
+                text-sm
+                sm:text-base
+
+                font-semibold
+
+                text-cyan-300
+              "
+                                    >
+
+                                        Email Address
+
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        placeholder="Enter your email"
+                                        value={form.email}
+                                        onChange={(e) =>
+                                            setForm({
+                                                ...form,
+                                                email: e.target.value,
+                                            })
+                                        }
+                                        className="
+                w-full
+
+                mt-3
+
+                px-4
+                sm:px-5
+
+                py-3.5
+                sm:py-4
+
+                rounded-2xl
+
+                bg-white/[0.08]
+
+                border border-white/10
+
+                text-white
+
+                placeholder:text-gray-400
+
+                outline-none
+
+                transition-all
+                duration-300
+
+                focus:border-cyan-400
+                focus:ring-4
+                focus:ring-cyan-400/20
+
+                hover:border-cyan-400/30
+              "
+                                    />
+
+                                </div>
+
+                                {/* ================= PHONE ================= */}
+                                <div>
+
+                                    <label
+                                        className="
+                text-sm
+                sm:text-base
+
+                font-semibold
+
+                text-cyan-300
+              "
+                                    >
+
+                                        Phone Number
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        placeholder="Enter your phone number"
+                                        value={form.phone}
+                                        onChange={(e) =>
+                                            setForm({
+                                                ...form,
+                                                phone: e.target.value,
+                                            })
+                                        }
+                                        className="
+                w-full
+
+                mt-3
+
+                px-4
+                sm:px-5
+
+                py-3.5
+                sm:py-4
+
+                rounded-2xl
+
+                bg-white/[0.08]
+
+                border border-white/10
+
+                text-white
+
+                placeholder:text-gray-400
+
+                outline-none
+
+                transition-all
+                duration-300
+
+                focus:border-cyan-400
+                focus:ring-4
+                focus:ring-cyan-400/20
+
+                hover:border-cyan-400/30
+              "
+                                    />
+
+                                </div>
+
+                                {/* ================= MESSAGE ================= */}
+                                <div>
+
+                                    <label
+                                        className="
+                text-sm
+                sm:text-base
+
+                font-semibold
+
+                text-cyan-300
+              "
+                                    >
+
+                                        Your Message
+
+                                    </label>
+
+                                    <textarea
+                                        rows={6}
+                                        placeholder="Write your message..."
+                                        value={form.message}
+                                        onChange={(e) =>
+                                            setForm({
+                                                ...form,
+                                                message: e.target.value,
+                                            })
+                                        }
+                                        className="
+                w-full
+
+                mt-3
+
+                px-4
+                sm:px-5
+
+                py-4
+
+                rounded-2xl
+
+                bg-white/[0.08]
+
+                border border-white/10
+
+                text-white
+
+                placeholder:text-gray-400
+
+                outline-none
+                resize-none
+
+                transition-all
+                duration-300
+
+                focus:border-cyan-400
+                focus:ring-4
+                focus:ring-cyan-400/20
+
+                hover:border-cyan-400/30
+              "
+                                    />
+
+                                </div>
+
+                                {/* ================= BUTTON ================= */}
+                                <button
+                                    type="submit"
                                     className="
-                    group-hover:translate-x-1
-                    transition-transform
-                "
-                                />
+              group
 
-                            </button>
+              w-full
 
-                        </form>
+              py-4
+
+              rounded-2xl
+
+              bg-gradient-to-r
+              from-cyan-500
+              to-blue-600
+
+              text-white
+
+              font-bold
+
+              text-base
+              sm:text-lg
+
+              shadow-[0_10px_40px_rgba(6,182,212,0.35)]
+
+              hover:scale-[1.02]
+              hover:shadow-cyan-500/30
+
+              active:scale-[0.98]
+
+              transition-all
+              duration-300
+
+              flex
+              items-center
+              justify-center
+
+              gap-3
+            "
+                                >
+
+                                    Send Message
+
+                                    <Send
+                                        size={20}
+                                        className="
+                transition-transform
+                duration-300
+
+                group-hover:translate-x-1
+              "
+                                    />
+
+                                </button>
+
+                            </form>
+
+                        </div>
 
                     </div>
 
@@ -1474,49 +1639,447 @@ ${form.message}
             </section>
 
             {/* CTA */}
-            <section className="
-                bg-[#021B33]
-                text-white
-                py-20
-            ">
+            <section
+                className="
+    relative
 
-                <div className="
-                    max-w-7xl mx-auto
-                    px-6 lg:px-10
-                ">
+    overflow-hidden
 
-                    <div className="
-                        grid grid-cols-1
-                        lg:grid-cols-2
-                        gap-12
-                        items-center
-                    ">
+    py-16
+    sm:py-20
+    lg:py-28
 
-                        {/* LEFT */}
-                        <div>
+    bg-gradient-to-b
+    from-[#021B33]
+    via-[#062B52]
+    to-[#031326]
 
-                            <h2 className="
-                                text-4xl lg:text-5xl
-                                font-extrabold
-                                leading-tight
-                            ">
+    text-white
+  "
+            >
 
-                                Premium Printing & Branding Services for
-                                <br />
-                                Your Business
+                {/* ================= GRID BACKGROUND ================= */}
+                <div
+                    className="
+      absolute inset-0
+
+      opacity-[0.03]
+
+      [background-image:linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)]
+
+      [background-size:60px_60px]
+    "
+                ></div>
+
+                {/* ================= TOP GLOW ================= */}
+                <div
+                    className="
+      absolute
+      -top-40
+      -left-40
+
+      w-[400px]
+      h-[400px]
+
+      bg-cyan-400/10
+
+      blur-[120px]
+
+      rounded-full
+    "
+                ></div>
+
+                {/* ================= BOTTOM GLOW ================= */}
+                <div
+                    className="
+      absolute
+      -bottom-40
+      -right-40
+
+      w-[400px]
+      h-[400px]
+
+      bg-blue-500/10
+
+      blur-[120px]
+
+      rounded-full
+    "
+                ></div>
+
+                {/* ================= MAIN CONTAINER ================= */}
+                <div
+                    className="
+      relative z-10
+
+      max-w-7xl
+      mx-auto
+
+      px-4
+      sm:px-6
+      lg:px-10
+    "
+                >
+
+                    <div
+                        className="
+        grid
+        grid-cols-1
+        lg:grid-cols-2
+
+        gap-12
+        lg:gap-20
+
+        items-center
+      "
+                    >
+
+                        {/* ================= LEFT CONTENT ================= */}
+                        <div
+                            className="
+          text-center
+          lg:text-left
+        "
+                        >
+
+                            {/* BADGE */}
+                            <div
+                                className="
+            inline-flex
+            items-center
+
+            gap-2
+
+            px-5 py-2.5
+
+            rounded-full
+
+            bg-cyan-400/10
+
+            border border-cyan-400/20
+
+            backdrop-blur-xl
+
+            text-cyan-300
+
+            text-sm
+            font-semibold
+
+            shadow-lg
+
+            mb-6
+          "
+                            >
+
+                                <div
+                                    className="
+              w-2 h-2
+
+              rounded-full
+
+              bg-cyan-400
+
+              animate-pulse
+            "
+                                ></div>
+
+                                Premium Printing Solutions
+
+                            </div>
+
+                            {/* HEADING */}
+                            <h2
+                                className="
+            text-4xl
+            sm:text-5xl
+            md:text-6xl
+            lg:text-7xl
+
+            font-black
+
+            leading-tight
+            sm:leading-[1.1]
+
+            tracking-tight
+          "
+                            >
+
+                                Premium Printing
+                                <br className="hidden sm:block" />
+
+                                <span
+                                    className="
+              bg-gradient-to-r
+              from-cyan-300
+              via-blue-300
+              to-cyan-400
+
+              bg-clip-text
+              text-transparent
+            "
+                                >
+
+                                    & Branding Services
+
+                                </span>
 
                             </h2>
 
-                            <p className="
-                                mt-6
-                                text-blue-100
-                                text-lg
-                                leading-8
-                            ">
+                            {/* DESCRIPTION */}
+                            <p
+                                className="
+            mt-6
+            sm:mt-8
 
-                                High quality products, fast turnaround, and exceptional customer service.
+            max-w-2xl
+
+            mx-auto
+            lg:mx-0
+
+            text-gray-300
+
+            text-base
+            sm:text-lg
+            lg:text-xl
+
+            leading-8
+            sm:leading-9
+          "
+                            >
+
+                                High-quality printing products,
+                                creative branding solutions and
+                                fast turnaround services designed
+                                to grow your business professionally.
 
                             </p>
+
+                            {/* BUTTONS */}
+                            <div
+                                className="
+            mt-10
+
+            flex
+            flex-col
+            sm:flex-row
+
+            items-center
+            lg:items-start
+
+            gap-4
+          "
+                            >
+
+                                {/* PRIMARY BUTTON */}
+                                <button
+                                    className="
+              group
+
+              px-7
+              sm:px-8
+
+              py-4
+
+              rounded-2xl
+
+              bg-gradient-to-r
+              from-cyan-500
+              to-blue-600
+
+              text-white
+
+              font-bold
+
+              text-sm
+              sm:text-base
+
+              shadow-[0_10px_40px_rgba(6,182,212,0.35)]
+
+              hover:scale-105
+              hover:shadow-cyan-500/30
+
+              transition-all
+              duration-300
+            "
+                                >
+                                    <Link href="/products" className="flex items-center gap-2">
+                                    Explore Products
+                                    </Link>
+                                </button>
+
+                              
+
+                            </div>
+
+                        </div>
+
+                        {/* ================= RIGHT PREMIUM CARD ================= */}
+                        <div
+                            className="
+          relative
+
+          group
+        "
+                        >
+
+                            {/* OUTER GLOW */}
+                            <div
+                                className="
+            absolute inset-0
+
+            bg-cyan-400/20
+
+            blur-3xl
+
+            rounded-[40px]
+
+            opacity-0
+
+            group-hover:opacity-100
+
+            transition-all
+            duration-500
+          "
+                            ></div>
+
+                            {/* CARD */}
+                            <div
+                                className="
+            relative
+
+            overflow-hidden
+
+            rounded-[32px]
+            sm:rounded-[40px]
+
+            border border-white/10
+
+            bg-white/[0.06]
+            backdrop-blur-2xl
+
+            p-6
+            sm:p-8
+            lg:p-10
+
+            shadow-[0_10px_50px_rgba(0,0,0,0.35)]
+          "
+                            >
+
+                                {/* SHINE EFFECT */}
+                                <div
+                                    className="
+              absolute inset-0
+
+              -translate-x-full
+
+              bg-gradient-to-r
+              from-transparent
+              via-white/10
+              to-transparent
+
+              group-hover:translate-x-full
+
+              transition-all
+              duration-1000
+            "
+                                ></div>
+
+                                {/* STATS */}
+                                <div
+                                    className="
+              relative z-10
+
+              grid
+              grid-cols-2
+
+              gap-5
+            "
+                                >
+
+                                    {[
+                                        {
+                                            number: "10K+",
+                                            label: "Products Delivered",
+                                        },
+                                        {
+                                            number: "500+",
+                                            label: "Happy Clients",
+                                        },
+                                        {
+                                            number: "35+",
+                                            label: "Years Experience",
+                                        },
+                                        {
+                                            number: "24/7",
+                                            label: "Customer Support",
+                                        },
+                                    ].map((item, i) => (
+
+                                        <div
+                                            key={i}
+                                            className="
+                  rounded-2xl
+
+                  border border-white/10
+
+                  bg-white/[0.05]
+
+                  p-5
+                  sm:p-6
+
+                  text-center
+
+                  hover:bg-white/[0.08]
+
+                  transition-all
+                  duration-300
+                "
+                                        >
+
+                                            <h3
+                                                className="
+                    text-2xl
+                    sm:text-3xl
+
+                    font-black
+
+                    bg-gradient-to-r
+                    from-cyan-300
+                    to-blue-400
+
+                    bg-clip-text
+                    text-transparent
+                  "
+                                            >
+
+                                                {item.number}
+
+                                            </h3>
+
+                                            <p
+                                                className="
+                    mt-2
+
+                    text-sm
+                    sm:text-base
+
+                    text-gray-300
+
+                    leading-6
+                  "
+                                            >
+
+                                                {item.label}
+
+                                            </p>
+
+                                        </div>
+
+                                    ))}
+
+                                </div>
+
+                            </div>
 
                         </div>
 
