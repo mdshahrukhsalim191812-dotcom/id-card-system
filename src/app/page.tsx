@@ -341,7 +341,7 @@ export default function HomePage() {
 
   return (
 
-  <div className="bg-white text-gray-800 scroll-smooth">
+    <div className="bg-white text-gray-800 scroll-smooth">
 
       {/* ================= WHATSAPP FLOAT ================= */}
       <a
@@ -781,6 +781,468 @@ export default function HomePage() {
             />
 
           ))}
+
+        </div>
+
+      </section>
+
+      {/* ================= OWNER SECTION ================= */}
+      <section
+        className="
+        relative
+        overflow-hidden
+
+        py-24
+
+        bg-gradient-to-b
+        from-[#031326]
+        via-[#062B52]
+        to-[#031326]
+    "
+      >
+
+        {/* ================= GRID BACKGROUND ================= */}
+        <div
+          className="
+            absolute inset-0
+
+            opacity-[0.03]
+
+            [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
+
+            [background-size:60px_60px]
+        "
+        ></div>
+
+        {/* ================= GLOW EFFECTS ================= */}
+        <div
+          className="
+            absolute
+            -top-40
+            -left-40
+
+            w-[500px]
+            h-[500px]
+
+            bg-cyan-400/10
+
+            blur-[120px]
+
+            rounded-full
+        "
+        ></div>
+
+        <div
+          className="
+            absolute
+            -bottom-40
+            -right-40
+
+            w-[500px]
+            h-[500px]
+
+            bg-blue-500/10
+
+            blur-[120px]
+
+            rounded-full
+        "
+        ></div>
+
+        {/* ================= MAIN CONTAINER ================= */}
+        <div
+          className="
+            relative z-10
+
+            max-w-7xl
+            mx-auto
+
+            px-6
+            lg:px-10
+        "
+        >
+
+          <div
+            className="
+                grid
+                grid-cols-1
+                lg:grid-cols-2
+
+                gap-16
+                items-center
+            "
+          >
+
+            {/* ================= IMAGE SIDE ================= */}
+            <div
+              className="
+                    relative
+                    group
+
+                    flex
+                    justify-center
+                "
+            >
+
+              {/* OUTER GLOW */}
+              <div
+                className="
+                        absolute
+
+                        w-[420px]
+                        h-[420px]
+
+                        bg-cyan-400/20
+
+                        blur-[100px]
+
+                        rounded-full
+
+                        group-hover:scale-110
+
+                        transition-all
+                        duration-700
+                    "
+              ></div>
+
+              {/* IMAGE CARD */}
+              <div
+                className="
+                        relative
+
+                        overflow-hidden
+
+                        rounded-[40px]
+
+                        border border-white/10
+
+                        bg-white/[0.06]
+                        backdrop-blur-2xl
+
+                        shadow-[0_20px_80px_rgba(0,0,0,0.4)]
+
+                        p-3
+
+                        max-w-md
+                    "
+              >
+
+                {/* SHINE EFFECT */}
+                <div
+                  className="
+                            absolute
+                            inset-0
+
+                            bg-gradient-to-r
+                            from-transparent
+                            via-white/10
+                            to-transparent
+
+                            -translate-x-full
+
+                            group-hover:translate-x-full
+
+                            transition-all
+                            duration-1500
+                        "
+                ></div>
+
+                {/* OWNER IMAGE */}
+                <img
+                  src="/hero/owner.png"
+                  alt="Owner"
+
+                  className="
+                            relative z-10
+
+                            w-full
+                            h-[600px]
+
+                            object-cover
+
+                            rounded-[30px]
+
+                            group-hover:scale-105
+
+                            transition-transform
+                            duration-700
+                        "
+                />
+
+              </div>
+
+            </div>
+
+            {/* ================= CONTENT SIDE ================= */}
+            <div
+              className="
+                    text-center
+                    lg:text-left
+                "
+            >
+
+              {/* SMALL BADGE */}
+              <div
+                className="
+                        inline-flex items-center
+                        gap-2
+
+                        px-5 py-2
+
+                        rounded-full
+
+                        bg-cyan-400/10
+                        border border-cyan-400/20
+
+                        backdrop-blur-xl
+
+                        text-cyan-300
+                        text-sm
+                        font-semibold
+
+                        mb-7
+                    "
+              >
+
+                Founder & Owner
+
+              </div>
+
+              {/* HEADING */}
+              <h2
+                className="
+                        text-4xl
+                        sm:text-5xl
+                        lg:text-6xl
+
+                        font-black
+
+                        leading-tight
+
+                        text-white
+                    "
+              >
+
+                Meet The{" "}
+
+                <span
+                  className="
+                            bg-gradient-to-r
+                            from-cyan-300
+                            via-blue-300
+                            to-cyan-400
+
+                            bg-clip-text
+                            text-transparent
+                        "
+                >
+
+                  Visionary
+
+                </span>
+
+              </h2>
+
+              {/* DESCRIPTION */}
+              <p
+                className="
+                        mt-8
+
+                        text-gray-300
+
+                        text-base
+                        sm:text-lg
+
+                        leading-8
+
+                        max-w-2xl
+                    "
+              >
+
+                Passionate about premium printing,
+                branding and modern business solutions.
+                Dedicated to delivering high-quality
+                creative services with professionalism
+                and innovation.
+
+              </p>
+
+              {/* FEATURES */}
+              <div
+                className="
+                        mt-10
+
+                        grid
+                        grid-cols-1
+                        sm:grid-cols-2
+
+                        gap-5
+                    "
+              >
+
+                {[
+                  "Premium Quality Work",
+                  "Modern Creative Design",
+                  "Fast Delivery Services",
+                  "Trusted By Clients",
+                ].map((item, i) => (
+
+                  <div
+                    key={i}
+                    className="
+                                group
+
+                                flex items-center
+                                gap-4
+
+                                p-5
+
+                                rounded-2xl
+
+                                bg-white/[0.05]
+
+                                border border-white/10
+
+                                hover:border-cyan-400/30
+                                hover:bg-white/[0.08]
+
+                                transition-all
+                                duration-300
+                            "
+                  >
+
+                    <div
+                      className="
+                                    w-10 h-10
+
+                                    rounded-xl
+
+                                    bg-cyan-400/10
+
+                                    flex items-center
+                                    justify-center
+
+                                    text-cyan-300
+
+                                    group-hover:scale-110
+
+                                    transition-transform
+                                    duration-300
+                                "
+                    >
+
+                      ✓
+
+                    </div>
+
+                    <p
+                      className="
+                                    text-white
+                                    font-medium
+                                "
+                    >
+
+                      {item}
+
+                    </p>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+              {/* BUTTONS */}
+              <div
+                className="
+                        mt-12
+
+                        flex flex-col
+                        sm:flex-row
+
+                        gap-4
+                    "
+              >
+
+                {/* CONTACT BUTTON */}
+                <a
+                  href="/contact"
+                  className="
+                            group
+
+                            inline-flex
+                            items-center
+                            justify-center
+                            gap-3
+
+                            px-8 py-4
+
+                            rounded-2xl
+
+                            bg-gradient-to-r
+                            from-cyan-500
+                            to-blue-600
+
+                            text-white
+                            font-semibold
+
+                            shadow-[0_10px_40px_rgba(6,182,212,0.35)]
+
+                            hover:scale-105
+                            hover:shadow-cyan-500/40
+
+                            transition-all
+                            duration-300
+                        "
+                >
+
+                  Contact Now
+
+                  <ArrowRight
+                    size={20}
+                    className="
+                                transition-transform
+                                duration-300
+
+                                group-hover:translate-x-1
+                            "
+                  />
+
+                </a>
+
+                {/* LEARN MORE */}
+                <button
+                  className="
+                            px-8 py-4
+
+                            rounded-2xl
+
+                            border border-white/15
+
+                            bg-white/10
+                            backdrop-blur-2xl
+
+                            hover:bg-white/20
+
+                            text-white
+                            font-semibold
+
+                            transition-all
+                            duration-300
+
+                            hover:scale-105
+                        "
+                >
+
+                  Learn More
+
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
 
@@ -1295,7 +1757,7 @@ export default function HomePage() {
                   {
                     icon: <Mail size={28} />,
                     title: "Email Address",
-                    desc: "mail@workgenix.in",
+                    desc: "mdhammadnaved92010@gmail.com",
                   },
                 ].map((item, i) => (
 
@@ -1683,7 +2145,7 @@ export default function HomePage() {
                   </div>
 
                   <div className="text-gray-300 leading-7">
-                    mail@workgenix.in
+                    mdhammadnaved92010@gmail.com
                   </div>
 
                 </div>

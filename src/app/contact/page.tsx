@@ -843,7 +843,7 @@ ${form.message}
                         leading-7
                     "
                                     >
-                                        mdhammadnaveed92010@gmail.com
+                                       mdhammadnaved92010@gmail.com
                                     </h2>
 
                                     <p

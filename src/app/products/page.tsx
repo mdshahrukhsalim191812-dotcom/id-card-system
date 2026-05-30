@@ -1380,7 +1380,7 @@ export default function ProductsPage() {
                   break-all
                 "
                                         >
-                                            mdhammadnaveed92010@gmail.com
+                                           mdhammadnaved92010@gmail.com
                                         </h3>
 
                                     </div>
