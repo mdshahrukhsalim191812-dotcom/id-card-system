@@ -32,7 +32,7 @@ export default function HomePage() {
       title: "Printing",
       highlight: "Impact",
       desc:
-        "High quality printing, branding and packaging solutions for businesses, schools and personal needs with premium finishing.",
+        "High quality printing, branding and packaging solutions for businesses, schools with premium finishing.",
     },
 
     {
@@ -73,7 +73,7 @@ export default function HomePage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoadingPage(false);
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   })

@@ -30,7 +30,7 @@ export default function Navbar() {
                 fixed
                 inset-x-0
                 top-0
-                z-999
+                z-[999]
 
                 bg-gradient-to-r
                 from-[#031326]

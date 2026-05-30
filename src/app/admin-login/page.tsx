@@ -309,7 +309,7 @@ export default function AdminLoginPage() {
                             text-gray-300
                         "
                         >
-                            Login to Admin dashboard
+                            Login to Admin Dashboard
                         </p>
 
                     </div>

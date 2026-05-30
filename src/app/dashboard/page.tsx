@@ -110,7 +110,7 @@ export default function DashboardPage() {
             className="
             min-h-screen
 
-            pt-[95px]
+            mt-[80px]
 
             bg-gradient-to-br
             from-[#F4F7FB]
