@@ -935,20 +935,29 @@ export default function ProductsPage() {
             </section >
 
             {/* ================= CONTACT SECTION ================= */}
-            <section
+            <motion.section
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+                viewport={{ once: true }}
                 className="
     relative
     overflow-hidden
+
     bg-gradient-to-b
     from-[#021B33]
     via-[#062B52]
     to-[#021B33]
+
     text-white
-    py-24
+
+    py-20
+    sm:py-24
+    lg:py-28
   "
             >
 
-                {/* GRID BACKGROUND */}
+                {/* ================= GRID BACKGROUND ================= */}
                 <div
                     className="
       absolute inset-0
@@ -960,40 +969,85 @@ export default function ProductsPage() {
     "
                 ></div>
 
-                {/* GLOW EFFECTS */}
-                <div
+                {/* ================= TOP DIVIDER ================= */}
+                <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "85%" }}
+                    transition={{ duration: 1.2 }}
+                    viewport={{ once: true }}
+                    className="
+      absolute
+      top-0
+      left-1/2
+      -translate-x-1/2
+
+      h-px
+
+      bg-gradient-to-r
+      from-transparent
+      via-cyan-400/30
+      to-transparent
+    "
+                ></motion.div>
+
+                {/* ================= GLOW EFFECTS ================= */}
+                <motion.div
+                    animate={{
+                        scale: [1, 1.08, 1],
+                    }}
+                    transition={{
+                        duration: 8,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                    }}
                     className="
       absolute
       -top-40
       -left-40
 
-      w-[500px]
-      h-[500px]
+      w-[400px]
+      sm:w-[500px]
+
+      h-[400px]
+      sm:h-[500px]
 
       bg-cyan-400/10
 
       blur-[120px]
+
       rounded-full
     "
-                ></div>
+                ></motion.div>
 
-                <div
+                <motion.div
+                    animate={{
+                        scale: [1, 1.1, 1],
+                    }}
+                    transition={{
+                        duration: 10,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                    }}
                     className="
       absolute
       -bottom-40
       -right-40
 
-      w-[500px]
-      h-[500px]
+      w-[400px]
+      sm:w-[500px]
+
+      h-[400px]
+      sm:h-[500px]
 
       bg-blue-500/10
 
       blur-[120px]
+
       rounded-full
     "
-                ></div>
+                ></motion.div>
 
-                {/* MAIN CONTAINER */}
+                {/* ================= MAIN CONTAINER ================= */}
                 <div
                     className="
       relative z-10
@@ -1001,8 +1055,9 @@ export default function ProductsPage() {
       max-w-7xl
       mx-auto
 
-      px-6
-      lg:px-10
+      px-4
+      sm:px-6
+      lg:px-8
     "
                 >
 
@@ -1012,20 +1067,48 @@ export default function ProductsPage() {
         grid-cols-1
         lg:grid-cols-2
 
-        gap-16
+        gap-12
+        lg:gap-20
+
         items-center
       "
                     >
 
                         {/* ================= LEFT CONTENT ================= */}
-                        <div
+                        <motion.div
+                            initial={{
+                                opacity: 0,
+                                x: -80,
+                            }}
+                            whileInView={{
+                                opacity: 1,
+                                x: 0,
+                            }}
+                            transition={{
+                                duration: 0.9,
+                            }}
+                            viewport={{ once: true }}
                             className="
-          animate-[fadeInUp_1s_ease]
+          text-center
+          lg:text-left
         "
                         >
 
                             {/* SMALL BADGE */}
-                            <div
+                            <motion.div
+                                initial={{
+                                    opacity: 0,
+                                    scale: 0.8,
+                                }}
+                                whileInView={{
+                                    opacity: 1,
+                                    scale: 1,
+                                }}
+                                transition={{
+                                    delay: 0.2,
+                                    duration: 0.5,
+                                }}
+                                viewport={{ once: true }}
                                 className="
             inline-flex items-center
             gap-2
@@ -1049,10 +1132,23 @@ export default function ProductsPage() {
 
                                 Contact Our Team
 
-                            </div>
+                            </motion.div>
 
                             {/* HEADING */}
-                            <h2
+                            <motion.h2
+                                initial={{
+                                    opacity: 0,
+                                    y: 40,
+                                }}
+                                whileInView={{
+                                    opacity: 1,
+                                    y: 0,
+                                }}
+                                transition={{
+                                    delay: 0.3,
+                                    duration: 0.8,
+                                }}
+                                viewport={{ once: true }}
                                 className="
             text-4xl
             sm:text-5xl
@@ -1083,10 +1179,23 @@ export default function ProductsPage() {
 
                                 </span>
 
-                            </h2>
+                            </motion.h2>
 
                             {/* DESCRIPTION */}
-                            <p
+                            <motion.p
+                                initial={{
+                                    opacity: 0,
+                                    y: 40,
+                                }}
+                                whileInView={{
+                                    opacity: 1,
+                                    y: 0,
+                                }}
+                                transition={{
+                                    delay: 0.4,
+                                    duration: 0.8,
+                                }}
+                                viewport={{ once: true }}
                                 className="
             mt-8
 
@@ -1098,6 +1207,9 @@ export default function ProductsPage() {
             leading-8
 
             max-w-xl
+
+            mx-auto
+            lg:mx-0
           "
                             >
 
@@ -1105,22 +1217,48 @@ export default function ProductsPage() {
                                 branding and professional design services
                                 tailored for schools, institutes and businesses.
 
-                            </p>
+                            </motion.p>
 
                             {/* BUTTONS */}
-                            <div
+                            <motion.div
+                                initial={{
+                                    opacity: 0,
+                                    y: 40,
+                                }}
+                                whileInView={{
+                                    opacity: 1,
+                                    y: 0,
+                                }}
+                                transition={{
+                                    delay: 0.5,
+                                    duration: 0.8,
+                                }}
+                                viewport={{ once: true }}
                                 className="
             mt-10
 
-            flex flex-col
+            flex
+            flex-col
             sm:flex-row
+
+            items-center
+            lg:items-start
+
+            justify-center
+            lg:justify-start
 
             gap-4
           "
                             >
 
                                 {/* CALL BUTTON */}
-                                <a
+                                <motion.a
+                                    whileHover={{
+                                        scale: 1.05,
+                                    }}
+                                    whileTap={{
+                                        scale: 0.97,
+                                    }}
                                     href="tel:+919525706529"
                                     className="
               group
@@ -1129,6 +1267,9 @@ export default function ProductsPage() {
               items-center
               justify-center
               gap-3
+
+              w-full
+              sm:w-auto
 
               px-8 py-4
 
@@ -1142,7 +1283,6 @@ export default function ProductsPage() {
 
               shadow-[0_10px_40px_rgba(6,182,212,0.35)]
 
-              hover:scale-105
               hover:shadow-cyan-500/40
 
               transition-all
@@ -1162,15 +1302,24 @@ export default function ProductsPage() {
               "
                                     />
 
-                                </a>
+                                </motion.a>
 
                                 {/* EMAIL BUTTON */}
-                                <a
+                                <motion.a
+                                    whileHover={{
+                                        scale: 1.05,
+                                    }}
+                                    whileTap={{
+                                        scale: 0.97,
+                                    }}
                                     href="mailto:mdhammadnaveed92010@gmail.com"
                                     className="
               inline-flex
               items-center
               justify-center
+
+              w-full
+              sm:w-auto
 
               px-8 py-4
 
@@ -1187,40 +1336,52 @@ export default function ProductsPage() {
 
               transition-all
               duration-300
-
-              hover:scale-105
             "
                                 >
 
                                     Send Email
 
-                                </a>
+                                </motion.a>
 
-                            </div>
+                            </motion.div>
 
-                        </div>
+                        </motion.div>
 
                         {/* ================= RIGHT CONTACT CARD ================= */}
-                        <div
+                        <motion.div
+                            initial={{
+                                opacity: 0,
+                                x: 80,
+                            }}
+                            whileInView={{
+                                opacity: 1,
+                                x: 0,
+                            }}
+                            transition={{
+                                duration: 1,
+                            }}
+                            viewport={{ once: true }}
+                            whileHover={{
+                                y: -8,
+                            }}
                             className="
           relative
 
-          rounded-[35px]
+          rounded-[30px]
+          sm:rounded-[35px]
 
           bg-white/[0.08]
           backdrop-blur-2xl
 
           border border-white/10
 
-          p-6
+          p-5
           sm:p-8
           lg:p-10
 
           shadow-[0_20px_80px_rgba(0,0,0,0.35)]
 
           overflow-hidden
-
-          animate-[fadeInUp_1.2s_ease]
         "
                         >
 
@@ -1241,239 +1402,149 @@ export default function ProductsPage() {
           "
                             ></div>
 
-                            <div className="relative z-10 space-y-7">
+                            <div className="relative z-10 space-y-5 sm:space-y-7">
 
-                                {/* PHONE */}
-                                <div
-                                    className="
-              group
+                                {[
+                                    {
+                                        icon: <Phone size={24} />,
+                                        title: "Phone",
+                                        desc: "+91 9525706529",
+                                        bg: "bg-blue-500/20",
+                                    },
+                                    {
+                                        icon: <Mail size={24} />,
+                                        title: "Email",
+                                        desc: "mdhammadnaveed92010@gmail.com",
+                                        bg: "bg-cyan-500/20",
+                                    },
+                                    {
+                                        icon: <MapPin size={24} />,
+                                        title: "Office",
+                                        desc: "Islampur, Shahjangi, Kabirpur Road, Bhagalpur",
+                                        bg: "bg-blue-500/20",
+                                    },
+                                ].map((item, i) => (
 
-              flex
-              items-start
+                                    <motion.div
+                                        key={i}
 
-              gap-5
+                                        initial={{
+                                            opacity: 0,
+                                            y: 40,
+                                        }}
 
-              p-5
+                                        whileInView={{
+                                            opacity: 1,
+                                            y: 0,
+                                        }}
 
-              rounded-3xl
+                                        transition={{
+                                            delay: i * 0.2,
+                                            duration: 0.7,
+                                        }}
 
-              bg-white/[0.04]
+                                        viewport={{ once: true }}
 
-              border border-white/10
+                                        whileHover={{
+                                            scale: 1.02,
+                                        }}
 
-              hover:border-cyan-400/30
-              hover:bg-white/[0.08]
-
-              transition-all
-              duration-300
-            "
-                                >
-
-                                    <div
                                         className="
-                shrink-0
+                group
 
-                w-14 h-14
+                flex
+                items-start
 
-                rounded-2xl
+                gap-4
+                sm:gap-5
 
-                bg-blue-500/20
+                p-4
+                sm:p-5
 
-                flex items-center justify-center
+                rounded-3xl
 
-                text-cyan-300
+                bg-white/[0.04]
 
-                group-hover:scale-110
-                transition-transform duration-300
+                border border-white/10
+
+                hover:border-cyan-400/30
+                hover:bg-white/[0.08]
+
+                transition-all
+                duration-300
               "
                                     >
 
-                                        <Phone size={24} />
+                                        {/* ICON */}
+                                        <div
+                                            className={`
+                  shrink-0
 
-                                    </div>
+                  w-12 h-12
+                  sm:w-14 sm:h-14
 
-                                    <div>
+                  rounded-2xl
 
-                                        <p className="text-blue-100 text-sm">
-                                            Phone
-                                        </p>
+                  ${item.bg}
 
-                                        <h3
-                                            className="
-                  mt-1
+                  flex items-center justify-center
 
-                  text-xl
-                  font-bold
-                "
-                                        >
-                                            +91 9525706529
-                                        </h3>
+                  text-cyan-300
 
-                                    </div>
+                  group-hover:scale-110
 
-                                </div>
-
-                                {/* EMAIL */}
-                                <div
-                                    className="
-              group
-
-              flex
-              items-start
-
-              gap-5
-
-              p-5
-
-              rounded-3xl
-
-              bg-white/[0.04]
-
-              border border-white/10
-
-              hover:border-cyan-400/30
-              hover:bg-white/[0.08]
-
-              transition-all
-              duration-300
-            "
-                                >
-
-                                    <div
-                                        className="
-                shrink-0
-
-                w-14 h-14
-
-                rounded-2xl
-
-                bg-cyan-500/20
-
-                flex items-center justify-center
-
-                text-cyan-300
-
-                group-hover:scale-110
-                transition-transform duration-300
-              "
-                                    >
-
-                                        <Mail size={24} />
-
-                                    </div>
-
-                                    <div>
-
-                                        <p className="text-blue-100 text-sm">
-                                            Email
-                                        </p>
-
-                                        <h3
-                                            className="
-                  mt-1
-
-                  text-base
-                  sm:text-lg
-
-                  font-bold
-
-                  break-all
-                "
-                                        >
-                                           mdhammadnaved92010@gmail.com
-                                        </h3>
-
-                                    </div>
-
-                                </div>
-
-                                {/* ADDRESS */}
-                                <div
-                                    className="
-              group
-
-              flex
-              items-start
-
-              gap-5
-
-              p-5
-
-              rounded-3xl
-
-              bg-white/[0.04]
-
-              border border-white/10
-
-              hover:border-cyan-400/30
-              hover:bg-white/[0.08]
-
-              transition-all
-              duration-300
-            "
-                                >
-
-                                    <div
-                                        className="
-                shrink-0
-
-                w-14 h-14
-
-                rounded-2xl
-
-                bg-blue-500/20
-
-                flex items-center justify-center
-
-                text-cyan-300
-
-                group-hover:scale-110
-                transition-transform duration-300
-              "
-                                    >
-
-                                        <MapPin size={24} />
-
-                                    </div>
-
-                                    <div>
-
-                                        <p className="text-blue-100 text-sm">
-                                            Office
-                                        </p>
-
-                                        <h3
-                                            className="
-                  mt-1
-
-                  text-base
-                  sm:text-lg
-
-                  font-bold
-
-                  leading-8
-                "
+                  transition-transform duration-300
+                `}
                                         >
 
-                                            Islampur, Shahjangi,
-                                            Kabirpur Road,
-                                            Bhagalpur
+                                            {item.icon}
 
-                                        </h3>
+                                        </div>
 
-                                    </div>
+                                        {/* TEXT */}
+                                        <div className="min-w-0 flex-1">
 
-                                </div>
+                                            <p className="text-blue-100 text-sm">
+
+                                                {item.title}
+
+                                            </p>
+
+                                            <h3
+                                                className="
+                    mt-1
+
+                    text-base
+                    sm:text-lg
+                    lg:text-xl
+
+                    font-bold
+
+                    leading-7
+
+                    break-words
+                  "
+                                            >
+
+                                                {item.desc}
+
+                                            </h3>
+
+                                        </div>
+
+                                    </motion.div>
+
+                                ))}
 
                             </div>
 
-                        </div>
+                        </motion.div>
 
                     </div>
 
                 </div>
 
-            </section>
+            </motion.section>
 
         </div >
 

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import HomeNavbar from "@/components/HomeNavbar";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 import {
@@ -76,48 +77,48 @@ export default function HomePage() {
     }, 3000);
 
     return () => clearTimeout(timer);
-  })
+  }, []);
 
   const products = [
     {
-      title: "Brochures & Pamphlets",
-      image: "/products/Brochure-&-Pamphlet.jpg",
-      desc: "Creative brochures to promote your business.",
+      title: "School ID Cards",
+      image: "/homeproducts/id-card.jpg",
+      desc: "Premium PVC school ID cards.",
     },
     {
-      title: "Visiting Cards",
-      image: "/products/visiting.jpg",
-      desc: "Premium quality visiting cards.",
+      title: "Acrylic ID Cards",
+      image: "/homeproducts/acrylic-id-card.jpg",
+      desc: "Modern acrylic ID card designs.",
     },
     {
-      title: "Banners & Flex",
-      image: "/products/banner.jpg",
-      desc: "Eye catching banners & flex.",
+      title: "School Belts",
+      image: "/homeproducts/belt.jpg",
+      desc: "Custom school uniform belts.",
     },
     {
-      title: "Posters & Flyers",
-      image: "/products/poster.jpg",
-      desc: "Attractive posters & flyers.",
+      title: "School Ties",
+      image: "/homeproducts/tie.jpg",
+      desc: "Stylish ties for school uniforms.",
     },
     {
-      title: "Packaging Products",
-      image: "/products/package.jpg",
-      desc: "Custom packaging solutions.",
+      title: "School Copies",
+      image: "/homeproducts/copy.jpg",
+      desc: "Printed notebooks and copies.",
     },
     {
-      title: "Wedding Cards",
-      image: "/products/wedding-card.jpg",
-      desc: "Elegant wedding invitation cards.",
+      title: "Report Cards",
+      image: "/homeproducts/report-card.jpg",
+      desc: "Professional report cards.",
     },
     {
-      title: "Booklets & Catalogs",
-      image: "/products/booklet.jpg",
-      desc: "Professional booklets & catalogs.",
+      title: "Custom Diaries",
+      image: "/homeproducts/diary.jpg",
+      desc: "Branded diaries for schools.",
     },
     {
-      title: "Stickers & Labels",
-      image: "/products/sticker.jpg",
-      desc: "Custom stickers & labels.",
+      title: "Printed T-Shirts",
+      image: "/homeproducts/tshirt.jpg",
+      desc: "Custom printed school t-shirts.",
     },
   ];
 
@@ -346,7 +347,6 @@ export default function HomePage() {
       {/* ================= WHATSAPP FLOAT ================= */}
       <a
         href="https://wa.me/919525706529"
-        target="_blank"
         className="
           fixed bottom-5 right-5 z-50
           flex items-center justify-center
@@ -786,911 +786,81 @@ export default function HomePage() {
 
       </section>
 
-      {/* ================= OWNER SECTION ================= */}
+      {/* ================= PRODUCTS ================= */}
       <section
         className="
-        relative
-        overflow-hidden
-
-        py-24
-
-        bg-gradient-to-b
-        from-[#031326]
-        via-[#062B52]
-        to-[#031326]
-    "
+    relative
+    overflow-hidden
+    py-24
+    bg-gradient-to-b
+    from-[#031326]
+    via-[#062B52]
+    to-[#031326]
+  "
       >
 
-        {/* ================= GRID BACKGROUND ================= */}
+        {/* ================= GLOBAL EFFECTS ================= */}
         <div
           className="
-            absolute inset-0
-
-            opacity-[0.03]
-
-            [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
-
-            [background-size:60px_60px]
-        "
-        ></div>
-
-        {/* ================= GLOW EFFECTS ================= */}
-        <div
-          className="
-            absolute
-            -top-40
-            -left-40
-
-            w-[500px]
-            h-[500px]
-
-            bg-cyan-400/10
-
-            blur-[120px]
-
-            rounded-full
-        "
+      absolute inset-0
+      opacity-[0.04]
+      [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
+      [background-size:60px_60px]
+    "
         ></div>
 
         <div
           className="
-            absolute
-            -bottom-40
-            -right-40
-
-            w-[500px]
-            h-[500px]
-
-            bg-blue-500/10
-
-            blur-[120px]
-
-            rounded-full
-        "
+      absolute -top-40 -left-40
+      w-[500px] h-[500px]
+      bg-cyan-400/10
+      blur-[120px]
+      rounded-full
+    "
         ></div>
 
-        {/* ================= MAIN CONTAINER ================= */}
         <div
           className="
-            relative z-10
+      absolute -bottom-40 -right-40
+      w-[500px] h-[500px]
+      bg-blue-500/10
+      blur-[120px]
+      rounded-full
+    "
+        ></div>
 
-            max-w-7xl
-            mx-auto
-
-            px-6
-            lg:px-10
-        "
+        <div
+          className="
+      relative z-10
+      max-w-7xl mx-auto
+      px-4 sm:px-6 lg:px-8
+    "
         >
 
-          <div
+          {/* ================= HEADING ================= */}
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 50,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.8,
+            }}
+            viewport={{ once: true }}
             className="
-                grid
-                grid-cols-1
-                lg:grid-cols-2
-
-                gap-16
-                items-center
-            "
+        text-center
+        max-w-3xl
+        mx-auto
+        mb-20
+      "
           >
 
-            {/* ================= IMAGE SIDE ================= */}
             <div
               className="
-                    relative
-                    group
-
-                    flex
-                    justify-center
-                "
-            >
-
-              {/* OUTER GLOW */}
-              <div
-                className="
-                        absolute
-
-                        w-[420px]
-                        h-[420px]
-
-                        bg-cyan-400/20
-
-                        blur-[100px]
-
-                        rounded-full
-
-                        group-hover:scale-110
-
-                        transition-all
-                        duration-700
-                    "
-              ></div>
-
-              {/* IMAGE CARD */}
-              <div
-                className="
-                        relative
-
-                        overflow-hidden
-
-                        rounded-[40px]
-
-                        border border-white/10
-
-                        bg-white/[0.06]
-                        backdrop-blur-2xl
-
-                        shadow-[0_20px_80px_rgba(0,0,0,0.4)]
-
-                        p-3
-
-                        max-w-md
-                    "
-              >
-
-                {/* SHINE EFFECT */}
-                <div
-                  className="
-                            absolute
-                            inset-0
-
-                            bg-gradient-to-r
-                            from-transparent
-                            via-white/10
-                            to-transparent
-
-                            -translate-x-full
-
-                            group-hover:translate-x-full
-
-                            transition-all
-                            duration-1500
-                        "
-                ></div>
-
-                {/* OWNER IMAGE */}
-                <img
-                  src="/hero/owner.png"
-                  alt="Owner"
-
-                  className="
-                            relative z-10
-
-                            w-full
-                            h-[600px]
-
-                            object-cover
-
-                            rounded-[30px]
-
-                            group-hover:scale-105
-
-                            transition-transform
-                            duration-700
-                        "
-                />
-
-              </div>
-
-            </div>
-
-            {/* ================= CONTENT SIDE ================= */}
-            <div
-              className="
-                    text-center
-                    lg:text-left
-                "
-            >
-
-              {/* SMALL BADGE */}
-              <div
-                className="
-                        inline-flex items-center
-                        gap-2
-
-                        px-5 py-2
-
-                        rounded-full
-
-                        bg-cyan-400/10
-                        border border-cyan-400/20
-
-                        backdrop-blur-xl
-
-                        text-cyan-300
-                        text-sm
-                        font-semibold
-
-                        mb-7
-                    "
-              >
-
-                Founder & Owner
-
-              </div>
-
-              {/* HEADING */}
-              <h2
-                className="
-                        text-4xl
-                        sm:text-5xl
-                        lg:text-6xl
-
-                        font-black
-
-                        leading-tight
-
-                        text-white
-                    "
-              >
-
-                Meet The{" "}
-
-                <span
-                  className="
-                            bg-gradient-to-r
-                            from-cyan-300
-                            via-blue-300
-                            to-cyan-400
-
-                            bg-clip-text
-                            text-transparent
-                        "
-                >
-
-                  Visionary
-
-                </span>
-
-              </h2>
-
-              {/* DESCRIPTION */}
-              <p
-                className="
-                        mt-8
-
-                        text-gray-300
-
-                        text-base
-                        sm:text-lg
-
-                        leading-8
-
-                        max-w-2xl
-                    "
-              >
-
-                Passionate about premium printing,
-                branding and modern business solutions.
-                Dedicated to delivering high-quality
-                creative services with professionalism
-                and innovation.
-
-              </p>
-
-              {/* FEATURES */}
-              <div
-                className="
-                        mt-10
-
-                        grid
-                        grid-cols-1
-                        sm:grid-cols-2
-
-                        gap-5
-                    "
-              >
-
-                {[
-                  "Premium Quality Work",
-                  "Modern Creative Design",
-                  "Fast Delivery Services",
-                  "Trusted By Clients",
-                ].map((item, i) => (
-
-                  <div
-                    key={i}
-                    className="
-                                group
-
-                                flex items-center
-                                gap-4
-
-                                p-5
-
-                                rounded-2xl
-
-                                bg-white/[0.05]
-
-                                border border-white/10
-
-                                hover:border-cyan-400/30
-                                hover:bg-white/[0.08]
-
-                                transition-all
-                                duration-300
-                            "
-                  >
-
-                    <div
-                      className="
-                                    w-10 h-10
-
-                                    rounded-xl
-
-                                    bg-cyan-400/10
-
-                                    flex items-center
-                                    justify-center
-
-                                    text-cyan-300
-
-                                    group-hover:scale-110
-
-                                    transition-transform
-                                    duration-300
-                                "
-                    >
-
-                      ✓
-
-                    </div>
-
-                    <p
-                      className="
-                                    text-white
-                                    font-medium
-                                "
-                    >
-
-                      {item}
-
-                    </p>
-
-                  </div>
-
-                ))}
-
-              </div>
-
-              {/* BUTTONS */}
-              <div
-                className="
-                        mt-12
-
-                        flex flex-col
-                        sm:flex-row
-
-                        gap-4
-                    "
-              >
-
-                {/* CONTACT BUTTON */}
-                <a
-                  href="/contact"
-                  className="
-                            group
-
-                            inline-flex
-                            items-center
-                            justify-center
-                            gap-3
-
-                            px-8 py-4
-
-                            rounded-2xl
-
-                            bg-gradient-to-r
-                            from-cyan-500
-                            to-blue-600
-
-                            text-white
-                            font-semibold
-
-                            shadow-[0_10px_40px_rgba(6,182,212,0.35)]
-
-                            hover:scale-105
-                            hover:shadow-cyan-500/40
-
-                            transition-all
-                            duration-300
-                        "
-                >
-
-                  Contact Now
-
-                  <ArrowRight
-                    size={20}
-                    className="
-                                transition-transform
-                                duration-300
-
-                                group-hover:translate-x-1
-                            "
-                  />
-
-                </a>
-
-                {/* LEARN MORE */}
-                <button
-                  className="
-                            px-8 py-4
-
-                            rounded-2xl
-
-                            border border-white/15
-
-                            bg-white/10
-                            backdrop-blur-2xl
-
-                            hover:bg-white/20
-
-                            text-white
-                            font-semibold
-
-                            transition-all
-                            duration-300
-
-                            hover:scale-105
-                        "
-                >
-
-                  Learn More
-
-                </button>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* ================= PRODUCTS ================= */}
-      <section className="
-  relative
-  overflow-hidden
-  py-24
-  bg-gradient-to-b
-  from-[#031326]
-  via-[#062B52]
-  to-[#031326]
-">
-
-        {/* ================= GLOBAL EFFECTS ================= */}
-        <div className="
-    absolute inset-0
-    opacity-[0.04]
-    [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
-    [background-size:60px_60px]
-  "></div>
-
-        <div className="
-    absolute -top-40 -left-40
-    w-[500px] h-[500px]
-    bg-cyan-400/10
-    blur-[120px]
-    rounded-full
-  "></div>
-
-        <div className="
-    absolute -bottom-40 -right-40
-    w-[500px] h-[500px]
-    bg-blue-500/10
-    blur-[120px]
-    rounded-full
-  "></div>
-
-        <div className="
-    relative z-10
-    max-w-7xl mx-auto
-    px-4 sm:px-6 lg:px-8
-  ">
-
-          {/* ================= COMMON HEADING ================= */}
-          <div className="
-      text-center
-      max-w-3xl
-      mx-auto
-      mb-20
-    ">
-
-            <div className="
-        inline-flex items-center
-        px-5 py-2
-        rounded-full
-        bg-cyan-400/10
-        border border-cyan-400/20
-        backdrop-blur-md
-        text-cyan-300
-        text-sm font-semibold
-        mb-6
-      ">
-              Premium Printing Solutions
-            </div>
-
-            <h2 className="
-        text-4xl sm:text-5xl lg:text-6xl
-        font-extrabold
-        leading-tight
-        text-white
-      ">
-
-              Our{" "}
-
-              <span className="
-          bg-gradient-to-r
-          from-cyan-300
-          to-blue-400
-          bg-clip-text
-          text-transparent
-        ">
-                Services & Products
-              </span>
-
-            </h2>
-
-            <p className="
-        text-gray-300
-        mt-6
-        text-base sm:text-lg
-        leading-relaxed
-      ">
-              High-quality printing, branding, and
-              professional design solutions crafted
-              to elevate your business identity.
-            </p>
-
-          </div>
-
-          {/* ================= GRID ================= */}
-          <div className="
-      grid grid-cols-1
-      sm:grid-cols-2
-      xl:grid-cols-4
-      gap-8
-    ">
-
-            {products.map((item, i) => (
-
-              <div
-                key={i}
-                className="
-            group
-            relative
-            overflow-hidden
-            rounded-[30px]
-            bg-white/[0.06]
-            backdrop-blur-2xl
-            border border-white/10
-            shadow-[0_10px_40px_rgba(0,0,0,0.25)]
-            hover:border-cyan-400/40
-            hover:shadow-cyan-500/20
-            transition-all duration-500
-            hover:-translate-y-3
-          "
-              >
-
-                {/* Glow */}
-                <div className="
-            absolute inset-0
-            bg-gradient-to-br
-            from-cyan-400/0
-            to-blue-500/0
-            group-hover:from-cyan-400/10
-            group-hover:to-blue-500/10
-            transition-all duration-500
-          "></div>
-
-                {/* Image */}
-                <div className="relative overflow-hidden">
-
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    width={500}
-                    height={300}
-                    className="
-                w-full h-60
-                object-cover
-                transition-transform duration-700
-                group-hover:scale-110
-              "
-                  />
-
-                  <div className="
-              absolute inset-0
-              bg-gradient-to-t
-              from-black/60
-              via-transparent
-              to-transparent
-            "></div>
-
-                </div>
-
-                {/* Content */}
-                <div className="
-            relative z-10
-            p-7
-          ">
-
-                  <h3 className="
-              text-2xl
-              font-bold
-              text-white
-              mb-4
-              group-hover:text-cyan-300
-              transition-colors duration-300
-            ">
-                    {item.title}
-                  </h3>
-
-                  <p className="
-              text-gray-300
-              leading-relaxed
-            ">
-                    {item.desc}
-                  </p>
-
-                  <div className="
-              mt-6
-              w-12 h-[3px]
-              rounded-full
-              bg-gradient-to-r
-              from-cyan-400
-              to-blue-500
-              group-hover:w-20
-              transition-all duration-500
-            "></div>
-
-                </div>
-
-              </div>
-
-            ))}
-
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* ================= FEATURES ================= */}
-      <section className="
-  relative
-  overflow-hidden
-  py-24
-  bg-gradient-to-b
-  from-[#031326]
-  via-[#062B52]
-  to-[#031326]
-">
-
-        {/* Divider */}
-        <div className="
-    absolute top-0 left-1/2
-    -translate-x-1/2
-    w-[85%] h-px
-    bg-gradient-to-r
-    from-transparent
-    via-cyan-400/30
-    to-transparent
-  "></div>
-
-        <div className="
-    relative z-10
-    max-w-7xl mx-auto
-    px-4 sm:px-6 lg:px-8
-  ">
-
-          {/* Heading */}
-          <div className="
-      text-center
-      max-w-3xl
-      mx-auto
-      mb-20
-    ">
-
-            <div className="
-        inline-flex items-center
-        px-5 py-2
-        rounded-full
-        bg-cyan-400/10
-        border border-cyan-400/20
-        backdrop-blur-md
-        text-cyan-300
-        text-sm font-semibold
-        mb-6
-      ">
-              Why Businesses Trust Work GeniX
-            </div>
-
-            <h2 className="
-        text-4xl sm:text-5xl lg:text-6xl
-        font-extrabold
-        leading-tight
-        text-white
-      ">
-
-              Why{" "}
-
-              <span className="
-          bg-gradient-to-r
-          from-cyan-300
-          to-blue-400
-          bg-clip-text
-          text-transparent
-        ">
-                Choose Us
-              </span>
-
-            </h2>
-
-            <p className="
-        text-gray-300
-        mt-6
-        text-base sm:text-lg
-        leading-relaxed
-      ">
-              Delivering premium printing, branding,
-              and creative solutions with innovation,
-              trust, and unmatched quality.
-            </p>
-
-          </div>
-
-          {/* Cards */}
-          <div className="
-      grid
-      grid-cols-1
-      sm:grid-cols-2
-      xl:grid-cols-4
-      gap-8
-    ">
-
-            {[
-              {
-                icon: <Award size={42} />,
-                title: "Creative Design",
-                desc: "Unique and innovative designs tailored for modern businesses.",
-              },
-              {
-                icon: <Layers3 size={42} />,
-                title: "Latest Technology",
-                desc: "Advanced printing machines delivering precision and quality.",
-              },
-              {
-                icon: <Users size={42} />,
-                title: "Premium Quality",
-                desc: "Using durable materials for long-lasting premium results.",
-              },
-              {
-                icon: <Briefcase size={42} />,
-                title: "Customer Satisfaction",
-                desc: "Building long-term trust through reliable professional service.",
-              },
-            ].map((item, i) => (
-
-              <div
-                key={i}
-                className="
-            group
-            relative
-            overflow-hidden
-            rounded-[30px]
-            bg-white/[0.06]
-            backdrop-blur-2xl
-            border border-white/10
-            p-8
-            text-center
-            shadow-[0_10px_40px_rgba(0,0,0,0.25)]
-            hover:-translate-y-3
-            hover:border-cyan-400/40
-            hover:shadow-cyan-500/20
-            transition-all duration-500
-          "
-              >
-
-                {/* Icon */}
-                <div className="
-            relative z-10
-            w-24 h-24
-            rounded-[28px]
-            bg-gradient-to-br
-            from-cyan-400/20
-            to-blue-500/20
-            border border-white/10
-            text-cyan-300
-            flex items-center justify-center
-            mx-auto mb-7
-            group-hover:scale-110
-            group-hover:text-white
-            transition-all duration-500
-          ">
-
-                  {item.icon}
-
-                </div>
-
-                <h3 className="
-            text-2xl
-            font-bold
-            mb-4
-            text-white
-            group-hover:text-cyan-300
-            transition-colors duration-300
-          ">
-                  {item.title}
-                </h3>
-
-                <p className="
-            text-gray-300
-            leading-relaxed
-          ">
-                  {item.desc}
-                </p>
-
-                <div className="
-            mt-6 mx-auto
-            w-12 h-[3px]
-            rounded-full
-            bg-gradient-to-r
-            from-cyan-400
-            to-blue-500
-            group-hover:w-20
-            transition-all duration-500
-          "></div>
-
-              </div>
-
-            ))}
-
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* ================= LOCATION ================= */}
-      <section className="
-  relative
-  overflow-hidden
-  py-24
-  bg-gradient-to-b
-  from-[#031326]
-  via-[#062B52]
-  to-[#031326]
-">
-
-        {/* Divider */}
-        <div className="
-    absolute top-0 left-1/2
-    -translate-x-1/2
-    w-[85%] h-px
-    bg-gradient-to-r
-    from-transparent
-    via-cyan-400/30
-    to-transparent
-  "></div>
-
-        <div className="
-    relative z-10
-    max-w-7xl mx-auto
-    px-4 sm:px-6 lg:px-8
-  ">
-
-          <div className="
-      grid lg:grid-cols-2
-      gap-16
-      items-center
-    ">
-
-            {/* LEFT */}
-            <div>
-
-              <div className="
           inline-flex items-center
           px-5 py-2
           rounded-full
@@ -1700,48 +870,1452 @@ export default function HomePage() {
           text-cyan-300
           text-sm font-semibold
           mb-6
-        ">
-                FIND US
-              </div>
+        "
+            >
+              Premium Printing Solutions
+            </div>
 
-              <h2 className="
+            <h2
+              className="
           text-4xl sm:text-5xl lg:text-6xl
           font-extrabold
           leading-tight
           text-white
-        ">
+        "
+            >
 
-                Visit Our{" "}
+              Our{" "}
 
-                <span className="
+              <span
+                className="
             bg-gradient-to-r
             from-cyan-300
             to-blue-400
             bg-clip-text
             text-transparent
-          ">
-                  Office
-                </span>
+          "
+              >
+                Services & Products
+              </span>
 
-              </h2>
+            </h2>
 
-              <p className="
+            <p
+              className="
           text-gray-300
           mt-6
           text-base sm:text-lg
           leading-relaxed
-        ">
-                Work GeniX provides complete printing,
-                designing, and branding solutions with
-                advanced technology and premium quality
-                finishing for businesses and institutions.
-              </p>
+        "
+            >
+              High-quality printing, branding,
+              and professional design solutions
+              crafted to elevate your business identity.
+            </p>
 
-              {/* Contact Cards */}
-              <div className="
-          mt-10
-          space-y-5
-        ">
+          </motion.div>
+
+          {/* ================= PRODUCTS GRID ================= */}
+          <div
+            className="
+        grid
+        grid-cols-1
+        sm:grid-cols-2
+        xl:grid-cols-4
+        gap-8
+      "
+          >
+
+            {products.map((item, i) => (
+
+              <motion.div
+                key={i}
+
+                initial={{
+                  opacity: 0,
+                  y: 80,
+                  scale: 0.9,
+                }}
+
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                }}
+
+                transition={{
+                  duration: 0.7,
+                  delay: i * 0.12,
+                }}
+
+                viewport={{ once: true }}
+
+                whileHover={{
+                  y: -12,
+                  scale: 1.03,
+                }}
+
+                className="
+            group
+            relative
+            overflow-hidden
+            rounded-[30px]
+
+            bg-white/[0.06]
+            backdrop-blur-2xl
+
+            border border-white/10
+
+            shadow-[0_10px_40px_rgba(0,0,0,0.25)]
+
+            hover:border-cyan-400/40
+            hover:shadow-cyan-500/20
+
+            transition-all duration-500
+          "
+              >
+
+                {/* Glow */}
+                <div
+                  className="
+              absolute inset-0
+
+              bg-gradient-to-br
+              from-cyan-400/0
+              to-blue-500/0
+
+              group-hover:from-cyan-400/10
+              group-hover:to-blue-500/10
+
+              transition-all duration-500
+            "
+                ></div>
+
+                {/* Image */}
+                <div
+                  className="
+              relative
+              overflow-hidden
+            "
+                >
+
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={500}
+                    height={300}
+                    className="
+                w-full
+                h-60
+
+                object-cover
+
+                transition-transform
+                duration-700
+
+                group-hover:scale-110
+              "
+                  />
+
+                  <div
+                    className="
+                absolute inset-0
+
+                bg-gradient-to-t
+                from-black/60
+                via-transparent
+                to-transparent
+              "
+                  ></div>
+
+                </div>
+
+                {/* CONTENT */}
+                <div
+                  className="
+              relative z-10
+              p-7
+            "
+                >
+
+                  <h3
+                    className="
+                text-2xl
+                font-bold
+                text-white
+
+                mb-4
+
+                group-hover:text-cyan-300
+
+                transition-colors duration-300
+              "
+                  >
+                    {item.title}
+                  </h3>
+
+                  <p
+                    className="
+                text-gray-300
+                leading-relaxed
+              "
+                  >
+                    {item.desc}
+                  </p>
+
+                  <div
+                    className="
+                mt-6
+                w-12 h-[3px]
+
+                rounded-full
+
+                bg-gradient-to-r
+                from-cyan-400
+                to-blue-500
+
+                group-hover:w-20
+
+                transition-all duration-500
+              "
+                  ></div>
+
+                </div>
+
+              </motion.div>
+
+            ))}
+
+          </div>
+
+        </div>
+
+      </section>
+
+      {/* ================= OWNER SECTION ================= */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        viewport={{ once: true }}
+        className="
+    relative
+    overflow-hidden
+    py-24
+    bg-gradient-to-b
+    from-[#031326]
+    via-[#062B52]
+    to-[#031326]
+  "
+      >
+
+        {/* ================= GRID BACKGROUND ================= */}
+        <div
+          className="
+      absolute inset-0
+      opacity-[0.03]
+      [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
+      [background-size:60px_60px]
+    "
+        ></div>
+
+        {/* ================= GLOW EFFECTS ================= */}
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="
+      absolute
+      -top-40
+      -left-40
+
+      w-[500px]
+      h-[500px]
+
+      bg-cyan-400/10
+
+      blur-[120px]
+
+      rounded-full
+    "
+        ></motion.div>
+
+        <motion.div
+          animate={{
+            scale: [1, 1.15, 1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="
+      absolute
+      -bottom-40
+      -right-40
+
+      w-[500px]
+      h-[500px]
+
+      bg-blue-500/10
+
+      blur-[120px]
+
+      rounded-full
+    "
+        ></motion.div>
+
+        {/* ================= MAIN CONTAINER ================= */}
+        <div
+          className="
+      relative z-10
+
+      max-w-7xl
+      mx-auto
+
+      px-6
+      lg:px-10
+    "
+        >
+
+          <div
+            className="
+        grid
+        grid-cols-1
+        lg:grid-cols-2
+
+        gap-16
+        items-center
+      "
+          >
+
+            {/* ================= IMAGE SIDE ================= */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: -120,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              transition={{
+                duration: 1,
+              }}
+              viewport={{ once: true }}
+              className="
+          relative
+          group
+
+          flex
+          justify-center
+        "
+            >
+
+              {/* OUTER GLOW */}
+              <motion.div
+                animate={{
+                  scale: [1, 1.08, 1],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="
+            absolute
+
+            w-[420px]
+            h-[420px]
+
+            bg-cyan-400/20
+
+            blur-[100px]
+
+            rounded-full
+          "
+              ></motion.div>
+
+              {/* ================= CIRCLE IMAGE CARD ================= */}
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  rotate: 2,
+                }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="
+            relative
+
+            w-[320px]
+            h-[320px]
+
+            sm:w-[380px]
+            sm:h-[380px]
+
+            rounded-full
+
+            border-[6px]
+            border-white/10
+
+            bg-white/[0.06]
+            backdrop-blur-2xl
+
+            shadow-[0_20px_80px_rgba(0,0,0,0.4)]
+
+            overflow-hidden
+
+            flex
+            items-center
+            justify-center
+          "
+              >
+
+                {/* SHINE EFFECT */}
+                <div
+                  className="
+              absolute
+              inset-0
+
+              bg-gradient-to-r
+              from-transparent
+              via-white/10
+              to-transparent
+
+              -translate-x-full
+
+              group-hover:translate-x-full
+
+              transition-all
+              duration-1500
+
+              z-20
+            "
+                ></div>
+
+                {/* ROTATING BORDER */}
+                <motion.div
+                  animate={{
+                    rotate: 360,
+                  }}
+                  transition={{
+                    duration: 15,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                  className="
+              absolute
+              inset-0
+
+              rounded-full
+
+              border-[3px]
+              border-cyan-400/30
+            "
+                ></motion.div>
+
+                {/* OWNER IMAGE */}
+                <motion.img
+                  src="/hero/owner.png"
+                  alt="Owner"
+
+                  animate={{
+                    y: [0, -8, 0],
+                  }}
+
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+
+                  className="
+              relative z-10
+
+              w-full
+              h-full
+
+              object-cover
+
+              rounded-full
+            "
+                />
+
+              </motion.div>
+
+            </motion.div>
+
+            {/* ================= CONTENT SIDE ================= */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: 120,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              transition={{
+                duration: 1,
+              }}
+              viewport={{ once: true }}
+              className="
+          text-center
+          lg:text-left
+        "
+            >
+
+              {/* SMALL BADGE */}
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 30,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.2,
+                  duration: 0.7,
+                }}
+                viewport={{ once: true }}
+                className="
+            inline-flex items-center
+            gap-2
+
+            px-5 py-2
+
+            rounded-full
+
+            bg-cyan-400/10
+            border border-cyan-400/20
+
+            backdrop-blur-xl
+
+            text-cyan-300
+            text-sm
+            font-semibold
+
+            mb-7
+          "
+              >
+
+                Founder & Owner
+
+              </motion.div>
+
+              {/* HEADING */}
+              <motion.h2
+                initial={{
+                  opacity: 0,
+                  y: 40,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.3,
+                  duration: 0.8,
+                }}
+                viewport={{ once: true }}
+                className="
+            text-4xl
+            sm:text-5xl
+            lg:text-6xl
+
+            font-black
+
+            leading-tight
+
+            text-white
+          "
+              >
+
+                Meet The{" "}
+                <br></br>
+                <span
+                  className="
+              bg-gradient-to-r
+              from-cyan-300
+              via-blue-300
+              to-cyan-400
+
+              bg-clip-text
+              text-transparent
+            "
+                >
+
+                  Naweed Arfi
+
+                </span>
+
+              </motion.h2>
+
+              {/* DESCRIPTION */}
+              <motion.p
+                initial={{
+                  opacity: 0,
+                  y: 40,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.4,
+                  duration: 0.8,
+                }}
+                viewport={{ once: true }}
+                className="
+            mt-8
+
+            text-gray-300
+
+            text-base
+            sm:text-lg
+
+            leading-8
+
+            max-w-2xl
+          "
+              >
+
+                Passionate about premium printing,
+                branding and modern business solutions.
+                Dedicated to delivering high-quality
+                creative services with professionalism
+                and innovation.
+
+              </motion.p>
+
+            </motion.div>
+
+          </div>
+
+        </div>
+
+      </motion.section>
+
+      {/* ================= FEATURES ================= */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        viewport={{ once: true }}
+        className="
+    relative
+    overflow-hidden
+    py-24
+
+    bg-gradient-to-b
+    from-[#031326]
+    via-[#062B52]
+    to-[#031326]
+  "
+      >
+
+        {/* ================= GRID BACKGROUND ================= */}
+        <div
+          className="
+      absolute inset-0
+
+      opacity-[0.03]
+
+      [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
+
+      [background-size:60px_60px]
+    "
+        ></div>
+
+        {/* ================= TOP DIVIDER ================= */}
+        <motion.div
+          initial={{ width: 0 }}
+          whileInView={{ width: "85%" }}
+          transition={{ duration: 1.2 }}
+          viewport={{ once: true }}
+          className="
+      absolute top-0 left-1/2
+      -translate-x-1/2
+
+      h-px
+
+      bg-gradient-to-r
+      from-transparent
+      via-cyan-400/30
+      to-transparent
+    "
+        ></motion.div>
+
+        {/* ================= GLOW EFFECTS ================= */}
+        <motion.div
+          animate={{
+            scale: [1, 1.08, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="
+      absolute
+      -top-40
+      -left-40
+
+      w-[500px]
+      h-[500px]
+
+      bg-cyan-400/10
+
+      blur-[120px]
+
+      rounded-full
+    "
+        ></motion.div>
+
+        <motion.div
+          animate={{
+            scale: [1, 1.12, 1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="
+      absolute
+      -bottom-40
+      -right-40
+
+      w-[500px]
+      h-[500px]
+
+      bg-blue-500/10
+
+      blur-[120px]
+
+      rounded-full
+    "
+        ></motion.div>
+
+        {/* ================= MAIN CONTAINER ================= */}
+        <div
+          className="
+      relative z-10
+
+      max-w-7xl
+      mx-auto
+
+      px-4
+      sm:px-6
+      lg:px-8
+    "
+        >
+
+          {/* ================= HEADING ================= */}
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 60,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.9,
+            }}
+            viewport={{ once: true }}
+            className="
+        text-center
+        max-w-3xl
+        mx-auto
+        mb-20
+      "
+          >
+
+            {/* Badge */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0.8,
+              }}
+              whileInView={{
+                opacity: 1,
+                scale: 1,
+              }}
+              transition={{
+                delay: 0.2,
+                duration: 0.5,
+              }}
+              viewport={{ once: true }}
+              className="
+          inline-flex
+          items-center
+
+          px-5 py-2
+
+          rounded-full
+
+          bg-cyan-400/10
+
+          border border-cyan-400/20
+
+          backdrop-blur-md
+
+          text-cyan-300
+          text-sm
+          font-semibold
+
+          mb-6
+        "
+            >
+
+              Why Businesses Trust Work GeniX
+
+            </motion.div>
+
+            {/* Heading */}
+            <motion.h2
+              initial={{
+                opacity: 0,
+                y: 40,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                delay: 0.3,
+                duration: 0.8,
+              }}
+              viewport={{ once: true }}
+              className="
+          text-4xl
+          sm:text-5xl
+          lg:text-6xl
+
+          font-black
+
+          leading-tight
+
+          text-white
+        "
+            >
+
+              Why{" "}
+
+              <span
+                className="
+            bg-gradient-to-r
+            from-cyan-300
+            via-blue-300
+            to-cyan-400
+
+            bg-clip-text
+            text-transparent
+          "
+              >
+
+                Choose Us
+
+              </span>
+
+            </motion.h2>
+
+            {/* Description */}
+            <motion.p
+              initial={{
+                opacity: 0,
+                y: 40,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                delay: 0.4,
+                duration: 0.8,
+              }}
+              viewport={{ once: true }}
+              className="
+          mt-6
+
+          text-gray-300
+
+          text-base
+          sm:text-lg
+
+          leading-relaxed
+        "
+            >
+
+              Delivering premium printing,
+              branding and creative solutions
+              with innovation, trust and
+              unmatched quality.
+
+            </motion.p>
+
+          </motion.div>
+
+          {/* ================= CARDS ================= */}
+          <div
+            className="
+        grid
+        grid-cols-1
+        sm:grid-cols-2
+        xl:grid-cols-4
+
+        gap-8
+      "
+          >
+
+            {[
+              {
+                icon: <Award size={42} />,
+                title: "Creative Design",
+                desc: "Modern and innovative branding solutions.",
+              },
+              {
+                icon: <Layers3 size={42} />,
+                title: "Latest Technology",
+                desc: "Advanced machines for perfect printing.",
+              },
+              {
+                icon: <Users size={42} />,
+                title: "Premium Quality",
+                desc: "Durable materials with premium finishing.",
+              },
+              {
+                icon: <Briefcase size={42} />,
+                title: "Customer Support",
+                desc: "Reliable service with client satisfaction.",
+              },
+            ].map((item, i) => (
+
+              <motion.div
+                key={i}
+
+                initial={{
+                  opacity: 0,
+                  y: 100,
+                  scale: 0.9,
+                }}
+
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                }}
+
+                whileHover={{
+                  y: -16,
+                  scale: 1.03,
+                }}
+
+                animate={{
+                  y: [0, -6, 0],
+                }}
+
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: i * 0.2,
+                }}
+
+                viewport={{ once: true }}
+
+                className="
+            group
+            relative
+
+            overflow-hidden
+
+            rounded-[32px]
+
+            bg-white/[0.06]
+            backdrop-blur-2xl
+
+            border border-white/10
+
+            min-h-[360px]
+
+            p-8
+
+            flex
+            flex-col
+            items-center
+            justify-between
+
+            text-center
+
+            shadow-[0_10px_40px_rgba(0,0,0,0.25)]
+
+            hover:border-cyan-400/40
+            hover:shadow-cyan-500/20
+
+            transition-all
+            duration-500
+          "
+              >
+
+                {/* ================= HOVER GLOW ================= */}
+                <div
+                  className="
+              absolute inset-0
+
+              bg-gradient-to-br
+              from-cyan-400/0
+              via-cyan-400/0
+              to-blue-500/0
+
+              group-hover:from-cyan-400/10
+              group-hover:to-blue-500/10
+
+              transition-all
+              duration-700
+            "
+                ></div>
+
+                {/* ================= SHINE EFFECT ================= */}
+                <div
+                  className="
+              absolute
+              inset-0
+
+              -translate-x-full
+
+              bg-gradient-to-r
+              from-transparent
+              via-white/10
+              to-transparent
+
+              group-hover:translate-x-full
+
+              transition-all
+              duration-1000
+            "
+                ></div>
+
+                {/* ================= ICON ================= */}
+                <motion.div
+                  whileHover={{
+                    rotate: 6,
+                    scale: 1.12,
+                  }}
+                  className="
+              relative z-10
+
+              w-24
+              h-24
+
+              rounded-[28px]
+
+              bg-gradient-to-br
+              from-cyan-400/20
+              to-blue-500/20
+
+              border border-white/10
+
+              text-cyan-300
+
+              flex
+              items-center
+              justify-center
+
+              shadow-lg
+
+              transition-all
+              duration-500
+            "
+                >
+
+                  {item.icon}
+
+                </motion.div>
+
+                {/* ================= CONTENT ================= */}
+                <div className="relative z-10 mt-8">
+
+                  <h3
+                    className="
+                text-2xl
+
+                font-bold
+
+                text-white
+
+                leading-snug
+
+                group-hover:text-cyan-300
+
+                transition-colors
+                duration-300
+              "
+                  >
+
+                    {item.title}
+
+                  </h3>
+
+                  <p
+                    className="
+                mt-5
+
+                text-gray-300
+
+                leading-8
+
+                text-[15px]
+              "
+                  >
+
+                    {item.desc}
+
+                  </p>
+
+                </div>
+
+                {/* ================= BOTTOM LINE ================= */}
+                <motion.div
+                  whileHover={{
+                    width: 100,
+                  }}
+                  className="
+              relative z-10
+
+              mt-8
+
+              w-14
+              h-[3px]
+
+              rounded-full
+
+              bg-gradient-to-r
+              from-cyan-400
+              to-blue-500
+
+              transition-all
+              duration-500
+            "
+                ></motion.div>
+
+              </motion.div>
+
+            ))}
+
+          </div>
+
+        </div>
+
+      </motion.section>
+
+      {/* ================= LOCATION ================= */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        viewport={{ once: true }}
+        className="
+    relative
+    overflow-hidden
+
+    py-20
+    sm:py-24
+    lg:py-28
+
+    bg-gradient-to-b
+    from-[#031326]
+    via-[#062B52]
+    to-[#031326]
+  "
+      >
+
+        {/* ================= GRID BACKGROUND ================= */}
+        <div
+          className="
+      absolute inset-0
+
+      opacity-[0.03]
+
+      [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
+
+      [background-size:60px_60px]
+    "
+        ></div>
+
+        {/* ================= TOP DIVIDER ================= */}
+        <motion.div
+          initial={{ width: 0 }}
+          whileInView={{ width: "85%" }}
+          transition={{ duration: 1.2 }}
+          viewport={{ once: true }}
+          className="
+      absolute
+      top-0
+      left-1/2
+      -translate-x-1/2
+
+      h-px
+
+      bg-gradient-to-r
+      from-transparent
+      via-cyan-400/30
+      to-transparent
+    "
+        ></motion.div>
+
+        {/* ================= GLOW EFFECTS ================= */}
+        <motion.div
+          animate={{
+            scale: [1, 1.08, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="
+      absolute
+      -top-40
+      -left-40
+
+      w-[350px]
+      sm:w-[500px]
+
+      h-[350px]
+      sm:h-[500px]
+
+      bg-cyan-400/10
+
+      blur-[120px]
+
+      rounded-full
+    "
+        ></motion.div>
+
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="
+      absolute
+      -bottom-40
+      -right-40
+
+      w-[350px]
+      sm:w-[500px]
+
+      h-[350px]
+      sm:h-[500px]
+
+      bg-blue-500/10
+
+      blur-[120px]
+
+      rounded-full
+    "
+        ></motion.div>
+
+        {/* ================= MAIN CONTAINER ================= */}
+        <div
+          className="
+      relative z-10
+
+      max-w-7xl
+      mx-auto
+
+      px-4
+      sm:px-6
+      lg:px-8
+    "
+        >
+
+          <div
+            className="
+        grid
+        grid-cols-1
+        lg:grid-cols-2
+
+        gap-14
+        lg:gap-20
+
+        items-center
+      "
+          >
+
+            {/* ================= LEFT CONTENT ================= */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: -80,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              transition={{
+                duration: 0.9,
+              }}
+              viewport={{ once: true }}
+              className="
+          text-center
+          lg:text-left
+        "
+            >
+
+              {/* Badge */}
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  scale: 0.8,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                transition={{
+                  delay: 0.2,
+                  duration: 0.5,
+                }}
+                viewport={{ once: true }}
+                className="
+            inline-flex
+            items-center
+
+            px-5 py-2.5
+
+            rounded-full
+
+            bg-cyan-400/10
+
+            border border-cyan-400/20
+
+            backdrop-blur-xl
+
+            text-cyan-300
+            text-sm
+            font-semibold
+
+            shadow-lg
+
+            mb-6
+          "
+              >
+
+                FIND US
+
+              </motion.div>
+
+              {/* Heading */}
+              <motion.h2
+                initial={{
+                  opacity: 0,
+                  y: 40,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.3,
+                  duration: 0.8,
+                }}
+                viewport={{ once: true }}
+                className="
+            text-4xl
+            sm:text-5xl
+            lg:text-6xl
+
+            font-black
+
+            leading-tight
+
+            text-white
+          "
+              >
+
+                Visit Our{" "}
+
+                <span
+                  className="
+              bg-gradient-to-r
+              from-cyan-300
+              via-blue-300
+              to-cyan-400
+
+              bg-clip-text
+              text-transparent
+            "
+                >
+
+                  Office
+
+                </span>
+
+              </motion.h2>
+
+              {/* Description */}
+              <motion.p
+                initial={{
+                  opacity: 0,
+                  y: 40,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.4,
+                  duration: 0.8,
+                }}
+                viewport={{ once: true }}
+                className="
+            mt-6
+
+            text-gray-300
+
+            text-base
+            sm:text-lg
+
+            leading-8
+
+            max-w-2xl
+
+            mx-auto
+            lg:mx-0
+          "
+              >
+
+                Work GeniX provides complete
+                printing, designing and branding
+                solutions with advanced technology
+                and premium quality finishing.
+
+              </motion.p>
+
+              {/* ================= CONTACT CARDS ================= */}
+              <div
+                className="
+            mt-10
+
+            space-y-5
+          "
+              >
 
                 {[
                   {
@@ -1761,53 +2335,863 @@ export default function HomePage() {
                   },
                 ].map((item, i) => (
 
+                  <motion.div
+                    key={i}
+
+                    initial={{
+                      opacity: 0,
+                      y: 40,
+                    }}
+
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+
+                    transition={{
+                      delay: i * 0.2,
+                      duration: 0.7,
+                    }}
+
+                    viewport={{ once: true }}
+
+                    whileHover={{
+                      y: -6,
+                      scale: 1.01,
+                    }}
+
+                    className="
+                group
+                relative
+
+                overflow-hidden
+
+                flex
+                items-start
+
+                gap-4
+                sm:gap-5
+
+                p-5
+                sm:p-6
+
+                rounded-[28px]
+
+                bg-white/[0.06]
+                backdrop-blur-2xl
+
+                border border-white/10
+
+                hover:border-cyan-400/30
+                hover:bg-white/[0.08]
+
+                transition-all
+                duration-500
+              "
+                  >
+
+                    {/* Hover Glow */}
+                    <div
+                      className="
+                  absolute inset-0
+
+                  bg-gradient-to-r
+                  from-cyan-400/0
+                  to-blue-500/0
+
+                  group-hover:from-cyan-400/10
+                  group-hover:to-blue-500/10
+
+                  transition-all
+                  duration-500
+                "
+                    ></div>
+
+                    {/* Shine */}
+                    <div
+                      className="
+                  absolute inset-0
+
+                  -translate-x-full
+
+                  bg-gradient-to-r
+                  from-transparent
+                  via-white/10
+                  to-transparent
+
+                  group-hover:translate-x-full
+
+                  transition-all
+                  duration-1000
+                "
+                    ></div>
+
+                    {/* Icon */}
+                    <div
+                      className="
+                  relative z-10
+
+                  w-14
+                  h-14
+
+                  sm:w-16
+                  sm:h-16
+
+                  rounded-2xl
+
+                  bg-gradient-to-br
+                  from-cyan-400/20
+                  to-blue-500/20
+
+                  border border-white/10
+
+                  flex
+                  items-center
+                  justify-center
+
+                  text-cyan-300
+
+                  shrink-0
+
+                  group-hover:scale-110
+                  group-hover:text-white
+
+                  transition-all
+                  duration-300
+                "
+                    >
+
+                      {item.icon}
+
+                    </div>
+
+                    {/* Text */}
+                    <div className="relative z-10 min-w-0 flex-1">
+
+                      <h3
+                        className="
+                    text-white
+
+                    font-bold
+
+                    text-lg
+                    sm:text-xl
+
+                    mb-2
+                  "
+                      >
+
+                        {item.title}
+
+                      </h3>
+
+                      <p
+                        className="
+                    text-gray-300
+
+                    text-sm
+                    sm:text-base
+
+                    leading-7
+
+                    break-words
+                  "
+                      >
+
+                        {item.desc}
+
+                      </p>
+
+                    </div>
+
+                  </motion.div>
+
+                ))}
+
+              </div>
+
+            </motion.div>
+
+            {/* ================= RIGHT MAP ================= */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: 80,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              transition={{
+                duration: 1,
+              }}
+              viewport={{ once: true }}
+              className="
+          relative
+          group
+        "
+            >
+
+              {/* Glow */}
+              <div
+                className="
+            absolute inset-0
+
+            bg-cyan-400/20
+
+            blur-3xl
+
+            rounded-[40px]
+
+            opacity-0
+
+            group-hover:opacity-100
+
+            transition-all
+            duration-500
+          "
+              ></div>
+
+              {/* Map Card */}
+              <motion.div
+                whileHover={{
+                  y: -8,
+                }}
+                className="
+            relative
+
+            overflow-hidden
+
+            rounded-[32px]
+            sm:rounded-[40px]
+
+            border border-white/10
+
+            bg-white/[0.06]
+            backdrop-blur-2xl
+
+            shadow-[0_10px_40px_rgba(0,0,0,0.3)]
+          "
+              >
+
+                {/* Shine */}
+                <div
+                  className="
+              absolute inset-0
+
+              -translate-x-full
+
+              bg-gradient-to-r
+              from-transparent
+              via-white/10
+              to-transparent
+
+              group-hover:translate-x-full
+
+              transition-all
+              duration-1000
+
+              z-20
+            "
+                ></div>
+
+                <Link
+                  href="https://maps.app.goo.gl/9AoEaHakFHWNiWyS7"
+                  target="_blank"
+                >
+
+                  <Image
+                    src="/icons/map.jpeg"
+                    alt="map"
+                    width={900}
+                    height={700}
+                    className="
+                w-full
+
+                h-[320px]
+                sm:h-[420px]
+                lg:h-[520px]
+
+                object-cover
+
+                transition-transform
+                duration-700
+
+                group-hover:scale-105
+              "
+                  />
+
+                </Link>
+
+                {/* Bottom Overlay */}
+                <div
+                  className="
+              absolute
+              bottom-0
+              left-0
+              right-0
+
+              p-5
+              sm:p-6
+
+              bg-gradient-to-t
+              from-[#021B33]
+              via-[#021B33]/80
+              to-transparent
+
+              z-10
+            "
+                >
+
+                  <h3
+                    className="
+                text-white
+
+                text-xl
+                sm:text-2xl
+
+                font-bold
+              "
+                  >
+
+                    Work GeniX Office
+
+                  </h3>
+
+                  <p
+                    className="
+                mt-2
+
+                text-gray-300
+
+                text-sm
+                sm:text-base
+              "
+                  >
+
+                    Tap to open location in Google Maps
+
+                  </p>
+
+                </div>
+
+              </motion.div>
+
+            </motion.div>
+
+          </div>
+
+        </div>
+
+      </motion.section>
+
+      {/* ================= FOOTER ================= */}
+      <footer
+        className="
+    relative
+    overflow-hidden
+
+    bg-gradient-to-b
+    from-[#031326]
+    via-[#062B52]
+    to-[#021B33]
+
+    text-white
+  "
+      >
+
+        {/* ================= BACKGROUND EFFECTS ================= */}
+
+        {/* Top Glow */}
+        <div
+          className="
+      absolute
+      -top-40
+      -right-40
+
+      w-[450px]
+      h-[450px]
+
+      bg-cyan-400/10
+
+      blur-[120px]
+
+      rounded-full
+    "
+        ></div>
+
+        {/* Bottom Glow */}
+        <div
+          className="
+      absolute
+      -bottom-40
+      -left-40
+
+      w-[450px]
+      h-[450px]
+
+      bg-blue-500/10
+
+      blur-[120px]
+
+      rounded-full
+    "
+        ></div>
+
+        {/* Grid Overlay */}
+        <div
+          className="
+      absolute inset-0
+
+      opacity-[0.03]
+
+      [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
+
+      [background-size:60px_60px]
+    "
+        ></div>
+
+        {/* Top Divider */}
+        <div
+          className="
+      absolute
+      top-0
+      left-1/2
+      -translate-x-1/2
+
+      w-[90%]
+      h-px
+
+      bg-gradient-to-r
+      from-transparent
+      via-cyan-400/30
+      to-transparent
+    "
+        ></div>
+
+        {/* ================= MAIN CONTENT ================= */}
+        <div
+          className="
+      relative z-10
+
+      max-w-7xl
+      mx-auto
+
+      px-4
+      sm:px-6
+      lg:px-8
+
+      py-20
+      sm:py-24
+    "
+        >
+
+          <div
+            className="
+        grid
+        grid-cols-1
+        sm:grid-cols-2
+        xl:grid-cols-4
+
+        gap-10
+        lg:gap-12
+      "
+          >
+
+            {/* ================= BRAND SECTION ================= */}
+            <div className="xl:pr-6">
+
+              {/* Logo */}
+              <div
+                className="
+            flex
+            items-center
+
+            gap-4
+
+            mb-7
+          "
+              >
+
+                <div
+                  className="
+              relative
+
+              w-16 h-16
+              sm:w-28 sm:h-20
+
+              rounded-2xl
+
+              bg-white/[0.08]
+              backdrop-blur-2xl
+
+              border border-white/10
+
+              shadow-[0_10px_40px_rgba(0,0,0,0.3)]
+
+              flex
+              items-center
+              justify-center
+
+              overflow-hidden
+            "
+                >
+
+                  {/* Glow */}
+                  <div
+                    className="
+                absolute inset-0
+
+                bg-gradient-to-br
+                from-cyan-400/20
+                to-blue-500/20
+              "
+                  ></div>
+
+                  <Image
+                    src="/genix-logo.png"
+                    alt="Work GeniX Logo"
+                    width={65}
+                    height={65}
+                    className="
+                relative z-10
+                object-contain
+              "
+                  />
+
+                </div>
+
+                <div>
+
+                  <h2
+                    className="
+                text-2xl
+                sm:text-3xl
+
+                font-black
+
+                tracking-wide
+
+                leading-tight
+              "
+                  >
+
+                    Work{" "}
+
+                    <span
+                      className="
+                  bg-gradient-to-r
+                  from-cyan-300
+                  via-blue-300
+                  to-cyan-400
+
+                  bg-clip-text
+                  text-transparent
+                "
+                    >
+
+                      GeniX
+
+                    </span>
+
+                  </h2>
+
+                  <p
+                    className="
+                text-gray-300
+
+                text-xs
+                sm:text-sm
+
+                mt-1
+              "
+                  >
+
+                    Printing • Branding • Designing
+
+                  </p>
+
+                </div>
+
+              </div>
+
+              {/* Description */}
+              <p
+                className="
+            text-gray-300
+
+            leading-8
+
+            text-sm
+            sm:text-base
+          "
+              >
+
+                Delivering premium printing,
+                branding and creative solutions
+                with modern technology and
+                high-quality finishing.
+
+              </p>
+
+            </div>
+
+            {/* ================= QUICK LINKS ================= */}
+            <div>
+
+              <h3
+                className="
+            text-2xl
+
+            font-bold
+
+            mb-7
+          "
+              >
+
+                Quick Links
+
+              </h3>
+
+              <ul
+                className="
+            space-y-4
+          "
+              >
+
+                {[
+                  {
+                    name: "Home",
+                    link: "/",
+                  },
+                  {
+                    name: "Dashboard",
+                    link: "/dashboard",
+                  },
+                  {
+                    name: "Products",
+                    link: "/products",
+                  },
+                  {
+                    name: "Gallery",
+                    link: "/gallery",
+                  },
+                  {
+                    name: "Contact",
+                    link: "/contact",
+                  },
+                ].map((item, i) => (
+
+                  <li key={i}>
+
+                    <Link
+                      href={item.link}
+                      className="
+                  group
+
+                  inline-flex
+                  items-center
+
+                  gap-3
+
+                  text-gray-300
+
+                  hover:text-cyan-300
+
+                  transition-all
+                  duration-300
+                "
+                    >
+
+                      <span
+                        className="
+                    w-2.5
+                    h-2.5
+
+                    rounded-full
+
+                    bg-cyan-400
+
+                    scale-0
+
+                    group-hover:scale-100
+
+                    transition-all
+                    duration-300
+                  "
+                      ></span>
+
+                      <span
+                        className="
+                    group-hover:translate-x-1
+
+                    transition-transform
+                    duration-300
+                  "
+                      >
+
+                        {item.name}
+
+                      </span>
+
+                    </Link>
+
+                  </li>
+
+                ))}
+
+              </ul>
+
+            </div>
+
+            {/* ================= CONTACT INFO ================= */}
+            <div>
+
+              <h3
+                className="
+            text-2xl
+
+            font-bold
+
+            mb-7
+          "
+              >
+
+                Contact Us
+
+              </h3>
+
+              <div className="space-y-5">
+
+                {[
+                  {
+                    icon: <Phone size={22} />,
+                    title: "Alternative Phone",
+                    desc: "+91 8521060741",
+                  },
+                  {
+                    icon: <Clock size={22} />,
+                    title: "Working Hours",
+                    desc: "Mon - Sat | 10:00 AM - 6:00 PM",
+                  },
+                ].map((item, i) => (
+
                   <div
                     key={i}
                     className="
                 group
-                flex items-start gap-5
-                p-5
-                rounded-[28px]
+                relative
+
+                overflow-hidden
+
+                flex
+                items-start
+
+                gap-4
+
+                p-4
+                sm:p-5
+
+                rounded-[24px]
+
                 bg-white/[0.06]
                 backdrop-blur-xl
+
                 border border-white/10
+
                 hover:border-cyan-400/30
-                transition-all duration-300
+                hover:bg-white/[0.08]
+
+                transition-all
+                duration-500
               "
                   >
 
-                    <div className="
-                w-14 h-14
-                rounded-2xl
-                bg-gradient-to-br
-                from-cyan-400/20
-                to-blue-500/20
-                flex items-center justify-center
-                text-cyan-300
-                shrink-0
-                group-hover:scale-110
-                group-hover:text-white
-                transition-all duration-300
-              ">
+                    {/* Hover Glow */}
+                    <div
+                      className="
+                  absolute inset-0
+
+                  bg-gradient-to-r
+                  from-cyan-400/0
+                  to-blue-500/0
+
+                  group-hover:from-cyan-400/10
+                  group-hover:to-blue-500/10
+
+                  transition-all
+                  duration-500
+                "
+                    ></div>
+
+                    {/* Icon */}
+                    <div
+                      className="
+                  relative z-10
+
+                  w-12
+                  h-12
+
+                  rounded-xl
+
+                  bg-gradient-to-br
+                  from-cyan-400/20
+                  to-blue-500/20
+
+                  border border-white/10
+
+                  flex
+                  items-center
+                  justify-center
+
+                  text-cyan-300
+
+                  shrink-0
+
+                  group-hover:scale-110
+                  group-hover:text-white
+
+                  transition-all
+                  duration-300
+                "
+                    >
+
                       {item.icon}
+
                     </div>
 
-                    <div>
+                    {/* Text */}
+                    <div className="relative z-10">
 
-                      <h3 className="
-                  text-white
-                  font-bold
-                  text-lg
-                  mb-1
-                ">
+                      <h4
+                        className="
+                    text-white
+
+                    font-semibold
+
+                    mb-1
+                  "
+                      >
+
                         {item.title}
-                      </h3>
 
-                      <p className="
-                  text-gray-300
-                  leading-7
-                ">
+                      </h4>
+
+                      <p
+                        className="
+                    text-gray-300
+
+                    text-sm
+                    sm:text-base
+
+                    leading-7
+
+                    break-words
+                  "
+                      >
+
                         {item.desc}
+
                       </p>
 
                     </div>
@@ -1820,420 +3204,138 @@ export default function HomePage() {
 
             </div>
 
-            {/* RIGHT MAP */}
-            <div className="
-        relative
-        group
-      ">
-
-              <div className="
-          absolute inset-0
-          bg-cyan-400/20
-          blur-3xl
-          rounded-[40px]
-          opacity-0
-          group-hover:opacity-100
-          transition duration-500
-        "></div>
-
-              <div className="
-          relative
-          overflow-hidden
-          rounded-[40px]
-          border border-white/10
-          bg-white/[0.06]
-          backdrop-blur-xl
-          shadow-[0_10px_40px_rgba(0,0,0,0.3)]
-        ">
-
-                <Link
-                  href="https://maps.app.goo.gl/9AoEaHakFHWNiWyS7"
-                >
-
-                  <Image
-                    src="/icons/map.jpeg"
-                    alt="map"
-                    width={700}
-                    height={700}
-                    className="
-                w-full
-                h-[350px] sm:h-[450px]
-                object-cover
-                transition-transform duration-700
-                group-hover:scale-105
-              "
-                  />
-
-                </Link>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* ================= FOOTER ================= */}
-      <footer className="
-  relative
-  overflow-hidden
-  bg-gradient-to-b
-  from-[#031326]
-  via-[#062B52]
-  to-[#021B33]
-  text-white
-">
-
-        {/* ================= BACKGROUND EFFECTS ================= */}
-
-        {/* Glow Top Right */}
-        <div className="
-    absolute -top-32 -right-32
-    w-[450px] h-[450px]
-    bg-cyan-400/10
-    blur-[120px]
-    rounded-full
-  "></div>
-
-        {/* Glow Bottom Left */}
-        <div className="
-    absolute -bottom-32 -left-32
-    w-[450px] h-[450px]
-    bg-blue-500/10
-    blur-[120px]
-    rounded-full
-  "></div>
-
-        {/* Grid Overlay */}
-        <div className="
-    absolute inset-0
-    opacity-[0.04]
-    [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
-    [background-size:60px_60px]
-  "></div>
-
-        {/* ================= MAIN CONTENT ================= */}
-        <div className="
-    relative z-10
-    max-w-7xl mx-auto
-    px-4 sm:px-6 lg:px-8
-    py-20
-  ">
-
-          <div className="
-      grid
-      grid-cols-1
-      sm:grid-cols-2
-      xl:grid-cols-4
-      gap-12 xl:gap-10
-    ">
-
-            {/* ================= BRAND ================= */}
-            <div>
-
-              {/* Logo */}
-              <div className="
-          flex items-center gap-4
-          mb-7
-        ">
-
-                <div className="
-            relative
-            w-16 h-16 sm:w-20 sm:h-20
-            rounded-2xl
-            bg-white/10
-            backdrop-blur-xl
-            border border-white/10
-            flex items-center justify-center
-            shadow-lg
-          ">
-
-                  <Image
-                    src="/genix-logo.png"
-                    alt="Work GeniX Logo"
-                    width={60}
-                    height={60}
-                    className="object-contain"
-                  />
-
-                </div>
-
-                <div>
-
-                  <h2 className="
-              text-2xl sm:text-3xl
-              font-extrabold
-              tracking-wide
-            ">
-                    Work{" "}
-
-                    <span className="
-                bg-gradient-to-r
-                from-cyan-300
-                to-blue-400
-                bg-clip-text
-                text-transparent
-              ">
-                      GeniX
-                    </span>
-
-                  </h2>
-
-                  <p className="
-              text-gray-300
-              text-sm
-              mt-1
-            ">
-                    Printing | Designing | Branding
-                  </p>
-
-                </div>
-
-              </div>
-
-              {/* Description */}
-              <p className="
-          text-gray-300
-          leading-8
-          text-sm sm:text-base
-        ">
-                Delivering excellence in printing,
-                designing, branding, and creative
-                solutions using modern technology
-                and premium quality materials.
-              </p>
-
-            </div>
-
-            {/* ================= QUICK LINKS ================= */}
-            <div>
-
-              <h3 className="
-          text-2xl
-          font-bold
-          mb-7
-        ">
-                Quick Links
-              </h3>
-
-              <ul className="
-          space-y-4
-          text-gray-300
-        ">
-
-                {[
-                  "Home",
-                  "About",
-                  "Products",
-                  "Gallery",
-                  "Contact",
-                ].map((item, i) => (
-
-                  <li key={i}>
-
-                    <Link
-                      href="/"
-                      className="
-                  group
-                  inline-flex
-                  items-center
-                  gap-2
-                  hover:text-cyan-300
-                  transition-all duration-300
-                "
-                    >
-
-                      <span className="
-                  w-2 h-2
-                  rounded-full
-                  bg-cyan-400
-                  scale-0
-                  group-hover:scale-100
-                  transition-all duration-300
-                "></span>
-
-                      {item}
-
-                    </Link>
-
-                  </li>
-
-                ))}
-
-              </ul>
-
-            </div>
-
-            {/* ================= CONTACT ================= */}
-            <div>
-
-              <h3 className="
-          text-2xl
-          font-bold
-          mb-7
-        ">
-                Contact Us
-              </h3>
-
-              <div className="space-y-5">
-
-                {/* Phone */}
-                <div className="
-            flex items-start gap-4
-            p-4
-            rounded-2xl
-            bg-white/[0.06]
-            backdrop-blur-xl
-            border border-white/10
-            hover:border-cyan-400/30
-            transition-all duration-300
-          ">
-
-                  <div className="
-              w-12 h-12
-              rounded-xl
-              bg-gradient-to-br
-              from-cyan-400/20
-              to-blue-500/20
-              flex items-center justify-center
-              text-cyan-300
-              shrink-0
-            ">
-
-                    <Phone size={22} />
-
-                  </div>
-
-                  <div className="text-gray-300 leading-7">
-
-                    +91 9470 266 299
-                    <br />
-                    +91 887 333 4440
-
-                  </div>
-
-                </div>
-
-                {/* Email */}
-                <div className="
-            flex items-start gap-4
-            p-4
-            rounded-2xl
-            bg-white/[0.06]
-            backdrop-blur-xl
-            border border-white/10
-            hover:border-cyan-400/30
-            transition-all duration-300
-          ">
-
-                  <div className="
-              w-12 h-12
-              rounded-xl
-              bg-gradient-to-br
-              from-cyan-400/20
-              to-blue-500/20
-              flex items-center justify-center
-              text-cyan-300
-              shrink-0
-            ">
-
-                    <Mail size={22} />
-
-                  </div>
-
-                  <div className="text-gray-300 leading-7">
-                    mdhammadnaved92010@gmail.com
-                  </div>
-
-                </div>
-
-                {/* Timing */}
-                <div className="
-            flex items-start gap-4
-            p-4
-            rounded-2xl
-            bg-white/[0.06]
-            backdrop-blur-xl
-            border border-white/10
-            hover:border-cyan-400/30
-            transition-all duration-300
-          ">
-
-                  <div className="
-              w-12 h-12
-              rounded-xl
-              bg-gradient-to-br
-              from-cyan-400/20
-              to-blue-500/20
-              flex items-center justify-center
-              text-cyan-300
-              shrink-0
-            ">
-
-                    <Clock size={22} />
-
-                  </div>
-
-                  <div className="text-gray-300 leading-7">
-
-                    Mon - Sat
-                    <br />
-                    10:00 AM - 6:00 PM
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
             {/* ================= LOCATION ================= */}
             <div>
 
               <h3
                 className="
-      text-2xl
-      font-bold
-      mb-7
-      text-white
-    "
+            text-2xl
+
+            font-bold
+
+            mb-7
+          "
               >
-                Location
+
+                Our Location
+
               </h3>
 
               <Link
                 href="https://maps.app.goo.gl/9AoEaHakFHWNiWyS7"
                 className="
-      group
-      flex items-center justify-center
-      w-[180px]
-      h-[180px]
-      rounded-[28px]
-      border border-white/10
-      bg-white/[0.04]
-      backdrop-blur-xl
-      hover:border-cyan-400/30
-      transition-all duration-500
-      hover:scale-105
-    "
+            group
+            relative
+
+            overflow-hidden
+
+            flex
+            items-center
+            justify-center
+
+            w-full
+            h-[260px]
+            sm:h-[280px]
+
+            rounded-[32px]
+
+            border border-white/10
+
+            bg-white/[0.05]
+            backdrop-blur-2xl
+
+            hover:border-cyan-400/30
+
+            transition-all
+            duration-500
+
+            hover:scale-[1.02]
+
+            shadow-[0_10px_40px_rgba(0,0,0,0.3)]
+          "
               >
 
-                {/* SVG ICON */}
-                <Image
-                  src="/icons/map.svg"
-                  alt="map"
-                  width={110}
-                  height={110}
+                {/* Glow */}
+                <div
                   className="
-        object-contain
-        transition-transform duration-500
-        group-hover:scale-110
-      "
-                />
+              absolute inset-0
+
+              bg-gradient-to-br
+              from-cyan-400/10
+              to-blue-500/10
+
+              opacity-0
+
+              group-hover:opacity-100
+
+              transition-all
+              duration-500
+            "
+                ></div>
+
+                {/* Shine */}
+                <div
+                  className="
+              absolute inset-0
+
+              -translate-x-full
+
+              bg-gradient-to-r
+              from-transparent
+              via-white/10
+              to-transparent
+
+              group-hover:translate-x-full
+
+              transition-all
+              duration-1000
+            "
+                ></div>
+
+                <div
+                  className="
+              relative z-10
+
+              flex
+              flex-col
+              items-center
+              justify-center
+
+              text-center
+            "
+                >
+
+                  <Image
+                    src="/icons/map.svg"
+                    alt="map"
+                    width={110}
+                    height={110}
+                    className="
+                object-contain
+
+                transition-transform
+                duration-500
+
+                group-hover:scale-110
+              "
+                  />
+
+                  <p
+                    className="
+                mt-5
+
+                text-gray-300
+
+                text-sm
+                sm:text-base
+              "
+                  >
+
+                    Open In Google Maps
+
+                  </p>
+
+                </div>
 
               </Link>
 
@@ -2244,51 +3346,96 @@ export default function HomePage() {
         </div>
 
         {/* ================= BOTTOM BAR ================= */}
-        <div className="
-    relative z-10
-    border-t border-white/10
-    bg-black/20
-    backdrop-blur-xl
-  ">
+        <div
+          className="
+      relative z-10
 
-          <div className="
-      max-w-7xl mx-auto
-      px-4 sm:px-6 lg:px-8
-      py-5
-      flex flex-col md:flex-row
-      items-center justify-between
-      gap-4
-      text-sm
-      text-gray-400
-    ">
+      border-t
+      border-white/10
 
-            <p className="text-center md:text-left">
+      bg-black/20
+      backdrop-blur-xl
+    "
+        >
+
+          <div
+            className="
+        max-w-7xl
+        mx-auto
+
+        px-4
+        sm:px-6
+        lg:px-8
+
+        py-5
+
+        flex
+        flex-col
+        md:flex-row
+
+        items-center
+        justify-between
+
+        gap-4
+      "
+          >
+
+            <p
+              className="
+          text-gray-400
+
+          text-sm
+
+          text-center
+          md:text-left
+        "
+            >
+
               © 2026 Work GeniX. All Rights Reserved.
+
             </p>
 
-            <div className="
-        flex items-center
-        gap-5
-      ">
+            <div
+              className="
+          flex
+          items-center
+
+          gap-6
+
+          text-sm
+        "
+            >
 
               <Link
                 href="/privacy-policy"
                 className="
+            text-gray-400
+
             hover:text-cyan-300
-            transition
+
+            transition-colors
+            duration-300
           "
               >
+
                 Privacy Policy
+
               </Link>
 
               <Link
                 href="/terms"
                 className="
+            text-gray-400
+
             hover:text-cyan-300
-            transition
+
+            transition-colors
+            duration-300
           "
               >
-                Terms
+
+                Terms & Conditions
+
               </Link>
 
             </div>
