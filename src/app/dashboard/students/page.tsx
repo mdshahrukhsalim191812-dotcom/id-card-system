@@ -46,7 +46,11 @@ export default function SchoolAdmin() {
 
             const data = await res.json();
 
-            setStudents(Array.isArray(data) ? data : []);
+            if (data.success) {
+                setStudents(data.data || []);
+            } else {
+                toast.error(data.message || "Failed to fetch students");
+            }
 
         } catch (error) {
             console.error(error);

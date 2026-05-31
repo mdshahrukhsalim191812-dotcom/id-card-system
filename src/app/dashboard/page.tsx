@@ -37,7 +37,7 @@ export default function DashboardPage() {
                 const data = await res.json();
 
                 // Save total students count
-                setTotalStudents(data.length);
+                setTotalStudents(data.data?.length || 0);
 
             } catch (error) {
 
@@ -54,7 +54,7 @@ export default function DashboardPage() {
     const stats = [
         {
             title: "Total Students",
-            value: `0 || totalStudents`,
+            value: totalStudents,
             icon: <Users size={30} />,
             color: "from-blue-600 to-cyan-500",
             bg: "bg-blue-50",

@@ -1,17 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import html2canvas from "html2canvas";
 import toast from "react-hot-toast";
 import TemplateRenderer from "@/components/TemplateRenderer";
-import jsPDF from "jspdf";
 import Link from "next/link";
-import { getCroppedImg } from "@/lib/cropImage";
-import ImageCropper from "@/components/ImageCropper";
-import * as faceapi from "face-api.js";
 import { removeBackground } from "@/lib/removeBg";
 import { addWhiteBackground } from "@/lib/addWhiteBg";
-import { FileBadge2, LoaderCircle, CreditCard, Users, Upload, ArrowRight, PlusCircle, LayoutDashboard } from "lucide-react";
+import { FileBadge2, LoaderCircle, CreditCard, Users, Upload, ArrowRight, LayoutDashboard } from "lucide-react";
 
 export default function CreateIDPage() {
     const [student, setStudent] = useState({
@@ -52,7 +47,6 @@ export default function CreateIDPage() {
         signature?: string;
     };
 
-    //const [color, setColor] = useState("blue");
     const [students, setStudents] = useState<Student[]>([]);
     const [image, setImage] = useState<string | null>(null);
     const [logo, setLogo] = useState<string | null>(null);
@@ -61,15 +55,13 @@ export default function CreateIDPage() {
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [updateloading, setUpdateLoading] = useState(false);
-    const [deleteLoading, setDeleteLoading] = useState(false);
     const [school, setSchool] = useState<any>(null);
-    const [form, setForm] = useState<any>(null);
     const [loadingPage, setLoadingPage] = useState(true);
     const [modelsLoaded, setModelsLoaded] = useState(false);
-
     const templateId = school?.templateId;
 
     const cardRef = useRef<HTMLDivElement>(null);
+    const faceapiRef = useRef<any>(null);
 
     const [cameraOn, setCameraOn] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -152,27 +144,44 @@ export default function CreateIDPage() {
 
             try {
 
+                const faceapi =
+                    await import("face-api.js");
+
+                faceapiRef.current = faceapi;
+
                 const MODEL_URL = "/models";
 
+                await faceapi.nets.tinyFaceDetector.loadFromUri(
+                    MODEL_URL
+                );
 
-                await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-
-                await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
-
+                await faceapi.nets.faceLandmark68Net.loadFromUri(
+                    MODEL_URL
+                );
 
                 setModelsLoaded(true);
 
+                console.log(
+                    "AI Models Loaded ✅"
+                );
+
             } catch (error) {
 
-                console.error("AI MODEL LOAD ERROR:", error);
+                console.error(
+                    "AI MODEL LOAD ERROR:",
+                    error
+                );
 
-                toast.error("AI models failed to load ❌");
+                toast.error(
+                    "AI models failed to load ❌"
+                );
             }
         };
 
         loadModels();
 
     }, []);
+
 
     const startCamera = async () => {
         try {
@@ -232,8 +241,12 @@ export default function CreateIDPage() {
             const cropped =
                 await autoCropFace(rawImage);
 
+            // 🔥 if AI failed, use original image
+            const imageForBg =
+                cropped || rawImage;
+
             const noBg =
-                await removeBackground(cropped);
+                await removeBackground(imageForBg);
 
             const finalImage =
                 await addWhiteBackground(noBg);
@@ -299,10 +312,10 @@ export default function CreateIDPage() {
                 img.onerror = reject;
             });
 
-            const detection = await faceapi
+            const detection = await faceapiRef.current
                 .detectSingleFace(
                     img,
-                    new faceapi.TinyFaceDetectorOptions({
+                    new faceapiRef.current.TinyFaceDetectorOptions({
                         inputSize: 320,
                         scoreThreshold: 0.5,
                     })
@@ -970,7 +983,7 @@ export default function CreateIDPage() {
                                     leading-relaxed
                                 "
                                 >
-                                    Welcome! Create Id Cards. Fill in the details, upload a photo, and generate professional ID cards in seconds. 
+                                    Welcome! Create Id Cards. Fill in the details, upload a photo, and generate professional ID cards in seconds.
                                 </p>
 
                             </div>
