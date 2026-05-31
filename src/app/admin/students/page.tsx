@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import toast from "react-hot-toast";
 
 import {
@@ -678,16 +679,19 @@ export default function AdminStudentsPage() {
                                         {/* INFO */}
                                         <div>
 
-                                            <h3 className="
-                                    text-lg
-                                    font-bold
-                                    text-gray-800
-                                    leading-6
-                                ">
-
+                                            <Link
+                                                href={`/admin/students/${student._id}`}
+                                                className="
+    text-lg
+    font-bold
+    text-blue-600
+    hover:text-blue-800
+    hover:underline
+    transition
+  "
+                                            >
                                                 {student.name}
-
-                                            </h3>
+                                            </Link>
 
                                             <p className="
                                     text-sm
@@ -845,17 +849,19 @@ export default function AdminStudentsPage() {
                                 {/* INFO */}
                                 <div className="min-w-0">
 
-                                    <h2 className="
-                            text-lg
-                            font-bold
-                            text-gray-800
-                            leading-6
-                            break-words
-                        ">
-
+                                    <Link
+                                        href={`/admin/students/${student._id}`}
+                                        className="
+    text-lg
+    font-bold
+    text-blue-600
+    hover:text-blue-800
+    hover:underline
+    transition
+  "
+                                    >
                                         {student.name}
-
-                                    </h2>
+                                    </Link>
 
                                     <p className="
                             text-sm
