@@ -86,20 +86,40 @@ export default function CreateIDPage() {
 
             const data = await res.json();
 
-            if (Array.isArray(data)) {
-                setStudents(data);
+            if (data.success && Array.isArray(data.data)) {
+
+                setStudents(data.data);
+
             } else {
-                console.error("Not array:", data);
+
+                console.error(
+                    "INVALID STUDENT DATA:",
+                    data
+                );
+
                 setStudents([]);
-                toast.error(data.message || "Failed to fetch students");
+
+                // ❌ remove toast here
             }
 
         } catch (error) {
-            console.error(error);
-            setStudents([]);
-            toast.error("Fetch error!");
+
+            console.error(
+                "FETCH STUDENTS ERROR:",
+                error
+            );
+
+            if (students.length === 0) {
+
+                toast.error(
+                    "Failed to fetch students"
+                );
+            }
+
         } finally {
-            setLoadingPage(false); // 🔥 STOP LOADING
+
+            // 🔥 VERY IMPORTANT
+            setLoadingPage(false);
         }
     };
 
@@ -201,7 +221,7 @@ export default function CreateIDPage() {
 
                 } catch (err) {
                     console.error(err);
-                    alert("Camera not accessible ❌");
+                    toast.error("Camera not accessible ❌");
                 }
             }, 300); // small delay
 
@@ -356,8 +376,8 @@ export default function CreateIDPage() {
 
             const canvas = document.createElement("canvas");
 
-            canvas.width = 107;
-            canvas.height = 132;
+            canvas.width = 600;
+            canvas.height = 740;
 
             const ctx = canvas.getContext("2d");
 
@@ -371,8 +391,8 @@ export default function CreateIDPage() {
                 cropH,
                 0,
                 0,
-                107,
-                132
+                600,
+                740
             );
 
             return canvas.toDataURL(
