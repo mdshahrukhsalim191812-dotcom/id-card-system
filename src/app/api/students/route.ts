@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
+
+import School from "@/models/School";
 import Student from "@/models/Student";
+
 import { cookies } from "next/headers";
 import cloudinary from "@/lib/cloudinary";
 import { verifyToken } from "@/lib/auth";
 import { studentSchema } from "@/lib/validation";
+
+School;
 
 // ================= GET STUDENTS =================
 
