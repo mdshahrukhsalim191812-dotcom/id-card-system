@@ -7,12 +7,14 @@ import { verifyToken } from "@/lib/auth";
 import { studentSchema } from "@/lib/validation";
 
 // ================= GET STUDENTS =================
+
 export async function GET() {
 
     try {
+
         await connectDB();
 
-        const cookieStore = await cookies();
+        const cookieStore = cookies();
 
         const token =
             cookieStore.get("token")?.value;
@@ -21,12 +23,14 @@ export async function GET() {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message: "Unauthorized ❌",
                 },
                 {
                     status: 401,
                 }
             );
+
         }
 
         const user = verifyToken(token);
@@ -35,72 +39,94 @@ export async function GET() {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message: "Invalid Token ❌",
                 },
                 {
                     status: 401,
                 }
             );
+
         }
 
+        // ================= ADMIN =================
 
-        // ADMIN → ALL STUDENTS
         if (user.role === "admin") {
 
             const students =
                 await Student.find()
+
                     .populate(
                         "schoolId",
-                        "name email"
+                        "name email templateId templateImage"
                     )
+
+                    .lean()
+
                     .sort({
                         createdAt: -1,
                     });
 
-            return NextResponse.json(
-                students
-            );
+            return NextResponse.json({
+                success: true,
+                data: students,
+            });
+
         }
 
-        // SCHOOL → OWN STUDENTS
+        // ================= SCHOOL =================
+
         const students =
             await Student.find({
                 schoolId: user.id,
             })
+
                 .populate(
                     "schoolId",
-                    "name email"
+                    "name email templateId templateImage"
                 )
+
+                .lean()
+
                 .sort({
                     createdAt: -1,
                 });
 
-        return NextResponse.json(
-            students
-        );
+        return NextResponse.json({
+            success: true,
+            data: students,
+        });
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "GET STUDENTS ERROR:",
+            error
+        );
 
         return NextResponse.json(
             {
+                success: false,
                 message: "Server Error ❌",
             },
             {
                 status: 500,
             }
         );
+
     }
+
 }
 
 // ================= CREATE STUDENT =================
+
 export async function POST(req: Request) {
 
     try {
 
-        const cookieStore =
-            await cookies();
+        await connectDB();
+
+        const cookieStore = cookies();
 
         const token =
             cookieStore.get("token")?.value;
@@ -109,12 +135,14 @@ export async function POST(req: Request) {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message: "Unauthorized ❌",
                 },
                 {
                     status: 401,
                 }
             );
+
         }
 
         const user =
@@ -124,20 +152,21 @@ export async function POST(req: Request) {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message: "Invalid Token ❌",
                 },
                 {
                     status: 401,
                 }
             );
-        }
 
-        await connectDB();
+        }
 
         const body =
             await req.json();
 
-        // VALIDATION
+        // ================= VALIDATION =================
+
         const parsed =
             studentSchema.safeParse(body);
 
@@ -145,6 +174,7 @@ export async function POST(req: Request) {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message:
                         parsed.error.issues[0]
                             .message,
@@ -153,9 +183,11 @@ export async function POST(req: Request) {
                     status: 400,
                 }
             );
+
         }
 
-        // IMAGE UPLOADS
+        // ================= IMAGE UPLOADS =================
+
         const uploads =
             await Promise.all([
 
@@ -185,6 +217,7 @@ export async function POST(req: Request) {
                         }
                     )
                     : null,
+
             ]);
 
         const imageUrl =
@@ -196,7 +229,8 @@ export async function POST(req: Request) {
         const signatureUrl =
             uploads[2]?.secure_url || "";
 
-        // CREATE STUDENT
+        // ================= CREATE =================
+
         const student =
             await Student.create({
 
@@ -240,8 +274,8 @@ export async function POST(req: Request) {
                     signature: signatureUrl,
                 }),
 
-                // IMPORTANT
                 schoolId: user.id,
+
             });
 
         return NextResponse.json({
@@ -251,26 +285,34 @@ export async function POST(req: Request) {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "CREATE STUDENT ERROR:",
+            error
+        );
 
         return NextResponse.json(
             {
+                success: false,
                 message: "Server Error ❌",
             },
             {
                 status: 500,
             }
         );
+
     }
+
 }
 
 // ================= UPDATE STUDENT =================
+
 export async function PUT(req: Request) {
 
     try {
 
-        const cookieStore =
-            await cookies();
+        await connectDB();
+
+        const cookieStore = cookies();
 
         const token =
             cookieStore.get("token")?.value;
@@ -279,12 +321,14 @@ export async function PUT(req: Request) {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message: "Unauthorized ❌",
                 },
                 {
                     status: 401,
                 }
             );
+
         }
 
         const user =
@@ -294,15 +338,15 @@ export async function PUT(req: Request) {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message: "Invalid Token ❌",
                 },
                 {
                     status: 401,
                 }
             );
-        }
 
-        await connectDB();
+        }
 
         const body =
             await req.json();
@@ -313,6 +357,7 @@ export async function PUT(req: Request) {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message:
                         "Student ID required",
                 },
@@ -320,6 +365,7 @@ export async function PUT(req: Request) {
                     status: 400,
                 }
             );
+
         }
 
         let updateData: any = {
@@ -327,6 +373,7 @@ export async function PUT(req: Request) {
         };
 
         // IMAGE
+
         if (
             body.image &&
             body.image.startsWith("data:")
@@ -342,9 +389,11 @@ export async function PUT(req: Request) {
 
             updateData.image =
                 upload.secure_url;
+
         }
 
         // LOGO
+
         if (
             body.logo &&
             body.logo.startsWith("data:")
@@ -360,9 +409,11 @@ export async function PUT(req: Request) {
 
             updateData.logo =
                 upload.secure_url;
+
         }
 
         // SIGNATURE
+
         if (
             body.signature &&
             body.signature.startsWith("data:")
@@ -378,6 +429,7 @@ export async function PUT(req: Request) {
 
             updateData.signature =
                 upload.secure_url;
+
         }
 
         delete updateData.id;
@@ -395,6 +447,7 @@ export async function PUT(req: Request) {
                 {
                     new: true,
                 }
+
             );
 
         return NextResponse.json({
@@ -404,26 +457,34 @@ export async function PUT(req: Request) {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "UPDATE STUDENT ERROR:",
+            error
+        );
 
         return NextResponse.json(
             {
+                success: false,
                 message: "Server Error ❌",
             },
             {
                 status: 500,
             }
         );
+
     }
+
 }
 
 // ================= DELETE STUDENT =================
+
 export async function DELETE(req: Request) {
 
     try {
 
-        const cookieStore =
-            await cookies();
+        await connectDB();
+
+        const cookieStore = cookies();
 
         const token =
             cookieStore.get("token")?.value;
@@ -432,12 +493,14 @@ export async function DELETE(req: Request) {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message: "Unauthorized ❌",
                 },
                 {
                     status: 401,
                 }
             );
+
         }
 
         const user =
@@ -447,15 +510,15 @@ export async function DELETE(req: Request) {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message: "Invalid Token ❌",
                 },
                 {
                     status: 401,
                 }
             );
-        }
 
-        await connectDB();
+        }
 
         const { searchParams } =
             new URL(req.url);
@@ -467,6 +530,7 @@ export async function DELETE(req: Request) {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message:
                         "Student ID required",
                 },
@@ -474,6 +538,7 @@ export async function DELETE(req: Request) {
                     status: 400,
                 }
             );
+
         }
 
         await Student.findOneAndDelete({
@@ -481,6 +546,7 @@ export async function DELETE(req: Request) {
             _id: id,
 
             schoolId: user.id,
+
         });
 
         return NextResponse.json({
@@ -491,26 +557,34 @@ export async function DELETE(req: Request) {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "DELETE STUDENT ERROR:",
+            error
+        );
 
         return NextResponse.json(
             {
+                success: false,
                 message: "Server Error ❌",
             },
             {
                 status: 500,
             }
         );
+
     }
+
 }
 
 // ================= BULK DELETE =================
+
 export async function PATCH(req: Request) {
 
     try {
 
-        const cookieStore =
-            await cookies();
+        await connectDB();
+
+        const cookieStore = cookies();
 
         const token =
             cookieStore.get("token")?.value;
@@ -519,12 +593,14 @@ export async function PATCH(req: Request) {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message: "Unauthorized ❌",
                 },
                 {
                     status: 401,
                 }
             );
+
         }
 
         const user =
@@ -534,15 +610,15 @@ export async function PATCH(req: Request) {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message: "Invalid Token ❌",
                 },
                 {
                     status: 401,
                 }
             );
-        }
 
-        await connectDB();
+        }
 
         const body =
             await req.json();
@@ -557,12 +633,14 @@ export async function PATCH(req: Request) {
 
             return NextResponse.json(
                 {
+                    success: false,
                     message: "IDs required",
                 },
                 {
                     status: 400,
                 }
             );
+
         }
 
         const result =
@@ -573,6 +651,7 @@ export async function PATCH(req: Request) {
                 },
 
                 schoolId: user.id,
+
             });
 
         return NextResponse.json({
@@ -581,19 +660,26 @@ export async function PATCH(req: Request) {
 
             deletedCount:
                 result.deletedCount,
+
         });
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "BULK DELETE ERROR:",
+            error
+        );
 
         return NextResponse.json(
             {
+                success: false,
                 message: "Server Error ❌",
             },
             {
                 status: 500,
             }
         );
+
     }
+
 }

@@ -328,66 +328,82 @@ export default function DownloadExcelPage() {
 
     return (
 
-        <div className="min-h-screen bg-[#F4F7FB]">
+        <div className="min-h-screen bg-[#F4F7FB] p-4 sm:p-6">
 
             {/* HEADER */}
-            <div className="bg-gradient-to-r from-[#021B33] via-[#04284B] to-[#063B6E] text-white">
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="
+                bg-gradient-to-r
+                from-[#021B33]
+                via-[#04284B]
+                to-[#063B6E]
+                rounded-3xl
+                p-6 sm:p-8
+                text-white
+                shadow-xl
+                mb-8
+            ">
 
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+                <div className="
+                    flex flex-col lg:flex-row
+                    lg:items-center
+                    lg:justify-between
+                    gap-6
+                ">
 
-                        {/* LEFT */}
-                        <div>
+                    <div>
 
-                            <h1 className="text-3xl sm:text-4xl font-extrabold">
-                                Download Excel
-                            </h1>
+                        <h1 className="
+                            text-3xl sm:text-5xl
+                            font-extrabold
+                        ">
+                            Download Excel
+                        </h1>
 
-                            <p className="text-blue-100 mt-2">
-                                Export students database professionally.
-                            </p>
+                        <p className="
+                            text-blue-100 mt-3
+                        ">
+                            Export students database professionally.                        </p>
 
-                        </div>
+                    </div>
 
-                        {/* RIGHT */}
-                        <button
-                            onClick={handleDownloadExcel}
-                            disabled={downloading}
-                            className="
+                    {/* Button */}
+                    <button
+                        onClick={handleDownloadExcel}
+                        disabled={downloading}
+                        className="
         flex items-center justify-center gap-2
         bg-green-500 hover:bg-green-600
         disabled:bg-green-300
         px-6 py-3 rounded-2xl
         font-semibold shadow-xl transition
     "
-                        >
+                    >
 
-                            {downloading ? (
+                        {downloading ? (
 
-                                <>
-                                    <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin"></div>
+                            <>
+                                <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin"></div>
 
-                                    Preparing Excel...
-                                </>
+                                Preparing Excel...
+                            </>
 
-                            ) : (
+                        ) : (
 
-                                <>
-                                    <FileSpreadsheet size={20} />
+                            <>
+                                <FileSpreadsheet size={20} />
 
-                                    Download Excel
-                                </>
+                                Download Excel
+                            </>
 
-                            )}
+                        )}
 
-                        </button>
-
-                    </div>
+                    </button>
 
                 </div>
 
             </div>
+
 
             {/* CONTENT */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

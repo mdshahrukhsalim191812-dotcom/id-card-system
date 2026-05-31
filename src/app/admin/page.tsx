@@ -110,6 +110,7 @@ export default function AdminDashboard() {
                 to-[#063B6E]
                 flex items-center justify-center
                 overflow-hidden
+                z-[999]
             ">
 
                 {/* GLOW */}

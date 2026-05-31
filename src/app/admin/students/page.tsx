@@ -338,20 +338,83 @@ export default function AdminStudentsPage() {
         <div className="min-h-screen bg-[#F4F7FB] p-4 sm:p-6">
 
             {/* HEADER */}
-            <div className="mb-8">
 
-                <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800">
-                    Students Management
-                </h1>
+            <div className="
+                bg-gradient-to-r
+                from-[#021B33]
+                via-[#04284B]
+                to-[#063B6E]
+                rounded-3xl
+                p-6 sm:p-8
+                text-white
+                shadow-xl
+                mb-8
+            ">
 
-                <p className="text-gray-500 mt-2">
-                    Manage all schools students from one panel.
-                </p>
+                <div className="
+                    flex flex-col lg:flex-row
+                    lg:items-center
+                    lg:justify-between
+                    gap-6
+                ">
+
+                    <div>
+
+                        <h1 className="
+                            text-3xl sm:text-5xl
+                            font-extrabold
+                        ">
+                            Students Management
+                        </h1>
+
+                        <p className="
+                            text-blue-100 mt-3
+                        ">
+                           Manage all schools students from one panel.
+                        </p>
+
+                    </div>
+
+                    {/* STATS */}
+                    <div className="
+                        bg-white/10 backdrop-blur-xl
+                        border border-white/10
+                        rounded-3xl p-5
+                        flex items-center gap-5
+                    ">
+
+                        <div className="
+                            w-16 h-16 rounded-2xl
+                            bg-white/10
+                            flex items-center justify-center
+                        ">
+
+                            <Users size={30} />
+
+                        </div>
+
+                        <div>
+
+                            <p className="text-blue-100">
+                                Students
+                            </p>
+
+                            <h2 className="
+                                text-4xl font-extrabold
+                            ">
+                                {filteredStudents.length}
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
             {/* STATS */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8 mt-[20px]">
 
                 <div className="bg-white rounded-3xl p-6 shadow-sm border">
 
