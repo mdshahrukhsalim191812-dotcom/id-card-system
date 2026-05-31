@@ -54,7 +54,7 @@ export default function DashboardPage() {
     const stats = [
         {
             title: "Total Students",
-            value: totalStudents,
+            value: `0 || totalStudents`,
             icon: <Users size={30} />,
             color: "from-blue-600 to-cyan-500",
             bg: "bg-blue-50",
