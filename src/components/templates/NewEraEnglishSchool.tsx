@@ -99,7 +99,7 @@ export default function NewEraEnglishSchool({
             <div
                 className="
                     absolute
-                    top-[295px]
+                    top-[290px]
                     left-[20px]
                     w-[170px]
                     text-[13px]
@@ -110,27 +110,27 @@ export default function NewEraEnglishSchool({
             >
 
                 <p className="m-0">
-                    Class : {student.class || "-"}
+                    CLASS : {student.class || "-"}
                 </p>
 
                 <p className="m-0">
                     D.O.B : {formatDate(student.dob) || "-"}
                 </p>
 
-                <p className="m-0">
-                    F. Name : {student.father || "-"}
+                <p className="m-0 w-[280px]">
+                    F. NAME : {student.father || "-"}
                 </p>
 
                 <p className="m-0">
-                    Mobile : {student.phone || "-"}
+                    MOB. : {student.phone || "-"}
                 </p>
 
                 <p className="m-0">
-                    Admn. No : {student.admissionNo || "-"}
+                    ADMN. NO : {student.admissionNo || "-"}
                 </p>
 
-                <p className="m-0 break-words">
-                    Address : {student.address || "-"}
+                <p className="m-0 break-words w-[250px]">
+                    ADDRESS : {student.address || "-"}
                 </p>
 
             </div>
@@ -139,23 +139,22 @@ export default function NewEraEnglishSchool({
             <div
                 className="
                     absolute
-                    top-[295px]
+                    top-[290px]
                     right-[20px]
                     w-[80px]
                     text-[13px]
                     font-bold
                     text-blue-800
-                    leading-[20px]
                     text-left
                 "
             >
 
-                <p className="m-0">
-                    Sec : {student.sec || "-"}
+                <p className="m-0 relative right-[20px]">
+                    SEC : {student.sec || "-"}
                 </p>
 
-                <p className="m-0">
-                    Roll No : {student.roll || "-"}
+                <p className="m-0 relative top-[-2px] right-[20px] w-[100px]">
+                    ROLL NO : {student.roll || "-"}
                 </p>
 
             </div>

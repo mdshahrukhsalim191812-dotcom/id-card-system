@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDate } from "@/lib/formatDate";
 
 import {
     User,
@@ -167,10 +168,7 @@ export default function StudentDetailsPage({
         logo: student.logo,
         signature: student.signature,
         school: student.schoolId,
-        formatDate: (date: any) =>
-            date
-                ? new Date(date).toLocaleDateString("en-GB")
-                : "",
+        formatDate,
     };
 
     return (
