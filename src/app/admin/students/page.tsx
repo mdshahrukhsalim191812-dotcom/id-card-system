@@ -45,8 +45,6 @@ export default function AdminStudentsPage() {
 
             const data = await res.json();
 
-            console.log("API DATA =>", data);
-
             if (Array.isArray(data)) {
 
                 setStudents(data);
@@ -64,7 +62,7 @@ export default function AdminStudentsPage() {
 
         } catch (error) {
 
-            console.log(error);
+            console.error(error);
 
             setStudents([]);
 
@@ -239,7 +237,7 @@ export default function AdminStudentsPage() {
 
                             } catch (error) {
 
-                                console.log(error);
+                                console.error(error);
 
                                 toast.dismiss(loadingToast);
 
