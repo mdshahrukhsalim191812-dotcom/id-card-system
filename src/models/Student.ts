@@ -64,6 +64,7 @@ const StudentSchema = new mongoose.Schema(
 
         dob: {
             type: Date,
+            default: null,
         },
 
         blood: {
@@ -98,15 +99,35 @@ const StudentSchema = new mongoose.Schema(
             required: true,
         },
     },
-    { timestamps: true }
+    {
+        timestamps: true,
+    }
 );
 
+// 🔥 Prevent duplicate roll number in same school
+StudentSchema.index(
+    {
+        schoolId: 1,
+        class: 1,
+        sec: 1,
+        roll: 1,
+    },
+    {
+        unique: true,
+    }
+);
 
-// Prevent duplicate student (same roll in same school)
-StudentSchema.index({ schoolId: 1, roll: 1 }, { unique: true });
+// 🔥 Prevent duplicate excel upload
+StudentSchema.index(
+    { schoolId: 1, fileHash: 1 },
+    {
+        background: true,
+    }
+);
 
-// Prevent duplicate file upload (optional but powerful)
-StudentSchema.index({ schoolId: 1, fileHash: 1 });
-
-export default mongoose.models.Student ||
+// 🔥 Avoid model overwrite error
+const Student =
+    mongoose.models.Student ||
     mongoose.model("Student", StudentSchema);
+
+export default Student;

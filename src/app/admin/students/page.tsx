@@ -11,7 +11,6 @@ import {
     GraduationCap,
     Trash2,
 } from "lucide-react";
-import Student from "@/models/Student";
 
 type Student = {
     _id: string;
@@ -38,32 +37,51 @@ export default function AdminStudentsPage() {
     const [loadingPage, setLoadingPage] = useState(true);
 
     // FETCH STUDENTS
-    useEffect(() => {
+    const fetchStudents = async () => {
 
-        const fetchStudents = async () => {
+        try {
 
-            try {
+            const res = await fetch("/api/admin/students");
 
-                const res = await fetch("/api/admin/students");
+            const data = await res.json();
 
-                const data = await res.json();
+            console.log("API DATA =>", data);
+
+            if (Array.isArray(data)) {
 
                 setStudents(data);
+
                 setFilteredStudents(data);
 
-            } catch (error) {
+            } else {
 
-                console.log(error);
+                console.error(data);
 
-            } finally {
+                setStudents([]);
 
-                setLoadingPage(false);
+                setFilteredStudents([]);
             }
-        };
+
+        } catch (error) {
+
+            console.log(error);
+
+            setStudents([]);
+
+            setFilteredStudents([]);
+
+        } finally {
+
+            setLoadingPage(false);
+        }
+    };
+
+    useEffect(() => {
 
         fetchStudents();
 
     }, []);
+
 
     // FILTER
     useEffect(() => {
@@ -370,7 +388,7 @@ export default function AdminStudentsPage() {
                         <p className="
                             text-blue-100 mt-3
                         ">
-                           Manage all schools students from one panel.
+                            Manage all schools students from one panel.
                         </p>
 
                     </div>
