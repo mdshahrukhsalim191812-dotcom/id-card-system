@@ -1,5 +1,7 @@
 /*eslint-disable @next/next/no-img-element*/
 
+import { color } from "framer-motion";
+
 type Props = {
     student: any;
     image: string | null;
@@ -40,10 +42,10 @@ export default function HappyValleySchoolBhagalpur({
                     alt="student"
                     style={{
                         position: "absolute",
-                        top: "130px",
-                        left: "165px",
+                        top: "132px",
+                        left: "170.5px",
                         width: "105px",
-                        height: "130px",
+                        height: "132px",
                         objectFit: "cover",
                         border: "2px solid #fff"
                     }}
@@ -70,14 +72,14 @@ export default function HappyValleySchoolBhagalpur({
             <div
                 style={{
                     position: "absolute",
-                    top: "268px",
+                    top: "268.5px",
                     left: "22px",
                     width: "250px"
                 }}
             >
                 <span
                     style={{
-                        fontSize: "22px",
+                        fontSize: "21px",
                         fontWeight: "bold",
                         color: "#fff",
                         display: "block",
@@ -91,32 +93,32 @@ export default function HappyValleySchoolBhagalpur({
             </div>
 
             {/* 🔹 ADMISSION */}
-            <p style={{ position: "absolute", left: "86px", top: "220px", fontSize: "14px", fontWeight: "bold" }}>
+            <p style={{ position: "absolute", left: "86px", top: "220px", fontSize: "13.5px", fontWeight: "bold"}} className="text-black">
                 {student.admissionNo || "---"}
             </p>
 
             {/* 🔹 DOB */}
-            <p style={{ position: "absolute", left: "86px", top: "235px", fontSize: "14px", fontWeight: "bold" }}>
+            <p style={{ position: "absolute", left: "86px", top: "238px", fontSize: "13.5px", fontWeight: "bold" }}className="text-black">
                 {formatDate(student.dob) || "---"}
             </p>
 
             {/* 🔹 ROLL */}
-            <p style={{ position: "absolute", left: "86px", top: "250px", fontSize: "14px", fontWeight: "bold" }}>
+            <p style={{ position: "absolute", left: "86px", top: "257px", fontSize: "13.5px", fontWeight: "bold" }} className="text-black">
                 {student.roll || "---"}
             </p>
 
             {/* 🔹 FATHER */}
-            <p style={{ position: "absolute", left: "22px", top: "285px", fontSize: "14px", fontWeight: "bold" }}>
+            <p style={{ position: "absolute", left: "22px", top: "315px", fontSize: "13.5px", fontWeight: "bold" }} className="text-black">
                 {student.father || "---"}
             </p>
 
             {/* 🔹 MOTHER */}
-            <p style={{ position: "absolute", left: "22px", top: "300px", fontSize: "14px", fontWeight: "bold" }}>
+            <p style={{ position: "absolute", left: "22px", top: "345px", fontSize: "13.5px", fontWeight: "bold" }} className="text-black">
                 {student.mother || "---"}
             </p>
 
             {/* 🔹 PHONE */}
-            <p style={{ position: "absolute", left: "22px", top: "315px", fontSize: "14px", fontWeight: "bold" }}>
+            <p style={{ position: "absolute", left: "22px", top: "375px", fontSize: "13.5px", fontWeight: "bold" }} className="text-black">
                 {student.phone || "---"}
             </p>
 
@@ -124,26 +126,38 @@ export default function HappyValleySchoolBhagalpur({
             <p style={{
                 position: "absolute",
                 left: "22px",
-                top: "330px",
+                top: "405px",
                 width: "200px",
-                fontSize: "14px",
+                fontSize: "13.5px",
                 fontWeight: "bold",
                 lineHeight: "16px",
                 wordBreak: "break-word"
-            }}>
+            }} className="text-black">
                 {student.address || "---"}
             </p>
 
             {/* 🔹 CLASS */}
             <p style={{
                 position: "absolute",
-                left: "200px",
+                left: "192px",
                 top: "350px",
                 fontSize: "22px",
                 fontWeight: "bold",
                 color: "#1e40af"
-            }}>
+            }} className="text-black">
                 {student.class || "---"}
+            </p>
+
+            <p style={{
+                position: "absolute",
+                left: "240px",
+                top: "350px",
+                fontSize: "22px",
+                fontWeight: "bold",
+                color: "#FFF100"
+            }} className="text-black"
+            >
+               /{student.sec || "---"}
             </p>
 
             {/* 🔹 SIGNATURE */}
