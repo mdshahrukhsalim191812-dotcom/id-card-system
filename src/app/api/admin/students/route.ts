@@ -1,5 +1,6 @@
 import { connectDB } from "@/lib/db";
 
+import School from "@/models/School";
 import Student from "@/models/Student";
 
 import { NextResponse } from "next/server";
