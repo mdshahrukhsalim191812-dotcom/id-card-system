@@ -43,8 +43,17 @@ export async function POST(req: Request) {
         // ================= BODY =================
         const body = await req.json();
 
+        const {
+            email,
+            password,
+            otpVerified,
+        } = body;
+
         const parsed =
-            loginSchema.safeParse(body);
+            loginSchema.safeParse({
+                email,
+                password,
+            });
 
         if (!parsed.success) {
 
@@ -62,10 +71,10 @@ export async function POST(req: Request) {
         // ================= DATABASE =================
         await connectDB();
 
-        // ONLY SCHOOL LOGIN
+        // ================= SCHOOL =================
         const school =
             await School.findOne({
-                email: body.email,
+                email,
                 role: "school",
             });
 
@@ -85,7 +94,7 @@ export async function POST(req: Request) {
         // ================= PASSWORD =================
         const isMatch =
             await bcrypt.compare(
-                body.password,
+                password,
                 school.password
             );
 
@@ -98,6 +107,20 @@ export async function POST(req: Request) {
                 },
                 {
                     status: 401,
+                }
+            );
+        }
+
+        // ================= OTP CHECK =================
+        if (!otpVerified) {
+
+            return NextResponse.json(
+                {
+                    message:
+                        "OTP verification required",
+                },
+                {
+                    status: 403,
                 }
             );
         }

@@ -1,160 +1,195 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
+import { useState, useEffect } from "react";
 
-import {
-    FaEye,
-    FaEyeSlash,
-} from "react-icons/fa";
+import Image from "next/image";
 
 import toast from "react-hot-toast";
 
 import {
-    UserRoundCheck,
+    ShieldCheck,
 } from "lucide-react";
 
-export default function LoginPage() {
+export default function VerifyLoginOTPPage() {
 
-    const [form, setForm] = useState({
-        email: "",
-        password: "",
-    });
-
-    const [showPassword, setShowPassword] =
-        useState(false);
+    const [otp, setOtp] =
+        useState("");
 
     const [loading, setLoading] =
         useState(false);
 
-    // ================= HANDLE CHANGE =================
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    // ================= PROTECT PAGE =================
 
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value,
-        });
-    };
+    useEffect(() => {
 
-    // ================= HANDLE SUBMIT =================
-    const handleSubmit = async (
-        e: React.FormEvent
-    ) => {
-
-        e.preventDefault();
-
-        if (loading) return;
-
-        try {
-
-            setLoading(true);
-
-            // 🔥 STEP 1
-            // CHECK SCHOOL EXISTS + PASSWORD
-
-            const checkRes = await fetch(
-                "/api/auth/check-login",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json",
-                    },
-
-                    body: JSON.stringify({
-                        email: form.email,
-                        password: form.password,
-                    }),
-                }
+        const tempLogin =
+            sessionStorage.getItem(
+                "tempLogin"
             );
 
-            const checkData =
-                await checkRes.json();
+        // ❌ NO LOGIN SESSION
+        if (!tempLogin) {
 
-            // ❌ INVALID LOGIN
-            if (!checkRes.ok) {
-
-                toast.error(
-                    checkData.message ||
-                    "Invalid credentials ❌"
-                );
-
-                return;
-            }
-
-            // 🔥 STEP 2
-            // SEND OTP TO OWNER
-
-            const otpRes = await fetch(
-                "/api/send-otp",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json",
-                    },
-
-                    body: JSON.stringify({
-                        email: form.email,
-                    }),
-                }
-            );
-
-            const otpData =
-                await otpRes.json();
-
-            // ❌ OTP ERROR
-            if (!otpRes.ok) {
-
-                toast.error(
-                    otpData.message ||
-                    "Failed to send OTP ❌"
-                );
-
-                return;
-            }
-
-            // 🔥 SAVE LOGIN DATA
-            sessionStorage.setItem(
-                "tempLogin",
-                JSON.stringify({
-                    email: form.email,
-                    password: form.password,
-                })
-            );
-
-            toast.success(
-                "OTP sent to owner email ✅"
-            );
-
-            // 🔥 REDIRECT
-            setTimeout(() => {
-
-                window.location.href =
-                    "/verify-login-otp";
-
-            }, 1000);
-
-        } catch (error) {
-
-            console.log(error);
-
-            toast.error(
-                "Something went wrong ❌"
-            );
-
-        } finally {
-
-            setLoading(false);
+            window.location.href =
+                "/login";
         }
-    };
+
+    }, []);
+
+    // ================= VERIFY OTP =================
+
+    const handleVerify =
+        async (
+            e?: React.FormEvent
+        ) => {
+
+            if (e) e.preventDefault();
+
+            if (loading) return;
+
+            try {
+
+                setLoading(true);
+
+                // 🔥 GET TEMP LOGIN
+                const tempLogin =
+                    sessionStorage.getItem(
+                        "tempLogin"
+                    );
+
+                if (!tempLogin) {
+
+                    toast.error(
+                        "Login session expired ❌"
+                    );
+
+                    return;
+                }
+
+                const loginData =
+                    JSON.parse(tempLogin);
+
+                // 🔥 VERIFY OTP
+                const otpRes =
+                    await fetch(
+                        "/api/verify-otp",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+                            },
+
+                            body: JSON.stringify({
+
+                                email:
+                                    loginData.email,
+
+                                otp,
+                            }),
+                        }
+                    );
+
+                const otpData =
+                    await otpRes.json();
+
+                // ❌ OTP INVALID
+                if (!otpRes.ok) {
+
+                    toast.error(
+                        otpData.message ||
+                        "Invalid OTP ❌"
+                    );
+
+                    return;
+                }
+
+                // 🔥 FINAL LOGIN
+                const loginRes =
+                    await fetch(
+                        "/api/auth/login",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+                            },
+
+                            credentials:
+                                "include",
+
+                            body: JSON.stringify({
+
+                                ...loginData,
+
+                                otpVerified: true,
+
+                            }),
+                        }
+                    );
+
+                const data =
+                    await loginRes.json();
+
+                // ❌ LOGIN FAILED
+                if (!loginRes.ok) {
+
+                    toast.error(
+                        data.message ||
+                        "Login failed ❌"
+                    );
+
+                    return;
+                }
+
+                // 🔥 SAVE SCHOOL
+                localStorage.setItem(
+                    "schoolId",
+                    data.school.id
+                );
+
+                localStorage.setItem(
+                    "school",
+                    JSON.stringify(
+                        data.school
+                    )
+                );
+
+                // 🔥 CLEAR SESSION
+                sessionStorage.removeItem(
+                    "tempLogin"
+                );
+
+                toast.success(
+                    "Login successful ✅"
+                );
+
+                // 🔥 REDIRECT
+                setTimeout(() => {
+
+                    window.location.href =
+                        "/dashboard/create-id";
+
+                }, 1500);
+
+            } catch (error) {
+
+                console.log(error);
+
+                toast.error(
+                    "Something went wrong ❌"
+                );
+
+            } finally {
+
+                setLoading(false);
+            }
+        };
 
     // ================= LOADING UI =================
+
     if (loading) {
 
         return (
@@ -224,7 +259,7 @@ export default function LoginPage() {
                             shadow-2xl
                         ">
 
-                            <UserRoundCheck
+                            <ShieldCheck
                                 size={50}
                                 className="
                                     text-white
@@ -275,7 +310,7 @@ export default function LoginPage() {
                         text-white
                         tracking-wide
                     ">
-                        Sending OTP...
+                        Verifying OTP...
                     </h2>
 
                     <p className="
@@ -287,7 +322,7 @@ export default function LoginPage() {
                         leading-relaxed
                     ">
                         Please wait while we
-                        sending OTP to Owner.
+                        securely verifying owner OTP.
                     </p>
 
                 </div>
@@ -297,6 +332,7 @@ export default function LoginPage() {
     }
 
     // ================= MAIN UI =================
+
     return (
 
         <div className="
@@ -316,6 +352,7 @@ export default function LoginPage() {
         ">
 
             {/* ================= GLOW EFFECTS ================= */}
+
             <div className="
                 absolute
                 top-0 left-0
@@ -335,6 +372,7 @@ export default function LoginPage() {
             "></div>
 
             {/* ================= CARD ================= */}
+
             <div className="
                 relative z-10
                 w-full
@@ -352,7 +390,8 @@ export default function LoginPage() {
                     sm:p-8
                 ">
 
-                    {/* ================= BRAND SECTION ================= */}
+                    {/* ================= BRAND ================= */}
+
                     <div className="
                         flex
                         items-center
@@ -362,6 +401,7 @@ export default function LoginPage() {
                     ">
 
                         {/* LOGO */}
+
                         <div className="flex-shrink-0">
 
                             <Image
@@ -380,7 +420,8 @@ export default function LoginPage() {
 
                         </div>
 
-                        {/* BRAND TEXT */}
+                        {/* TEXT */}
+
                         <div>
 
                             <h1 className="
@@ -420,6 +461,7 @@ export default function LoginPage() {
                     </div>
 
                     {/* ================= HEADING ================= */}
+
                     <div className="
                         text-center
                         mt-8
@@ -432,7 +474,7 @@ export default function LoginPage() {
                             text-white
                         ">
 
-                            Welcome Back
+                            Verify Login OTP
 
                         </h2>
 
@@ -443,22 +485,24 @@ export default function LoginPage() {
                             mt-2
                         ">
 
-                            Login to your school dashboard
+                            Enter owner verification OTP
 
                         </p>
 
                     </div>
 
                     {/* ================= FORM ================= */}
+
                     <form
-                        onSubmit={handleSubmit}
+                        onSubmit={handleVerify}
                         className="
                             mt-8
                             space-y-5
                         "
                     >
 
-                        {/* ================= EMAIL ================= */}
+                        {/* OTP */}
+
                         <div>
 
                             <label className="
@@ -466,21 +510,25 @@ export default function LoginPage() {
                                 text-gray-300
                             ">
 
-                                Email Address
+                                Owner OTP
 
                             </label>
 
                             <input
-                                type="email"
-                                name="email"
-                                placeholder="Enter email address"
-                                value={form.email}
-                                onChange={handleChange}
+                                type="text"
+                                placeholder="Enter OTP"
+                                value={otp}
+                                onChange={(e) =>
+                                    setOtp(
+                                        e.target.value
+                                    )
+                                }
                                 required
+                                maxLength={6}
                                 className="
                                     w-full
                                     mt-2
-                                    p-3 sm:p-4
+                                    p-4
                                     rounded-2xl
                                     bg-white/10
                                     border border-white/20
@@ -489,105 +537,17 @@ export default function LoginPage() {
                                     focus:outline-none
                                     focus:ring-2
                                     focus:ring-cyan-400
-                                    transition-all
-                                    duration-300
+                                    text-center
+                                    tracking-[10px]
+                                    text-2xl
+                                    font-bold
                                 "
                             />
 
                         </div>
 
-                        {/* ================= PASSWORD ================= */}
-                        <div>
+                        {/* BUTTON */}
 
-                            <label className="
-                                text-sm
-                                text-gray-300
-                            ">
-
-                                Password
-
-                            </label>
-
-                            <div className="
-                                relative
-                                mt-2
-                            ">
-
-                                <input
-                                    type={
-                                        showPassword
-                                            ? "text"
-                                            : "password"
-                                    }
-                                    name="password"
-                                    placeholder="Enter password"
-                                    value={form.password}
-                                    onChange={handleChange}
-                                    required
-                                    className="
-                                        w-full
-                                        p-3 sm:p-4
-                                        rounded-2xl
-                                        bg-white/10
-                                        border border-white/20
-                                        text-white
-                                        placeholder-gray-400
-                                        focus:outline-none
-                                        focus:ring-2
-                                        focus:ring-cyan-400
-                                        pr-12
-                                        transition-all
-                                        duration-300
-                                    "
-                                />
-
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        setShowPassword(
-                                            !showPassword
-                                        )
-                                    }
-                                    className="
-                                        absolute
-                                        right-4
-                                        top-1/2
-                                        -translate-y-1/2
-                                        text-gray-300
-                                        hover:text-white
-                                        transition
-                                    "
-                                >
-
-                                    {showPassword
-                                        ? <FaEyeSlash />
-                                        : <FaEye />}
-
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                        {/* ================= FORGOT PASSWORD ================= */}
-                        <div className="
-                            text-right
-                        ">
-
-                            <Link
-                                href="/forgot-password"
-                                className="
-                                    text-sm
-                                    text-cyan-400
-                                    hover:underline
-                                "
-                            >
-                                Forgot Password?
-                            </Link>
-
-                        </div>
-
-                        {/* ================= BUTTON ================= */}
                         <button
                             type="submit"
                             disabled={loading}
@@ -610,35 +570,11 @@ export default function LoginPage() {
                             "
                         >
 
-                            Send OTP to Owner Email
+                            Verify OTP
 
                         </button>
 
                     </form>
-
-                    {/* ================= FOOTER ================= */}
-                    <p className="
-                        text-center
-                        text-gray-300
-                        text-sm
-                        mt-7
-                    ">
-
-                        Don’t have an account?
-
-                        <Link
-                            href="/register"
-                            className="
-                                text-cyan-400
-                                font-semibold
-                                ml-1
-                                hover:underline
-                            "
-                        >
-                            Register
-                        </Link>
-
-                    </p>
 
                 </div>
 
