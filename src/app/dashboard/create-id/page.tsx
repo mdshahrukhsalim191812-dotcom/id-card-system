@@ -1228,23 +1228,6 @@ export default function CreateIDPage() {
                         ))}
                     </select>
 
-                    {/* FILE INPUTS */}
-                    <div>
-                        <p className="font-medium mb-1">School Logo</p>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            className="w-full border border-gray-300 p-2 rounded-md hover:border-blue-400 focus:ring-2 focus:ring-blue-400 transition"
-                            onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    const reader = new FileReader();
-                                    reader.onloadend = () => setLogo(reader.result as string);
-                                    reader.readAsDataURL(file);
-                                }
-                            }}
-                        />
-                    </div>
 
                     {/* 🔥 STUDENT IMAGE (UPLOAD + CAMERA) */}
                     <div>
@@ -1350,23 +1333,6 @@ export default function CreateIDPage() {
                                 className="mt-2 w-24 h-32 object-cover rounded border"
                             />
                         )}
-                    </div>
-
-                    <div>
-                        <p className="font-medium mb-1">Principal Signature</p>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            className="w-full border border-gray-300 p-2 rounded-md hover:border-blue-400 focus:ring-2 focus:ring-blue-400 transition"
-                            onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    const reader = new FileReader();
-                                    reader.onloadend = () => setSignature(reader.result as string);
-                                    reader.readAsDataURL(file);
-                                }
-                            }}
-                        />
                     </div>
 
                     {/* INPUTS */}

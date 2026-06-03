@@ -73,7 +73,7 @@ export default function KarishmaConventSchool({
 
                 <span
                     className="
-                        text-[#cf2f2c]
+                        text-blue-800
                         leading-none
                         text-center
                         tracking-tighter
@@ -98,7 +98,7 @@ export default function KarishmaConventSchool({
             <div
                 className="
                     absolute
-                    top-[294px]
+                    top-[298px]
                     left-[18px]
                     text-[11px]
                     leading-[22px]
@@ -157,7 +157,7 @@ export default function KarishmaConventSchool({
             <div
                 className="
                     absolute
-                    top-[294px]
+                    top-[298px]
                     left-[102px]
 
                     text-[11px]
@@ -217,7 +217,7 @@ export default function KarishmaConventSchool({
             <div
                 className="
                     absolute
-                    top-[294px]
+                    top-[298px]
                     left-[115px]
 
                     w-[160px]
@@ -287,12 +287,12 @@ export default function KarishmaConventSchool({
 
                 {/* ADDRESS */}
                 <div
-                    className="relative top-[-8.5px] left-[-9.5px] text-[10px] w-[200px]"
+                    className="relative top-[-8.5px] left-[-9.5px] text-[10px] w-[170px]"
                     style={{
                         letterSpacing: "1px",
                         fontFamily: "Arial",
                         transform: "scaleY(1.65)",
-                        lineHeight: "12.5px",
+                        lineHeight: "10px",
                     }}
                 >
 
@@ -307,7 +307,7 @@ export default function KarishmaConventSchool({
             <div
                 className="
         absolute
-        top-[277px]
+        top-[281px]
         right-[18px]
     "
             >

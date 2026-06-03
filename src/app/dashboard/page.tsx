@@ -53,28 +53,12 @@ export default function DashboardPage() {
 
     const stats = [
         {
-            title: "Total Students",
+            title: "Your Total Students",
             value: totalStudents,
             icon: <Users size={30} />,
             color: "from-blue-600 to-cyan-500",
             bg: "bg-blue-50",
             text: "text-blue-600",
-        },
-        {
-            title: "ID Cards Created",
-            value: "95",
-            icon: <CreditCard size={30} />,
-            color: "from-green-600 to-emerald-500",
-            bg: "bg-green-50",
-            text: "text-green-600",
-        },
-        {
-            title: "Pending Orders",
-            value: "25",
-            icon: <Clock3 size={30} />,
-            color: "from-orange-500 to-yellow-400",
-            bg: "bg-orange-50",
-            text: "text-orange-500",
         },
     ];
 
