@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -28,6 +28,8 @@ export default function LoginPage() {
     const [loading, setLoading] =
         useState(false);
 
+    const [cooldown, setCooldown] = useState(0);
+
     // ================= HANDLE CHANGE =================
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement>
@@ -38,6 +40,30 @@ export default function LoginPage() {
             [e.target.name]: e.target.value,
         });
     };
+
+    // ================= COOLDOWN TIMER =================
+
+    useEffect(() => {
+
+        let timer: NodeJS.Timeout;
+
+        if (cooldown > 0) {
+
+            timer = setTimeout(() => {
+
+                setCooldown(
+                    cooldown - 1
+                );
+
+            }, 1000);
+        }
+
+        return () => {
+
+            clearTimeout(timer);
+        };
+
+    }, [cooldown]);
 
     // ================= HANDLE SUBMIT =================
     const handleSubmit = async (
@@ -131,6 +157,8 @@ export default function LoginPage() {
             toast.success(
                 "OTP sent to owner email ✅"
             );
+
+            setCooldown(60); // 60 seconds cooldown
 
             // 🔥 REDIRECT
             setTimeout(() => {
@@ -590,7 +618,7 @@ export default function LoginPage() {
                         {/* ================= BUTTON ================= */}
                         <button
                             type="submit"
-                            disabled={loading}
+                            disabled={loading || cooldown > 0}
                             className="
                                 w-full
                                 py-3 sm:py-4
@@ -610,7 +638,12 @@ export default function LoginPage() {
                             "
                         >
 
-                            Send OTP to Owner Email
+                            {loading ?
+                                "Sending OTP"
+                                :
+                                cooldown > 0
+                                    ? `Resend OTP in ${cooldown}s`
+                                    : "Send OTP to Owner Email"}
 
                         </button>
 

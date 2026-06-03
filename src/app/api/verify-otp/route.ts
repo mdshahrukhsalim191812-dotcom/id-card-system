@@ -12,17 +12,16 @@ export async function POST(req: Request) {
         const body = await req.json();
 
         const {
-            email,
             otp,
         } = body;
 
         // ================= VALIDATION =================
-        if (!email || !otp) {
+        if (!otp) {
 
             return NextResponse.json(
                 {
                     message:
-                        "Email and OTP required ❌",
+                        "OTP required ❌",
                 },
                 {
                     status: 400,
@@ -36,7 +35,6 @@ export async function POST(req: Request) {
         // ================= FIND OTP =================
         const existingOTP =
             await OTP.findOne({
-                email,
                 otp,
             });
 

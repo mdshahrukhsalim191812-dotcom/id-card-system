@@ -1,6 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import {
+    useState,
+    useEffect,
+} from "react";
 
 import Image from "next/image";
 
@@ -10,7 +13,7 @@ import {
     ShieldCheck,
 } from "lucide-react";
 
-export default function VerifyLoginOTPPage() {
+export default function VerifyRegisterOTPPage() {
 
     const [otp, setOtp] =
         useState("");
@@ -22,16 +25,16 @@ export default function VerifyLoginOTPPage() {
 
     useEffect(() => {
 
-        const tempLogin =
+        const tempRegister =
             sessionStorage.getItem(
-                "tempLogin"
+                "tempRegister"
             );
 
-        // ❌ NO LOGIN SESSION
-        if (!tempLogin) {
+        // ❌ NO REGISTER SESSION
+        if (!tempRegister) {
 
             window.location.href =
-                "/login";
+                "/register";
         }
 
     }, []);
@@ -51,23 +54,25 @@ export default function VerifyLoginOTPPage() {
 
                 setLoading(true);
 
-                // 🔥 GET TEMP LOGIN
-                const tempLogin =
+                // 🔥 GET TEMP REGISTER
+                const tempRegister =
                     sessionStorage.getItem(
-                        "tempLogin"
+                        "tempRegister"
                     );
 
-                if (!tempLogin) {
+                if (!tempRegister) {
 
                     toast.error(
-                        "Login session expired ❌"
+                        "Register session expired ❌"
                     );
 
                     return;
                 }
 
-                const loginData =
-                    JSON.parse(tempLogin);
+                const registerData =
+                    JSON.parse(
+                        tempRegister
+                    );
 
                 // 🔥 VERIFY OTP
                 const otpRes =
@@ -84,7 +89,7 @@ export default function VerifyLoginOTPPage() {
                             body: JSON.stringify({
 
                                 email:
-                                    loginData.email,
+                                    registerData.email,
 
                                 otp,
                             }),
@@ -105,10 +110,10 @@ export default function VerifyLoginOTPPage() {
                     return;
                 }
 
-                // 🔥 FINAL LOGIN
-                const loginRes =
+                // 🔥 FINAL REGISTER
+                const registerRes =
                     await fetch(
-                        "/api/auth/login",
+                        "/api/auth/register",
                         {
                             method: "POST",
 
@@ -117,60 +122,40 @@ export default function VerifyLoginOTPPage() {
                                     "application/json",
                             },
 
-                            credentials:
-                                "include",
-
-                            body: JSON.stringify({
-
-                                ...loginData,
-
-                                otpVerified: true,
-
-                            }),
+                            body: JSON.stringify(
+                                registerData
+                            ),
                         }
                     );
 
                 const data =
-                    await loginRes.json();
+                    await registerRes.json();
 
-                // ❌ LOGIN FAILED
-                if (!loginRes.ok) {
+                // ❌ REGISTER FAILED
+                if (!registerRes.ok) {
 
                     toast.error(
                         data.message ||
-                        "Login failed ❌"
+                        "Registration failed ❌"
                     );
 
                     return;
                 }
 
-                // 🔥 SAVE SCHOOL
-                localStorage.setItem(
-                    "schoolId",
-                    data.school.id
-                );
-
-                localStorage.setItem(
-                    "school",
-                    JSON.stringify(
-                        data.school
-                    )
-                );
-
                 // 🔥 CLEAR SESSION
                 sessionStorage.removeItem(
-                    "tempLogin"
+                    "tempRegister"
                 );
 
                 toast.success(
-                    "Login successful ✅"
+                    "Account created successfully ✅"
                 );
 
                 // 🔥 REDIRECT
                 setTimeout(() => {
 
                     window.location.href =
-                        "/dashboard/create-id";
+                        "/login";
 
                 }, 1500);
 
@@ -474,7 +459,7 @@ export default function VerifyLoginOTPPage() {
                             text-white
                         ">
 
-                            Verify Login OTP
+                            Verify Register OTP
 
                         </h2>
 

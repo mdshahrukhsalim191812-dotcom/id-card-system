@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -47,6 +47,8 @@ export default function RegisterPage() {
   const [loading, setLoading] =
     useState(false);
 
+  const [cooldown, setCooldown] = useState(0);
+
   // ================= PASSWORD RULES =================
   const rules =
     checkPassword(form.password);
@@ -79,6 +81,30 @@ export default function RegisterPage() {
     });
   };
 
+  // ================= COOLDOWN TIMER =================
+
+  useEffect(() => {
+
+    let timer: NodeJS.Timeout;
+
+    if (cooldown > 0) {
+
+      timer = setTimeout(() => {
+
+        setCooldown(
+          cooldown - 1
+        );
+
+      }, 1000);
+    }
+
+    return () => {
+
+      clearTimeout(timer);
+    };
+
+  }, [cooldown]);
+
   // ================= SUBMIT =================
   const handleSubmit = async (
     e: React.FormEvent
@@ -86,7 +112,11 @@ export default function RegisterPage() {
 
     e.preventDefault();
 
-    if (form.password !== confirmPassword) {
+    // 🔥 PASSWORD MATCH
+    if (
+      form.password !==
+      confirmPassword
+    ) {
 
       toast.error(
         "Passwords do not match ❌"
@@ -95,6 +125,7 @@ export default function RegisterPage() {
       return;
     }
 
+    // 🔥 PASSWORD STRENGTH
     if (score < 4) {
 
       toast.error(
@@ -104,12 +135,17 @@ export default function RegisterPage() {
       return;
     }
 
-    setLoading(true);
-
     try {
 
-      const res = await fetch(
-        "/api/auth/register",
+      setLoading(true);
+
+      // =========================
+      // 🔥 STEP 1
+      // SEND OTP TO OWNER EMAIL
+      // =========================
+
+      const otpRes = await fetch(
+        "/api/send-otp",
         {
           method: "POST",
 
@@ -118,50 +154,66 @@ export default function RegisterPage() {
               "application/json",
           },
 
-          body: JSON.stringify(form),
+          body: JSON.stringify({
+
+            email: form.email,
+
+          }),
         }
       );
 
-      const data =
-        await res.json();
+      const otpData =
+        await otpRes.json();
 
-      if (res.ok) {
+      // ❌ OTP ERROR
+      if (!otpRes.ok) {
 
-        toast.success(
-          "Account Created Successfully ✅"
+        toast.error(
+          otpData.message ||
+          "Failed to send OTP ❌"
         );
 
-        setTimeout(() => {
-
-          router.push("/login");
-
-        }, 1200);
-
-      } else {
-
-        if (res.status === 400) {
-
-          toast.error(
-            "User already exists"
-          );
-
-          router.push("/login");
-
-        } else {
-
-          toast.error(
-            data.message ||
-            "Registration Failed"
-          );
-        }
+        return;
       }
+
+      // =========================
+      // 🔥 STEP 2
+      // SAVE REGISTER DATA
+      // =========================
+
+      sessionStorage.setItem(
+        "tempRegister",
+        JSON.stringify(form)
+      );
+
+      // =========================
+      // 🔥 STEP 3
+      // SUCCESS MESSAGE
+      // =========================
+
+      toast.success(
+        "OTP sent to owner email ✅"
+      );
+
+      // =========================
+      // 🔥 STEP 4
+      // REDIRECT TO OTP PAGE
+      // =========================
+
+      setTimeout(() => {
+
+        router.push(
+          "/verify-register-otp"
+        );
+
+      }, 1000);
 
     } catch (error) {
 
       console.log(error);
 
       toast.error(
-        "Something went wrong!"
+        "Something went wrong ❌"
       );
 
     } finally {
@@ -169,6 +221,7 @@ export default function RegisterPage() {
       setLoading(false);
     }
   };
+
 
   return (
 
@@ -581,8 +634,8 @@ export default function RegisterPage() {
                             "
             >
               {loading
-                ? "Creating Account..."
-                : "Create Account"}
+                ? "Sending OTP..."
+                : "Send OTP to Owner Email"}
             </button>
 
           </form>
