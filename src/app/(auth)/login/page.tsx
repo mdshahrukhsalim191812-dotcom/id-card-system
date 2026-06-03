@@ -103,7 +103,7 @@ export default function LoginPage() {
             setTimeout(() => {
 
                 window.location.href =
-                    "/dashboard";
+                    "/create-id";
 
             }, 800);
 
