@@ -17,6 +17,7 @@ import {
 import NewEraEnglishSchool from "@/components/templates/NewEraEnglishSchool";
 import BalBhartiSchool from "@/components/templates/BalBhartiSchool";
 import HappyValleySchoolBhagalpur from "@/components/templates/HappyValleySchoolBhagalpur";
+import KarishmaConventSchool from "@/components/templates/KarishmaConventSchool";
 
 export default function StudentDetailsPage({
     params,
@@ -432,6 +433,12 @@ export default function StudentDetailsPage({
 
                                     {templateId === "HappyValleySchoolBhagalpur" && (
                                         <HappyValleySchoolBhagalpur
+                                            {...commonProps}
+                                        />
+                                    )}
+
+                                    {templateId === "KarishmaConventSchool" && (
+                                        <KarishmaConventSchool
                                             {...commonProps}
                                         />
                                     )}
