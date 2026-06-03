@@ -181,10 +181,6 @@ export default function CreateIDPage() {
 
                 setModelsLoaded(true);
 
-                console.log(
-                    "AI Models Loaded ✅"
-                );
-
             } catch (error) {
 
                 console.error(
