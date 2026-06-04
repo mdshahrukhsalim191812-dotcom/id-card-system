@@ -21,15 +21,24 @@ export default function KarishmaConventSchool({
         <div
             id="card"
             className="
-                relative
-                w-[300px]
-                h-[476px]
-                overflow-hidden
-                flex-shrink-0
-                bg-white
-            "
+        relative
+        overflow-hidden
+        flex-shrink-0
+        bg-white
+    "
             style={{
-                backgroundImage: `url(${school?.templateImage || "/templates/karishma-convent-school.jpeg"})`,
+                width: "300px",
+                height: "476px",
+
+                minWidth: "300px",
+                maxWidth: "300px",
+
+                minHeight: "476px",
+                maxHeight: "476px",
+
+                backgroundImage: `url(${school?.templateImage ||
+                    "/templates/karishma-convent-school.jpeg"
+                    })`,
                 backgroundSize: "300px 476px",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",

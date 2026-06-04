@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { formatDate } from "@/lib/formatDate";
 import TemplateRenderer from "@/components/TemplateRenderer";
 
 import {
@@ -182,8 +183,8 @@ export default function AdminDownloadIDPage() {
 
             const pdf = new jsPDF({
                 orientation: "portrait",
-                unit: "px",
-                format: [300, 476],
+                unit: "mm",
+                format: [54, 85.6],
                 compress: true,
             });
 
@@ -207,6 +208,12 @@ export default function AdminDownloadIDPage() {
                             student.schoolId?.templateId,
                     },
                 });
+
+                await document.fonts.ready;
+
+                await new Promise((resolve) =>
+                    setTimeout(resolve, 1000)
+                );
 
                 // WAIT FOR REACT RENDER
                 await new Promise((resolve) =>
@@ -232,37 +239,29 @@ export default function AdminDownloadIDPage() {
                 const canvas = await html2canvas(
                     cardRef.current,
                     {
-                        scale: 4,
-
+                        scale: 1,
                         useCORS: true,
-
                         backgroundColor: null,
-
                         logging: false,
-
                         width: 300,
                         height: 476,
-
                         windowWidth: 300,
                         windowHeight: 476,
-
                         scrollX: 0,
                         scrollY: 0,
-
                         imageTimeout: 0,
-
                         removeContainer: true,
                     }
                 );
 
                 const imgData =
-                    canvas.toDataURL("image/png");
+                    canvas.toDataURL("image/png", 1.0);
 
                 // ADD PAGE
                 if (i > 0) {
 
                     pdf.addPage(
-                        [300, 476],
+                        [54, 85.6],
                         "portrait"
                     );
                 }
@@ -273,8 +272,8 @@ export default function AdminDownloadIDPage() {
                     "PNG",
                     0,
                     0,
-                    300,
-                    476,
+                    54,
+                    85.6,
                     undefined,
                     "FAST"
                 );
@@ -855,17 +854,23 @@ export default function AdminDownloadIDPage() {
 
             )}
 
-            {/* HIDDEN TEMPLATE */}
-            <div className="
-                fixed -left-[9999px]
-                top-0
-            ">
+            {/* PDF CAPTURE AREA */}
+            <div
+                style={{
+                    position: "fixed",
+                    left: "-9999px",
+                    top: "0",
+                    width: "300px",
+                    height: "476px",
+                }}
+            >
 
                 <div
                     ref={cardRef}
                     style={{
                         width: "300px",
                         height: "476px",
+                        border: "5px solid red",
                     }}
                 >
 
@@ -884,9 +889,7 @@ export default function AdminDownloadIDPage() {
 
                             signature={currentStudent.signature}
 
-                            formatDate={(date: any) =>
-                                new Date(date).toLocaleDateString()
-                            }
+                            formatDate={formatDate}
 
                             school={currentStudent.schoolId}
                         />

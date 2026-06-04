@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { formatDate } from "@/lib/formatDate";
 
 import {
@@ -27,6 +27,7 @@ export default function StudentDetailsPage({
 
     const [student, setStudent] = useState<any>(null);
     const [loadingPage, setLoadingPage] = useState(true);
+    const previewCardRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
 
@@ -415,7 +416,9 @@ export default function StudentDetailsPage({
 
                             <div className="p-4 sm:p-6 md:p-10 overflow-auto">
 
-                                <div className="flex justify-center items-start">
+                                <div 
+                                ref={previewCardRef}
+                                className="flex justify-center items-start">
 
                                     {/* TEMPLATE */}
 

@@ -50,131 +50,128 @@ export default function NewEraEnglishSchool({
                         object-cover
                         rounded-[10px]
                     "
-                />
-            )}
-
-            {/* SCHOOL LOGO */}
-            {logo && (
-                <img
-                    src={logo}
-                    alt="logo"
-                    className="
-                        absolute
-                        top-[128px]
-                        left-[15px]
-                        w-[70px]
-                        h-[70px]
-                        object-contain
-                    "
+                    style={{
+                        border: "2px solid red",
+                        background: "rgba(255,0,0,0.1)"
+                    }}
                 />
             )}
 
             {/* STUDENT NAME */}
             <div
-                className="
-                    absolute
-                    top-[248px]
-                    left-[20px]
-                    w-[260px]
-                    h-[32px]
-                    flex
-                    items-center
-                    justify-center
-                "
+                style={{
+                    position: "absolute",
+                    top: "248px",
+                    left: "20px",
+                    width: "260px",
+                    height: "32px",
+
+                    background: "#006b2f",
+
+                    textAlign: "center",
+
+                    color: "white",
+
+                    fontSize: "20px",
+
+                    fontWeight: "700",
+
+                    lineHeight: "32px",
+                }}
             >
-                <span
-                    className="
-                        text-white
-                        font-bold
-                        text-[20px]
-                        leading-none
-                        whitespace-nowrap
-                    "
-                >
-                    {student.name || "----"}
-                </span>
+                {}
             </div>
 
             {/* LEFT DETAILS */}
             <div
                 className="
-                    absolute
-                    top-[290px]
-                    left-[20px]
-                    w-[170px]
-                    text-[13px]
-                    font-bold
-                    text-blue-800
-                    leading-[18px]
-                "
+        absolute
+        top-[290px]
+        left-[20px]
+        text-[13px]
+        font-normal
+        text-blue-800
+        "
+                style={{
+                    border: "2px solid red",
+                    background: "rgba(255,0,0,0.1)"
+                }}
             >
 
-                <p className="m-0">
+                <div className="absolute top-[0px] left-[0px] whitespace-nowrap">
                     CLASS : {student.class || "-"}
-                </p>
+                </div>
 
-                <p className="m-0">
+                <div className="absolute top-[18px] left-[0px] whitespace-nowrap">
                     D.O.B : {formatDate(student.dob) || "-"}
-                </p>
+                </div>
 
-                <p className="m-0 w-[280px]">
+                <div className="absolute top-[36px] left-[0px] whitespace-nowrap">
                     F. NAME : {student.father || "-"}
-                </p>
+                </div>
 
-                <p className="m-0">
+                <div className="absolute top-[54px] left-[0px] whitespace-nowrap">
                     MOB. : {student.phone || "-"}
-                </p>
+                </div>
 
-                <p className="m-0">
+                <div className="absolute top-[72px] left-[0px] whitespace-nowrap">
                     ADMN. NO : {student.admissionNo || "-"}
-                </p>
+                </div>
 
-                <p className="m-0 break-words w-[250px]">
+                <div
+                    className="
+            absolute
+            top-[90px]
+            left-[0px]
+            w-[250px]
+            leading-[16px]
+            break-words
+        "
+                >
                     ADDRESS : {student.address || "-"}
-                </p>
+                </div>
 
             </div>
 
             {/* RIGHT DETAILS */}
             <div
                 className="
-                    absolute
-                    top-[290px]
-                    right-[20px]
-                    w-[80px]
-                    text-[13px]
-                    font-bold
-                    text-blue-800
-                    text-left
-                "
+        absolute
+        top-[290px]
+        right-[20px]
+        text-[13px]
+        font-bold
+        text-blue-800
+    "
+                style={{
+                    border: "2px solid red",
+                    background: "rgba(255,0,0,0.1)"
+                }}
             >
 
-                <p className="m-0 relative right-[20px]">
+                <div
+                    className="
+            absolute
+            top-[0px]
+            right-[0px]
+            whitespace-nowrap
+        "
+                >
                     SEC : {student.sec || "-"}
-                </p>
+                </div>
 
-                <p className="m-0 relative top-[-2px] right-[20px] w-[100px]">
+                <div
+                    className="
+            absolute
+            top-[18px]
+            right-[0px]
+            whitespace-nowrap
+        "
+                >
                     ROLL NO : {student.roll || "-"}
-                </p>
+                </div>
 
             </div>
-
-            {/* SIGNATURE */}
-            {signature && (
-                <img
-                    src={signature}
-                    alt="signature"
-                    className="
-                        absolute
-                        bottom-[18px]
-                        right-[18px]
-                        w-[80px]
-                        h-auto
-                        object-contain
-                    "
-                />
-            )}
-
         </div>
     );
 }
