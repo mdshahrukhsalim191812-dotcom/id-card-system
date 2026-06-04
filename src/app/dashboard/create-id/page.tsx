@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import TemplateRenderer from "@/components/TemplateRenderer";
 import Link from "next/link";
@@ -67,11 +66,6 @@ export default function CreateIDPage() {
     const [cameraOn, setCameraOn] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-
-    const searchParams = useSearchParams();
-    const studentId = searchParams.get("studentId");
-
-    console.log("URL STUDENT ID:", studentId);
 
     const fetchStudents = async () => {
         try {
