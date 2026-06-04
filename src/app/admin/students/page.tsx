@@ -761,13 +761,13 @@ export default function AdminStudentsPage() {
                                             <Link
                                                 href={`/admin/students/${student._id}`}
                                                 className="
-    text-lg
-    font-bold
-    text-blue-600
-    hover:text-blue-800
-    hover:underline
-    transition
-  "
+                                                text-lg
+                                                font-bold
+                                                text-blue-600
+                                                hover:text-blue-800
+                                                hover:underline
+                                                transition
+                                                "
                                             >
                                                 {student.name}
                                             </Link>

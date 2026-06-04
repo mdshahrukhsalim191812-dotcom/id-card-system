@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import TemplateRenderer from "@/components/TemplateRenderer";
 import Link from "next/link";
@@ -66,6 +67,11 @@ export default function CreateIDPage() {
     const [cameraOn, setCameraOn] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const searchParams = useSearchParams();
+    const studentId = searchParams.get("studentId");
+
+    console.log("URL STUDENT ID:", studentId);
 
     const fetchStudents = async () => {
         try {
@@ -198,6 +204,84 @@ export default function CreateIDPage() {
 
     }, []);
 
+    useEffect(() => {
+
+        const selectedStudent =
+            sessionStorage.getItem(
+                "selectedStudent"
+            );
+
+        if (!selectedStudent) return;
+
+        const data =
+            JSON.parse(selectedStudent);
+
+        console.log(
+            "Selected Student:",
+            data
+        );
+
+        setSelectedId(data._id);
+
+        setStudent({
+
+            school: data.school || "",
+
+            admissionNo:
+                data.admissionNo || "",
+
+            sec:
+                data.sec || "",
+
+            name:
+                data.name || "",
+
+            roll:
+                data.roll || "",
+
+            class:
+                data.class || "",
+
+            father:
+                data.father || "",
+
+            mother:
+                data.mother || "",
+
+            phone:
+                data.phone || "",
+
+            address:
+                data.address || "",
+
+            schoolAddress: "",
+
+            dob:
+                data.dob
+                    ? new Date(data.dob)
+                        .toISOString()
+                        .split("T")[0]
+                    : "",
+
+            photo: "",
+
+            blood:
+                data.blood || ""
+        });
+
+        setImage(
+            data.image || null
+        );
+
+        setLogo(
+            data.logo || null
+        );
+
+        setSignature(
+            data.signature || null
+        );
+
+    }, []);
 
     const startCamera = async () => {
         try {

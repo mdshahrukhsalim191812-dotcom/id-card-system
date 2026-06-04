@@ -828,9 +828,27 @@ export default function SchoolAdmin() {
 
                                                 <div>
 
-                                                    <p className="font-semibold text-gray-800">
+                                                    <Link
+                                                        href={`/dashboard/create-id?studentId=${s._id}`}
+                                                        onClick={() => {
+
+                                                            sessionStorage.setItem(
+                                                                "selectedStudent",
+                                                                JSON.stringify(s)
+                                                            );
+
+                                                        }}
+                                                        className="
+        text-lg
+        font-bold
+        text-blue-600
+        hover:text-blue-800
+        hover:underline
+        transition
+    "
+                                                    >
                                                         {s.name}
-                                                    </p>
+                                                    </Link>
 
                                                     <p className="text-sm text-gray-500">
                                                         Student Record
@@ -896,9 +914,27 @@ export default function SchoolAdmin() {
 
                                     <div>
 
-                                        <h2 className="font-bold text-lg text-gray-800">
+                                        <Link
+                                            href={`/dashboard/create-id?studentId=${s._id}`}
+                                            onClick={() => {
+
+                                                sessionStorage.setItem(
+                                                    "selectedStudent",
+                                                    JSON.stringify(s)
+                                                );
+
+                                            }}
+                                            className="
+        text-lg
+        font-bold
+        text-blue-600
+        hover:text-blue-800
+        hover:underline
+        transition
+    "
+                                        >
                                             {s.name}
-                                        </h2>
+                                        </Link>
 
                                         <p className="text-sm text-gray-500">
                                             Student Record
@@ -981,6 +1017,6 @@ export default function SchoolAdmin() {
 
             </div>
 
-        </div>
+        </div >
     );
 }
