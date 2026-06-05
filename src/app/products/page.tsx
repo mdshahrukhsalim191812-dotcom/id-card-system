@@ -430,15 +430,15 @@ export default function ProductsPage() {
 
                             {[
                                 {
-                                    num: "35+",
+                                    num: "5+",
                                     text: "Experience",
                                 },
                                 {
-                                    num: "100+",
+                                    num: "54+",
                                     text: "Products",
                                 },
                                 {
-                                    num: "10K+",
+                                    num: "5K+",
                                     text: "Projects",
                                 },
                             ].map((item, i) => (
