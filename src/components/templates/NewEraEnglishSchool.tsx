@@ -13,7 +13,7 @@ export default function NewEraEnglishSchool({
     student,
     image,
     logo,
-    signature,
+signature,
     formatDate,
     school,
 }: Props) {
@@ -79,7 +79,7 @@ export default function NewEraEnglishSchool({
                     lineHeight: "32px",
                 }}
             >
-                {}
+                {student.name || "----"}
             </div>
 
             {/* LEFT DETAILS */}
