@@ -199,7 +199,19 @@ export default function AdminDownloadIDPage() {
 
         a.href = url;
 
-        a.download = "test.pdf";
+        const selectedSchoolData = schools.find(
+            (school) => school._id === selectedSchool
+        );
+
+        const schoolName =
+            selectedSchoolData?.name || "School";
+
+        const className =
+            selectedClass || "All";
+
+        a.download = `${schoolName}-${className}.pdf`;
+
+        console.log(a.download);
 
         a.click();
 
