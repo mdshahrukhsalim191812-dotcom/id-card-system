@@ -174,147 +174,36 @@ export default function AdminDownloadIDPage() {
 
     // ================= DOWNLOAD PDF =================
     const handleDownloadPDF = async () => {
-
-        if (filteredStudents.length === 0) return;
-
-        try {
-
-            setGenerating(true);
-
-            const pdf = new jsPDF({
-                orientation: "portrait",
-                unit: "mm",
-                format: [54, 85.6],
-                compress: true,
-            });
-
-            for (
-                let i = 0;
-                i < filteredStudents.length;
-                i++
-            ) {
-
-                const student =
-                    filteredStudents[i];
-
-                // SET CURRENT STUDENT
-                setCurrentStudent({
-                    ...student,
-
-                    schoolId: {
-                        ...student.schoolId,
-
-                        templateId:
-                            student.schoolId?.templateId,
-                    },
-                });
-
-                await document.fonts.ready;
-
-                await new Promise((resolve) =>
-                    setTimeout(resolve, 1000)
-                );
-
-                // WAIT FOR REACT RENDER
-                await new Promise((resolve) =>
-                    requestAnimationFrame(() =>
-                        requestAnimationFrame(resolve)
-                    )
-                );
-
-                // PROGRESS
-                const progress =
-                    Math.round(
-                        ((i + 1) /
-                            filteredStudents.length) *
-                        100
-                    );
-
-                setDownloadProgress(progress);
-
-                // CHECK REF
-                if (!cardRef.current) continue;
-
-                // CAPTURE
-                const canvas = await html2canvas(
-                    cardRef.current,
-                    {
-                        scale: 1,
-                        useCORS: true,
-                        backgroundColor: null,
-                        logging: false,
-                        width: 300,
-                        height: 476,
-                        windowWidth: 300,
-                        windowHeight: 476,
-                        scrollX: 0,
-                        scrollY: 0,
-                        imageTimeout: 0,
-                        removeContainer: true,
-                    }
-                );
-
-                const imgData =
-                    canvas.toDataURL("image/png", 1.0);
-
-                // ADD PAGE
-                if (i > 0) {
-
-                    pdf.addPage(
-                        [54, 85.6],
-                        "portrait"
-                    );
-                }
-
-                // ADD IMAGE
-                pdf.addImage(
-                    imgData,
-                    "PNG",
-                    0,
-                    0,
-                    54,
-                    85.6,
-                    undefined,
-                    "FAST"
-                );
+        const response = await fetch(
+            "/api/generate-pdf",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type":
+                        "application/json",
+                },
+                body: JSON.stringify({
+                    students: filteredStudents,
+                    background: "/templates/new-era.jpg",
+                })
             }
+        );
 
-            // SCHOOL NAME
-            const schoolData =
-                schools.find(
-                    (school) =>
-                        school._id === selectedSchool
-                );
+        const blob = await response.blob();
 
-            const schoolName =
-                schoolData?.name
-                    ?.replace(/\s+/g, "-")
-                    ?.toLowerCase() || "school";
+        const url =
+            window.URL.createObjectURL(blob);
 
-            // CLASS
-            const className =
-                selectedClass
-                    ? `class-${selectedClass}`
-                    : "all-classes";
+        const a =
+            document.createElement("a");
 
-            // DOWNLOAD
-            pdf.save(
-                `${schoolName}-${className}-id-cards.pdf`
-            );
+        a.href = url;
 
-        } catch (error) {
+        a.download = "test.pdf";
 
-            console.log(error);
+        a.click();
 
-        } finally {
-
-            setTimeout(() => {
-
-                setGenerating(false);
-                setDownloadProgress(0);
-
-            }, 1000);
-        }
+        window.URL.revokeObjectURL(url);
     };
 
     // ================= PAGE LOADING =================

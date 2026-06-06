@@ -13,7 +13,7 @@ export default function NewEraEnglishSchool({
     student,
     image,
     logo,
-signature,
+    signature,
     formatDate,
     school,
 }: Props) {
@@ -43,17 +43,13 @@ signature,
                     alt="student"
                     className="
                         absolute
-                        top-[111px]
-                        left-[96px]
-                        w-[107px]
-                        h-[132px]
+                        top-[113px]
+                        left-[99px]
+                        w-[103px]
+                        h-[128px]
                         object-cover
                         rounded-[10px]
                     "
-                    style={{
-                        border: "2px solid red",
-                        background: "rgba(255,0,0,0.1)"
-                    }}
                 />
             )}
 
@@ -65,8 +61,6 @@ signature,
                     left: "20px",
                     width: "260px",
                     height: "32px",
-
-                    background: "#006b2f",
 
                     textAlign: "center",
 
@@ -91,11 +85,7 @@ signature,
         text-[13px]
         font-normal
         text-blue-800
-        "
-                style={{
-                    border: "2px solid red",
-                    background: "rgba(255,0,0,0.1)"
-                }}
+"
             >
 
                 <div className="absolute top-[0px] left-[0px] whitespace-nowrap">
@@ -143,10 +133,6 @@ signature,
         font-bold
         text-blue-800
     "
-                style={{
-                    border: "2px solid red",
-                    background: "rgba(255,0,0,0.1)"
-                }}
             >
 
                 <div
@@ -172,6 +158,6 @@ signature,
                 </div>
 
             </div>
-        </div>
+        </div >
     );
 }
