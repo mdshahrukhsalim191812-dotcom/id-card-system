@@ -5,6 +5,7 @@ import {
     Text,
     StyleSheet,
 } from "@react-pdf/renderer";
+import { formatDate } from "@/lib/formatDate";
 
 const styles = StyleSheet.create({
     page: {
@@ -34,7 +35,7 @@ export default function BalBhartiSchool({
                         style={styles.page}
                     >
                         <Image
-                            src="http://localhost:3000/templates/bal-bharti.jpeg"
+                            src="http://localhost:3000/templates/bal-bharti.png"
                             style={
                                 styles.background
                             }
@@ -46,28 +47,82 @@ export default function BalBhartiSchool({
                                 style={{
                                     position:
                                         "absolute",
-                                    top: 113,
-                                    left: 98,
-                                    width: 104,
-                                    height: 128,
-                                    borderRadius: 10,
+                                    top: 118.1,
+                                    left: 145.2,
+                                    width: 127,
+                                    height: 161,
                                 }}
                             />
                         )}
 
                         <Text
                             style={{
+                                position: "absolute",
+                                top: 237.5,
+                                left: 75,
+                                fontSize: 13,
+                                fontWeight: "bold",
+                                color: "#000000",
+                            }}
+                        >
+                            {student.class}
+                        </Text>
+
+                        <Text
+                            style={{
+                                position: "absolute",
+                                top: 253.5,
+                                left: 75,
+                                fontSize: 13,
+                                fontWeight: "bold",
+                                color: "#000000",
+                            }}
+                        >
+                            {student.sec}
+                        </Text>
+
+                        <Text
+                            style={{
+                                position: "absolute",
+                                top: 269,
+                                left: 75,
+                                fontSize: 13,
+                                fontWeight: "bold",
+                                color: "#000000",
+                            }}
+                        >
+                            {student.roll}
+                        </Text>
+
+                        <Text
+                            style={{
+                                position: "absolute",
+                                top: 285.5,
+                                left: 75,
+                                fontSize: 13,
+                                fontWeight: "bold",
+                                color: "#000000",
+                            }}
+                        >
+                            {formatDate(student.dob?.split("T")[0]) || "N/A"}
+                        </Text>
+
+                        <Text
+                            style={{
                                 position:
                                     "absolute",
-                                top: 252.5,
+                                top: 311,
                                 left: 20,
                                 width: 260,
                                 textAlign:
                                     "center",
+                                justifyContent: "center",
+                                alignItems: "center",
                                 fontSize: 22,
                                 color:
-                                    "#ffffff",
+                                    "#cc3737",
                                 fontWeight: "bold",
+                                letterSpacing: -1,
                             }}
                         >
                             {student.name}
@@ -76,106 +131,68 @@ export default function BalBhartiSchool({
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 295,
-                                left: 25,
-                                fontSize: 14,
+                                top: 342.5,
+                                left: 85,
+                                fontSize: 13,
                                 fontWeight: "bold",
-                                color: "#1e40af",
+                                color: "#000000",
                             }}
                         >
-                            Class : {student.class}
+                            {student.admissionNo}
+                        </Text>
+
+
+                        <Text
+                            style={{
+                                position: "absolute",
+                                top: 358.5,
+                                left: 85,
+                                fontSize: 13,
+                                fontWeight: "bold",
+                                color: "#000000",
+                            }}
+                        >
+                            {student.father}
                         </Text>
 
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 295,
-                                left: 190,
-                                fontSize: 14,
+                                top: 374.5,
+                                left: 85,
+                                fontSize: 13,
                                 fontWeight: "bold",
-                                color: "#1e40af",
+                                color: "#000000",
                             }}
                         >
-                            Sec : {student.sec}
+                            {student.mother}
                         </Text>
 
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 315,
-                                left: 25,
-                                fontSize: 14,
+                                top: 390.7,
+                                left: 85,
+                                fontSize: 13,
                                 fontWeight: "bold",
-                                color: "#1e40af",
+                                color: "#000000",
                             }}
                         >
-                            D.O.B : {student.dob?.split("T")[0] || "N/A"}
+                            {student.phone}
                         </Text>
 
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 315,
-                                left: 190,
-                                fontSize: 14,
+                                top: 407.2,
+                                left: 85,
+                                width: 210,
+                                fontSize: 13,
                                 fontWeight: "bold",
-                                color: "#1e40af",
+                                color: "#000000",
                             }}
                         >
-                            Roll No : {student.roll}
-                        </Text>
-
-                        <Text
-                            style={{
-                                position: "absolute",
-                                top: 335,
-                                left: 25,
-                                fontSize: 14,
-                                fontWeight: "bold",
-                                color: "#1e40af",
-                            }}
-                        >
-                            F. Name : {student.father}
-                        </Text>
-
-                        <Text
-                            style={{
-                                position: "absolute",
-                                top: 355,
-                                left: 25,
-                                fontSize: 14,
-                                fontWeight: "bold",
-                                color: "#1e40af",
-                            }}
-                        >
-                            Mobile : {student.phone}
-                        </Text>
-
-                        <Text
-                            style={{
-                                position: "absolute",
-                                top: 375,
-                                left: 25,
-                                fontSize: 14,
-                                fontWeight: "bold",
-                                color: "#1e40af",
-                            }}
-                        >
-                            Admn. No : {student.admissionNo}
-                        </Text>
-
-                        <Text
-                            style={{
-                                position: "absolute",
-                                top: 395,
-                                left: 25,
-                                width: 240,
-                                fontSize: 14,
-                                fontWeight: "bold",
-                                color: "#1e40af",
-                            }}
-                        >
-                            Address : {student.address}
+                            {student.address}
                         </Text>
                     </Page>
                 )
