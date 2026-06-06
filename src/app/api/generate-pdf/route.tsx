@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { renderToBuffer } from "@react-pdf/renderer";
-import React from "react";
 
 import NewEraEnglishSchool from "@/components/downloadingTemplate/NewEraEnglishSchool";
 import KarishmaConventSchool from "@/components/downloadingTemplate/KarishmaConventSchool";
@@ -13,45 +12,45 @@ export async function POST(request: NextRequest) {
     const templateId =
         data.students?.[0]?.schoolId?.templateId;
 
-    let TemplateComponent: any =
-        NewEraEnglishSchool;
+    let pdfDocument;
 
     switch (templateId) {
         case "KarishmaConventSchool":
-            TemplateComponent =
-                KarishmaConventSchool;
+            pdfDocument = (
+                <KarishmaConventSchool data={data} />
+            );
             break;
 
         case "NewEraEnglishSchool":
-            TemplateComponent =
-                NewEraEnglishSchool;
+            pdfDocument = (
+                <NewEraEnglishSchool data={data} />
+            );
             break;
 
         case "BalBhartiSchool":
-            TemplateComponent =
-                BalBhartiSchool;
+            pdfDocument = (
+                <BalBhartiSchool data={data} />
+            );
             break;
 
         case "HappyValleySchoolBhagalpur":
-            TemplateComponent =
-                HappyValleySchoolBhagalpur;
+            pdfDocument = (
+                <HappyValleySchoolBhagalpur
+                    data={data}
+                />
+            );
             break;
 
         default:
-            TemplateComponent =
-                NewEraEnglishSchool;
+            pdfDocument = (
+                <NewEraEnglishSchool data={data} />
+            );
     }
 
-    const pdfBuffer = await renderToBuffer(
-        React.createElement(
-            TemplateComponent,
-            {
-                data,
-            }
-        )
-    );
+    const pdfBuffer =
+        await renderToBuffer(pdfDocument);
 
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(pdfBuffer as any, {
         headers: {
             "Content-Type":
                 "application/pdf",
