@@ -60,14 +60,13 @@ export default function HappyValleySchoolBhagalpur({
                                 position:
                                     "absolute",
                                 top: 274,
-                                left: -10,
+                                left: 20,
                                 width: 260,
-                                textAlign:
-                                    "center",
                                 fontSize: 22,
                                 color:
                                     "#ffffff",
                                 fontWeight: "bold",
+                                letterSpacing: -1,
                             }}
                         >
                             {student.name}
@@ -76,11 +75,11 @@ export default function HappyValleySchoolBhagalpur({
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 295,
-                                left: 25,
-                                fontSize: 14,
+                                top: 355,
+                                left: 190,
+                                fontSize: 22,
                                 fontWeight: "bold",
-                                color: "#1e40af",
+                                color: "#f1f527",
                             }}
                         >
                             {student.class}
@@ -89,24 +88,25 @@ export default function HappyValleySchoolBhagalpur({
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 295,
-                                left: 190,
-                                fontSize: 14,
+                                top: 355,
+                                left: 250,
+                                fontSize: 22,
                                 fontWeight: "bold",
-                                color: "#1e40af",
+                                color: "#f1f527",
                             }}
                         >
-                            Sec : {student.sec}
+                            {student.sec}
                         </Text>
 
-<Text
+                        <Text
                             style={{
                                 position: "absolute",
-                                top: 222.5,
-                                left: 78,
-                                fontSize: 15,
+                                top: 222,
+                                left: 86,
+                                fontSize: 14,
                                 fontWeight: "bold",
                                 color: "#000000",
+                                letterSpacing: -1,
                             }}
                         >
                             {student.admissionNo}
@@ -115,67 +115,86 @@ export default function HappyValleySchoolBhagalpur({
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 315,
-                                left: 25,
+                                top: 241,
+                                left: 86,
                                 fontSize: 14,
                                 fontWeight: "bold",
-                                color: "#1e40af",
+                                color: "#000000",
+                                letterSpacing: -1,
                             }}
                         >
-                            D.O.B : {formatDate(student.dob?.split("T")[0]) || "N/A"}
+                            {formatDate(student.dob?.split("T")[0]) || "N/A"}
                         </Text>
 
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 315,
-                                left: 190,
+                                top: 259,
+                                left: 86,
                                 fontSize: 14,
                                 fontWeight: "bold",
-                                color: "#1e40af",
+                                color: "#000000",
+                                letterSpacing: -1,
                             }}
                         >
-                            Roll No : {student.roll}
+                            {student.roll}
                         </Text>
 
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 335,
-                                left: 25,
+                                top: 317.5,
+                                left: 23,
                                 fontSize: 14,
                                 fontWeight: "bold",
-                                color: "#1e40af",
+                                color: "#000000",
+                                letterSpacing: -1,
                             }}
                         >
-                            F. Name : {student.father}
+                            {student.father}
                         </Text>
 
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 355,
-                                left: 25,
+                                top: 347.5,
+                                left: 23,
                                 fontSize: 14,
                                 fontWeight: "bold",
-                                color: "#1e40af",
+                                color: "#000000",
+                                letterSpacing: -1,
                             }}
                         >
-                            Mobile : {student.phone}
+                            {student.mother}
                         </Text>
 
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 395,
-                                left: 25,
+                                top: 378,
+                                left: 23,
+                                fontSize: 14,
+                                fontWeight: "bold",
+                                color: "#000000",
+                                letterSpacing: -1,
+                            }}
+                        >
+                            {student.phone}
+                        </Text>
+
+                        <Text
+                            style={{
+                                position: "absolute",
+                                top: 407,
+                                left: 23,
                                 width: 240,
                                 fontSize: 14,
                                 fontWeight: "bold",
-                                color: "#1e40af",
+                                color: "#000000",
+                                letterSpacing: -1,
                             }}
                         >
-                            Address : {student.address}
+                            {student.address}
                         </Text>
                     </Page>
                 )
