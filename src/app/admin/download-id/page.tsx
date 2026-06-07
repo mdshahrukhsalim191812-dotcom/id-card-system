@@ -211,8 +211,6 @@ export default function AdminDownloadIDPage() {
 
         a.download = `${schoolName}-${className}.pdf`;
 
-        console.log(a.download);
-
         a.click();
 
         window.URL.revokeObjectURL(url);

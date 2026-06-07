@@ -35,10 +35,8 @@ export default function BalBhartiSchool({
                         style={styles.page}
                     >
                         <Image
-                            src="http://localhost:3000/templates/bal-bharti.png"
-                            style={
-                                styles.background
-                            }
+                            src={`${process.cwd()}/public/templates/bal-bharti.png`}
+                            style={styles.background}
                         />
 
                         {student.image && (
