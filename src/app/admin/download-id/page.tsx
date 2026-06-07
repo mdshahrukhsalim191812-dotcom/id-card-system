@@ -685,7 +685,7 @@ export default function AdminDownloadIDPage() {
             {generating && (
 
                 <div className="
-                    fixed inset-0 z-50
+                    fixed inset-0 z-[50]
                     bg-gradient-to-br
                     from-[#021B33]
                     via-[#04284B]
