@@ -174,48 +174,78 @@ export default function AdminDownloadIDPage() {
 
     // ================= DOWNLOAD PDF =================
     const handleDownloadPDF = async () => {
-        const response = await fetch(
-            "/api/generate-pdf",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type":
-                        "application/json",
-                },
-                body: JSON.stringify({
-                    students: filteredStudents,
-                    background: "/templates/new-era.jpg",
-                })
+        try {
+            setGenerating(true);
+            setDownloadProgress(10);
+
+            const response = await fetch(
+                "/api/generate-pdf",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        students: filteredStudents,
+                        background: "/templates/new-era.jpg",
+                    }),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to generate PDF");
             }
-        );
 
-        const blob = await response.blob();
+            setDownloadProgress(50);
 
-        const url =
-            window.URL.createObjectURL(blob);
+            const blob = await response.blob();
 
-        const a =
-            document.createElement("a");
+            setDownloadProgress(80);
 
-        a.href = url;
+            const url = window.URL.createObjectURL(blob);
 
-        const selectedSchoolData = schools.find(
-            (school) => school._id === selectedSchool
-        );
+            const a = document.createElement("a");
 
-        const schoolName =
-            selectedSchoolData?.name || "School";
+            a.href = url;
 
-        const className =
-            selectedClass || "All";
+            const selectedSchoolData = schools.find(
+                (school) => school._id === selectedSchool
+            );
 
-        a.download = `${schoolName}-${className}.pdf`;
+            const schoolName =
+                selectedSchoolData?.name || "School";
 
-        a.click();
+            const className =
+                selectedClass || "All";
 
-        window.URL.revokeObjectURL(url);
+            a.download = `${schoolName}-${className}.pdf`;
+
+            document.body.appendChild(a);
+
+            setDownloadProgress(95);
+
+            a.click();
+
+            document.body.removeChild(a);
+
+            window.URL.revokeObjectURL(url);
+
+            setDownloadProgress(100);
+
+            setTimeout(() => {
+                setGenerating(false);
+                setDownloadProgress(0);
+            }, 1000);
+
+        } catch (error) {
+            console.error(error);
+
+            alert("PDF generation failed");
+
+            setGenerating(false);
+            setDownloadProgress(0);
+        }
     };
-
     // ================= PAGE LOADING =================
     if (loadingPage) {
 
