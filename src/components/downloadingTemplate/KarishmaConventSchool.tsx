@@ -5,8 +5,8 @@ import {
     Text,
     StyleSheet,
 } from "@react-pdf/renderer";
-import fs from "fs";
 import { formatDate } from "@/lib/formatDate";
+import fs from "fs";
 
 const styles = StyleSheet.create({
     page: {
@@ -50,37 +50,43 @@ export default function KarishmaConventSchool({
                                         "absolute",
                                     top: 123,
                                     left: 100.5,
-                                    width: 99,
-                                    height: 124.1,
+                                    width: 98.8,
+                                    height: 124.2,
                                 }}
                             />
                         )}
 
-                        {/* Student Name */}
                         <Text
                             style={{
-                                position: "absolute",
-                                top: 292,
-                                left: 10,
-                                width: 280,
-                                textAlign: "center",
-                                fontSize: 20,
-                                fontWeight: "bold",
-                                color: "#e11d48",
+                                position:
+                                    "absolute",
+                                top: 258,
+                                left: 20,
+                                width: 260,
+                                textAlign:
+                                    "center",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                fontSize: 17,
+                                color:
+                                    "#1565c0",
+                                fontWeight: "extrabold",
+                                letterSpacing: -0.2,
+                                transform: "scaleY(1.67)",
                             }}
                         >
                             {student.name}
                         </Text>
 
-                        {/* Admission No */}
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 330,
-                                left: 20,
-                                fontSize: 11,
-                                color: "#dc2626",
+                                top: 286,
+                                left: 25,
+                                fontSize: 10,
                                 fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
                             }}
                         >
                             Admn. No.
@@ -89,50 +95,40 @@ export default function KarishmaConventSchool({
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 330,
-                                left: 110,
-                                fontSize: 11,
+                                top: 286,
+                                left: 85,
+                                fontSize: 10,
                                 fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
                             }}
                         >
-                            : {student.admissionNo}
-                        </Text>
-
-                        {/* Class */}
-                        <Text
-                            style={{
-                                position: "absolute",
-                                top: 330,
-                                left: 210,
-                                fontSize: 11,
-                                color: "#dc2626",
-                                fontWeight: "bold",
-                            }}
-                        >
-                            Class
+                            :
                         </Text>
 
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 330,
-                                left: 250,
-                                fontSize: 11,
+                                top: 286,
+                                left: 105,
+                                fontSize: 10,
                                 fontWeight: "bold",
+                                color: "#000000",
+                                transform: "scaleY(1.67)",
                             }}
                         >
-                            : {student.class}
+                            {student.admissionNo}
                         </Text>
 
-                        {/* Mother Name */}
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 355,
-                                left: 20,
-                                fontSize: 11,
-                                color: "#dc2626",
+                                top: 307,
+                                left: 25,
+                                fontSize: 10,
                                 fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
                             }}
                         >
                             M. Name
@@ -141,24 +137,41 @@ export default function KarishmaConventSchool({
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 355,
-                                left: 110,
-                                fontSize: 11,
+                                top: 307,
+                                left: 85,
+                                fontSize: 10,
                                 fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
                             }}
                         >
-                            : {student.mother || "N/A"}
+                            :
                         </Text>
 
-                        {/* Father Name */}
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 380,
-                                left: 20,
-                                fontSize: 11,
-                                color: "#dc2626",
+                                top: 307,
+                                left: 105,
+                                fontSize: 10,
                                 fontWeight: "bold",
+                                color: "#000000",
+                                letterSpacing: -0.2,
+                                transform: "scaleY(1.67)",
+                            }}
+                        >
+                            {student.mother}
+                        </Text>
+
+                        <Text
+                            style={{
+                                position: "absolute",
+                                top: 327,
+                                left: 25,
+                                fontSize: 10,
+                                fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
                             }}
                         >
                             F. Name
@@ -167,24 +180,41 @@ export default function KarishmaConventSchool({
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 380,
-                                left: 110,
-                                fontSize: 11,
+                                top: 327,
+                                left: 85,
+                                fontSize: 10,
                                 fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
                             }}
                         >
-                            : {student.father}
+                            :
                         </Text>
 
-                        {/* DOB */}
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 405,
-                                left: 20,
-                                fontSize: 11,
-                                color: "#dc2626",
+                                top: 327,
+                                left: 105,
+                                fontSize: 10,
                                 fontWeight: "bold",
+                                color: "#000000",
+                                letterSpacing: -0.2,
+                                transform: "scaleY(1.67)",
+                            }}
+                        >
+                            {student.father}
+                        </Text>
+
+                        <Text
+                            style={{
+                                position: "absolute",
+                                top: 347,
+                                left: 25,
+                                fontSize: 10,
+                                fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
                             }}
                         >
                             D.O.B.
@@ -193,24 +223,40 @@ export default function KarishmaConventSchool({
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 405,
-                                left: 110,
-                                fontSize: 11,
+                                top: 347,
+                                left: 85,
+                                fontSize: 10,
                                 fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
                             }}
                         >
-                            : {formatDate(student.dob?.split("T")[0])}
+                            :
                         </Text>
 
-                        {/* Phone */}
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 430,
-                                left: 20,
-                                fontSize: 11,
-                                color: "#dc2626",
+                                top: 347,
+                                left: 105,
+                                fontSize: 10,
                                 fontWeight: "bold",
+                                color: "#000000",
+                                transform: "scaleY(1.67)",
+                            }}
+                        >
+                            {formatDate(student.dob?.split("T")[0]) || "N/A"}
+                        </Text>
+
+                        <Text
+                            style={{
+                                position: "absolute",
+                                top: 368,
+                                left: 25,
+                                fontSize: 10,
+                                fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
                             }}
                         >
                             Ph. No.
@@ -219,24 +265,40 @@ export default function KarishmaConventSchool({
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 430,
-                                left: 110,
-                                fontSize: 11,
+                                top: 368,
+                                left: 85,
+                                fontSize: 10,
                                 fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
                             }}
                         >
-                            : {student.phone}
+                            :
                         </Text>
 
-                        {/* Address */}
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 455,
-                                left: 20,
-                                fontSize: 11,
-                                color: "#dc2626",
+                                top: 368,
+                                left: 105,
+                                fontSize: 10,
                                 fontWeight: "bold",
+                                color: "#000000",
+                                transform: "scaleY(1.67)",
+                            }}
+                        >
+                            {student.phone}
+                        </Text>
+
+                        <Text
+                            style={{
+                                position: "absolute",
+                                top: 389,
+                                left: 25,
+                                fontSize: 10,
+                                fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
                             }}
                         >
                             Address
@@ -245,15 +307,75 @@ export default function KarishmaConventSchool({
                         <Text
                             style={{
                                 position: "absolute",
-                                top: 455,
-                                left: 110,
-                                width: 170,
+                                top: 389,
+                                left: 85,
                                 fontSize: 10,
                                 fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
                             }}
                         >
-                            : {student.address}
+                            :
                         </Text>
+
+                        <Text
+                            style={{
+                                position: "absolute",
+                                top: 389,
+                                left: 105,
+                                width: 182,
+                                fontSize: 10,
+                                fontWeight: "bold",
+                                color: "#000000",
+                                letterSpacing: -0.5,
+                                transform: "scaleY(1.67)",
+                            }}
+                        >
+                            {student.address}
+                        </Text>
+
+                        <Text
+                            style={{
+                                position: "absolute",
+                                top: 286,
+                                left: 190,
+                                fontSize: 10,
+                                fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
+                            }}
+                        >
+                            Class
+                        </Text>
+
+                        <Text
+                            style={{
+                                position: "absolute",
+                                top: 286,
+                                left: 230,
+                                fontSize: 10,
+                                fontWeight: "bold",
+                                color: "#ab2020",
+                                transform: "scaleY(1.67)",
+                            }}
+                        >
+                            :
+                        </Text>
+
+                        <Text
+                            style={{
+                                position: "absolute",
+                                top: 286,
+                                left: 250,
+                                fontSize: 10,
+                                fontWeight: "900",
+                                color: "#000000",
+                                transform: "scaleY(1.67)",
+                            }}
+                        >
+                            {student.class}
+                        </Text>
+
                     </Page>
                 )
             )}

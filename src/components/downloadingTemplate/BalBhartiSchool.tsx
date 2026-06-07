@@ -26,12 +26,6 @@ export default function BalBhartiSchool({
 }: {
     data: any;
 }) {
-
-    console.log(
-        "Background:",
-        `${process.cwd()}/public/templates/bal-bharti.png`
-    );
-
     return (
         <Document>
             {data.students.map(
