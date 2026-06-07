@@ -6,6 +6,7 @@ import {
     StyleSheet,
 } from "@react-pdf/renderer";
 import { formatDate } from "@/lib/formatDate";
+import fs from "fs";
 
 const styles = StyleSheet.create({
     page: {
@@ -35,10 +36,10 @@ export default function HappyValleySchoolBhagalpur({
                         style={styles.page}
                     >
                         <Image
-                            src="http://localhost:3000/templates/happy-valley-school-bhagalpur.jpg"
-                            style={
-                                styles.background
-                            }
+                            src={fs.readFileSync(
+                                `${process.cwd()}/public/templates/happy-valley-school-bhagalpur.jpg`
+                            )}
+                            style={styles.background}
                         />
 
                         {student.image && (

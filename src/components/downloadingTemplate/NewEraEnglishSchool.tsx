@@ -5,6 +5,8 @@ import {
     Text,
     StyleSheet,
 } from "@react-pdf/renderer";
+import fs from "fs";
+import { formatDate } from "@/lib/formatDate";
 
 const styles = StyleSheet.create({
     page: {
@@ -34,10 +36,10 @@ export default function NewEraEnglishSchool({
                         style={styles.page}
                     >
                         <Image
-                            src="http://localhost:3000/templates/new-era.jpeg"
-                            style={
-                                styles.background
-                            }
+                            src={fs.readFileSync(
+                                `${process.cwd()}/public/templates/new-era.jpeg`
+                            )}
+                            style={styles.background}
                         />
 
                         {student.image && (
@@ -109,7 +111,7 @@ export default function NewEraEnglishSchool({
                                 color: "#1e40af",
                             }}
                         >
-                            D.O.B : {student.dob?.split("T")[0] || "N/A"}
+                            D.O.B : {formatDate(student.dob?.split("T")[0]) || "N/A"}
                         </Text>
 
                         <Text

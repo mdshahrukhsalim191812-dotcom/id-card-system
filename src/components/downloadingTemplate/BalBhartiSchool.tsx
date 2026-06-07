@@ -6,6 +6,7 @@ import {
     StyleSheet,
 } from "@react-pdf/renderer";
 import { formatDate } from "@/lib/formatDate";
+import fs from "fs";
 
 const styles = StyleSheet.create({
     page: {
@@ -25,6 +26,12 @@ export default function BalBhartiSchool({
 }: {
     data: any;
 }) {
+
+    console.log(
+        "Background:",
+        `${process.cwd()}/public/templates/bal-bharti.png`
+    );
+
     return (
         <Document>
             {data.students.map(
@@ -35,7 +42,9 @@ export default function BalBhartiSchool({
                         style={styles.page}
                     >
                         <Image
-                            src={`${process.cwd()}/public/templates/bal-bharti.png`}
+                            src={fs.readFileSync(
+                                `${process.cwd()}/public/templates/bal-bharti.png`
+                            )}
                             style={styles.background}
                         />
 

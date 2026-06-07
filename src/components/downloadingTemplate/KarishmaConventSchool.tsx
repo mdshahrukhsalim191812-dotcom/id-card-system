@@ -5,6 +5,8 @@ import {
     Text,
     StyleSheet,
 } from "@react-pdf/renderer";
+import fs from "fs";
+import { formatDate } from "@/lib/formatDate";
 
 const styles = StyleSheet.create({
     page: {
@@ -34,10 +36,10 @@ export default function KarishmaConventSchool({
                         style={styles.page}
                     >
                         <Image
-                            src="http://localhost:3000/templates/karishma-convent-school.jpeg"
-                            style={
-                                styles.background
-                            }
+                            src={fs.readFileSync(
+                                `${process.cwd()}/public/templates/karishma-convent-school.jpeg`
+                            )}
+                            style={styles.background}
                         />
 
                         {student.image && (
@@ -197,7 +199,7 @@ export default function KarishmaConventSchool({
                                 fontWeight: "bold",
                             }}
                         >
-                            : {student.dob?.split("T")[0]}
+                            : {formatDate(student.dob?.split("T")[0])}
                         </Text>
 
                         {/* Phone */}
