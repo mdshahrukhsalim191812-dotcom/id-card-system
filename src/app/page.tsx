@@ -1569,7 +1569,7 @@ export default function HomePage() {
                   <p className="text-gray-300 text-xs sm:text-sm md:text-base">
                     <span className="font-semibold text-white">Graduate</span> From{" "}
                     <span className="text-cyan-300 font-medium">
-                      Tilka Majhi Bhagalpur University
+                      Tilka Manjhi Bhagalpur University
                     </span>
                     , Bhagalpur
                   </p>
@@ -1579,7 +1579,7 @@ export default function HomePage() {
                   <p className="text-gray-300 text-xs sm:text-sm md:text-base">
                     <span className="font-semibold text-white">Pursuing Post Graduation</span> From{" "}
                     <span className="text-cyan-300 font-medium">
-                      Tilkamanjhi University
+                      Tilka Manjhi University
                     </span>
                   </p>
                 </div>
