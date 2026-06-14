@@ -39,11 +39,6 @@ const products = [
         desc: "Attractive posters & flyers.",
     },
     {
-        title: "Packaging Products",
-        image: "/products/package.jpg",
-        desc: "Custom packaging solutions.",
-    },
-    {
         title: "Wedding Cards",
         image: "/products/wedding-card.jpg",
         desc: "Elegant wedding invitation cards.",
@@ -56,7 +51,107 @@ const products = [
     {
         title: "Stickers & Labels",
         image: "/products/sticker.jpg",
+        desc: "Custom cutting. ",
+    },
+    {
+        title: "Invitation Cards",
+        image: "/products/invitation.jpg",
         desc: "Custom stickers & labels.",
+    },
+    {
+        title: "Letter Pad",
+        image: "/products/sticker.jpg",
+        desc: "Custom stickers & labels.",
+    },
+    {
+        title: "Calender",
+        image: "/products/sticker.jpg",
+        desc: "Custom stickers & labels.",
+    },
+    {
+        title: "Poster & Handbill",
+        image: "/products/sticker.jpg",
+        desc: "Custom stickers & labels.",
+    },
+    {
+        title: "Certificate",
+        image: "/products/sticker.jpg",
+        desc: "Custom stickers & labels.",
+    },
+    {
+        title: "Fee & Bill Book",
+        image: "/products/sticker.jpg",
+        desc: "Custom stickers & labels.",
+    },
+    {
+        title: "Batch",
+        image: "/products/sticker.jpg",
+        desc: "Custom stickers & labels.",
+    },
+    {
+        title: "Acrylic Key Ring & Paper Weight",
+        image: "/products/sticker.jpg",
+        desc: "Custom stickers & labels.",
+    },
+    {
+        title: "Lanyard",
+        image: "/products/sticker.jpg",
+        desc: "Custom stickers & labels.",
+    },
+    {
+        title: "Digital Flag",
+        image: "/products/sticker.jpg",
+        desc: "Custom stickers & labels.",
+    },
+    {
+        title: "Arylic Monento",
+        image: "/products/sticker.jpg",
+        desc: "Customized Engraving",
+    },
+    {
+        title: "Customized Medals",
+        image: "/products/sticker.jpg",
+        desc: "Custom stickers & labels.",
+    },
+    {
+        title: "PVC Cards",
+        image: "/products/sticker.jpg",
+        desc: "Custom stickers & labels.",
+    },
+    {
+        title: "Rubber Mohar",
+        image: "/products/sticker.jpg",
+        desc: "Custom stickers & labels.",
+    },
+    {
+        title: "Coffee Mug",
+        image: "/products/sticker.jpg",
+        desc: "50-100 Minimum orders. ",
+    },
+    {
+        title: "DTF Rubber Print",
+        image: "/products/sticker.jpg",
+        desc: "50-100 Minimum orders. ",
+    },
+    {
+        title: "Customized Jute Bags",
+        image: "/products/sticker.jpg",
+        desc: "50-100 Minimum orders. ",
+    },
+    {
+        title: "Exam Copy",
+        image: "/products/sticker.jpg",
+        desc: "50-100 Minimum orders. ",
+    },
+    {
+        title: "Class Name Plate",
+        image: "/products/sticker.jpg",
+        desc: "50-100 Minimum orders. ",
+    },
+    {
+        title: "Yoyo Clip",
+        image: "/products/sticker.jpg",
+        desc: "50-100 Minimum orders. ",
     },
 ];
 

@@ -2836,7 +2836,7 @@ export default function HomePage() {
                   {
                     icon: <Phone size={18} className="sm:w-5 sm:h-5 md:w-[22px] md:h-[22px]" />,
                     title: "Alternative Phone",
-                    desc: "+91 8521060741",
+                    desc: "+91 9525706529 +91 8521060741 +91 9709675175",
                   },
                   {
                     icon: <Clock size={18} className="sm:w-5 sm:h-5 md:w-[22px] md:h-[22px]" />,

@@ -300,7 +300,6 @@ export default function KarishmaConventSchool({
                     style={{
                         letterSpacing: "1px",
                         fontFamily: "Arial",
-                        transform: "scaleY(1.65)",
                         lineHeight: "10px",
                     }}
                 >
