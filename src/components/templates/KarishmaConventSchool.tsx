@@ -296,11 +296,11 @@ export default function KarishmaConventSchool({
 
                 {/* ADDRESS */}
                 <div
-                    className="relative top-[-8.5px] left-[-9.5px] text-[10px] w-[170px]"
+                    className="relative top-[-16.6px] left-[-9.5px] text-[12px] w-[170px]"
                     style={{
                         letterSpacing: "1px",
                         fontFamily: "Arial",
-                        lineHeight: "10px",
+                        lineHeight: "14px",
                     }}
                 >
 

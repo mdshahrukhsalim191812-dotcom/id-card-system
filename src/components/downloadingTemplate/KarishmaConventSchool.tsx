@@ -323,12 +323,11 @@ export default function KarishmaConventSchool({
                                 position: "absolute",
                                 top: 389,
                                 left: 105,
-                                width: 182,
-                                fontSize: 10,
+                                width: 180,
+                                fontSize: 14,
                                 fontWeight: "bold",
                                 color: "#000000",
                                 letterSpacing: -0.5,
-                                transform: "scaleY(1.67)",
                             }}
                         >
                             {student.address}
