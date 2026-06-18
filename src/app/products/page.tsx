@@ -21,137 +21,162 @@ const products = [
     {
         title: "Brochures & Pamphlets",
         image: "/products/Brochure-&-Pamphlet.jpg",
-        desc: "Creative brochures to promote your business.",
+        desc: "Creative brochures to promote your business effectively.",
     },
     {
         title: "Visiting Cards",
         image: "/products/visiting.jpg",
-        desc: "Premium quality visiting cards.",
+        desc: "Premium quality visiting cards for professional networking.",
     },
     {
         title: "Banners & Flex",
         image: "/products/banner.jpg",
-        desc: "Eye catching banners & flex.",
+        desc: "Eye catching banners and flex for advertising.",
     },
     {
         title: "Posters & Flyers",
         image: "/products/poster.jpg",
-        desc: "Attractive posters & flyers.",
+        desc: "Attractive posters and flyers for promotions.",
     },
     {
         title: "Wedding Cards",
         image: "/products/wedding-card.jpg",
-        desc: "Elegant wedding invitation cards.",
+        desc: "Elegant wedding invitation cards with custom designs.",
     },
     {
         title: "Booklets & Catalogs",
         image: "/products/booklet.jpg",
-        desc: "Professional booklets & catalogs.",
+        desc: "Professional booklets and catalogs for businesses.",
     },
     {
         title: "Stickers & Labels",
         image: "/products/sticker.jpg",
-        desc: "Custom cutting. ",
+        desc: "Custom cutting stickers and labels available.",
     },
     {
         title: "Invitation Cards",
         image: "/products/invitation.jpg",
-        desc: "Custom stickers & labels.",
+        desc: "Custom invitation cards for all occasions.",
     },
     {
         title: "Letter Pad",
         image: "/products/sticker.jpg",
-        desc: "Custom stickers & labels.",
+        desc: "High quality letter pads for official use.",
     },
     {
         title: "Calender",
         image: "/products/sticker.jpg",
-        desc: "Custom stickers & labels.",
+        desc: "Customized calendars with your own designs.",
     },
     {
         title: "Poster & Handbill",
         image: "/products/sticker.jpg",
-        desc: "Custom stickers & labels.",
+        desc: "Posters and handbills for effective marketing.",
     },
     {
         title: "Certificate",
         image: "/products/sticker.jpg",
-        desc: "Custom stickers & labels.",
+        desc: "Customized certificates for achievements and recognition.",
     },
     {
         title: "Fee & Bill Book",
         image: "/products/sticker.jpg",
-        desc: "Custom stickers & labels.",
+        desc: "Fee and bill books for businesses.",
     },
     {
         title: "Batch",
         image: "/products/sticker.jpg",
-        desc: "Custom stickers & labels.",
+        desc: "Customized batches for schools and events.",
     },
     {
-        title: "Acrylic Key Ring & Paper Weight",
+        title: "Paper Weight",
         image: "/products/sticker.jpg",
-        desc: "Custom stickers & labels.",
+        desc: "Custom paper weights for office use.",
     },
     {
         title: "Lanyard",
-        image: "/products/sticker.jpg",
-        desc: "Custom stickers & labels.",
+        image: "/products/lanyard.jpeg",
+        desc: "Custom lanyards for events and identification.",
     },
     {
         title: "Digital Flag",
         image: "/products/sticker.jpg",
-        desc: "Custom stickers & labels.",
+        desc: "Digital flags for promotional and events.",
     },
     {
         title: "Arylic Monento",
         image: "/products/sticker.jpg",
-        desc: "Customized Engraving",
+        desc: "Customized engraving on acrylic momento.",
     },
     {
-        title: "Customized Medals",
+        title: "Medals",
         image: "/products/sticker.jpg",
-        desc: "Custom stickers & labels.",
+        desc: "Customized medals for sports and awards.",
     },
     {
         title: "PVC Cards",
         image: "/products/sticker.jpg",
-        desc: "Custom stickers & labels.",
+        desc: "PVC cards for identification and access.",
     },
     {
         title: "Rubber Mohar",
         image: "/products/sticker.jpg",
-        desc: "Custom stickers & labels.",
+        desc: "Custom rubber stamps for official use.",
     },
     {
         title: "Coffee Mug",
         image: "/products/sticker.jpg",
-        desc: "50-100 Minimum orders. ",
+        desc: "Customized coffee mugs with minimum orders.",
     },
     {
         title: "DTF Rubber Print",
         image: "/products/sticker.jpg",
-        desc: "50-100 Minimum orders. ",
+        desc: "DTF rubber printing with minimum order.",
     },
     {
-        title: "Customized Jute Bags",
+        title: "Jute Bags",
         image: "/products/sticker.jpg",
-        desc: "50-100 Minimum orders. ",
+        desc: "Eco-friendly customized jute bags available.",
     },
     {
         title: "Exam Copy",
         image: "/products/sticker.jpg",
-        desc: "50-100 Minimum orders. ",
+        desc: "Exam copies with custom design options.",
     },
     {
         title: "Class Name Plate",
         image: "/products/sticker.jpg",
-        desc: "50-100 Minimum orders. ",
+        desc: "Custom name plates for classrooms and offices.",
     },
     {
         title: "Yoyo Clip",
         image: "/products/sticker.jpg",
-        desc: "50-100 Minimum orders. ",
+        desc: "Yoyo clips for promotional and branding.",
+    },
+    {
+        title: "Sun Pack",
+        image: "/products/sunpack.jpeg",
+        desc: "Sun pack for packaging and storage.",
+    },
+    {
+        title: "Wall Clock",
+        image: "/products/wall-clock.jpeg",
+        desc: "Customized wall clocks with your design.",
+    },
+    {
+        title: "Umbrella",
+        image: "/products/umbrella.jpeg",
+        desc: "Customized umbrellas for branding and gifting.",
+    },
+    {
+        title: "Acrylic Key Ring",
+        image: "/products/key-chain.jpeg",
+        desc: "Acrylic key rings with custom designs.",
+    },
+    {
+        title: "T-Shirt",
+        image: "/products/tshirt.jpeg",
+        desc: "Customized t-shirts for events and promotions.",
     },
 ];
 
@@ -834,13 +859,15 @@ export default function ProductsPage() {
 
                     {/* PRODUCTS GRID */}
                     <div className="
-                        grid
-                        grid-cols-1
-                        sm:grid-cols-2
-                        xl:grid-cols-4
+    grid
+    grid-cols-2
+    sm:grid-cols-3
+    xl:grid-cols-4
 
-                        gap-8
-                    ">
+    gap-4
+    sm:gap-6
+    lg:gap-8
+">
 
                         {products.map((item, i) => (
 
@@ -868,74 +895,81 @@ export default function ProductsPage() {
                                 }}
 
                                 className="
-                                group
-                                relative
+            group
+            relative
 
-                                overflow-hidden
+            overflow-hidden
 
-                                rounded-[30px]
+            rounded-2xl
+            sm:rounded-3xl
 
-                        bg-white/[0.06]
-                        backdrop-blur-2xl
+            bg-white/[0.06]
+            backdrop-blur-2xl
 
-                    border border-white/10
-                    before:absolute
-                    before:inset-0
-                    before:rounded-[30px]
-                    before:p-[1px]
-                    before:bg-gradient-to-br
-                    before:from-cyan-400/0
-                    before:via-cyan-400/0
-                    before:to-blue-500/0
-                    group-hover:before:from-cyan-400/40
-                    group-hover:before:via-blue-500/30
-                    group-hover:before:to-cyan-400/40
-                    before:transition-all
-                    before:duration-700
+            border border-white/10
 
-                    before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)]
-                    before:[mask-composite:xor]
-                    before:[-webkit-mask-composite:xor]
+            before:absolute
+            before:inset-0
+            before:rounded-2xl
+            before:sm:rounded-3xl
+            before:p-[1px]
+            before:bg-gradient-to-br
+            before:from-cyan-400/0
+            before:via-cyan-400/0
+            before:to-blue-500/0
+            group-hover:before:from-cyan-400/40
+            group-hover:before:via-blue-500/30
+            group-hover:before:to-cyan-400/40
+            before:transition-all
+            before:duration-700
 
-                        shadow-[0_10px_40px_rgba(0,0,0,0.25)]
+            before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)]
+            before:[mask-composite:xor]
+            before:[-webkit-mask-composite:xor]
 
-                        hover:border-cyan-400/40
-                        hover:shadow-cyan-500/20
+            shadow-[0_10px_40px_rgba(0,0,0,0.25)]
 
-                        transition-all
-                        duration-500
+            hover:border-cyan-400/40
+            hover:shadow-cyan-500/20
 
-                        hover:-translate-y-4
-                        hover:scale-[1.02]
-                        "
+            transition-all
+            duration-500
+
+            hover:-translate-y-2
+            sm:hover:-translate-y-3
+            xl:hover:-translate-y-4
+
+            hover:scale-[1.01]
+            sm:hover:scale-[1.02]
+        "
                             >
 
                                 {/* HOVER GLOW */}
                                 <div className="
-    absolute inset-0
+                absolute inset-0
 
-    bg-gradient-to-br
+                bg-gradient-to-br
 
-    from-cyan-400/0
-    via-blue-500/0
-    to-cyan-400/0
+                from-cyan-400/0
+                via-blue-500/0
+                to-cyan-400/0
 
-    group-hover:from-cyan-400/10
-    group-hover:via-blue-500/10
-    group-hover:to-cyan-400/10
+                group-hover:from-cyan-400/10
+                group-hover:via-blue-500/10
+                group-hover:to-cyan-400/10
 
-    opacity-0
-    group-hover:opacity-100
+                opacity-0
+                group-hover:opacity-100
 
-    transition-all
-    duration-700
-"></div>
+                transition-all
+                duration-700
+            "></div>
 
                                 {/* IMAGE */}
                                 <div className="
-                                    relative
-                                    overflow-hidden
-                                ">
+                relative
+                overflow-hidden
+            ">
 
                                     <Image
                                         src={item.image}
@@ -944,78 +978,108 @@ export default function ProductsPage() {
                                         height={300}
                                         priority={false}
                                         className="
-                                            w-full
-                                            h-60
+                        w-full
+                        h-40
+                        sm:h-48
+                        md:h-56
+                        lg:h-60
 
-                                            object-cover
+                        object-cover
 
-                                            transition-transform
-                                            duration-700
+                        transition-transform
+                        duration-700
 
-                                            group-hover:scale-125
-                                            group-hover:rotate-1
-                                        "
+                        group-hover:scale-125
+                        group-hover:rotate-1
+                    "
                                     />
 
                                     <div className="
-                                        absolute inset-0
+                    absolute inset-0
 
-                                        bg-gradient-to-t
-                                        from-black/60
-                                        via-transparent
-                                        to-transparent
-                                    "></div>
+                    bg-gradient-to-t
+                    from-black/60
+                    via-transparent
+                    to-transparent
+                "></div>
 
                                 </div>
 
                                 {/* CONTENT */}
                                 <div className="
-                                    relative z-10
-                                    p-7
-                                ">
+                relative z-10
+                p-4
+                sm:p-5
+                md:p-6
+                lg:p-7
+            ">
 
                                     <h3 className="
-                                        text-2xl
-                                        font-bold
-                                        text-white
+                    text-base
+                    sm:text-lg
+                    md:text-xl
+                    lg:text-2xl
 
-                                        mb-4
+                    font-bold
+                    text-white
 
-                                        group-hover:text-cyan-300
+                    mb-2
+                    sm:mb-3
+                    lg:mb-4
 
-                                        transition-colors
-                                        duration-300
-                                    ">
+                    group-hover:text-cyan-300
+
+                    transition-colors
+                    duration-300
+
+                    line-clamp-1
+                ">
 
                                         {item.title}
 
                                     </h3>
 
                                     <p className="
-                                        text-gray-300
-                                        leading-relaxed
-                                    ">
+                    text-gray-300
+                    leading-relaxed
+
+                    text-xs
+                    sm:text-sm
+                    lg:text-base
+
+                    line-clamp-2
+                    sm:line-clamp-3
+                ">
 
                                         {item.desc}
 
                                     </p>
 
                                     <div className="
-                                        mt-6
+                    mt-3
+                    sm:mt-4
+                    lg:mt-6
 
-                                        w-12 h-[3px]
+                    w-8
+                    sm:w-10
+                    lg:w-12
 
-                                        rounded-full
+                    h-[2px]
+                    sm:h-[3px]
 
-                                        bg-gradient-to-r
-                                        from-cyan-400
-                                        to-blue-500
+                    rounded-full
 
-                                        group-hover:w-20
+                    bg-gradient-to-r
+                    from-cyan-400
+                    to-blue-500
 
-                                        transition-all
-                                        duration-500
-                                    "></div>
+                    group-hover:w-12
+                    sm:group-hover:w-16
+                    lg:group-hover:w-20
+
+                    transition-all
+                    duration-500
+                "></div>
 
                                 </div>
 

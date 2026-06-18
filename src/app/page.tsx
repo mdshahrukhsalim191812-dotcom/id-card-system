@@ -898,160 +898,191 @@ export default function HomePage() {
           </motion.div>
 
           {/* ================= PRODUCTS GRID ================= */}
-          <div
-            className="
+         <div
+    className="
         grid
-        grid-cols-1
-        sm:grid-cols-2
-        lg:grid-cols-3
+        grid-cols-2
+        sm:grid-cols-3
         xl:grid-cols-4
-        gap-5 sm:gap-6 md:gap-7 lg:gap-8
-      "
-          >
-            {products.map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{
-                  opacity: 0,
-                  y: 80,
-                  scale: 0.9,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                }}
-                transition={{
-                  duration: 0.7,
-                  delay: i * 0.12,
-                }}
-                viewport={{ once: true }}
-                whileHover={{
-                  y: -12,
-                  scale: 1.03,
-                }}
+        gap-3
+        sm:gap-4
+        md:gap-5
+        lg:gap-6
+        xl:gap-7
+    "
+>
+    {products.map((item, i) => (
+        <motion.div
+            key={i}
+            initial={{
+                opacity: 0,
+                y: 80,
+                scale: 0.9,
+            }}
+            whileInView={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+            }}
+            transition={{
+                duration: 0.7,
+                delay: i * 0.12,
+            }}
+            viewport={{ once: true }}
+            whileHover={{
+                y: -8,
+                scale: 1.02,
+            }}
+            className="
+                group
+                relative
+                overflow-hidden
+                rounded-xl
+                sm:rounded-2xl
+                md:rounded-2xl
+                lg:rounded-3xl
+                bg-white/[0.06]
+                backdrop-blur-2xl
+                border border-white/10
+                shadow-[0_10px_40px_rgba(0,0,0,0.25)]
+                hover:border-cyan-400/40
+                hover:shadow-cyan-500/20
+                transition-all
+                duration-500
+                cursor-pointer
+            "
+        >
+            {/* Glow Effect */}
+            <div
                 className="
-            group
-            relative
-            overflow-hidden
-            rounded-2xl sm:rounded-2xl md:rounded-3xl
-            bg-white/[0.06]
-            backdrop-blur-2xl
-            border border-white/10
-            shadow-[0_10px_40px_rgba(0,0,0,0.25)]
-            hover:border-cyan-400/40
-            hover:shadow-cyan-500/20
-            transition-all duration-500
-            cursor-pointer
-          "
-              >
-                {/* Glow Effect */}
-                <div
-                  className="
-              absolute inset-0
-              bg-gradient-to-br
-              from-cyan-400/0
-              to-blue-500/0
-              group-hover:from-cyan-400/10
-              group-hover:to-blue-500/10
-              transition-all duration-500
-              pointer-events-none
-            "
-                ></div>
+                    absolute inset-0
+                    bg-gradient-to-br
+                    from-cyan-400/0
+                    to-blue-500/0
+                    group-hover:from-cyan-400/10
+                    group-hover:to-blue-500/10
+                    transition-all
+                    duration-500
+                    pointer-events-none
+                "
+            ></div>
 
-                {/* Shine Effect on Hover */}
-                <div
-                  className="
-              absolute inset-0
-              -translate-x-full
-              bg-gradient-to-r
-              from-transparent
-              via-white/8
-              to-transparent
-              group-hover:translate-x-full
-              transition-all duration-1000
-              ease-in-out
-              pointer-events-none
-            "
-                ></div>
+            {/* Shine Effect on Hover */}
+            <div
+                className="
+                    absolute inset-0
+                    -translate-x-full
+                    bg-gradient-to-r
+                    from-transparent
+                    via-white/8
+                    to-transparent
+                    group-hover:translate-x-full
+                    transition-all
+                    duration-1000
+                    ease-in-out
+                    pointer-events-none
+                "
+            ></div>
 
-                {/* Image Container */}
-                <div className="relative overflow-hidden">
-                  <Image
+            {/* Image Container */}
+            <div className="relative overflow-hidden">
+                <Image
                     src={item.image}
                     alt={item.title}
                     width={500}
                     height={300}
                     className="
-                w-full
-                h-48 sm:h-52 md:h-56 lg:h-60
-                object-cover
-                transition-transform
-                duration-700
-                ease-out
-                group-hover:scale-110
-              "
-                  />
-                  <div
+                        w-full
+                        h-36
+                        sm:h-44
+                        md:h-48
+                        lg:h-52
+                        xl:h-56
+                        object-cover
+                        transition-transform
+                        duration-700
+                        ease-out
+                        group-hover:scale-110
+                    "
+                />
+                <div
                     className="
-                absolute inset-0
-                bg-gradient-to-t
-                from-black/70
-                via-black/20
-                to-transparent
-                opacity-60
-                group-hover:opacity-80
-                transition-opacity
-                duration-500
-              "
-                  ></div>
-                </div>
+                        absolute inset-0
+                        bg-gradient-to-t
+                        from-black/70
+                        via-black/20
+                        to-transparent
+                        opacity-60
+                        group-hover:opacity-80
+                        transition-opacity
+                        duration-500
+                    "
+                ></div>
+            </div>
 
-                {/* Content */}
-                <div className="relative z-10 p-5 sm:p-6 md:p-7">
-                  <h3
+            {/* Content */}
+            <div className="relative z-10 p-3 sm:p-4 md:p-5 lg:p-6">
+                <h3
                     className="
-                text-lg sm:text-xl md:text-2xl
-                font-bold
-                text-white
-                mb-2 sm:mb-3 md:mb-4
-                group-hover:text-cyan-300
-                transition-colors duration-300
-                line-clamp-1
-              "
-                  >
+                        text-sm
+                        sm:text-base
+                        md:text-lg
+                        lg:text-xl
+                        font-bold
+                        text-white
+                        mb-1
+                        sm:mb-2
+                        md:mb-3
+                        group-hover:text-cyan-300
+                        transition-colors
+                        duration-300
+                        line-clamp-1
+                    "
+                >
                     {item.title}
-                  </h3>
+                </h3>
 
-                  <p
+                <p
                     className="
-                text-gray-300
-                text-sm sm:text-base
-                leading-relaxed
-                line-clamp-2
-              "
-                  >
+                        text-gray-300
+                        text-[11px]
+                        sm:text-xs
+                        md:text-sm
+                        leading-relaxed
+                        line-clamp-2
+                        sm:line-clamp-3
+                    "
+                >
                     {item.desc}
-                  </p>
+                </p>
 
-                  {/* Animated Bottom Line */}
-                  <div
+                {/* Animated Bottom Line */}
+                <div
                     className="
-                mt-4 sm:mt-5 md:mt-6
-                w-10 sm:w-12
-                h-[2px] sm:h-[3px]
-                rounded-full
-                bg-gradient-to-r
-                from-cyan-400
-                to-blue-500
-                group-hover:w-16 sm:group-hover:w-20
-                transition-all duration-500
-              "
-                  ></div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                        mt-2
+                        sm:mt-3
+                        md:mt-4
+                        lg:mt-5
+                        w-6
+                        sm:w-8
+                        md:w-10
+                        h-[2px]
+                        rounded-full
+                        bg-gradient-to-r
+                        from-cyan-400
+                        to-blue-500
+                        group-hover:w-10
+                        sm:group-hover:w-12
+                        md:group-hover:w-14
+                        lg:group-hover:w-16
+                        transition-all
+                        duration-500
+                    "
+                ></div>
+            </div>
+        </motion.div>
+    ))}
+</div>
         </div>
       </section>
 
@@ -1880,187 +1911,251 @@ export default function HomePage() {
           </motion.div>
 
           {/* ================= CARDS GRID ================= */}
-          <div
-            className="
+         <div
+    className="
         grid
-        grid-cols-1
-        sm:grid-cols-2
-        lg:grid-cols-4
-        gap-5 sm:gap-6 md:gap-7 lg:gap-8
-      "
-          >
-            {[
-              {
-                icon: <Award size={36} className="sm:w-10 sm:h-10 lg:w-[42px] lg:h-[42px]" />,
-                title: "Creative Design",
-                desc: "Modern and innovative branding solutions.",
-              },
-              {
-                icon: <Layers3 size={36} className="sm:w-10 sm:h-10 lg:w-[42px] lg:h-[42px]" />,
-                title: "Latest Technology",
-                desc: "Advanced machines for perfect printing.",
-              },
-              {
-                icon: <Users size={36} className="sm:w-10 sm:h-10 lg:w-[42px] lg:h-[42px]" />,
-                title: "Premium Quality",
-                desc: "Durable materials with premium finishing.",
-              },
-              {
-                icon: <Briefcase size={36} className="sm:w-10 sm:h-10 lg:w-[42px] lg:h-[42px]" />,
-                title: "Customer Support",
-                desc: "Reliable service with client satisfaction.",
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{
-                  opacity: 0,
-                  y: 100,
-                  scale: 0.9,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                }}
-                whileHover={{
-                  y: -12,
-                  scale: 1.02,
-                }}
-                animate={{
-                  y: [0, -4, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: i * 0.15,
-                }}
-                viewport={{ once: true }}
+        grid-cols-2
+        sm:grid-cols-3
+        xl:grid-cols-4
+        gap-3
+        sm:gap-4
+        md:gap-5
+        lg:gap-6
+        xl:gap-7
+    "
+>
+    {[
+        {
+            icon: <Award size={28} className="sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-[36px] lg:h-[36px] xl:w-[42px] xl:h-[42px]" />,
+            title: "Creative Design",
+            desc: "Modern and innovative branding solutions.",
+        },
+        {
+            icon: <Layers3 size={28} className="sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-[36px] lg:h-[36px] xl:w-[42px] xl:h-[42px]" />,
+            title: "Latest Technology",
+            desc: "Advanced machines for perfect printing.",
+        },
+        {
+            icon: <Users size={28} className="sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-[36px] lg:h-[36px] xl:w-[42px] xl:h-[42px]" />,
+            title: "Premium Quality",
+            desc: "Durable materials with premium finishing.",
+        },
+        {
+            icon: <Briefcase size={28} className="sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-[36px] lg:h-[36px] xl:w-[42px] xl:h-[42px]" />,
+            title: "Customer Support",
+            desc: "Reliable service with client satisfaction.",
+        },
+    ].map((item, i) => (
+        <motion.div
+            key={i}
+            initial={{
+                opacity: 0,
+                y: 100,
+                scale: 0.9,
+            }}
+            whileInView={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+            }}
+            whileHover={{
+                y: -8,
+                scale: 1.02,
+            }}
+            animate={{
+                y: [0, -4, 0],
+            }}
+            transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.15,
+            }}
+            viewport={{ once: true }}
+            className="
+                group
+                relative
+                overflow-hidden
+                rounded-xl
+                sm:rounded-2xl
+                md:rounded-2xl
+                lg:rounded-3xl
+                bg-white/[0.06]
+                backdrop-blur-2xl
+                border border-white/10
+                min-h-[260px]
+                sm:min-h-[280px]
+                md:min-h-[300px]
+                lg:min-h-[320px]
+                xl:min-h-[340px]
+                p-3
+                sm:p-4
+                md:p-5
+                lg:p-6
+                xl:p-7
+                flex
+                flex-col
+                items-center
+                justify-between
+                text-center
+                shadow-[0_10px_40px_rgba(0,0,0,0.25)]
+                hover:border-cyan-400/40
+                hover:shadow-cyan-500/20
+                transition-all
+                duration-500
+                cursor-pointer
+            "
+        >
+            {/* ================= HOVER GLOW ================= */}
+            <div
                 className="
-            group
-            relative
-            overflow-hidden
-            rounded-2xl sm:rounded-2xl md:rounded-3xl
-            bg-white/[0.06]
-            backdrop-blur-2xl
-            border border-white/10
-            min-h-[300px] sm:min-h-[320px] md:min-h-[340px] lg:min-h-[360px]
-            p-5 sm:p-6 md:p-7 lg:p-8
-            flex flex-col items-center justify-between
-            text-center
-            shadow-[0_10px_40px_rgba(0,0,0,0.25)]
-            hover:border-cyan-400/40
-            hover:shadow-cyan-500/20
-            transition-all duration-500
-            cursor-pointer
-          "
-              >
-                {/* ================= HOVER GLOW ================= */}
-                <div
-                  className="
-              absolute inset-0
-              bg-gradient-to-br
-              from-cyan-400/0
-              via-cyan-400/0
-              to-blue-500/0
-              group-hover:from-cyan-400/10
-              group-hover:to-blue-500/10
-              transition-all duration-700
-              pointer-events-none
-            "
-                ></div>
+                    absolute inset-0
+                    bg-gradient-to-br
+                    from-cyan-400/0
+                    via-cyan-400/0
+                    to-blue-500/0
+                    group-hover:from-cyan-400/10
+                    group-hover:to-blue-500/10
+                    transition-all
+                    duration-700
+                    pointer-events-none
+                "
+            ></div>
 
-                {/* ================= SHINE EFFECT ================= */}
-                <div
-                  className="
-              absolute
-              inset-0
-              -translate-x-full
-              bg-gradient-to-r
-              from-transparent
-              via-white/8
-              to-transparent
-              group-hover:translate-x-full
-              transition-all duration-1000
-              ease-in-out
-              pointer-events-none
-            "
-                ></div>
+            {/* ================= SHINE EFFECT ================= */}
+            <div
+                className="
+                    absolute
+                    inset-0
+                    -translate-x-full
+                    bg-gradient-to-r
+                    from-transparent
+                    via-white/8
+                    to-transparent
+                    group-hover:translate-x-full
+                    transition-all
+                    duration-1000
+                    ease-in-out
+                    pointer-events-none
+                "
+            ></div>
 
-                {/* ================= ICON ================= */}
-                <motion.div
-                  whileHover={{
+            {/* ================= ICON ================= */}
+            <motion.div
+                whileHover={{
                     rotate: 6,
                     scale: 1.1,
-                  }}
-                  className="
-              relative z-10
-              w-16 h-16 sm:w-20 sm:h-20 md:w-22 md:h-22 lg:w-24 lg:h-24
-              rounded-xl sm:rounded-2xl md:rounded-[26px] lg:rounded-[28px]
-              bg-gradient-to-br
-              from-cyan-400/20
-              to-blue-500/20
-              border border-white/10
-              text-cyan-300
-              flex
-              items-center
-              justify-center
-              shadow-lg
-              transition-all duration-500
-            "
+                }}
+                className="
+                    relative z-10
+                    w-14
+                    h-14
+                    sm:w-16
+                    sm:h-16
+                    md:w-18
+                    md:h-18
+                    lg:w-20
+                    lg:h-20
+                    xl:w-24
+                    xl:h-24
+                    rounded-xl
+                    sm:rounded-2xl
+                    md:rounded-[22px]
+                    lg:rounded-[24px]
+                    xl:rounded-[28px]
+                    bg-gradient-to-br
+                    from-cyan-400/20
+                    to-blue-500/20
+                    border border-white/10
+                    text-cyan-300
+                    flex
+                    items-center
+                    justify-center
+                    shadow-lg
+                    transition-all
+                    duration-500
+                "
+            >
+                {item.icon}
+            </motion.div>
+
+            {/* ================= CONTENT ================= */}
+            <div className="relative z-10 mt-3 sm:mt-4 md:mt-5 lg:mt-6 xl:mt-7">
+                <h3
+                    className="
+                        text-base
+                        sm:text-lg
+                        md:text-xl
+                        lg:text-xl
+                        xl:text-2xl
+                        font-bold
+                        text-white
+                        leading-snug
+                        group-hover:text-cyan-300
+                        transition-colors
+                        duration-300
+                        line-clamp-1
+                    "
                 >
-                  {item.icon}
-                </motion.div>
-
-                {/* ================= CONTENT ================= */}
-                <div className="relative z-10 mt-5 sm:mt-6 md:mt-7 lg:mt-8">
-                  <h3
-                    className="
-                text-xl sm:text-2xl md:text-2xl lg:text-2xl
-                font-bold
-                text-white
-                leading-snug
-                group-hover:text-cyan-300
-                transition-colors duration-300
-              "
-                  >
                     {item.title}
-                  </h3>
+                </h3>
 
-                  <p
+                <p
                     className="
-                mt-3 sm:mt-4 md:mt-5
-                text-gray-300
-                leading-6 sm:leading-7 md:leading-8
-                text-sm sm:text-base
-                max-w-[250px] mx-auto
-              "
-                  >
+                        mt-2
+                        sm:mt-3
+                        md:mt-4
+                        text-gray-300
+                        leading-5
+                        sm:leading-6
+                        md:leading-7
+                        text-[11px]
+                        sm:text-xs
+                        md:text-sm
+                        lg:text-sm
+                        xl:text-base
+                        max-w-[200px]
+                        sm:max-w-[220px]
+                        md:max-w-[240px]
+                        lg:max-w-[250px]
+                        mx-auto
+                        line-clamp-2
+                        sm:line-clamp-3
+                    "
+                >
                     {item.desc}
-                  </p>
-                </div>
+                </p>
+            </div>
 
-                {/* ================= BOTTOM LINE ================= */}
-                <motion.div
-                  whileHover={{
-                    width: 80,
-                  }}
-                  className="
-              relative z-10
-              mt-5 sm:mt-6 md:mt-7 lg:mt-8
-              w-10 sm:w-12 md:w-14
-              h-[2px] sm:h-[3px]
-              rounded-full
-              bg-gradient-to-r
-              from-cyan-400
-              to-blue-500
-              transition-all duration-500
-            "
-                ></motion.div>
-              </motion.div>
-            ))}
-          </div>
+            {/* ================= BOTTOM LINE ================= */}
+            <motion.div
+                whileHover={{
+                    width: 60,
+                }}
+                className="
+                    relative z-10
+                    mt-3
+                    sm:mt-4
+                    md:mt-5
+                    lg:mt-6
+                    xl:mt-7
+                    w-8
+                    sm:w-10
+                    md:w-12
+                    lg:w-14
+                    h-[2px]
+                    sm:h-[3px]
+                    rounded-full
+                    bg-gradient-to-r
+                    from-cyan-400
+                    to-blue-500
+                    transition-all
+                    duration-500
+                "
+            ></motion.div>
+        </motion.div>
+    ))}
+</div>
         </div>
       </motion.section>
 
